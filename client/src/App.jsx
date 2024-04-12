@@ -5,10 +5,10 @@ function App() {
 
   return (
     <>
-    <SignOutButton>
+    {/* <SignOutButton>
       <button>Signout from clerk</button>
     </SignOutButton>
-    <SignInButton/>
+    <SignInButton/> */}
      <Routes/>
     </>
   )
