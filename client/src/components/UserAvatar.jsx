@@ -1,7 +1,10 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
 
-export default function UserAvatar({Text}) {
+export default function UserAvatar({
+  Text, 
+  submitOnClickFunction, 
+}) {
   return (
     <>
      <Avatar
@@ -12,8 +15,9 @@ export default function UserAvatar({Text}) {
       color:'black', 
       backgroundColor:'orange', 
     }}
+    onClick={submitOnClickFunction}
      >
-      {Text}
+      {`${Text}`}
      </Avatar>
     </>
   )

@@ -2,9 +2,8 @@ import {
   Box, 
   Typography,  
 } from '@mui/material'
-import SearchIcon from './assets/search.svg'
-import ActionButton from '../../components/ActionButton/ActionButton';
-import Avatar from '../../components/UserAvatar';
+import Actions from './Actions/index'
+import AccountProfile from './AccountProfile/index'
 
 export default function Index() {
   return (
@@ -20,14 +19,9 @@ export default function Index() {
     top:'.05rem', 
   }}
    >
-    <Avatar
-    Text={'J'}
-    />
+   <AccountProfile/>
+   <Actions/>
 
-    <ActionButton
-    Icon={SearchIcon}
-    Text={'Search'}
-    />
    </Box>
    </>
   )

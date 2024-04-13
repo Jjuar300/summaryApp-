@@ -1,15 +1,23 @@
-import Routes from './routes'
-import { SignOutButton, SignInButton } from '@clerk/clerk-react'
+import { 
+  SignedIn, 
+  SignedOut,
+ 
+} from '@clerk/clerk-react'
+import {
+  SignedInRoutes, 
+  SignedOutRoutes, 
+} from './routes'
 
 function App() {
 
   return (
     <>
-    {/* <SignOutButton>
-      <button>Signout from clerk</button>
-    </SignOutButton>
-    <SignInButton/> */}
-     <Routes/>
+    <SignedIn>
+      <SignedInRoutes/>
+    </SignedIn>
+     <SignedOut>
+     <SignedOutRoutes/>
+     </SignedOut>
     </>
   )
 }
