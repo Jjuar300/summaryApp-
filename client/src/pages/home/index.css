@@ -1,0 +1,20 @@
+
+.search{
+display: flex;
+position: absolute;
+top: 8rem;
+left: 1rem;
+gap: 1rem;
+padding: .5rem;
+width: 13rem;
+transition: background-color .1s linear;
+}
+
+.search:hover{
+    cursor: pointer;
+    background-color: #f7f8f9;
+}
+
+.search:focus{
+    background-color: #e2e4e6;
+}
