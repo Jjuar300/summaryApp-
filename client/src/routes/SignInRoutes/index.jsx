@@ -3,8 +3,12 @@ import {
     Routes, 
     BrowserRouter,
 } from 'react-router-dom'
-import Home from '../../pages/home/Index'
-import NotFound from '../../pages/NotFound/Index'
+
+import {
+  SettingsPage,
+  Home, 
+  NotFound, 
+} from '../../pages'
 
 export default function index() {
  
@@ -14,6 +18,7 @@ export default function index() {
     <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='*' element={<NotFound/>} />
+        <Route path='/settings' element={<SettingsPage/>} />
     </Routes>
    </BrowserRouter>
    </>

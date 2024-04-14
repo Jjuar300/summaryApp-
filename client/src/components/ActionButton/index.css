@@ -1,6 +1,6 @@
 .search{
     display: flex;
-    position: absolute;
+    /* position: absolute; */
     top: 8rem;
     left: 1rem;
     gap: 1rem;
@@ -16,7 +16,7 @@
     
     .blueBack{
         display: flex;
-        position: absolute;
+        /* position: absolute; */
         top: 8rem;
         left: 1rem;
         gap: 1rem;

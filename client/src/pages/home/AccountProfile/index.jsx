@@ -18,11 +18,14 @@ import {
     logout, 
 } from './assets'
 
+import {useNavigate} from 'react-router-dom'
+
   export default function Index() {
 
     const {user} = useUser(); 
     const FirstName = user.firstName.charAt(0).toUpperCase()
     const [anchorEl, setAnchorEl] = useState(null); 
+    const navigate = useNavigate(); 
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -62,6 +65,7 @@ import {
        <PopoverContainer
        imageIcon={settings}
        text={'Settings'}
+       submitOnClick={() => navigate('/settings')}
        />
 
        <PopoverContainer

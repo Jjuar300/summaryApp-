@@ -1,19 +1,28 @@
 import React from 'react'
 import Avatar from '@mui/material/Avatar';
 
+
 export default function UserAvatar({
   Text, 
   submitOnClickFunction, 
+  width,
+  height, 
+  fontSize, 
+  left, 
+  top,
 }) {
   return (
     <>
      <Avatar
      sx={{
-      left:'1.5rem', 
-      top:'1rem',
       ':hover' : {cursor:'pointer'}, 
-      color:'black', 
+      color:'white', 
       backgroundColor:'orange', 
+      width: `${width}rem`, 
+      height: `${height}rem`, 
+      fontSize:`${fontSize}rem`, 
+      left: `${left}rem`,
+      top:`${top}rem`,
     }}
     onClick={submitOnClickFunction}
      >

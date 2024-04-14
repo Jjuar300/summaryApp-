@@ -6,6 +6,7 @@ import {
 export default function PopoverContainer({
     imageIcon, 
     text, 
+    submitOnClick, 
 }) {
   return (
  <>
@@ -21,6 +22,7 @@ export default function PopoverContainer({
         src={`${imageIcon}`}
         />
     <Button
+     onClick={submitOnClick}
         sx={{
             fontSize:'1rem', 
             color:'black', 
