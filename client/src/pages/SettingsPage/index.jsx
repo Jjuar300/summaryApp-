@@ -1,6 +1,8 @@
-import { UserAvatar } from "../../components"
+import { 
+    UserAvatar, 
+    NavBar, 
+} from "../../components"
 import { useUser } from "@clerk/clerk-react";
-import { NavBar } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { 
     Box,
@@ -8,14 +10,21 @@ import {
     TextField,
     Typography, 
     Button,
+    Modal, 
 
 } from "@mui/material";
 import {ActionButton} from "../../components";
+import { 
+    feedBack, 
+    shieldCheck, 
+} from "./assets";
+import { useState } from "react";
 
 export default function index() {
     const {user} = useUser(); 
     const FirstName = user.firstName.charAt(0).toUpperCase()
     const navigate = useNavigate(); 
+    const [isOpen, setOpen] = useState(); 
 
     const handleUserDelete = () => {
         user?.delete()
@@ -24,10 +33,7 @@ export default function index() {
 
     return (
    <>
-   <NavBar
-   submitClickFunction={() => navigate('/')}
-   />
- 
+  <NavBar/>
   <UserAvatar
    top={3}
    width={6}
@@ -53,7 +59,8 @@ export default function index() {
   <TextField
    disabled
    sx={{
-    width:'18rem'
+    width:'18rem',
+    border:'none'
    }}
    placeholder={`${user.emailAddresses}`}
    />
@@ -88,43 +95,100 @@ sx={{
     
 }}
 >
-<ActionButton
-Text={'Announcement'}
-/>
 
 <ActionButton
+Icon={shieldCheck}
 Text={'Terms & Privacy'}
 />
 
 <ActionButton
+Icon={feedBack}
 Text={'Give us feedback'}
 />
 </Box>
 
-<Divider
-sx={{
+<Typography
+onClick={() => setOpen(true)}
+ sx={{
     position:'absolute', 
-    width:'25rem',
-    left:'-2rem',
-    top:'25rem'
-}}
-/>
+    top:'22rem',
+    left:'1rem', 
+    color: '#4c4e4d', 
+    ":hover" : {
+        cursor:'pointer', 
+        color:'#252625',
+    }  
+ }}
+ >Delete account</Typography>
 
-<Button
-onClick={handleUserDelete}
-sx={{
-    backgroundColor:'#830e0a', 
-    position:'absolute', 
-    top:'28rem',
-    left:'6rem',
-    color:'white',
-    ":hover" : {backgroundColor:'#590907'} 
-}}
->
-    Delete Account
-</Button>
    </Box>
 
+
+  <Modal
+  open={isOpen}
+  >
+    <Box
+    sx={{
+        position:'absolute', 
+        backgroundColor:'white', 
+        width:'25rem', 
+        height:'23rem', 
+        left:'50rem',
+        top:'15rem', 
+        borderRadius:'1rem', 
+    }}
+    >
+       <Typography
+       sx={{
+        position:'absolute', 
+        left:'2rem',
+        top:'2rem',  
+        fontSize:'1.3rem', 
+       }}
+       >
+        Are your sure you want to delete your<br/> Account?
+       </Typography>
+
+       <Typography
+       sx={{
+        position:'absolute', 
+        left:'2rem',
+        top:'7rem',  
+        fontSize:'1rem', 
+        opacity:'.6'
+       }}
+       >
+        Deleting your account will remove all <br/>
+        information and data.  
+       </Typography>
+
+       <Button
+       onClick={handleUserDelete}
+       sx={{
+        position:'absolute', 
+        top:'15rem', 
+        left:'17rem', 
+        backgroundColor:'#f66e7a', 
+        color:'white', 
+        width:'6rem'
+       }}
+       >
+        Delete
+       </Button>
+
+       <Button
+       onClick={() => setOpen(false)}
+       sx={{
+        position:'absolute', 
+        top:'15rem', 
+        left:'12rem',
+        color: 'black',  
+       }}
+       >
+        Cancel
+       </Button>
+    </Box>
+  </Modal>
 
    </>
   )
