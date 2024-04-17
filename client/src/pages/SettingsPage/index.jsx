@@ -11,6 +11,7 @@ import {
     Typography, 
     Button,
     Modal, 
+    useMediaQuery
 
 } from "@mui/material";
 import {ActionButton} from "../../components";
@@ -19,12 +20,34 @@ import {
     shieldCheck, 
 } from "./assets";
 import { useState } from "react";
+import DeleteModal from "./DeleteModal";
 
 export default function index() {
     const {user} = useUser(); 
     const FirstName = user.firstName.charAt(0).toUpperCase()
     const navigate = useNavigate(); 
     const [isOpen, setOpen] = useState(); 
+    const isMobileScreen = useMediaQuery('(max-width:400px)');
+
+
+    const DesktopDeleteAccountModal = {
+      position:'absolute', 
+      backgroundColor:'white', 
+      width:'25rem', 
+      height:'23rem', 
+      left:'50rem',
+      top:'15rem', 
+      borderRadius:'1rem', 
+    }
+
+   const MobileDeleteAccountModal = {
+      position:'absolute', 
+      backgroundColor:'white', 
+      width:'25rem', 
+      height:'23rem', 
+      top:'10rem', 
+      borderRadius:'1rem', 
+   }
 
     const handleUserDelete = () => {
         user?.delete()
@@ -122,74 +145,23 @@ onClick={() => setOpen(true)}
  >Delete account</Typography>
 
    </Box>
-
-
-  <Modal
-  open={isOpen}
-  >
-    <Box
-    sx={{
-        position:'absolute', 
-        backgroundColor:'white', 
-        width:'25rem', 
-        height:'23rem', 
-        left:'50rem',
-        top:'15rem', 
-        borderRadius:'1rem', 
-    }}
-    >
-       <Typography
-       sx={{
-        position:'absolute', 
-        left:'2rem',
-        top:'2rem',  
-        fontSize:'1.3rem', 
-       }}
-       >
-        Are your sure you want to delete your<br/> Account?
-       </Typography>
-
-       <Typography
-       sx={{
-        position:'absolute', 
-        left:'2rem',
-        top:'7rem',  
-        fontSize:'1rem', 
-        opacity:'.6'
-       }}
-       >
-        Deleting your account will remove all <br/>
-        information and data.  
-       </Typography>
-
-       <Button
-       onClick={handleUserDelete}
-       sx={{
-        position:'absolute', 
-        top:'15rem', 
-        left:'17rem', 
-        backgroundColor:'#f66e7a', 
-        color:'white', 
-        width:'6rem'
-       }}
-       >
-        Delete
-       </Button>
-
-       <Button
-       onClick={() => setOpen(false)}
-       sx={{
-        position:'absolute', 
-        top:'15rem', 
-        left:'12rem',
-        color: 'black',  
-       }}
-       >
-        Cancel
-       </Button>
-    </Box>
-  </Modal>
-
+{ 
+isMobileScreen ?
+<DeleteModal
+  isOpen={isOpen}
+  setOpen={setOpen}
+  userDeleteFunction={handleUserDelete}
+  inlineStyle={MobileDeleteAccountModal}
+   />
+  :
+  
+  <DeleteModal
+  isOpen={isOpen}
+  setOpen={setOpen}
+  userDeleteFunction={handleUserDelete}
+  inlineStyle={DesktopDeleteAccountModal}
+   />
+  }
    </>
   )
 }
