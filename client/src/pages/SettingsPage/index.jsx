@@ -49,6 +49,17 @@ export default function index() {
       borderRadius:'1rem', 
    }
 
+   const UserAvatarStyle = {
+    ':hover' : {cursor:'pointer'}, 
+    color:'white', 
+    backgroundColor:'orange', 
+    top:'3rem',
+    width:'6rem',
+    height:'6rem',
+    fontSize:'2rem',
+    left:'8rem',
+   }
+
     const handleUserDelete = () => {
         user?.delete()
         navigate('/')
@@ -58,11 +69,7 @@ export default function index() {
    <>
   <NavBar/>
   <UserAvatar
-   top={3}
-   width={6}
-   height={6}
-   fontSize={2}
-   left={8}
+  inlineStyle={UserAvatarStyle}
    Text={FirstName}
    />
  

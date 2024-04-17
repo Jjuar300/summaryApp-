@@ -36,12 +36,23 @@ import {useNavigate} from 'react-router-dom'
     }
 
     const open = Boolean(anchorEl)
+    const userAvatarStyle = {
+      position:'relative', 
+      backgroundColor:'orange', 
+      top:'2rem', 
+      left:'2rem', 
+      width:'3rem',
+      height:'3rem',
+      fontSize:'1.4rem',   
+    } 
 
     return (
      <>      
       <UserAvatar
+      
       Text={FirstName}
       submitOnClickFunction={handleClick}
+      inlineStyle={userAvatarStyle}
       />
       <Popover
       open={open}

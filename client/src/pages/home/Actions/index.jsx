@@ -6,8 +6,8 @@ export default function index() {
   return (
     <>
       <ActionButton
-    Icon={SearchIcon}
-    Text={'Search'}
+    // Icon={SearchIcon}
+    Text={'Browse space'}
     />
     </>
   )

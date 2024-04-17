@@ -1,11 +1,14 @@
 .search{
     display: flex;
-    /* position: absolute; */
-    top: 8rem;
-    left: 1rem;
+    position: absolute;
+    top: 10rem;
+    left: -1rem;
     gap: 1rem;
     padding: .5rem;
     width: 13rem;
+    padding-left: 5rem;
+    padding-right: 4rem;
+    padding-left: 3rem;
     transition: background-color .1s linear;
     }
     
@@ -16,12 +19,14 @@
     
     .blueBack{
         display: flex;
-        /* position: absolute; */
-        top: 8rem;
-        left: 1rem;
+        position: absolute;
+        top: 10rem;
+        left: -1rem;
         gap: 1rem;
         padding: .5rem;
-        width: 13rem;
+        width: 20rem;
+        padding-right: 4rem;
+        padding-left: 3rem;
         background-color: rgb(229, 229, 239); 
         transition: background-color .2s linear;
     }

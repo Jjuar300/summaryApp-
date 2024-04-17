@@ -17,12 +17,9 @@ export default function ActionButton({
   onClick={() => setClassName('blueBack')}
   className={`${className}`}
   >
-  <img
-     src={`${Icon}`} 
-    />
     <Typography
     sx={{
-      fontSize:'1.3rem'
+      fontSize:'1.2rem'
     }}
     >{Text}</Typography>
   </div>
