@@ -14,7 +14,6 @@ import {
     useMediaQuery
 
 } from "@mui/material";
-import {ActionButton} from "../../components";
 import { 
     feedBack, 
     shieldCheck, 
@@ -126,15 +125,6 @@ sx={{
 }}
 >
 
-<ActionButton
-Icon={shieldCheck}
-Text={'Terms & Privacy'}
-/>
-
-<ActionButton
-Icon={feedBack}
-Text={'Give us feedback'}
-/>
 </Box>
 
 <Typography

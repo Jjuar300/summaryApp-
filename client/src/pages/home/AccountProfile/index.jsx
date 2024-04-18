@@ -19,6 +19,7 @@ import {
 } from './assets'
 
 import {useNavigate} from 'react-router-dom'
+import {useMediaQuery} from '@mui/material';
 
   export default function Index() {
 
@@ -26,6 +27,7 @@ import {useNavigate} from 'react-router-dom'
     const FirstName = user.firstName.charAt(0).toUpperCase()
     const [anchorEl, setAnchorEl] = useState(null); 
     const navigate = useNavigate(); 
+    const isMobileScreen = useMediaQuery('(max-width:400px)');
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -44,7 +46,18 @@ import {useNavigate} from 'react-router-dom'
       width:'3rem',
       height:'3rem',
       fontSize:'1.4rem',   
+      cursor:'pointer', 
     } 
+
+    const mobileUserAvatarStyle  = {
+      position:'relative', 
+      backgroundColor:'orange', 
+      top:'2rem', 
+      left:'2rem', 
+      width:'3rem',
+      height:'3rem',
+      fontSize:'1.4rem',   
+    }
 
     return (
      <>      
@@ -52,7 +65,7 @@ import {useNavigate} from 'react-router-dom'
       
       Text={FirstName}
       submitOnClickFunction={handleClick}
-      inlineStyle={userAvatarStyle}
+      inlineStyle={isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle}
       />
       <Popover
       open={open}
