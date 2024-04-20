@@ -172,6 +172,7 @@ isText={true}
   :
   
   <DeleteModal
+  isText={true}
   textQuestion={
     'Are your sure you want to delete your Account?'
    }

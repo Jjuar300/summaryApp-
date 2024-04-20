@@ -4,27 +4,49 @@ import {useMediaQuery} from '@mui/material'
 import addcircle from './assets/addcircle.svg'
 import { Space } from '../../../components'
 import SpaceModal from '../../../components/Modal'
+import { 
+  handleInputValue, 
+  handleClonedSpace, 
+} from '../../../Redux/createSpace'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function index() {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [isBrowserClicked, setBrowserClicked] = useState(false); 
   const [isSpaceClicked, setSpaceClicked] = useState(false)
   const [isOpenModal, setOpenModal] = useState(false)
+  const inputText = useSelector(state => state.createSpace.inputValue)
+  const newSpace = useSelector(state => state.createSpace.cloneSpace)
+
+  const dispatch = useDispatch()
+
+  console.log(inputText)
 
 const [clonedComponent, setCLonedComponent] = useState([]); 
+
+console.log(clonedComponent)
+console.log(clonedComponent[0]?.props?.text)
 
 const handleButtonClicked = () => {
   const newIndex = clonedComponent.length + 1; 
   setCLonedComponent([...clonedComponent, 
   <Space 
   setState={setSpaceClicked}
-  text={'hello'} 
+  text={inputText} 
   inlineStyle={cloneSpaceStyle}
   key={newIndex} 
   index={newIndex}/>])
   setSpaceClicked(true)
   setOpenModal(true)
   
+}
+
+const handleCloseSave = () => {
+  setOpenModal(false)
+}
+
+const handleChange = (e) => {
+  dispatch(handleInputValue(e.target.value))
 }
 
   const BrowseStyle = {
@@ -130,6 +152,8 @@ const rightButtonStyle = {
     />
 
      <SpaceModal
+     onClick={handleCloseSave}
+     onChange={handleChange}
      rightButtonStyle={rightButtonStyle}
      textQuestion={'Create a new Space'}
      isText={true}
@@ -142,6 +166,8 @@ const rightButtonStyle = {
      inlineStyle={MobileSpaceModal}
      />
 
+     {/* <h1>name: {inputText}</h1> */}
+       {clonedComponent}
     </>
   )
 }

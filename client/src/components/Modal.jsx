@@ -19,7 +19,9 @@ export default function DeleteModal({
     isInput, 
     inputStyle, 
     rightButtonStyle, 
+    onChange, 
 }) {
+
   return (
     <>
         <Modal
@@ -67,6 +69,7 @@ export default function DeleteModal({
         isInput 
         ?
         <TextField
+        onChange={onChange}
          sx={inputStyle}
         />
       : 

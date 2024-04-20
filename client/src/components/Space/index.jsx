@@ -19,7 +19,9 @@ export default function index({
     onClick={onClick}
     sx={inlineStyle}
     >
-      {text}
+     <Typography>
+     {text}
+     </Typography>
 
    { 
    
