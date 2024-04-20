@@ -13,12 +13,20 @@ const [clonedComponent, setCLonedComponent] = useState([]);
 
 const handleButtonClicked = () => {
   const newIndex = clonedComponent.length + 1; 
-  setCLonedComponent([...clonedComponent, <Space text={'hello'} key={newIndex} index={newIndex}/>])
+  setCLonedComponent([...clonedComponent, 
+  <Space 
+  setState={setSpaceClicked}
+  text={'hello'} 
+  inlineStyle={cloneSpaceStyle}
+  key={newIndex} 
+  index={newIndex}/>])
+  setSpaceClicked(true)
+  
 }
 
   const BrowseStyle = {
     display:'flex',  
-    position: 'absolute', 
+    position: 'relative', 
     top:'8rem', 
     left:'-.2rem', 
     ':hover' : {
@@ -38,8 +46,26 @@ const handleButtonClicked = () => {
 
  const createSpaceStyle = {
   display:'flex',  
-  position: 'absolute', 
-  top:'13rem', 
+  position: 'relative', 
+  top:'10rem', 
+  left:'-.2rem', 
+  ':hover' : {
+    cursor:'pointer', 
+    background:'#fefefe', 
+  }, 
+  width:'10rem',
+  padding:'.5rem',
+  paddingRight: isMobileScreen ? '11.4rem' : '3rem',
+  paddingLeft: '3rem', 
+  transition:'background .2s ease-in-out',
+  opacity: '.6', 
+  fontSize:'1.2rem', 
+}
+
+const cloneSpaceStyle = {
+  display:'flex',  
+  position: 'relative', 
+  top:'10rem', 
   left:'-.2rem', 
   ':hover' : {
     cursor:'pointer', 
@@ -56,14 +82,9 @@ const handleButtonClicked = () => {
   borderRight: isSpaceClicked ? '3px solid gray' : null, 
 }
 
+
   return (
     <>
- <Button
- onClick={handleButtonClicked}
- >
-  Clone
- </Button>
-   {clonedComponent}
 
    <Space
    isIcon={false}
@@ -73,12 +94,17 @@ const handleButtonClicked = () => {
    />
   
     <Space
+    onClick={handleButtonClicked}
     isIcon={true}
     icon={addcircle}
     text={'Create space'}
-    setState={setSpaceClicked}
     inlineStyle={createSpaceStyle}
     />
+
+
+  
+      {clonedComponent}
+
     </>
   )
 }

@@ -9,7 +9,11 @@ export default function DeleteModal({
     isOpen,
     setOpen, 
     userDeleteFunction,   
-    inlineStyle, 
+    inlineStyle,
+    textQuestion,
+    textInformation,
+    textLeftButton, 
+    textRightButton,    
 }) {
   return (
     <>
@@ -27,7 +31,7 @@ export default function DeleteModal({
         fontSize:'1.3rem', 
        }}
        >
-        Are your sure you want to delete your<br/> Account?
+       {textQuestion}
        </Typography>
 
        <Typography
@@ -39,8 +43,7 @@ export default function DeleteModal({
         opacity:'.6'
        }}
        >
-        Deleting your account will remove all <br/>
-        information and data.  
+       {textInformation}
        </Typography>
 
        <Button
@@ -54,7 +57,7 @@ export default function DeleteModal({
         width:'6rem'
        }}
        >
-        Delete
+        {textRightButton}
        </Button>
 
        <Button
@@ -66,7 +69,7 @@ export default function DeleteModal({
         color: 'black',  
        }}
        >
-        Cancel
+        {textLeftButton}
        </Button>
     </Box>
   </Modal>

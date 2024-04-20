@@ -10,12 +10,13 @@ export default function index({
     icon, 
     isIcon, 
     inlineStyle, 
+    onClick,
 }) {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
 
   return (
     <Box
-    onClick={() => setState(true)}
+    onClick={onClick}
     sx={inlineStyle}
     >
       {text}

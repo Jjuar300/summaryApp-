@@ -19,7 +19,7 @@ import {
     shieldCheck, 
 } from "./assets";
 import { useState } from "react";
-import DeleteModal from "./DeleteModal";
+import DeleteModal from "../../components/Modal";
 
 export default function index() {
     const {user} = useUser(); 
@@ -145,6 +145,14 @@ onClick={() => setOpen(true)}
 { 
 isMobileScreen ?
 <DeleteModal
+ textQuestion={
+  'Are your sure you want to delete your Account?'
+ }
+ textInformation={
+  'Deleting your account will remove all information and data. '
+ }
+  textLeftButton={'Cancel'}
+  textRightButton={'Delete'}
   isOpen={isOpen}
   setOpen={setOpen}
   userDeleteFunction={handleUserDelete}
@@ -153,6 +161,14 @@ isMobileScreen ?
   :
   
   <DeleteModal
+  textQuestion={
+    'Are your sure you want to delete your Account?'
+   }
+   textInformation={
+    'Deleting your account will remove all information and data. '
+   }
+    textLeftButton={'Cancel'}
+    textRightButton={'Delete'}
   isOpen={isOpen}
   setOpen={setOpen}
   userDeleteFunction={handleUserDelete}
