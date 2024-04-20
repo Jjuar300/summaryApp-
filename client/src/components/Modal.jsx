@@ -2,18 +2,23 @@ import {
     Box, 
     Button,
     Typography, 
-    Modal, 
+    Modal,
+    TextField, 
 } from "@mui/material"
 
 export default function DeleteModal({
     isOpen,
     setOpen, 
-    userDeleteFunction,   
+    onClick,   
     inlineStyle,
     textQuestion,
     textInformation,
     textLeftButton, 
     textRightButton,    
+    isText, 
+    isInput, 
+    inputStyle, 
+    rightButtonStyle, 
 }) {
   return (
     <>
@@ -23,7 +28,10 @@ export default function DeleteModal({
     <Box
     sx={inlineStyle}
     >
-       <Typography
+      {
+      isText 
+      ?
+      <Typography
        sx={{
         position:'absolute', 
         left:'2rem',
@@ -33,8 +41,14 @@ export default function DeleteModal({
        >
        {textQuestion}
        </Typography>
+      : 
+      null 
+      }
 
-       <Typography
+     {  
+     isText 
+     ? 
+     <Typography
        sx={{
         position:'absolute', 
         left:'2rem',
@@ -45,17 +59,23 @@ export default function DeleteModal({
        >
        {textInformation}
        </Typography>
+       : 
+       null
+       }
+
+      {
+        isInput 
+        ?
+        <TextField
+         sx={inputStyle}
+        />
+      : 
+      null
+    }
 
        <Button
-       onClick={userDeleteFunction}
-       sx={{
-        position:'absolute', 
-        top:'15rem', 
-        left:'17rem', 
-        backgroundColor:'#f66e7a', 
-        color:'white', 
-        width:'6rem'
-       }}
+       onClick={onClick}
+       sx={rightButtonStyle}
        >
         {textRightButton}
        </Button>

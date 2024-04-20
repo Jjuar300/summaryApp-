@@ -3,11 +3,13 @@ import { Box, Button, Typography } from '@mui/material'
 import {useMediaQuery} from '@mui/material'
 import addcircle from './assets/addcircle.svg'
 import { Space } from '../../../components'
+import SpaceModal from '../../../components/Modal'
 
 export default function index() {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [isBrowserClicked, setBrowserClicked] = useState(false); 
   const [isSpaceClicked, setSpaceClicked] = useState(false)
+  const [isOpenModal, setOpenModal] = useState(false)
 
 const [clonedComponent, setCLonedComponent] = useState([]); 
 
@@ -21,6 +23,7 @@ const handleButtonClicked = () => {
   key={newIndex} 
   index={newIndex}/>])
   setSpaceClicked(true)
+  setOpenModal(true)
   
 }
 
@@ -83,6 +86,31 @@ const cloneSpaceStyle = {
 }
 
 
+const MobileSpaceModal = {
+  position:'absolute', 
+  backgroundColor:'white', 
+  width:'25rem', 
+  height:'23rem', 
+  top:'10rem', 
+  borderRadius:'1rem', 
+}
+
+
+const textFieldStyle = {
+  position:'absolute', 
+  top:'6rem', 
+  left:'2rem', 
+  width:'20rem', 
+}
+
+const rightButtonStyle = {
+  position:'absolute', 
+  top:'15rem', 
+  left:'17rem', 
+  backgroundColor:'#47046e', 
+  color:'white', 
+  width:'6rem'
+ }
   return (
     <>
 
@@ -101,9 +129,18 @@ const cloneSpaceStyle = {
     inlineStyle={createSpaceStyle}
     />
 
-
-  
-      {clonedComponent}
+     <SpaceModal
+     rightButtonStyle={rightButtonStyle}
+     textQuestion={'Create a new Space'}
+     isText={true}
+     inputStyle={textFieldStyle}
+     isInput={true}
+     isOpen={isOpenModal}
+     textLeftButton={'Cancel'}
+     textRightButton={'Save'}
+     setOpen={setOpenModal}
+     inlineStyle={MobileSpaceModal}
+     />
 
     </>
   )

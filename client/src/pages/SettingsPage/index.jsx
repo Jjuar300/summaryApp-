@@ -64,6 +64,15 @@ export default function index() {
         navigate('/')
     }
 
+  const rightButtonStyle = {
+    position:'absolute', 
+    top:'15rem', 
+    left:'17rem', 
+    backgroundColor:'#f66e7a', 
+    color:'white', 
+    width:'6rem'
+   }
+
     return (
    <>
   <NavBar/>
@@ -145,6 +154,7 @@ onClick={() => setOpen(true)}
 { 
 isMobileScreen ?
 <DeleteModal
+isText={true}
  textQuestion={
   'Are your sure you want to delete your Account?'
  }
@@ -155,8 +165,9 @@ isMobileScreen ?
   textRightButton={'Delete'}
   isOpen={isOpen}
   setOpen={setOpen}
-  userDeleteFunction={handleUserDelete}
+  onClick={handleUserDelete}
   inlineStyle={MobileDeleteAccountModal}
+  rightButtonStyle={rightButtonStyle}
    />
   :
   
@@ -171,8 +182,9 @@ isMobileScreen ?
     textRightButton={'Delete'}
   isOpen={isOpen}
   setOpen={setOpen}
-  userDeleteFunction={handleUserDelete}
+  onClick={handleUserDelete}
   inlineStyle={DesktopDeleteAccountModal}
+  rightButtonStyle={rightButtonStyle}
    />
   }
    </>
