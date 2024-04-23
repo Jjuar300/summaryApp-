@@ -199,9 +199,9 @@ const rightButtonStyle = {
        {clonedComponent.map((data) => (
          <Space 
          key={data?.key}
-         setState={data?.setState}
+         setState={setSpaceClicked}
          text={data?.text} 
-         inlineStyle={data?.style}
+         inlineStyle={cloneSpaceStyle}
          />
        ))}
      
