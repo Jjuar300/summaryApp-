@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import {useMediaQuery} from '@mui/material'
 import addcircle from './assets/addcircle.svg'
@@ -6,7 +6,6 @@ import { Space } from '../../../components'
 import SpaceModal from '../../../components/Modal'
 import { 
   handleInputValue, 
-  handleClonedSpace, 
 } from '../../../Redux/createSpace'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -15,38 +14,51 @@ export default function index() {
   const [isBrowserClicked, setBrowserClicked] = useState(false); 
   const [isSpaceClicked, setSpaceClicked] = useState(false)
   const [isOpenModal, setOpenModal] = useState(false)
-  const inputText = useSelector(state => state.createSpace.inputValue)
-  const newSpace = useSelector(state => state.createSpace.cloneSpace)
+ const [text, setText] = useState('')
 
   const dispatch = useDispatch()
 
-  console.log(inputText)
-
 const [clonedComponent, setCLonedComponent] = useState([]); 
+const [spaces, setSpaces] = useState([])
 
 console.log(clonedComponent)
-console.log(clonedComponent[0]?.props?.text)
+console.log(text)
 
 const handleButtonClicked = () => {
-  const newIndex = clonedComponent.length + 1; 
-  setCLonedComponent([...clonedComponent, 
-  <Space 
-  setState={setSpaceClicked}
-  text={inputText} 
-  inlineStyle={cloneSpaceStyle}
-  key={newIndex} 
-  index={newIndex}/>])
   setSpaceClicked(true)
   setOpenModal(true)
-  
 }
 
+
+useEffect(() => {
+   localStorage.setItem('text', text)
+},[text])
+
+useEffect(() => {
+  const itemText = window.localStorage.getItem('text')
+   if(itemText !== null){
+    setText(itemText)
+   }
+}, [])
+
+
 const handleCloseSave = () => {
+  const newIndex = clonedComponent.length + 1; 
+  setCLonedComponent([...clonedComponent, 
+   {
+    text: text, 
+    key:newIndex, 
+    setState: setSpaceClicked, 
+    style: cloneSpaceStyle, 
+   }
+])
+
   setOpenModal(false)
+  setText('')
 }
 
 const handleChange = (e) => {
-  dispatch(handleInputValue(e.target.value))
+  setText(e.target.value)
 }
 
   const BrowseStyle = {
@@ -117,7 +129,6 @@ const MobileSpaceModal = {
   borderRadius:'1rem', 
 }
 
-
 const textFieldStyle = {
   position:'absolute', 
   top:'6rem', 
@@ -133,6 +144,25 @@ const rightButtonStyle = {
   color:'white', 
   width:'6rem'
  }
+
+ const array = [
+  {
+    text: 'books', 
+    setState: setSpaceClicked, 
+    style: cloneSpaceStyle, 
+  }, 
+  {
+    text: 'Taxes', 
+    setState: setSpaceClicked, 
+    style: cloneSpaceStyle, 
+  }, 
+  {
+    text: 'Tech', 
+    setState: setSpaceClicked, 
+    style: cloneSpaceStyle, 
+  }, 
+ ]
+
   return (
     <>
 
@@ -166,8 +196,15 @@ const rightButtonStyle = {
      inlineStyle={MobileSpaceModal}
      />
 
-     {/* <h1>name: {inputText}</h1> */}
-       {clonedComponent}
+       {clonedComponent.map((data) => (
+         <Space 
+         key={data?.key}
+         setState={data?.setState}
+         text={data?.text} 
+         inlineStyle={data?.style}
+         />
+       ))}
+     
     </>
   )
 }

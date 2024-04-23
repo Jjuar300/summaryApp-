@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jjuar300/summaryApp-.git"
+  },
+  "author": "Jose Juarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jjuar300/summaryApp-/issues"
+  },
+  "homepage": "https://github.com/Jjuar300/summaryApp-#readme"
+}
