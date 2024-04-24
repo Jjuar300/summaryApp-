@@ -41,18 +41,34 @@ useEffect(() => {
    }
 }, [])
 
+const handleSpaceTextSubmit = async (e) => {
+   e?.preventDefault(); 
+   try{
+       await fetch('http://localhost:3004/getspacetext', {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json', 
+        }, 
+        body: JSON.stringify({text: text}), 
+       },)
+
+   }catch(error){
+    console.log(error); 
+   } 
+}
 
 const handleCloseSave = () => {
-  const newIndex = clonedComponent.length + 1; 
-  setCLonedComponent([...clonedComponent, 
-   {
-    text: text, 
-    key:newIndex, 
-    setState: setSpaceClicked, 
-    style: cloneSpaceStyle, 
-   }
-])
+//   const newIndex = clonedComponent.length + 1; 
+//   setCLonedComponent([...clonedComponent, 
+//    {
+//     text: text, 
+//     key:newIndex, 
+//     setState: setSpaceClicked, 
+//     style: cloneSpaceStyle, 
+//    }
+// ])
 
+  handleSpaceTextSubmit(); 
   setOpenModal(false)
   setText('')
 }
