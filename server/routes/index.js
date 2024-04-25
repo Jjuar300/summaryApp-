@@ -5,6 +5,7 @@ const {
     Space
 } = require('../controllers/index'); 
 
-router.post('/getspacetext', Space.getSpaceText)
+router.post('/postspacetext', Space.postSpaceText)
+router.get('/getspacetext', Space.getSpaceText)
 
 module.exports = router; 

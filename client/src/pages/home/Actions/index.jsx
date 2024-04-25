@@ -19,10 +19,11 @@ export default function index() {
   const dispatch = useDispatch()
 
 const [clonedComponent, setCLonedComponent] = useState([]); 
-const [spaces, setSpaces] = useState([])
+const [spaces, setSpaces] = useState({})
 
 console.log(clonedComponent)
 console.log(text)
+console.log(Object.keys(spaces))
 
 const handleButtonClicked = () => {
   setSpaceClicked(true)
@@ -44,7 +45,7 @@ useEffect(() => {
 const handleSpaceTextSubmit = async (e) => {
    e?.preventDefault(); 
    try{
-       await fetch('http://localhost:3004/getspacetext', {
+       await fetch('http://localhost:3004/postspacetext', {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json', 
@@ -56,6 +57,18 @@ const handleSpaceTextSubmit = async (e) => {
     console.log(error); 
    } 
 }
+
+useEffect(() => {
+
+  fetch('http://localhost:3004/getspacetext', {
+    method: 'GET', 
+    headers: {
+      'Content-Type' : 'application/json', 
+    }
+   })
+    .then((data) => setSpaces(data))
+    .catch((error) => console.error('Error fetching data:', error))
+}, [])
 
 const handleCloseSave = () => {
 //   const newIndex = clonedComponent.length + 1; 
@@ -212,11 +225,11 @@ const rightButtonStyle = {
      inlineStyle={MobileSpaceModal}
      />
 
-       {clonedComponent.map((data) => (
+       {Object.keys(spaces).map((data) => (
          <Space 
-         key={data?.key}
+         key={data?.id}
          setState={setSpaceClicked}
-         text={data?.text} 
+         text={data?.Text} 
          inlineStyle={cloneSpaceStyle}
          />
        ))}

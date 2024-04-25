@@ -1,6 +1,6 @@
 const {spaces} = require('../../Models/index')
 
-const getSpaceText = async(req, res) => {
+const postSpaceText = async(req, res) => {
   try{
     const {
         text, 
@@ -15,6 +15,17 @@ const getSpaceText = async(req, res) => {
   }
 }; 
 
+const getSpaceText = async (req, res) => {
+  try{
+   const spaceTextData = await spaces.find({}); 
+   res.json(spaceTextData); 
+  }catch(error){
+    console.error('Error occured while fetching data from mongodb:', error)
+    res.status(500).json({error: 'Internal server error'})
+  }
+}
+
 module.exports = {
+    postSpaceText, 
     getSpaceText, 
 }; 
