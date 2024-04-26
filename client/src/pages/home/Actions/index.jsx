@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import {useMediaQuery} from '@mui/material'
-import addcircle from './assets/addcircle.svg'
+import { 
+  addcircle, 
+  dragIndicator, 
+} from './assets'
 import { Space } from '../../../components'
 import SpaceModal from '../../../components/Modal'
 import { 
@@ -19,14 +22,13 @@ export default function index() {
   const dispatch = useDispatch()
 
 const [clonedComponent, setCLonedComponent] = useState([]); 
-const [spaces, setSpaces] = useState({})
+const [spaces, setSpaces] = useState([])
 
 console.log(clonedComponent)
 console.log(text)
-console.log(Object.keys(spaces))
+console.log(spaces)
 
 const handleButtonClicked = () => {
-  setSpaceClicked(true)
   setOpenModal(true)
 }
 
@@ -66,6 +68,7 @@ useEffect(() => {
       'Content-Type' : 'application/json', 
     }
    })
+    .then((response) => response.json())
     .then((data) => setSpaces(data))
     .catch((error) => console.error('Error fetching data:', error))
 }, [])
@@ -144,7 +147,7 @@ const cloneSpaceStyle = {
   transition:'background .2s ease-in-out',
   opacity: '.6', 
   fontSize:'1.2rem',
-  backgroundColor: isSpaceClicked ? '#fefefe' : null, 
+  backgroundColor: isSpaceClicked ? '#fefefe' : 'null', 
   borderRight: isSpaceClicked ? '3px solid gray' : null, 
 }
 
@@ -204,8 +207,8 @@ const rightButtonStyle = {
   
     <Space
     onClick={handleButtonClicked}
-    isIcon={true}
-    icon={addcircle}
+    isCreateSpaceIcon={true}
+    CreateSpaceIcon={addcircle}
     text={'Create space'}
     inlineStyle={createSpaceStyle}
     />
@@ -225,12 +228,14 @@ const rightButtonStyle = {
      inlineStyle={MobileSpaceModal}
      />
 
-       {Object.keys(spaces).map((data) => (
+       {spaces.map((data) => (
          <Space 
          key={data?.id}
-         setState={setSpaceClicked}
+         onClick={setSpaceClicked}
          text={data?.Text} 
          inlineStyle={cloneSpaceStyle}
+         isSpaceIcon={true}
+         rightSpaceIcon={dragIndicator}
          />
        ))}
      

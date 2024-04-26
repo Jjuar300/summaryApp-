@@ -5,10 +5,12 @@ import {
 import {useMediaQuery} from "@mui/material"
 
 export default function index({
-    setState, 
     text, 
-    icon, 
-    isIcon, 
+    CreateSpaceIcon,
+    isSpaceIcon, 
+    leftSpaceIcon, 
+    rightSpaceIcon,   
+    isCreateSpaceIcon, 
     inlineStyle, 
     onClick,
 }) {
@@ -25,7 +27,7 @@ export default function index({
 
    { 
    
-   isIcon ? 
+   isCreateSpaceIcon ? 
 
    <Box
     sx={{
@@ -34,11 +36,29 @@ export default function index({
     }}
     >
     <img
-     src={`${icon}`}
+     src={`${CreateSpaceIcon}`}
      />
+
     </Box>
   : null  
   }
+
+ {
+  isSpaceIcon ? 
+  <Box
+  sx={{
+    position:'relative', 
+    left: isMobileScreen ? '13rem' : '4rem',  
+    width:'2rem'
+  }}
+  >
+  <img
+   src={`${rightSpaceIcon}`}
+   />
+
+  </Box>
+  : null
+ }
 
     </Box>
   )
