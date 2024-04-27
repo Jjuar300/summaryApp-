@@ -32,7 +32,7 @@ export default function index({
    <Box
     sx={{
       position:'relative', 
-      left: isMobileScreen ? '13rem' : '4rem', 
+      left: isMobileScreen ? '13rem' : '6rem', 
     }}
     >
     <img
@@ -47,9 +47,10 @@ export default function index({
   isSpaceIcon ? 
   <Box
   sx={{
-    position:'relative', 
-    left: isMobileScreen ? '13rem' : '4rem',  
-    width:'2rem'
+    position:'absolute', 
+    display:'flex',
+    left: isMobileScreen ? '22.5rem' : '14rem',
+    height:'1rem',
   }}
   >
   <img
@@ -59,6 +60,25 @@ export default function index({
   </Box>
   : null
  }
+
+{
+  isSpaceIcon ? 
+  <Box
+  sx={{
+    position:'absolute', 
+    display:'flex',
+    left: isMobileScreen ? '2.5rem' : '1.4rem',
+    height:'1rem',
+  }}
+  >
+  <img
+   src={`${leftSpaceIcon}`}
+   />
+
+  </Box>
+  : null
+ }
+
 
     </Box>
   )

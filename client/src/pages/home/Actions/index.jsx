@@ -4,6 +4,7 @@ import {useMediaQuery} from '@mui/material'
 import { 
   addcircle, 
   dragIndicator, 
+  noteCards, 
 } from './assets'
 import { Space } from '../../../components'
 import SpaceModal from '../../../components/Modal'
@@ -71,7 +72,7 @@ useEffect(() => {
     .then((response) => response.json())
     .then((data) => setSpaces(data))
     .catch((error) => console.error('Error fetching data:', error))
-}, [])
+}, [spaces])
 
 const handleCloseSave = () => {
 //   const newIndex = clonedComponent.length + 1; 
@@ -125,7 +126,7 @@ const handleChange = (e) => {
   width:'10rem',
   padding:'.5rem',
   paddingRight: isMobileScreen ? '11.4rem' : '3rem',
-  paddingLeft: '3rem', 
+  paddingLeft: isMobileScreen ? '2.7rem' : '1.5rem', 
   transition:'background .2s ease-in-out',
   opacity: '.6', 
   fontSize:'1.2rem', 
@@ -143,7 +144,7 @@ const cloneSpaceStyle = {
   width:'10rem',
   padding:'.5rem',
   paddingRight: isMobileScreen ? '11.4rem' : '3rem',
-  paddingLeft: '3rem', 
+  paddingLeft: isMobileScreen ? '4rem' : '3rem' , 
   transition:'background .2s ease-in-out',
   opacity: '.6', 
   fontSize:'1.2rem',
@@ -236,6 +237,7 @@ const rightButtonStyle = {
          inlineStyle={cloneSpaceStyle}
          isSpaceIcon={true}
          rightSpaceIcon={dragIndicator}
+         leftSpaceIcon={noteCards}
          />
        ))}
      
