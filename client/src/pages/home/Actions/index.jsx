@@ -22,28 +22,14 @@ export default function index() {
 
   const dispatch = useDispatch()
 
-const [clonedComponent, setCLonedComponent] = useState([]); 
 const [spaces, setSpaces] = useState([])
 
-console.log(clonedComponent)
 console.log(text)
 console.log(spaces)
 
 const handleButtonClicked = () => {
   setOpenModal(true)
 }
-
-
-useEffect(() => {
-   localStorage.setItem('text', text)
-},[text])
-
-useEffect(() => {
-  const itemText = window.localStorage.getItem('text')
-   if(itemText !== null){
-    setText(itemText)
-   }
-}, [])
 
 const handleSpaceTextSubmit = async (e) => {
    e?.preventDefault(); 
@@ -61,29 +47,26 @@ const handleSpaceTextSubmit = async (e) => {
    } 
 }
 
-useEffect(() => {
 
-  fetch('http://localhost:3004/getspacetext', {
-    method: 'GET', 
-    headers: {
-      'Content-Type' : 'application/json', 
+useEffect(() => {
+   handleFetch(); 
+  },[])
+
+  const handleFetch = async () => {
+    try{
+     const response = await fetch('http://localhost:3004/getspacetext')
+         if(!response.ok){
+          throw new Error('Failed to fetch data')
+         }
+         const data  = await response.json(); 
+         setSpaces(data); 
+
+    }catch(error){
+      console.error('Error fetching:', error)
     }
-   })
-    .then((response) => response.json())
-    .then((data) => setSpaces(data))
-    .catch((error) => console.error('Error fetching data:', error))
-}, [spaces])
+  }
 
 const handleCloseSave = () => {
-//   const newIndex = clonedComponent.length + 1; 
-//   setCLonedComponent([...clonedComponent, 
-//    {
-//     text: text, 
-//     key:newIndex, 
-//     setState: setSpaceClicked, 
-//     style: cloneSpaceStyle, 
-//    }
-// ])
 
   handleSpaceTextSubmit(); 
   setOpenModal(false)

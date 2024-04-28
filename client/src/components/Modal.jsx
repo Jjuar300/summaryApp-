@@ -65,7 +65,10 @@ export default function DeleteModal({
        null
        }
 
-      {
+     <form
+     onSubmit={onClick}
+     >
+     {
         isInput 
         ?
         <TextField
@@ -77,11 +80,12 @@ export default function DeleteModal({
     }
 
        <Button
-       onClick={onClick}
+       type="submit"
        sx={rightButtonStyle}
        >
         {textRightButton}
        </Button>
+     </form>
 
        <Button
        onClick={() => setOpen(false)}
