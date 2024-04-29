@@ -6,4 +6,4 @@ export {
     fetchData, 
     postData, 
     updateData, 
-}
+}; 
