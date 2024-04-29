@@ -7,6 +7,7 @@ import {
   SignedInRoutes, 
   SignedOutRoutes, 
 } from './routes'
+import './App.css'
 
 function App() {
 

@@ -13,6 +13,7 @@ export default function index({
     isCreateSpaceIcon, 
     inlineStyle, 
     onClick,
+    rightSpaceIconClick, 
 }) {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
 
@@ -46,6 +47,7 @@ export default function index({
  {
   isSpaceIcon ? 
   <Box
+  onClick={rightSpaceIconClick}
   sx={{
     position:'absolute', 
     display:'flex',

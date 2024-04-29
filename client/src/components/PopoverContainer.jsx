@@ -7,28 +7,22 @@ export default function PopoverContainer({
     imageIcon, 
     text, 
     submitOnClick, 
+    boxStyle, 
+    buttonStyle, 
+    isIcon, 
 }) {
   return (
  <>
  <Box
-    sx={{
-        position:'relative', 
-        display:'flex', 
-        left:'1rem', 
-    }}
+    sx={boxStyle}
     >
-        <img
+       {isIcon && <img
         style={{width:'1.2rem'}}
         src={`${imageIcon}`}
-        />
+        />}
     <Button
      onClick={submitOnClick}
-        sx={{
-            fontSize:'1rem', 
-            color:'black', 
-            width:'10rem',
-            left:'-2rem',  
-        }}
+        sx={buttonStyle}
         >
             {text}
         </Button>

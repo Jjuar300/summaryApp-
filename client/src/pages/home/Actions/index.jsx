@@ -1,28 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
-import {useMediaQuery} from '@mui/material'
+
+import {
+  useMediaQuery, 
+  Popover,
+  Box,
+} from '@mui/material'
+import { Space } from '../../../components'
+import SpaceModal from '../../../components/Modal'
+
+import React, { 
+  useEffect, 
+  useState, 
+ } from 'react'
+
 import { 
   addcircle, 
   dragIndicator, 
-  noteCards, 
+  noteCards,
+  edit,  
+  deleteIcon, 
 } from './assets'
-import { Space } from '../../../components'
-import SpaceModal from '../../../components/Modal'
+
 import { 
-  handleInputValue, 
-} from '../../../Redux/createSpace'
-import { useSelector, useDispatch } from 'react-redux'
+  fetchData, 
+  postData, 
+} from '../../../utils'
+
+import {PopoverContainer} from '../../../components'
 
 export default function index() {
-  const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [isBrowserClicked, setBrowserClicked] = useState(false); 
   const [isSpaceClicked, setSpaceClicked] = useState(false)
   const [isOpenModal, setOpenModal] = useState(false)
- const [text, setText] = useState('')
+  const [text, setText] = useState('')
+  const [spaces, setSpaces] = useState([])
+  const isMobileScreen = useMediaQuery('(max-width:400px)');
+  const [anchorEl, setAnchorEl] = useState(null); 
+  const open = Boolean(anchorEl)
 
-  const dispatch = useDispatch()
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+}; 
 
-const [spaces, setSpaces] = useState([])
+const handleClose = () => {
+    setAnchorEl(null)
+}
 
 console.log(text)
 console.log(spaces)
@@ -33,41 +54,17 @@ const handleButtonClicked = () => {
 
 const handleSpaceTextSubmit = async (e) => {
    e?.preventDefault(); 
-   try{
-       await fetch('http://localhost:3004/postspacetext', {
-        method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json', 
-        }, 
-        body: JSON.stringify({text: text}), 
-       },)
-
-   }catch(error){
-    console.log(error); 
-   } 
+   postData('http://localhost:3004/postspacetext', {text: text})
 }
 
-
 useEffect(() => {
-   handleFetch(); 
+   fetchData(
+    'http://localhost:3004/getspacetext', 
+    setSpaces, 
+  ) 
   },[])
 
-  const handleFetch = async () => {
-    try{
-     const response = await fetch('http://localhost:3004/getspacetext')
-         if(!response.ok){
-          throw new Error('Failed to fetch data')
-         }
-         const data  = await response.json(); 
-         setSpaces(data); 
-
-    }catch(error){
-      console.error('Error fetching:', error)
-    }
-  }
-
 const handleCloseSave = () => {
-
   handleSpaceTextSubmit(); 
   setOpenModal(false)
   setText('')
@@ -77,7 +74,7 @@ const handleChange = (e) => {
   setText(e.target.value)
 }
 
-  const BrowseStyle = {
+const BrowseStyle = {
     display:'flex',  
     position: 'relative', 
     top:'8rem', 
@@ -161,26 +158,44 @@ const rightButtonStyle = {
   width:'6rem'
  }
 
- const array = [
-  {
-    text: 'books', 
-    setState: setSpaceClicked, 
-    style: cloneSpaceStyle, 
-  }, 
-  {
-    text: 'Taxes', 
-    setState: setSpaceClicked, 
-    style: cloneSpaceStyle, 
-  }, 
-  {
-    text: 'Tech', 
-    setState: setSpaceClicked, 
-    style: cloneSpaceStyle, 
-  }, 
- ]
+ const renameButtonStyle = {
+  color:'#747573',
+  textTransform: 'none'
+ }
+
+ const deleteButonStyle = {
+  color: '#ff6f82',
+  textTransform: 'none'
+ }
 
   return (
     <>
+  
+  <Popover
+    open={open}
+    anchorEl={anchorEl}
+    onClose={handleClose}
+    sx={{
+      display:'flex', 
+      flexDirection:'row', 
+      left:'-4rem', 
+      width:'22rem',
+      textTransform: ''
+    }}
+  > 
+ 
+
+
+ <PopoverContainer
+  text={'Rename'}
+  buttonStyle={renameButtonStyle}
+  />
+   <PopoverContainer
+  text={'Delete'}
+  buttonStyle={deleteButonStyle}
+  />
+
+  </Popover>
 
    <Space
    isIcon={false}
@@ -189,7 +204,7 @@ const rightButtonStyle = {
    inlineStyle={BrowseStyle}
    />
   
-    <Space
+     <Space
     onClick={handleButtonClicked}
     isCreateSpaceIcon={true}
     CreateSpaceIcon={addcircle}
@@ -216,13 +231,14 @@ const rightButtonStyle = {
          <Space 
          key={data?.id}
          onClick={setSpaceClicked}
-         text={data?.Text} 
+         text={data.Text} 
          inlineStyle={cloneSpaceStyle}
          isSpaceIcon={true}
          rightSpaceIcon={dragIndicator}
          leftSpaceIcon={noteCards}
+         rightSpaceIconClick={handleClick}
          />
-       ))}
+       ))} 
      
     </>
   )

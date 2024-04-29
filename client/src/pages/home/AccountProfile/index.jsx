@@ -59,6 +59,19 @@ import {useMediaQuery} from '@mui/material';
       fontSize:'1.4rem',   
     }
 
+   const boxStyle = {
+    position:'relative', 
+    display:'flex', 
+    left:'1rem', 
+}
+
+const buttonStyle = {
+  fontSize:'1rem', 
+  color:'black', 
+  width:'10rem',
+  left:'-2rem',  
+}
+
     return (
      <>      
       <UserAvatar
@@ -90,11 +103,17 @@ import {useMediaQuery} from '@mui/material';
        imageIcon={settings}
        text={'Settings'}
        submitOnClick={() => navigate('/settings')}
+       boxStyle={boxStyle}
+       buttonStyle={buttonStyle}
+       isIcon={true}
        />
 
        <PopoverContainer
        imageIcon={feedBack}
        text={'Feedback'}
+       boxStyle={boxStyle}
+       buttonStyle={buttonStyle}
+       isIcon={true}
        />
 
       <SignOutButton>
