@@ -77,8 +77,8 @@ const handleChange = (e) => {
 const BrowseStyle = {
     display:'flex',  
     position: 'relative', 
-    top:'8rem', 
-    left:'-.2rem', 
+    top: isMobileScreen ? '9rem' : '9rem', 
+    left: isMobileScreen ? '-.6rem' : '-1.6rem', 
     ':hover' : {
       cursor:'pointer', 
       background:'#fefefe', 
@@ -98,7 +98,7 @@ const BrowseStyle = {
   display:'flex',  
   position: 'relative', 
   top:'10rem', 
-  left:'-.2rem', 
+  left: isMobileScreen ?  '-.6rem' : '-.3rem', 
   ':hover' : {
     cursor:'pointer', 
     background:'#fefefe', 
@@ -106,7 +106,7 @@ const BrowseStyle = {
   width:'10rem',
   padding:'.5rem',
   paddingRight: isMobileScreen ? '11.4rem' : '3rem',
-  paddingLeft: isMobileScreen ? '2.7rem' : '1.5rem', 
+  paddingLeft: isMobileScreen ? '3rem' : '1.5rem', 
   transition:'background .2s ease-in-out',
   opacity: '.6', 
   fontSize:'1.2rem', 
@@ -126,7 +126,7 @@ const cloneSpaceStyle = {
   paddingRight: isMobileScreen ? '11.4rem' : '3rem',
   paddingLeft: isMobileScreen ? '4rem' : '3rem' , 
   transition:'background .2s ease-in-out',
-  opacity: '.6', 
+  opacity: '.8', 
   fontSize:'1.2rem',
   backgroundColor: isSpaceClicked ? '#fefefe' : 'null', 
   borderRight: isSpaceClicked ? '3px solid gray' : null, 
@@ -178,7 +178,7 @@ const rightButtonStyle = {
     sx={{
       display:'flex', 
       flexDirection:'row', 
-      left:'-4rem', 
+      left: isMobileScreen ? '-3rem' :'-4rem', 
       width:'22rem',
       textTransform: ''
     }}
