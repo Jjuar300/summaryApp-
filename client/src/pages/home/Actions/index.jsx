@@ -31,7 +31,9 @@ export default function index() {
   const [isBrowserClicked, setBrowserClicked] = useState(false); 
   const [isSpaceClicked, setSpaceClicked] = useState(false)
   const [isOpenModal, setOpenModal] = useState(false)
+  const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false)
   const [text, setText] = useState('')
+  const [editText, setEditText] = useState('')
   const [spaces, setSpaces] = useState([])
   const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [anchorEl, setAnchorEl] = useState(null); 
@@ -52,26 +54,45 @@ const handleButtonClicked = () => {
   setOpenModal(true)
 }
 
+const handleRenameSpace = () => {
+  setRenameSpaceOpen(true)
+}
+
 const handleSpaceTextSubmit = async (e) => {
    e?.preventDefault(); 
    postData('http://localhost:3004/postspacetext', {text: text})
+}
+
+const handleEditSpaceText = async (e) => {
+  e?.preventDefault(); 
+  //updateData('http://localhost:3004/editspacetext', {text: editText})
 }
 
 useEffect(() => {
    fetchData(
     'http://localhost:3004/getspacetext', 
     setSpaces, 
-  ) 
-  },[])
+  );
+  },[]);
 
 const handleCloseSave = () => {
   handleSpaceTextSubmit(); 
-  setOpenModal(false)
-  setText('')
+  setOpenModal(false);
+  setText('');
+}
+
+const handleCloseEditSpace = () => {
+  handleEditSpaceText(); 
+  setRenameSpaceOpen(false); 
+  setEditText(''); 
 }
 
 const handleChange = (e) => {
-  setText(e.target.value)
+  setText(e.target.value);
+}; 
+
+const handleEditChange = (e) => {
+  setEditText(e.target.value); 
 }
 
 const BrowseStyle = {
@@ -132,7 +153,6 @@ const cloneSpaceStyle = {
   borderRight: isSpaceClicked ? '3px solid gray' : null, 
 }
 
-
 const MobileSpaceModal = {
   position:'absolute', 
   backgroundColor:'white', 
@@ -184,11 +204,10 @@ const rightButtonStyle = {
     }}
   > 
  
-
-
  <PopoverContainer
   text={'Rename'}
   buttonStyle={renameButtonStyle}
+  submitOnClick={handleRenameSpace}
   />
    <PopoverContainer
   text={'Delete'}
@@ -226,6 +245,22 @@ const rightButtonStyle = {
      setOpen={setOpenModal}
      inlineStyle={MobileSpaceModal}
      />
+
+    <SpaceModal
+     onClick={handleCloseEditSpace}
+     onChange={handleEditChange}
+     setOpen={setRenameSpaceOpen}
+     textQuestion={'Edit Space'}
+     textLeftButton={'Cancel'}
+     textRightButton={'Save'}
+     isInput={true}
+     isOpen={isRenameSpaceOpen}
+     inlineStyle={MobileSpaceModal}
+     inputStyle={textFieldStyle}
+     rightButtonStyle={rightButtonStyle}
+     isText={true}
+    />
+
 
        {spaces.map((data) => (
          <Space 
