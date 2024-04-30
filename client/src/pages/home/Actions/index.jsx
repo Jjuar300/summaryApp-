@@ -23,6 +23,7 @@ import {
 import { 
   fetchData, 
   postData, 
+  updateData, 
 } from '../../../utils'
 
 import {PopoverContainer} from '../../../components'
@@ -35,9 +36,22 @@ export default function index() {
   const [text, setText] = useState('')
   const [editText, setEditText] = useState('')
   const [spaces, setSpaces] = useState([])
+  const [spaceText, setSpaceText] = useState(''); 
   const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [anchorEl, setAnchorEl] = useState(null); 
   const open = Boolean(anchorEl)
+
+  console.log(spaceText)
+
+  let spaceId; 
+
+   spaces.forEach(data => {
+    if(spaceText === data?.Text){
+      return spaceId = data?._id; 
+    }
+  })
+
+console.log(spaceId)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -56,6 +70,7 @@ const handleButtonClicked = () => {
 
 const handleRenameSpace = () => {
   setRenameSpaceOpen(true)
+  handleClose(); 
 }
 
 const handleSpaceTextSubmit = async (e) => {
@@ -65,7 +80,10 @@ const handleSpaceTextSubmit = async (e) => {
 
 const handleEditSpaceText = async (e) => {
   e?.preventDefault(); 
-  //updateData('http://localhost:3004/editspacetext', {text: editText})
+  updateData('http://localhost:3004/editspacetext', {
+    text: editText, 
+    id: spaces[0]?._id
+  }); 
 }
 
 useEffect(() => {
@@ -77,6 +95,7 @@ useEffect(() => {
 
 const handleCloseSave = () => {
   handleSpaceTextSubmit(); 
+  handleEditSpaceText();  
   setOpenModal(false);
   setText('');
 }
@@ -272,6 +291,7 @@ const rightButtonStyle = {
          rightSpaceIcon={dragIndicator}
          leftSpaceIcon={noteCards}
          rightSpaceIconClick={handleClick}
+         setState={setSpaceText}
          />
        ))} 
      

@@ -14,8 +14,14 @@ export default function index({
     inlineStyle, 
     onClick,
     rightSpaceIconClick, 
+    setState, 
 }) {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
+  
+  const handleRightIconClick = (event) => {
+    setState(text)
+    rightSpaceIconClick(event); 
+  }
 
   return (
     <Box
@@ -47,7 +53,7 @@ export default function index({
  {
   isSpaceIcon ? 
   <Box
-  onClick={rightSpaceIconClick}
+  onClick={handleRightIconClick}
   sx={{
     position:'absolute', 
     display:'flex',

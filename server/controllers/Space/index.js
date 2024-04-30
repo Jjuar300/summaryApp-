@@ -23,9 +23,21 @@ const getSpaceText = async (req, res) => {
     console.error('Error occured while fetching data from mongodb:', error)
     res.status(500).json({error: 'Internal server error'})
   }
+}; 
+
+const editSpaceText = async (req, res) => {
+  const {
+    Id, 
+  } = req.body; 
+  try{
+    console.log(Id)
+  }catch(error){
+    console.error("Error occured while updating data from mongodb:", error)
+  }
 }
 
 module.exports = {
     postSpaceText, 
     getSpaceText, 
+    editSpaceText, 
 }; 

@@ -7,5 +7,6 @@ const {
 
 router.post('/postspacetext', Space.postSpaceText)
 router.get('/getspacetext', Space.getSpaceText)
+router.put('/editspacetext', Space.editSpaceText)
 
 module.exports = router; 
