@@ -20,19 +20,33 @@ const getSpaceText = async (req, res) => {
    const spaceTextData = await spaces.find({}); 
    res.json(spaceTextData); 
   }catch(error){
-    console.error('Error occured while fetching data from mongodb:', error)
+    console.log('Error occured while fetching data from mongodb:', error)
     res.status(500).json({error: 'Internal server error'})
   }
 }; 
 
 const editSpaceText = async (req, res) => {
   const {
-    Id, 
+    text,
+    id,  
   } = req.body; 
   try{
-    console.log(Id)
+     await spaces.findByIdAndUpdate(id, {
+      Text: text, 
+     })
   }catch(error){
-    console.error("Error occured while updating data from mongodb:", error)
+    console.log("Error occured while updating data from mongodb:", error)
+  }
+}
+
+const deleteSpace = async (req, res) => {
+  try{
+    const {
+      id, 
+    } = req.body; 
+    await spaces.findByIdAndDelete(id)
+  }catch(error){
+    console.log('Error occured while deleting data', error)
   }
 }
 
@@ -40,4 +54,5 @@ module.exports = {
     postSpaceText, 
     getSpaceText, 
     editSpaceText, 
+    deleteSpace,
 }; 

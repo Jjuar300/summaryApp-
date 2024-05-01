@@ -10,6 +10,7 @@ import SpaceModal from '../../../components/Modal'
 import React, { 
   useEffect, 
   useState, 
+  useRef, 
  } from 'react'
 
 import { 
@@ -24,6 +25,7 @@ import {
   fetchData, 
   postData, 
   updateData, 
+  deleteData, 
 } from '../../../utils'
 
 import {PopoverContainer} from '../../../components'
@@ -75,15 +77,25 @@ const handleRenameSpace = () => {
 
 const handleSpaceTextSubmit = async (e) => {
    e?.preventDefault(); 
-   postData('http://localhost:3004/postspacetext', {text: text})
+   postData('http://localhost:3004/postspacetext', {
+    text: text, 
+  })
 }
 
 const handleEditSpaceText = async (e) => {
   e?.preventDefault(); 
   updateData('http://localhost:3004/editspacetext', {
     text: editText, 
-    id: spaces[0]?._id
+    id: spaceId, 
   }); 
+}
+
+const handleDeleteSpace = async (e) => {
+  e?.preventDefault(); 
+  deleteData('http://localhost:3004/deletespace', {
+    id: spaceId, 
+  }); 
+  handleClose(); 
 }
 
 useEffect(() => {
@@ -207,6 +219,8 @@ const rightButtonStyle = {
   textTransform: 'none'
  }
 
+
+
   return (
     <>
   
@@ -231,6 +245,7 @@ const rightButtonStyle = {
    <PopoverContainer
   text={'Delete'}
   buttonStyle={deleteButonStyle}
+  submitOnClick={handleDeleteSpace}
   />
 
   </Popover>
@@ -243,6 +258,7 @@ const rightButtonStyle = {
    />
   
      <Space
+     key={2}
     onClick={handleButtonClicked}
     isCreateSpaceIcon={true}
     CreateSpaceIcon={addcircle}
