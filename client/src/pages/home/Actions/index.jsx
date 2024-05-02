@@ -42,8 +42,12 @@ export default function index() {
   const isMobileScreen = useMediaQuery('(max-width:400px)');
   const [anchorEl, setAnchorEl] = useState(null); 
   const open = Boolean(anchorEl)
+  const [isOnChange, setOnChange] = useState(false)
+  const [countSpaces, setCountSpaces] = useState(0); 
+  const SpacesLength = spaces.length; 
 
   console.log(spaceText)
+  console.log(countSpaces)
 
   let spaceId; 
 
@@ -96,6 +100,7 @@ const handleDeleteSpace = async (e) => {
     id: spaceId, 
   }); 
   handleClose(); 
+  setCountSpaces(SpacesLength - 1)
 }
 
 useEffect(() => {
@@ -103,19 +108,22 @@ useEffect(() => {
     'http://localhost:3004/getspacetext', 
     setSpaces, 
   );
-  },[]);
+  },[countSpaces]);
+
 
 const handleCloseSave = () => {
   handleSpaceTextSubmit(); 
   handleEditSpaceText();  
   setOpenModal(false);
   setText('');
+  setCountSpaces(SpacesLength + 1)
 }
 
 const handleCloseEditSpace = () => {
   handleEditSpaceText(); 
   setRenameSpaceOpen(false); 
   setEditText(''); 
+  setCountSpaces(SpacesLength / 1)
 }
 
 const handleChange = (e) => {

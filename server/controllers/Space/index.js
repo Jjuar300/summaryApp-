@@ -10,6 +10,7 @@ const postSpaceText = async(req, res) => {
         Text: text, 
     })
     console.log(text); 
+    res.json(newSpaceText)
   }catch(error){
     console.log(error)
   }
@@ -31,9 +32,10 @@ const editSpaceText = async (req, res) => {
     id,  
   } = req.body; 
   try{
-     await spaces.findByIdAndUpdate(id, {
+    const editSpaceText = await spaces.findByIdAndUpdate(id, {
       Text: text, 
      })
+     res.json(editSpaceText)
   }catch(error){
     console.log("Error occured while updating data from mongodb:", error)
   }
@@ -44,7 +46,8 @@ const deleteSpace = async (req, res) => {
     const {
       id, 
     } = req.body; 
-    await spaces.findByIdAndDelete(id)
+   const deleteSpace = await spaces.findByIdAndDelete(id)
+    res.json(deleteSpace)
   }catch(error){
     console.log('Error occured while deleting data', error)
   }
