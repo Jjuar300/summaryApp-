@@ -57,6 +57,7 @@ export default function index() {
     }
   })
 
+ 
 console.log(spaceId)
 
   const handleClick = (event) => {
@@ -123,7 +124,7 @@ const handleCloseEditSpace = () => {
   handleEditSpaceText(); 
   setRenameSpaceOpen(false); 
   setEditText(''); 
-  setCountSpaces(SpacesLength / 1)
+  setCountSpaces(spaceText) // renaming changes
 }
 
 const handleChange = (e) => {
@@ -302,6 +303,7 @@ const rightButtonStyle = {
      inputStyle={textFieldStyle}
      rightButtonStyle={rightButtonStyle}
      isText={true}
+     previousText={spaceText}
     />
 
 
