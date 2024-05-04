@@ -1,20 +1,16 @@
-import React from 'react'
-import Avatar from '@mui/material/Avatar';
-
+import React from "react";
+import Avatar from "@mui/material/Avatar";
 
 export default function UserAvatar({
-  Text, 
-  submitOnClickFunction, 
-  inlineStyle, 
+  Text,
+  submitOnClickFunction,
+  inlineStyle,
 }) {
   return (
     <>
-     <Avatar
-     sx={inlineStyle}
-    onClick={submitOnClickFunction}
-     >
-      {`${Text}`}
-     </Avatar>
+      <Avatar sx={inlineStyle} onClick={submitOnClickFunction}>
+        {`${Text}`}
+      </Avatar>
     </>
-  )
+  );
 }

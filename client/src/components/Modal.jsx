@@ -1,108 +1,80 @@
-import { 
-    Box, 
-    Button,
-    Typography, 
-    Modal,
-    TextField, 
-} from "@mui/material"
+import { Box, Button, Typography, Modal, TextField } from "@mui/material";
 
 export default function DeleteModal({
-    isOpen,
-    setOpen, 
-    onClick,   
-    inlineStyle,
-    textQuestion,
-    textInformation,
-    textLeftButton, 
-    textRightButton,    
-    isText, 
-    isInput, 
-    inputStyle, 
-    rightButtonStyle, 
-    onChange, 
-    previousText, 
+  isOpen,
+  setOpen,
+  onClick,
+  inlineStyle,
+  textQuestion,
+  textInformation,
+  textLeftButton,
+  textRightButton,
+  isText,
+  isInput,
+  inputStyle,
+  rightButtonStyle,
+  onChange,
+  previousText,
 }) {
-
   return (
     <>
-        <Modal
-  open={isOpen}
-  >
-    <Box
-    sx={inlineStyle}
-    >
-      {
-      isText 
-      ?
-      <Typography
-       sx={{
-        position:'absolute', 
-        left:'2rem',
-        top:'2rem',  
-        fontSize:'1.3rem', 
-       }}
-       >
-       {textQuestion}
-       </Typography>
-      : 
-      null 
-      }
+      <Modal open={isOpen}>
+        <Box sx={inlineStyle}>
+          {isText ? (
+            <Typography
+              sx={{
+                position: "absolute",
+                left: "2rem",
+                top: "2rem",
+                fontSize: "1.3rem",
+              }}
+            >
+              {textQuestion}
+            </Typography>
+          ) : null}
 
-     {  
-     isText 
-     ? 
-     <Typography
-       sx={{
-        position:'absolute', 
-        left:'2rem',
-        top:'7rem',  
-        fontSize:'1rem', 
-        opacity:'.6'
-       }}
-       >
-       {textInformation}
-       </Typography>
-       : 
-       null
-       }
+          {isText ? (
+            <Typography
+              sx={{
+                position: "absolute",
+                left: "2rem",
+                top: "7rem",
+                fontSize: "1rem",
+                opacity: ".6",
+              }}
+            >
+              {textInformation}
+            </Typography>
+          ) : null}
 
-     <form
-     onSubmit={onClick}
-     >
-     {
-        isInput 
-        ?
-        <TextField
-        type="text"
-        defaultValue={previousText}
-        onChange={onChange}
-         sx={inputStyle}
-        />
-      : 
-      null
-    }
+          <form onSubmit={onClick}>
+            {isInput ? (
+              <TextField
+                type="text"
+                defaultValue={previousText}
+                onChange={onChange}
+                sx={inputStyle}
+              />
+            ) : null}
 
-       <Button
-       type="submit"
-       sx={rightButtonStyle}
-       >
-        {textRightButton}
-       </Button>
-     </form>
+            <Button type="submit" sx={rightButtonStyle}>
+              {textRightButton}
+            </Button>
+          </form>
 
-       <Button
-       onClick={() => setOpen(false)}
-       sx={{
-        position:'absolute', 
-        top:'15rem', 
-        left:'12rem',
-        color: 'black',  
-       }}
-       >
-        {textLeftButton}
-       </Button>
-    </Box>
-  </Modal>
+          <Button
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "absolute",
+              top: "15rem",
+              left: "12rem",
+              color: "black",
+            }}
+          >
+            {textLeftButton}
+          </Button>
+        </Box>
+      </Modal>
     </>
-  )
+  );
 }

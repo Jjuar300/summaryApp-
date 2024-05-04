@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const newSpace = new mongoose.Schema({
-    Text: String, 
+  Text: String,
 });
 
-const createNewSpace = mongoose.model('spaces', newSpace); 
-module.exports = createNewSpace; 
+const createNewSpace = mongoose.model("spaces", newSpace);
+module.exports = createNewSpace;

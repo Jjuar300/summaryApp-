@@ -1,149 +1,127 @@
-import {
-    Box, 
-    Button, 
-    Popover, 
-  } from '@mui/material'
-  import {
-    UserAvatar, 
-    PopoverContainer, 
-  } from '../../../components'
-  import {
-    useUser, 
-    SignOutButton, 
-} from '@clerk/clerk-react'
-import { useState } from 'react';
-import {
-    settings, 
-    feedBack, 
-    logout, 
-} from './assets'
+import { Box, Button, Popover } from "@mui/material";
+import { UserAvatar, PopoverContainer } from "../../../components";
+import { useUser, SignOutButton } from "@clerk/clerk-react";
+import { useState } from "react";
+import { settings, feedBack, logout } from "./assets";
 
-import {useNavigate} from 'react-router-dom'
-import {useMediaQuery} from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
-  export default function Index() {
+export default function Index() {
+  const { user } = useUser();
+  const FirstName = user.firstName.charAt(0).toUpperCase();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+  const isMobileScreen = useMediaQuery("(max-width:400px)");
 
-    const {user} = useUser(); 
-    const FirstName = user.firstName.charAt(0).toUpperCase()
-    const [anchorEl, setAnchorEl] = useState(null); 
-    const navigate = useNavigate(); 
-    const isMobileScreen = useMediaQuery('(max-width:400px)');
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    }; 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+  const open = Boolean(anchorEl);
+  const userAvatarStyle = {
+    position: "relative",
+    backgroundColor: "orange",
+    top: "2rem",
+    left: "2rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+    cursor: "pointer",
+  };
 
-    const open = Boolean(anchorEl)
-    const userAvatarStyle = {
-      position:'relative', 
-      backgroundColor:'orange', 
-      top:'2rem', 
-      left:'2rem', 
-      width:'3rem',
-      height:'3rem',
-      fontSize:'1.4rem',   
-      cursor:'pointer', 
-    } 
+  const mobileUserAvatarStyle = {
+    position: "relative",
+    backgroundColor: "orange",
+    top: "2rem",
+    left: "2rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+  };
 
-    const mobileUserAvatarStyle  = {
-      position:'relative', 
-      backgroundColor:'orange', 
-      top:'2rem', 
-      left:'2rem', 
-      width:'3rem',
-      height:'3rem',
-      fontSize:'1.4rem',   
-    }
+  const boxStyle = {
+    position: "relative",
+    display: "flex",
+    left: "1rem",
+  };
 
-   const boxStyle = {
-    position:'relative', 
-    display:'flex', 
-    left:'1rem', 
-}
+  const buttonStyle = {
+    fontSize: "1rem",
+    color: "black",
+    width: "10rem",
+    left: "-2rem",
+  };
 
-const buttonStyle = {
-  fontSize:'1rem', 
-  color:'black', 
-  width:'10rem',
-  left:'-2rem',  
-}
-
-    return (
-     <>      
+  return (
+    <>
       <UserAvatar
-      
-      Text={FirstName}
-      submitOnClickFunction={handleClick}
-      inlineStyle={isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle}
+        Text={FirstName}
+        submitOnClickFunction={handleClick}
+        inlineStyle={isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle}
       />
       <Popover
-      open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      sx={{
-        left:'4rem', 
-        width:'12rem', 
-      }}
-      >
-      <Box
-      sx={{
-        display:'flex', 
-        flexDirection:'column', 
-        alignItems:'flex-start',  
-        width:'12rem', 
-        gap:'1rem', 
-      }}
-      >
-
-       <PopoverContainer
-       imageIcon={settings}
-       text={'Settings'}
-       submitOnClick={() => navigate('/settings')}
-       boxStyle={boxStyle}
-       buttonStyle={buttonStyle}
-       isIcon={true}
-       />
-
-       <PopoverContainer
-       imageIcon={feedBack}
-       text={'Feedback'}
-       boxStyle={boxStyle}
-       buttonStyle={buttonStyle}
-       isIcon={true}
-       />
-
-      <SignOutButton>
-      <Box
-    sx={{
-        position:'relative', 
-        display:'flex', 
-        left:'1rem', 
-
-    }}
-    >
-        <img
-        style={{width:'1.2rem'}}
-        src={`${logout}`}
-        />
-    <Button
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
         sx={{
-            fontSize:'1rem', 
-            color:'black',
-            width:'10rem',
-            left:'-2rem',  
+          left: "4rem",
+          width: "12rem",
         }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            width: "12rem",
+            gap: "1rem",
+          }}
         >
-            Logout
-        </Button>
-    </Box>
-      </SignOutButton>
-     
-      </Box>
+          <PopoverContainer
+            imageIcon={settings}
+            text={"Settings"}
+            submitOnClick={() => navigate("/settings")}
+            boxStyle={boxStyle}
+            buttonStyle={buttonStyle}
+            isIcon={true}
+          />
+
+          <PopoverContainer
+            imageIcon={feedBack}
+            text={"Feedback"}
+            boxStyle={boxStyle}
+            buttonStyle={buttonStyle}
+            isIcon={true}
+          />
+
+          <SignOutButton>
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                left: "1rem",
+              }}
+            >
+              <img style={{ width: "1.2rem" }} src={`${logout}`} />
+              <Button
+                sx={{
+                  fontSize: "1rem",
+                  color: "black",
+                  width: "10rem",
+                  left: "-2rem",
+                }}
+              >
+                Logout
+              </Button>
+            </Box>
+          </SignOutButton>
+        </Box>
       </Popover>
-     </>
-    )
-  }
+    </>
+  );
+}
