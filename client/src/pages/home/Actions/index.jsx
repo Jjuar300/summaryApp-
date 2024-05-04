@@ -1,16 +1,10 @@
-import { useMediaQuery, Popover, Box } from "@mui/material";
+import { useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
 import SpaceModal from "../../../components/Modal";
 
 import React, { useEffect, useState, useRef } from "react";
 
-import {
-  addcircle,
-  dragIndicator,
-  noteCards,
-  edit,
-  deleteIcon,
-} from "./assets";
+import { addcircle, dragIndicator, noteCards } from "./assets";
 
 import { fetchData, postData, updateData, deleteData } from "../../../utils";
 
@@ -18,7 +12,6 @@ import { PopoverContainer } from "../../../components";
 
 export default function index() {
   const [isBrowserClicked, setBrowserClicked] = useState(false);
-  const [isSpaceClicked, setSpaceClicked] = useState(false);
   const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
@@ -34,14 +27,23 @@ export default function index() {
   console.log(spaceText);
   console.log(countSpaces);
   let spaceId;
-  spaces.forEach((data) => {
+  let clickBackground;
+  spaces.map((data) => {
     if (spaceText === data?.Text) {
-      return (spaceId = data?._id);
+      spaceId = data?._id;
+      clickBackground = {
+        backgroundColor: "#fefefe",
+        borderRight: "3px solid gray",
+      };
+    } else if (spaceId !== data?.id) {
+      clickBackground = {
+        backgroundColor: "none",
+        borderRight: "none",
+      };
     }
   });
 
   console.log(spaceId);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -102,7 +104,7 @@ export default function index() {
     handleEditSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
-    setCountSpaces(spaceText); // renaming changes
+    setCountSpaces(spaceText);
   };
 
   const handleChange = (e) => {
@@ -154,8 +156,8 @@ export default function index() {
   const cloneSpaceStyle = {
     display: "flex",
     position: "relative",
-    top: "10rem",
-    left: "-.2rem",
+    top: "11rem",
+    left: "-0.5rem",
     ":hover": {
       cursor: "pointer",
       background: "#fefefe",
@@ -167,8 +169,8 @@ export default function index() {
     transition: "background .2s ease-in-out",
     opacity: ".8",
     fontSize: "1.2rem",
-    backgroundColor: isSpaceClicked ? "#fefefe" : "null",
-    borderRight: isSpaceClicked ? "3px solid gray" : null,
+    backgroundColor: "#fefefe",
+    borderRight: "3px solid gray",
   };
 
   const MobileSpaceModal = {
@@ -232,21 +234,24 @@ export default function index() {
         />
       </Popover>
 
-      <Space
-        isIcon={false}
-        setState={setBrowserClicked}
-        text={"Browser space"}
-        inlineStyle={BrowseStyle}
-      />
+      <Box sx={createSpaceStyle}>
+        <Typography>Browse Space</Typography>
+      </Box>
 
-      <Space
-        key={2}
-        onClick={handleButtonClicked}
-        isCreateSpaceIcon={true}
-        CreateSpaceIcon={addcircle}
-        text={"Create space"}
-        inlineStyle={createSpaceStyle}
-      />
+      <Box onClick={handleButtonClicked} sx={createSpaceStyle}>
+        <Typography>Create Space</Typography>
+
+        {true ? (
+          <Box
+            sx={{
+              position: "relative",
+              left: isMobileScreen ? "13rem" : "6rem",
+            }}
+          >
+            <img src={`${addcircle}`} />
+          </Box>
+        ) : null}
+      </Box>
 
       <SpaceModal
         onClick={handleCloseSave}
@@ -282,9 +287,26 @@ export default function index() {
       {spaces.map((data) => (
         <Space
           key={data?.id}
-          onClick={setSpaceClicked}
           text={data.Text}
-          inlineStyle={cloneSpaceStyle}
+          inlineStyle={{
+            display: "flex",
+            position: "relative",
+            top: "11rem",
+            left: "-0.5rem",
+            ":hover": {
+              cursor: "pointer",
+              background: "#fefefe",
+            },
+            width: "10rem",
+            padding: ".5rem",
+            paddingRight: isMobileScreen ? "11.4rem" : "3rem",
+            paddingLeft: isMobileScreen ? "4rem" : "3rem",
+            transition: "background .2s ease-in-out",
+            opacity: ".8",
+            fontSize: "1.2rem",
+            backgroundColor: spaceText === data?.Text && "#fefefe",
+            borderRight: spaceText === data?.Text && "3px solid gray",
+          }}
           isSpaceIcon={true}
           rightSpaceIcon={dragIndicator}
           leftSpaceIcon={noteCards}
