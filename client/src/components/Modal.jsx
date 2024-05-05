@@ -10,15 +10,14 @@ export default function DeleteModal({
   textInformation,
   textLeftButton,
   textRightButton,
-  textCount, 
+  textCount,
   isText,
   isInput,
   inputStyle,
   onChange,
   previousText,
-  isReadOnly, 
-  setReadOnly, 
 }) {
+  const MaxLengthOfText = 20;
   return (
     <>
       <Modal open={isOpen}>
@@ -54,9 +53,8 @@ export default function DeleteModal({
             {isInput ? (
               <>
                 <TextField
-                  onClick={() => setReadOnly(false)}
                   inputProps={{
-                    readOnly: isReadOnly, 
+                    maxLength: MaxLengthOfText,
                   }}
                   size="small"
                   type="text"
@@ -66,13 +64,15 @@ export default function DeleteModal({
                 />
 
                 <Typography
-                sx={{
-                  position:'absolute', 
-                  top:'8.6rem',
-                  left:'20rem',  
-                  fontSize:'.9rem'
-                }}
-                >{textCount}/20</Typography>
+                  sx={{
+                    position: "absolute",
+                    top: "8.6rem",
+                    left: "20rem",
+                    fontSize: ".9rem",
+                  }}
+                >
+                  {textCount}/20
+                </Typography>
               </>
             ) : null}
 

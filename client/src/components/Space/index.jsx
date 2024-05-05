@@ -27,7 +27,11 @@ export default function index({
   return (
     <>
       <Box onClick={handleSpaceClick} sx={inlineStyle}>
-        <Typography>{text}</Typography>
+        <Typography
+        sx={{
+          width:'20rem', 
+        }}
+        >{text}</Typography>
         {isSpaceIcon ? (
           <Box
             onClick={handleRightIconClick}

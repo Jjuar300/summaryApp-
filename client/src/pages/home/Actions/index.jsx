@@ -17,14 +17,12 @@ export default function index() {
   const [editText, setEditText] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [spaceText, setSpaceText] = useState("");
-  const [isReadOnly, setReadOnly] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
   const SpacesLength = spaces.length;
   const LengthOfText = text.length;
-  const MaximumTextNumber = 20;
 
   console.log(text.length);
   console.log(spaceText);
@@ -102,14 +100,7 @@ export default function index() {
 
   const handleChange = (e) => {
     setText(e.target.value);
-    if (LengthOfText >= MaximumTextNumber - 1) {
-      setReadOnly(true);
-    } else if (LengthOfText <= MaximumTextNumber) {
-      setReadOnly(false);
-    }
   };
-
-  console.log(isReadOnly);
 
   const handleEditChange = (e) => {
     setEditText(e.target.value);
@@ -216,8 +207,6 @@ export default function index() {
         setOpen={setOpenModal}
         inlineStyle={MobileSpaceModal}
         textCount={LengthOfText}
-        isReadOnly={isReadOnly}
-        setReadOnly={setReadOnly}
       />
 
       <SpaceModal
@@ -233,6 +222,7 @@ export default function index() {
         inputStyle={textFieldStyle}
         isText={true}
         previousText={spaceText}
+        textCount={LengthOfText}
       />
 
       {spaces.map((data) => (
@@ -248,9 +238,9 @@ export default function index() {
               cursor: "pointer",
               background: "#fefefe",
             },
-            width: "10rem",
+            width: "12rem",
             padding: ".5rem",
-            paddingRight: isMobileScreen ? "11.4rem" : "3rem",
+            paddingRight: isMobileScreen ? "11.4rem" : "1.3rem",
             paddingLeft: isMobileScreen ? "4rem" : "3rem",
             transition: "background .2s ease-in-out",
             opacity: ".8",
