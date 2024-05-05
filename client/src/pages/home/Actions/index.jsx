@@ -1,4 +1,4 @@
-import { useMediaQuery, Popover, Box, Typography } from "@mui/material";
+import { Button, useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
 import SpaceModal from "../../../components/Modal";
 
@@ -11,19 +11,22 @@ import { fetchData, postData, updateData, deleteData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 
 export default function index() {
-  const [isBrowserClicked, setBrowserClicked] = useState(false);
   const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [spaceText, setSpaceText] = useState("");
+  const [isReadOnly, setReadOnly] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
   const SpacesLength = spaces.length;
+  const LengthOfText = text.length;
+  const MaximumTextNumber = 20;
 
+  console.log(text.length);
   console.log(spaceText);
   console.log(countSpaces);
   let spaceId;
@@ -99,7 +102,14 @@ export default function index() {
 
   const handleChange = (e) => {
     setText(e.target.value);
+    if (LengthOfText >= MaximumTextNumber - 1) {
+      setReadOnly(true);
+    } else if (LengthOfText <= MaximumTextNumber) {
+      setReadOnly(false);
+    }
   };
+
+  console.log(isReadOnly);
 
   const handleEditChange = (e) => {
     setEditText(e.target.value);
@@ -205,6 +215,9 @@ export default function index() {
         textRightButton={"Save"}
         setOpen={setOpenModal}
         inlineStyle={MobileSpaceModal}
+        textCount={LengthOfText}
+        isReadOnly={isReadOnly}
+        setReadOnly={setReadOnly}
       />
 
       <SpaceModal

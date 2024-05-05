@@ -1,4 +1,5 @@
 import { Box, Button, Typography, Modal, TextField } from "@mui/material";
+import { useState } from "react";
 
 export default function DeleteModal({
   isOpen,
@@ -9,11 +10,14 @@ export default function DeleteModal({
   textInformation,
   textLeftButton,
   textRightButton,
+  textCount, 
   isText,
   isInput,
   inputStyle,
   onChange,
   previousText,
+  isReadOnly, 
+  setReadOnly, 
 }) {
   return (
     <>
@@ -50,6 +54,10 @@ export default function DeleteModal({
             {isInput ? (
               <>
                 <TextField
+                  onClick={() => setReadOnly(false)}
+                  inputProps={{
+                    readOnly: isReadOnly, 
+                  }}
                   size="small"
                   type="text"
                   defaultValue={previousText}
@@ -64,7 +72,7 @@ export default function DeleteModal({
                   left:'20rem',  
                   fontSize:'.9rem'
                 }}
-                >0/20</Typography>
+                >{textCount}/20</Typography>
               </>
             ) : null}
 
