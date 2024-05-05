@@ -12,7 +12,6 @@ export default function DeleteModal({
   isText,
   isInput,
   inputStyle,
-  rightButtonStyle,
   onChange,
   previousText,
 }) {
@@ -49,15 +48,37 @@ export default function DeleteModal({
 
           <form onSubmit={onClick}>
             {isInput ? (
-              <TextField
-                type="text"
-                defaultValue={previousText}
-                onChange={onChange}
-                sx={inputStyle}
-              />
+              <>
+                <TextField
+                  size="small"
+                  type="text"
+                  defaultValue={previousText}
+                  onChange={onChange}
+                  sx={inputStyle}
+                />
+
+                <Typography
+                sx={{
+                  position:'absolute', 
+                  top:'8.6rem',
+                  left:'20rem',  
+                  fontSize:'.9rem'
+                }}
+                >0/20</Typography>
+              </>
             ) : null}
 
-            <Button type="submit" sx={rightButtonStyle}>
+            <Button
+              type="submit"
+              sx={{
+                position: "absolute",
+                top: "11rem",
+                left: "17rem",
+                backgroundColor: "#47046e",
+                color: "white",
+                width: "6rem",
+              }}
+            >
               {textRightButton}
             </Button>
           </form>
@@ -66,7 +87,7 @@ export default function DeleteModal({
             onClick={() => setOpen(false)}
             sx={{
               position: "absolute",
-              top: "15rem",
+              top: "11rem",
               left: "12rem",
               color: "black",
             }}

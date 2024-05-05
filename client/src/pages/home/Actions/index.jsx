@@ -27,19 +27,9 @@ export default function index() {
   console.log(spaceText);
   console.log(countSpaces);
   let spaceId;
-  let clickBackground;
   spaces.map((data) => {
     if (spaceText === data?.Text) {
       spaceId = data?._id;
-      clickBackground = {
-        backgroundColor: "#fefefe",
-        borderRight: "3px solid gray",
-      };
-    } else if (spaceId !== data?.id) {
-      clickBackground = {
-        backgroundColor: "none",
-        borderRight: "none",
-      };
     }
   });
 
@@ -115,26 +105,6 @@ export default function index() {
     setEditText(e.target.value);
   };
 
-  const BrowseStyle = {
-    display: "flex",
-    position: "relative",
-    top: isMobileScreen ? "9rem" : "9rem",
-    left: isMobileScreen ? "-.6rem" : "-1.6rem",
-    ":hover": {
-      cursor: "pointer",
-      background: "#fefefe",
-    },
-    width: "10rem",
-    padding: ".5rem",
-    paddingRight: isMobileScreen ? "11.4rem" : "3rem",
-    paddingLeft: "3rem",
-    transition: "background .2s ease-in-out",
-    opacity: ".6",
-    fontSize: "1.2rem",
-    backgroundColor: isBrowserClicked ? "#fefefe" : null,
-    borderRight: isBrowserClicked ? "3px solid gray" : null,
-  };
-
   const createSpaceStyle = {
     display: "flex",
     position: "relative",
@@ -153,33 +123,14 @@ export default function index() {
     fontSize: "1.2rem",
   };
 
-  const cloneSpaceStyle = {
-    display: "flex",
-    position: "relative",
-    top: "11rem",
-    left: "-0.5rem",
-    ":hover": {
-      cursor: "pointer",
-      background: "#fefefe",
-    },
-    width: "10rem",
-    padding: ".5rem",
-    paddingRight: isMobileScreen ? "11.4rem" : "3rem",
-    paddingLeft: isMobileScreen ? "4rem" : "3rem",
-    transition: "background .2s ease-in-out",
-    opacity: ".8",
-    fontSize: "1.2rem",
-    backgroundColor: "#fefefe",
-    borderRight: "3px solid gray",
-  };
-
   const MobileSpaceModal = {
     position: "absolute",
     backgroundColor: "white",
     width: "25rem",
-    height: "23rem",
-    top: "10rem",
+    height: "15rem",
+    top: isMobileScreen ? "10rem" : "20rem",
     borderRadius: "1rem",
+    left: isMobileScreen ? null : "45rem",
   };
 
   const textFieldStyle = {
@@ -187,15 +138,6 @@ export default function index() {
     top: "6rem",
     left: "2rem",
     width: "20rem",
-  };
-
-  const rightButtonStyle = {
-    position: "absolute",
-    top: "15rem",
-    left: "17rem",
-    backgroundColor: "#47046e",
-    color: "white",
-    width: "6rem",
   };
 
   const renameButtonStyle = {
@@ -241,22 +183,19 @@ export default function index() {
       <Box onClick={handleButtonClicked} sx={createSpaceStyle}>
         <Typography>Create Space</Typography>
 
-        {true ? (
-          <Box
-            sx={{
-              position: "relative",
-              left: isMobileScreen ? "13rem" : "6rem",
-            }}
-          >
-            <img src={`${addcircle}`} />
-          </Box>
-        ) : null}
+        <Box
+          sx={{
+            position: "relative",
+            left: isMobileScreen ? "13rem" : "6rem",
+          }}
+        >
+          <img src={`${addcircle}`} />
+        </Box>
       </Box>
 
       <SpaceModal
         onClick={handleCloseSave}
         onChange={handleChange}
-        rightButtonStyle={rightButtonStyle}
         textQuestion={"Create a new Space"}
         isText={true}
         inputStyle={textFieldStyle}
@@ -279,7 +218,6 @@ export default function index() {
         isOpen={isRenameSpaceOpen}
         inlineStyle={MobileSpaceModal}
         inputStyle={textFieldStyle}
-        rightButtonStyle={rightButtonStyle}
         isText={true}
         previousText={spaceText}
       />
