@@ -4,7 +4,7 @@ import SpaceModal from "../../../components/Modal";
 
 import React, { useEffect, useState, useRef } from "react";
 
-import { addcircle, dragIndicator, noteCards } from "./assets";
+import { addcircle, dragIndicator, edit, noteCards } from "./assets";
 
 import { fetchData, postData, updateData, deleteData } from "../../../utils";
 
@@ -18,23 +18,15 @@ export default function index() {
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
   const [spaces, setSpaces] = useState([]);
-  const [spaceText, setSpaceText] = useState("");
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isTextField, setTextfield] = useState(false);
   const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
   const SpacesLength = spaces.length;
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-  const LengthOfSpaceText = spaceText.length;
   const spaceTextValue = useSelector(state => state.createSpace.inputValue)
 
-  console.log(text.length);
-  console.log(spaceText);
-  console.log(countSpaces);
-  console.log(editText);
-  console.log(spaceTextValue)
   let spaceId;
   spaces.map((data) => {
     if (spaceTextValue === data?.Text) {
@@ -103,7 +95,7 @@ export default function index() {
     handleEditSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
-    setCountSpaces(spaceText);
+    setCountSpaces(spaceTextValue);
   };
 
   const handleChange = (e) => {
@@ -253,8 +245,8 @@ export default function index() {
             transition: "background .2s ease-in-out",
             opacity: ".8",
             fontSize: "1.2rem",
-            backgroundColor: spaceText === data?.Text && "#fefefe",
-            borderRight: spaceText === data?.Text && "3px solid gray",
+            backgroundColor: editText === data?.Text && "#fefefe",
+            borderRight: editText === data?.Text && "3px solid gray",
           }}
           isSpaceIcon={true}
           rightSpaceIcon={dragIndicator}
