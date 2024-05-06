@@ -10,6 +10,8 @@ import { fetchData, postData, updateData, deleteData } from "../../../utils";
 
 import { PopoverContainer } from "../../../components";
 
+import { useSelector } from "react-redux";
+
 export default function index() {
   const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
@@ -19,17 +21,23 @@ export default function index() {
   const [spaceText, setSpaceText] = useState("");
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isTextField, setTextfield] = useState(false);
   const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
   const SpacesLength = spaces.length;
   const LengthOfText = text.length;
+  const LengthOfEditText = editText.length;
+  const LengthOfSpaceText = spaceText.length;
+  const spaceTextValue = useSelector(state => state.createSpace.inputValue)
 
   console.log(text.length);
   console.log(spaceText);
   console.log(countSpaces);
+  console.log(editText);
+  console.log(spaceTextValue)
   let spaceId;
   spaces.map((data) => {
-    if (spaceText === data?.Text) {
+    if (spaceTextValue === data?.Text) {
       spaceId = data?._id;
     }
   });
@@ -221,8 +229,8 @@ export default function index() {
         inlineStyle={MobileSpaceModal}
         inputStyle={textFieldStyle}
         isText={true}
-        previousText={spaceText}
-        textCount={LengthOfText}
+        previousText={editText}
+        textCount={LengthOfEditText}
       />
 
       {spaces.map((data) => (
@@ -252,7 +260,7 @@ export default function index() {
           rightSpaceIcon={dragIndicator}
           leftSpaceIcon={noteCards}
           rightSpaceIconClick={handleClick}
-          setState={setSpaceText}
+          setState={setEditText}
         />
       ))}
     </>

@@ -1,23 +1,24 @@
 import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import {useDispatch} from 'react-redux'
+import { handleInputValue } from "../../Redux/createSpace";
 
 export default function index({
   text,
-  CreateSpaceIcon,
   isSpaceIcon,
   leftSpaceIcon,
   rightSpaceIcon,
-  isCreateSpaceIcon,
   inlineStyle,
-  onClick,
   rightSpaceIconClick,
   setState,
 }) {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const dispatch = useDispatch(); 
 
   const handleRightIconClick = (event) => {
     setState(text);
     rightSpaceIconClick(event);
+    dispatch(handleInputValue(text))
   };
 
   const handleSpaceClick = () => {

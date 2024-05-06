@@ -4,21 +4,16 @@ export const createSpace = createSlice({
     name:'createSpace', 
     initialState: {
         inputValue: '', 
-        cloneSpace: [], 
     }, 
 
     reducers: {
         handleInputValue: (state, action) => {
           state.inputValue = action.payload; 
         }, 
-        handleClonedSpace: (state, action) => {
-            state.cloneSpace = action.payload; 
-        },
     }
 })
 
 export const {
-    handleInputValue, 
-    handleClonedSpace, 
+    handleInputValue,  
 } = createSpace.actions; 
 export default createSpace.reducer; 
