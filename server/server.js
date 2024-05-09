@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3004;
 const app = express();
 const httpServer = http.createServer(app);
 const routes = require("./routes/index");
+const openAI = require('./openai/index')
 
 dotenv.config();
 
