@@ -10,7 +10,8 @@ import { fetchData, postData, updateData, deleteData } from "../../../utils";
 
 import { PopoverContainer } from "../../../components";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { handleSpaceText } from "../../../Redux/createSpace";
 
 export default function index() {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -26,15 +27,22 @@ export default function index() {
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
   const spaceTextValue = useSelector(state => state.createSpace.inputValue)
+  const dispatch = useDispatch(); 
 
   let spaceId;
+  let spaceText; 
   spaces.map((data) => {
     if (spaceTextValue === data?.Text) {
       spaceId = data?._id;
+      spaceText = data?.Text; 
     }
   });
 
+  dispatch(handleSpaceText(spaceText))
+
   console.log(spaceId);
+  console.log(spaceText)
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -236,7 +244,7 @@ export default function index() {
             left: "-0.5rem",
             ":hover": {
               cursor: "pointer",
-              background: "#fefefe",
+              background: "#ededed",
             },
             width: "12rem",
             padding: ".5rem",
@@ -245,7 +253,7 @@ export default function index() {
             transition: "background .2s ease-in-out",
             opacity: ".8",
             fontSize: "1.2rem",
-            backgroundColor: editText === data?.Text && "#fefefe",
+            backgroundColor: editText === data?.Text && "#ededed",
             borderRight: editText === data?.Text && "3px solid gray",
           }}
           isSpaceIcon={true}

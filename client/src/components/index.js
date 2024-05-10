@@ -3,7 +3,7 @@ import PopoverContainer from "./PopoverContainer";
 import NavBar from './NavBar/index';
 import Space from './Space/index'; 
 import Modal from './Modal'; 
-import Notes from './Notes'; 
+import NavBarNotes from './NavBarNotes'; 
 
 export {
     UserAvatar,
@@ -11,5 +11,5 @@ export {
     NavBar, 
     Space,
     Modal, 
-    Notes, 
+    NavBarNotes, 
 }

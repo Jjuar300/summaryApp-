@@ -23,6 +23,7 @@ export default function index({
 
   const handleSpaceClick = () => {
     setState(text);
+    dispatch(handleInputValue(text))
   };
 
   return (

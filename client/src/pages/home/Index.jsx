@@ -3,7 +3,7 @@ import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
-import {Notes} from '../../components'
+import Notes from "./Notes/index";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
@@ -11,7 +11,7 @@ export default function Index() {
 
   return (
     <>
-    <Notes/>
+      <Notes />
       {isMobileScreen ? (
         <>
           <Drawer open={open}>
@@ -58,7 +58,7 @@ export default function Index() {
             height: "59.8rem",
             left: ".2rem",
             top: ".05rem",
-            borderRight:'1px solid #cfcfcf'
+            borderRight: "1px solid #cfcfcf",
           }}
         >
           <AccountProfile />

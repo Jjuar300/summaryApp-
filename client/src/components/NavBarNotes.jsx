@@ -1,7 +1,8 @@
 import { Typography, Box } from "@mui/material";
-import React from "react";
 
-export default function Notes() {
+export default function Notes({
+  spaceText, 
+}) {
   return (
     <>
       <Box
@@ -25,7 +26,7 @@ export default function Notes() {
             fontWeight:'bold',  
         }}
         >
-          Roman Empire
+          {spaceText}
         </Typography>
 
         <Typography
