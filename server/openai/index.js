@@ -1,28 +1,26 @@
-// const { config } = require("dotenv");
-// config();
-// const { ChatOpenAI } = require("@langchain/openai");
+const { config } = require("dotenv");
+config();
 
-// const model = new ChatOpenAI({
-//   openAIApiKey: process.env.OPENAI_API_KEY,
-// });
+const {OpenAI} = require('openai')
 
-// const response = model.invoke("Write a poem about God");
-// console.log(response);
+const openai =  new OpenAI(); 
 
-//using openAI
-// const { Configuration, OpenAI } = require("openai");
-// const openAi = new OpenAI();
+const main = async () => {
+  const completion = await openai.chat.completions.create({
+    messages: [
+        {
+            role:'system', 
+            content:'You are a helpful assistant.'
+        }, 
+        {
+            role:'user', 
+            content:'what is the capital of Texas?', 
+        }, 
+    ], 
+    model: 'gpt-3.5-turbo', 
+    response_format: {type: 'json_object'}, 
+  }); 
+  console.log(completion.choices[0].message.content); 
+}
 
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// const chat = async () => {
-//   const response = await openAi.chat.completions.create({
-//     model: "gpt-4",
-//     message: [{ role: "user", content: "where is the United States located?" }],
-//   });
-//   console.log(completions.choices[0].message.content);
-// };
-
-// chat();
+main(); 
