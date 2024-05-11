@@ -1,7 +1,7 @@
 const { config } = require("dotenv");
 config();
 
-const {OpenAI} = require('openai')
+const {OpenAI, Configuration} = require('openai')
 
 const openai =  new OpenAI(); 
 
@@ -14,11 +14,10 @@ const main = async () => {
         }, 
         {
             role:'user', 
-            content:'what is the capital of Texas?', 
+            content:'give me a three paragraph about https://www.wired.com/story/geomagnetic-storm-aurora-night-sky/ ', 
         }, 
     ], 
     model: 'gpt-3.5-turbo', 
-    response_format: {type: 'json_object'}, 
   }); 
   console.log(completion.choices[0].message.content); 
 }
