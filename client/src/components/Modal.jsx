@@ -49,7 +49,7 @@ export default function DeleteModal({
             </Typography>
           ) : null}
 
-          <form onSubmit={onClick}>
+          <form>
             {isInput ? (
               <>
                 <TextField
@@ -77,7 +77,7 @@ export default function DeleteModal({
             ) : null}
 
             <Button
-              type="submit"
+              onClick={onClick}
               sx={{
                 position: "absolute",
                 top: "11rem",

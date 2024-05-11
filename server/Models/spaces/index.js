@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const newSpace = new mongoose.Schema({
-  Text: String,
+  Spaces: [{}],
 });
 
 const createNewSpace = mongoose.model("spaces", newSpace);

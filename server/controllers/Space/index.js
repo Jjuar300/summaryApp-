@@ -2,11 +2,12 @@ const { spaces } = require("../../Models/index");
 
 const postSpaceText = async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, id } = req.body;
 
     const newSpaceText = await spaces.create({
-      Text: text,
+      Spaces: [{text, id,}],
     });
+
     console.log(text);
     res.json(newSpaceText);
   } catch (error) {
@@ -25,12 +26,13 @@ const getSpaceText = async (req, res) => {
 };
 
 const editSpaceText = async (req, res) => {
-  const { text, id } = req.body;
+  const { text, id, documentId } = req.body;
   try {
-    const editSpaceText = await spaces.findByIdAndUpdate(id, {
-      Text: text,
+    const editSpaceText = await spaces.findByIdAndUpdate(documentId, {
+      $push: {Spaces: {text, id}}, 
     });
     res.json(editSpaceText);
+    console.log(documentId)
   } catch (error) {
     console.log("Error occured while updating data from mongodb:", error);
   }

@@ -4,6 +4,7 @@ import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
 import Notes from "./Notes/index";
+import UserSignIn from "../userSignIn";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
@@ -11,6 +12,7 @@ export default function Index() {
 
   return (
     <>
+    <UserSignIn/>
       <Notes />
       {isMobileScreen ? (
         <>

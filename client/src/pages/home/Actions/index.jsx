@@ -1,6 +1,7 @@
 import { Button, useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
 import SpaceModal from "../../../components/Modal";
+import { v4 as uuidv4 } from 'uuid';
 
 import React, { useEffect, useState, useRef } from "react";
 
@@ -11,7 +12,7 @@ import { fetchData, postData, updateData, deleteData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 
 import { useSelector, useDispatch } from "react-redux";
-import { handleSpaceText } from "../../../Redux/createSpace";
+import { handleSpaceText, handleInputValue } from "../../../Redux/createSpace";
 
 export default function index() {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -28,20 +29,23 @@ export default function index() {
   const LengthOfEditText = editText.length;
   const spaceTextValue = useSelector(state => state.createSpace.inputValue)
   const dispatch = useDispatch(); 
+  const uniqueId = uuidv4(); 
 
   let spaceId;
   let spaceText; 
   spaces.map((data) => {
-    if (spaceTextValue === data?.Text) {
+    if (spaceTextValue === data?.Spaces[0]?.text) {
       spaceId = data?._id;
-      spaceText = data?.Text; 
+      spaceText = data?.Spaces[0]?.text; 
     }
+    console.log(data?.Spaces)
   });
 
   dispatch(handleSpaceText(spaceText))
 
   console.log(spaceId);
   console.log(spaceText)
+  console.log(spaceTextValue)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,15 +70,17 @@ export default function index() {
   const handleSpaceTextSubmit = async (e) => {
     e?.preventDefault();
     postData("http://localhost:3004/postspacetext", {
-      text: text,
+      text:text,
+      id: uniqueId,
     });
   };
 
   const handleEditSpaceText = async (e) => {
     e?.preventDefault();
     updateData("http://localhost:3004/editspacetext", {
-      text: editText,
-      id: spaceId,
+      text: text,
+      id: uniqueId, 
+      documentId: spaceId,
     });
   };
 
@@ -92,6 +98,7 @@ export default function index() {
   }, [countSpaces]);
 
   const handleCloseSave = () => {
+    dispatch(handleInputValue(text)); 
     handleSpaceTextSubmit();
     handleEditSpaceText();
     setOpenModal(false);
@@ -236,7 +243,7 @@ export default function index() {
       {spaces.map((data) => (
         <Space
           key={data?.id}
-          text={data.Text}
+          text={data?.Spaces[0]?.text}
           inlineStyle={{
             display: "flex",
             position: "relative",

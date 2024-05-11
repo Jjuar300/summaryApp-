@@ -3,9 +3,9 @@ import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { useState } from "react";
 import { settings, feedBack, logout } from "./assets";
-
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import { postData } from "../../../utils";
 
 export default function Index() {
   const { user } = useUser();
@@ -13,6 +13,18 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+
+  const handleNewUser = async (e) => {
+    e.preventDefault(); 
+     postData("http://localhost:3004/postnewuser",{
+       fullname: user.fullName,
+       userName: user.username, 
+       email: user.primaryEmailAddress.emailAddress,
+       userId: user.id,  
+       password: user.passwordEnabled, 
+       spaceId: null, 
+     }) 
+  }; 
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
