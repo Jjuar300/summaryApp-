@@ -9,4 +9,5 @@ router.put("/editspacetext", Space.editSpaceText);
 router.delete("/deletespace", Space.deleteSpace);
 
 // router.post("/postnewuser", User.newUser);
+router.post("/postnewuserid", User.newUserId); 
 module.exports = router;

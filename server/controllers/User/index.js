@@ -22,6 +22,20 @@ const newUser = async (req, res) => {
   }
 };
 
+const newUserId = async (req, res) => {
+ try{
+  const {userId} = req.body; 
+  const createNewUserId = await user.create({
+    userId:userId, 
+  });
+  createNewUserId.save(); 
+  console.log('userId:', userId); 
+ }catch(error){
+  console.log(error)
+ }
+};
+
 module.exports = {
   newUser,
+  newUserId, 
 };

@@ -1,4 +1,4 @@
-const { spaces } = require("../../Models/index");
+const { spaces, user } = require("../../Models/index");
 
 const postSpaceText = async (req, res) => {
   try {
@@ -33,6 +33,7 @@ const editSpaceText = async (req, res) => {
     });
     res.json(editSpaceText);
     console.log(documentId)
+    
   } catch (error) {
     console.log("Error occured while updating data from mongodb:", error);
   }

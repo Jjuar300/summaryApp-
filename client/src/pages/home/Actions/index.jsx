@@ -1,7 +1,7 @@
 import { Button, useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
 import SpaceModal from "../../../components/Modal";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import React, { useEffect, useState, useRef } from "react";
 
@@ -12,7 +12,11 @@ import { fetchData, postData, updateData, deleteData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 
 import { useSelector, useDispatch } from "react-redux";
-import { handleSpaceText, handleInputValue } from "../../../Redux/createSpace";
+import {
+  handleSpaceText,
+  handleInputValue,
+  shouldSpaceTextSubmit,
+} from "../../../Redux/createSpace";
 
 export default function index() {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -27,25 +31,31 @@ export default function index() {
   const SpacesLength = spaces.length;
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-  const spaceTextValue = useSelector(state => state.createSpace.inputValue)
-  const dispatch = useDispatch(); 
-  const uniqueId = uuidv4(); 
+  const spaceTextValue = useSelector((state) => state.createSpace.inputValue);
+  const isSpaceTextSubmit = useSelector(
+    (state) => state.createSpace.isSpaceTextSubmit
+  );
+  const dispatch = useDispatch();
+  const uniqueId = uuidv4();
 
   let spaceId;
-  let spaceText; 
+  let spaceText;
+
   spaces.map((data) => {
     if (spaceTextValue === data?.Spaces[0]?.text) {
-      spaceId = data?._id;
-      spaceText = data?.Spaces[0]?.text; 
+      // spaceId = data?._id;
+      spaceText = data?.Spaces[0]?.text;
     }
-    console.log(data?.Spaces)
+    spaceId = data?._id;
+    console.log(data?.Spaces);
   });
 
-  dispatch(handleSpaceText(spaceText))
+  dispatch(handleSpaceText(spaceText));
 
   console.log(spaceId);
-  console.log(spaceText)
-  console.log(spaceTextValue)
+  console.log(spaceText);
+  console.log(spaceTextValue);
+  console.log(isSpaceTextSubmit);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,6 +70,10 @@ export default function index() {
 
   const handleButtonClicked = () => {
     setOpenModal(true);
+    if(spaces.length === 0){
+      dispatch(shouldSpaceTextSubmit(true));
+      console.log('spaceTextInput true')
+    }
   };
 
   const handleRenameSpace = () => {
@@ -67,10 +81,14 @@ export default function index() {
     handleClose();
   };
 
+  const handleNewUserId = () => {
+    postData("http://localhost:3004/postnewuserid", { userId: spaceId });
+  };
+
   const handleSpaceTextSubmit = async (e) => {
     e?.preventDefault();
     postData("http://localhost:3004/postspacetext", {
-      text:text,
+      text: text,
       id: uniqueId,
     });
   };
@@ -79,7 +97,7 @@ export default function index() {
     e?.preventDefault();
     updateData("http://localhost:3004/editspacetext", {
       text: text,
-      id: uniqueId, 
+      id: uniqueId,
       documentId: spaceId,
     });
   };
@@ -97,14 +115,19 @@ export default function index() {
     fetchData("http://localhost:3004/getspacetext", setSpaces);
   }, [countSpaces]);
 
+
   const handleCloseSave = () => {
-    dispatch(handleInputValue(text)); 
-    handleSpaceTextSubmit();
+    handleNewUserId();
+    dispatch(handleInputValue(text));
+    isSpaceTextSubmit && handleSpaceTextSubmit(); // true or false?
     handleEditSpaceText();
     setOpenModal(false);
     setText("");
     setCountSpaces(SpacesLength + 1);
+
+    dispatch(shouldSpaceTextSubmit(false));
   };
+
 
   const handleCloseEditSpace = () => {
     handleEditSpaceText();
@@ -240,36 +263,38 @@ export default function index() {
         textCount={LengthOfEditText}
       />
 
-      {spaces.map((data) => (
-        <Space
-          key={data?.id}
-          text={data?.Spaces[0]?.text}
-          inlineStyle={{
-            display: "flex",
-            position: "relative",
-            top: "11rem",
-            left: "-0.5rem",
-            ":hover": {
-              cursor: "pointer",
-              background: "#ededed",
-            },
-            width: "12rem",
-            padding: ".5rem",
-            paddingRight: isMobileScreen ? "11.4rem" : "1.3rem",
-            paddingLeft: isMobileScreen ? "4rem" : "3rem",
-            transition: "background .2s ease-in-out",
-            opacity: ".8",
-            fontSize: "1.2rem",
-            backgroundColor: editText === data?.Text && "#ededed",
-            borderRight: editText === data?.Text && "3px solid gray",
-          }}
-          isSpaceIcon={true}
-          rightSpaceIcon={dragIndicator}
-          leftSpaceIcon={noteCards}
-          rightSpaceIconClick={handleClick}
-          setState={setEditText}
-        />
-      ))}
+      {spaces.map((data) =>
+        data.Spaces.map((data) => (
+          <Space
+            key={data?.id}
+            text={data?.text}
+            inlineStyle={{
+              display: "flex",
+              position: "relative",
+              top: "11rem",
+              left: "-0.5rem",
+              ":hover": {
+                cursor: "pointer",
+                background: "#ededed",
+              },
+              width: "12rem",
+              padding: ".5rem",
+              paddingRight: isMobileScreen ? "11.4rem" : "1.3rem",
+              paddingLeft: isMobileScreen ? "4rem" : "3rem",
+              transition: "background .2s ease-in-out",
+              opacity: ".8",
+              fontSize: "1.2rem",
+              backgroundColor: editText === data?.Text && "#ededed",
+              borderRight: editText === data?.Text && "3px solid gray",
+            }}
+            isSpaceIcon={true}
+            rightSpaceIcon={dragIndicator}
+            leftSpaceIcon={noteCards}
+            rightSpaceIconClick={handleClick}
+            setState={setEditText}
+          />
+        ))
+      )}
     </>
   );
 }

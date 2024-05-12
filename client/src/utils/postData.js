@@ -6,7 +6,7 @@ const postData = async (
     data, 
 ) => {
     try{
-        await fetch(endpoint, {
+        await fetch(endpoint,{
          method: 'POST',
          headers: {
            'Content-Type' : 'application/json', 
