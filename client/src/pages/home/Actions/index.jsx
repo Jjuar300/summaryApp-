@@ -28,7 +28,7 @@ export default function index() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
-  const SpacesLength = spaces.length;
+  const SpacesLength = spaces[0]?.Spaces.length;
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
   const spaceTextValue = useSelector((state) => state.createSpace.inputValue);
@@ -40,12 +40,19 @@ export default function index() {
 
   let spaceId;
   let spaceText;
+  let spaceObjectId; 
 
   spaces.map((data) => {
     if (spaceTextValue === data?.Spaces[0]?.text) {
-      // spaceId = data?._id;
       spaceText = data?.Spaces[0]?.text;
     }
+ 
+    data?.Spaces.map((data) => {
+      if(editText === data?.text){
+        spaceObjectId = data?.id; 
+      }
+    })
+
     spaceId = data?._id;
     console.log(data?.Spaces);
   });
@@ -56,6 +63,8 @@ export default function index() {
   console.log(spaceText);
   console.log(spaceTextValue);
   console.log(isSpaceTextSubmit);
+  console.log(editText)
+  console.log(spaceObjectId)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,25 +114,26 @@ export default function index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     deleteData("http://localhost:3004/deletespace", {
-      id: spaceId,
+      id: spaceObjectId,
     });
     handleClose();
-    setCountSpaces(SpacesLength - 1);
+    setCountSpaces(countSpaces - 1);
   };
 
   useEffect(() => {
     fetchData("http://localhost:3004/getspacetext", setSpaces);
-  }, [countSpaces]);
+  },[countSpaces]);
 
 
-  const handleCloseSave = () => {
+  const handleCloseSave = (e) => {
+    e?.preventDefault(); 
     handleNewUserId();
     dispatch(handleInputValue(text));
-    isSpaceTextSubmit && handleSpaceTextSubmit(); // true or false?
+    isSpaceTextSubmit && handleSpaceTextSubmit(); 
     handleEditSpaceText();
     setOpenModal(false);
     setText("");
-    setCountSpaces(SpacesLength + 1);
+    setCountSpaces(countSpaces + 1);
 
     dispatch(shouldSpaceTextSubmit(false));
   };
@@ -133,7 +143,7 @@ export default function index() {
     handleEditSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
-    setCountSpaces(spaceTextValue);
+    // setCountSpaces(spaceTextValue);
   };
 
   const handleChange = (e) => {
