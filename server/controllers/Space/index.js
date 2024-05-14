@@ -2,10 +2,10 @@ const { spaces, user } = require("../../Models/index");
 
 const postSpaceText = async (req, res) => {
   try {
-    const { text, id } = req.body;
+    const { text } = req.body;
 
     const newSpaceText = await spaces.create({
-      Spaces: [{text, id,}],
+      Spaces: [{text}],
     });
 
     console.log(text);
@@ -26,10 +26,10 @@ const getSpaceText = async (req, res) => {
 };
 
 const editSpaceText = async (req, res) => {
-  const { text, id, documentId } = req.body;
+  const { text, documentId } = req.body;
   try {
     const editSpaceText = await spaces.findByIdAndUpdate(documentId, {
-      $push: {Spaces: {text, id}}, 
+      $push: {Spaces: {text}}, 
     });
     res.json(editSpaceText);
     console.log(documentId)

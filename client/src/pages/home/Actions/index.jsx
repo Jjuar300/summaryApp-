@@ -45,16 +45,21 @@ export default function index() {
   spaces.map((data) => {
     if (spaceTextValue === data?.Spaces[0]?.text) {
       spaceText = data?.Spaces[0]?.text;
+    
     }
+<<<<<<< HEAD
  
     data?.Spaces.map((data) => {
       if(editText === data?.text){
         spaceObjectId = data?.id; 
       }
     })
+=======
+>>>>>>> dev
 
     spaceId = data?._id;
     console.log(data?.Spaces);
+
   });
 
   dispatch(handleSpaceText(spaceText));
@@ -98,7 +103,6 @@ export default function index() {
     e?.preventDefault();
     postData("http://localhost:3004/postspacetext", {
       text: text,
-      id: uniqueId,
     });
   };
 
@@ -106,7 +110,6 @@ export default function index() {
     e?.preventDefault();
     updateData("http://localhost:3004/editspacetext", {
       text: text,
-      id: uniqueId,
       documentId: spaceId,
     });
   };
@@ -114,7 +117,10 @@ export default function index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     deleteData("http://localhost:3004/deletespace", {
+<<<<<<< HEAD
       id: spaceObjectId,
+=======
+>>>>>>> dev
     });
     handleClose();
     setCountSpaces(countSpaces - 1);

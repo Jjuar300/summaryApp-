@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const newSpace = new mongoose.Schema({
-  Spaces: [{}],
+  Spaces: [{
+    text: String, 
+    id: {type: mongoose.Schema.Types.ObjectId}, 
+  }],
 });
 
 const createNewSpace = mongoose.model("spaces", newSpace);
