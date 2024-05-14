@@ -47,15 +47,6 @@ export default function index() {
       spaceText = data?.Spaces[0]?.text;
     
     }
-<<<<<<< HEAD
- 
-    data?.Spaces.map((data) => {
-      if(editText === data?.text){
-        spaceObjectId = data?.id; 
-      }
-    })
-=======
->>>>>>> dev
 
     spaceId = data?._id;
     console.log(data?.Spaces);
@@ -117,10 +108,7 @@ export default function index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     deleteData("http://localhost:3004/deletespace", {
-<<<<<<< HEAD
-      id: spaceObjectId,
-=======
->>>>>>> dev
+
     });
     handleClose();
     setCountSpaces(countSpaces - 1);
