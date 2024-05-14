@@ -45,9 +45,12 @@ export default function index() {
     if (spaceTextValue === data?.Spaces[0]?.text) {
       // spaceId = data?._id;
       spaceText = data?.Spaces[0]?.text;
+    
     }
+
     spaceId = data?._id;
     console.log(data?.Spaces);
+
   });
 
   dispatch(handleSpaceText(spaceText));
@@ -89,7 +92,6 @@ export default function index() {
     e?.preventDefault();
     postData("http://localhost:3004/postspacetext", {
       text: text,
-      id: uniqueId,
     });
   };
 
@@ -97,7 +99,6 @@ export default function index() {
     e?.preventDefault();
     updateData("http://localhost:3004/editspacetext", {
       text: text,
-      id: uniqueId,
       documentId: spaceId,
     });
   };
@@ -105,7 +106,6 @@ export default function index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     deleteData("http://localhost:3004/deletespace", {
-      id: spaceId,
     });
     handleClose();
     setCountSpaces(SpacesLength - 1);
@@ -119,7 +119,7 @@ export default function index() {
   const handleCloseSave = () => {
     handleNewUserId();
     dispatch(handleInputValue(text));
-    isSpaceTextSubmit && handleSpaceTextSubmit(); // true or false?
+    isSpaceTextSubmit && handleSpaceTextSubmit(); 
     handleEditSpaceText();
     setOpenModal(false);
     setText("");
