@@ -45,13 +45,18 @@ export default function index() {
   spaces.map((data) => {
     if (spaceTextValue === data?.Spaces[0]?.text) {
       spaceText = data?.Spaces[0]?.text;
-    
     }
 
     spaceId = data?._id;
     console.log(data?.Spaces);
 
   });
+
+  spaces[0]?.Spaces.map((data) => {
+    if(editText === data?.text){
+      spaceObjectId = data?._id; 
+    }
+  })
 
   dispatch(handleSpaceText(spaceText));
 
@@ -61,6 +66,7 @@ export default function index() {
   console.log(isSpaceTextSubmit);
   console.log(editText)
   console.log(spaceObjectId)
+  // console.log(spaces[0]?.Spaces[0]._id)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -108,7 +114,7 @@ export default function index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     deleteData("http://localhost:3004/deletespace", {
-
+        id:spaceObjectId, 
     });
     handleClose();
     setCountSpaces(countSpaces - 1);

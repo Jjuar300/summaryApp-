@@ -44,6 +44,7 @@ const deleteSpace = async (req, res) => {
     const { id } = req.body;
     const deleteSpace = await spaces.findByIdAndDelete(id);
     res.json(deleteSpace);
+    console.log('detele id:', id)
   } catch (error) {
     console.log("Error occured while deleting data", error);
   }
