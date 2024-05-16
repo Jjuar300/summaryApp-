@@ -41,10 +41,14 @@ const editSpaceText = async (req, res) => {
 
 const deleteSpace = async (req, res) => {
   try {
-    const { id } = req.body;
-    const deleteSpace = await spaces.findByIdAndDelete(id);
+    const { documentId, text, objectId } = req.body;
+    const deleteSpace = await spaces.findByIdAndUpdate(documentId, {
+      $pull: {Spaces: { _id: objectId}}
+    });
     res.json(deleteSpace);
-    console.log('detele id:', id)
+    console.log('delete text:', text)
+    console.log('detele id:', documentId)
+    console.log('objectId:', objectId)
   } catch (error) {
     console.log("Error occured while deleting data", error);
   }

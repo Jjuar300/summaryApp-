@@ -1,7 +1,6 @@
 import { Button, useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
 import SpaceModal from "../../../components/Modal";
-import { v4 as uuidv4 } from "uuid";
 
 import React, { useEffect, useState, useRef } from "react";
 
@@ -36,37 +35,27 @@ export default function index() {
     (state) => state.createSpace.isSpaceTextSubmit
   );
   const dispatch = useDispatch();
-  const uniqueId = uuidv4();
 
   let spaceId;
-  let spaceText;
-  let spaceObjectId; 
+  let spaceObjectId;
 
   spaces.map((data) => {
-    if (spaceTextValue === data?.Spaces[0]?.text) {
-      spaceText = data?.Spaces[0]?.text;
-    }
-
     spaceId = data?._id;
-    console.log(data?.Spaces);
-
   });
 
   spaces[0]?.Spaces.map((data) => {
-    if(editText === data?.text){
-      spaceObjectId = data?._id; 
+    if (editText === data?.text) {
+      spaceObjectId = data?._id;
     }
-  })
+  });
 
-  dispatch(handleSpaceText(spaceText));
+  dispatch(handleSpaceText(editText));
 
   console.log(spaceId);
-  console.log(spaceText);
   console.log(spaceTextValue);
   console.log(isSpaceTextSubmit);
-  console.log(editText)
-  console.log(spaceObjectId)
-  // console.log(spaces[0]?.Spaces[0]._id)
+  console.log(editText);
+  console.log(spaceObjectId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -81,9 +70,9 @@ export default function index() {
 
   const handleButtonClicked = () => {
     setOpenModal(true);
-    if(spaces.length === 0){
+    if (spaces.length === 0) {
       dispatch(shouldSpaceTextSubmit(true));
-      console.log('spaceTextInput true')
+      console.log("spaceTextInput true");
     }
   };
 
@@ -113,8 +102,10 @@ export default function index() {
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
-    deleteData("http://localhost:3004/deletespace", {
-        id:spaceObjectId, 
+    updateData("http://localhost:3004/deletespace", {
+      documentId: spaceId,
+      objectId: spaceObjectId,
+      text: editText,
     });
     handleClose();
     setCountSpaces(countSpaces - 1);
@@ -122,14 +113,13 @@ export default function index() {
 
   useEffect(() => {
     fetchData("http://localhost:3004/getspacetext", setSpaces);
-  },[countSpaces]);
-
+  }, [countSpaces]);
 
   const handleCloseSave = (e) => {
-    e?.preventDefault(); 
+    e?.preventDefault();
     handleNewUserId();
     dispatch(handleInputValue(text));
-    isSpaceTextSubmit && handleSpaceTextSubmit(); 
+    isSpaceTextSubmit && handleSpaceTextSubmit();
     handleEditSpaceText();
     setOpenModal(false);
     setText("");
@@ -137,7 +127,6 @@ export default function index() {
 
     dispatch(shouldSpaceTextSubmit(false));
   };
-
 
   const handleCloseEditSpace = () => {
     handleEditSpaceText();
@@ -276,7 +265,7 @@ export default function index() {
       {spaces.map((data) =>
         data.Spaces.map((data) => (
           <Space
-            key={data?.id}
+            key={data?._id}
             text={data?.text}
             inlineStyle={{
               display: "flex",
