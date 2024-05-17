@@ -15,6 +15,7 @@ import {
   handleSpaceText,
   handleInputValue,
   shouldSpaceTextSubmit,
+  sendSpaceObjectId,
 } from "../../../Redux/createSpace";
 
 export default function index() {
@@ -44,18 +45,20 @@ export default function index() {
   });
 
   spaces[0]?.Spaces.map((data) => {
-    if (editText === data?.text) {
-      spaceObjectId = data?._id;
+    
+    if(editText === data?.text){
+      return spaceObjectId= data?._id
     }
+    
   });
 
   dispatch(handleSpaceText(editText));
 
-  console.log(spaceId);
+  console.log('documentId:',spaceId);
   console.log(spaceTextValue);
   console.log(isSpaceTextSubmit);
   console.log(editText);
-  console.log(spaceObjectId);
+  console.log('objectId:',spaceObjectId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -76,9 +79,19 @@ export default function index() {
     }
   };
 
+  const renameSpaceText = async (e) => {
+    e?.preventDefault();
+    updateData("http://localhost:3004/renamespacetext", {
+      documentId: spaceId,
+      text: editText,
+      objectId: spaceObjectId, 
+    });
+  };
+
   const handleRenameSpace = () => {
     setRenameSpaceOpen(true);
     handleClose();
+    dispatch(sendSpaceObjectId(spaceObjectId))
   };
 
   const handleNewUserId = () => {
@@ -129,7 +142,8 @@ export default function index() {
   };
 
   const handleCloseEditSpace = () => {
-    handleEditSpaceText();
+    renameSpaceText(); 
+    // handleEditSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
     // setCountSpaces(spaceTextValue);

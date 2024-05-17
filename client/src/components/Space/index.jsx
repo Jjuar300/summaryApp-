@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   handleInputValue,
   shouldSpaceTextSubmit,
+  sendSpaceObjectId, 
 } from "../../Redux/createSpace";
 
 export default function index({

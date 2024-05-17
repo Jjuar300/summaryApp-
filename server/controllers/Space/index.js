@@ -5,7 +5,7 @@ const postSpaceText = async (req, res) => {
     const { text } = req.body;
 
     const newSpaceText = await spaces.create({
-      Spaces: [{text}],
+      Spaces: [{ text }],
     });
 
     console.log(text);
@@ -29,13 +29,35 @@ const editSpaceText = async (req, res) => {
   const { text, documentId } = req.body;
   try {
     const editSpaceText = await spaces.findByIdAndUpdate(documentId, {
-      $push: {Spaces: {text}}, 
+      $push: { Spaces: { text } },
     });
     res.json(editSpaceText);
-    console.log(documentId)
-    
+    console.log(documentId);
   } catch (error) {
     console.log("Error occured while updating data from mongodb:", error);
+  }
+};
+
+const renameSpaceText = async (req, res) => {
+  try {
+    const { text, documentId, objectId } = req.body;
+  //   await spaces.findByIdAndUpdate(objectId, {
+      
+  //   }, 
+  // );
+
+  await spaces.updateOne(
+    {_id: documentId, "Spaces._id" : objectId}, 
+    {$set: {"Spaces.$.text" : text}}
+  )
+
+
+    console.log("----RENAME SPACE ------");
+    console.log("rename new text:", text);
+    console.log("rename documentId:", documentId);
+    console.log('rename objectId:', objectId)
+  } catch (error) {
+    console.log("Error occured while upadting spaceText", error);
   }
 };
 
@@ -43,12 +65,13 @@ const deleteSpace = async (req, res) => {
   try {
     const { documentId, text, objectId } = req.body;
     const deleteSpace = await spaces.findByIdAndUpdate(documentId, {
-      $pull: {Spaces: { _id: objectId}}
+      $pull: { Spaces: { _id: objectId } },
     });
     res.json(deleteSpace);
-    console.log('delete text:', text)
-    console.log('detele id:', documentId)
-    console.log('objectId:', objectId)
+    console.log("-----DELETE SPACE------");
+    console.log("delete text:", text);
+    console.log("detele id:", documentId);
+    console.log("objectId:", objectId);
   } catch (error) {
     console.log("Error occured while deleting data", error);
   }
@@ -59,4 +82,5 @@ module.exports = {
   getSpaceText,
   editSpaceText,
   deleteSpace,
+  renameSpaceText,
 };
