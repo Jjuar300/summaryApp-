@@ -23,6 +23,7 @@ export default function index() {
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
+  const [ObjectId, setObjectId] = useState(''); 
   const [spaces, setSpaces] = useState([]);
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,6 +36,8 @@ export default function index() {
   const isSpaceTextSubmit = useSelector(
     (state) => state.createSpace.isSpaceTextSubmit
   );
+  const spaceText = useSelector((state) => state.createSpace.spaceText)
+
   const dispatch = useDispatch();
 
   let spaceId;
@@ -46,8 +49,8 @@ export default function index() {
 
   spaces[0]?.Spaces.map((data) => {
     
-    if(editText === data?.text){
-      return spaceObjectId= data?._id
+    if(spaceText === data?.text){
+      spaceObjectId = data?._id
     }
     
   });
@@ -59,6 +62,8 @@ export default function index() {
   console.log(isSpaceTextSubmit);
   console.log(editText);
   console.log('objectId:',spaceObjectId);
+  console.log('space name:', spaceText)
+  console.log('object new id:', ObjectId)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -84,7 +89,7 @@ export default function index() {
     updateData("http://localhost:3004/renamespacetext", {
       documentId: spaceId,
       text: editText,
-      objectId: spaceObjectId, 
+      objectId: ObjectId, 
     });
   };
 
@@ -92,6 +97,7 @@ export default function index() {
     setRenameSpaceOpen(true);
     handleClose();
     dispatch(sendSpaceObjectId(spaceObjectId))
+    dispatch(handleSpaceText(editText));
   };
 
   const handleNewUserId = () => {
@@ -305,6 +311,9 @@ export default function index() {
             leftSpaceIcon={noteCards}
             rightSpaceIconClick={handleClick}
             setState={setEditText}
+            editText={editText}
+            setObjectId={setObjectId}
+            ObjectId={data?._id}
           />
         ))
       )}

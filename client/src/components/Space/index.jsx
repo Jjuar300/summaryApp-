@@ -5,6 +5,7 @@ import {
   handleInputValue,
   shouldSpaceTextSubmit,
   sendSpaceObjectId, 
+  handleSpaceText
 } from "../../Redux/createSpace";
 
 export default function index({
@@ -15,6 +16,8 @@ export default function index({
   inlineStyle,
   rightSpaceIconClick,
   setState,
+  setObjectId, 
+  ObjectId
 }) {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const dispatch = useDispatch();
@@ -27,7 +30,10 @@ export default function index({
 
   const handleSpaceClick = () => {
     setState(text);
+    setObjectId(ObjectId)
     // dispatch(handleInputValue(text))
+      // dispatch(handleSpaceText(editText));
+   
   };
 
   return (
