@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux'
 
 export default function index() {
   const spaceText = useSelector(state => state.createSpace.spaceText)
-
-  console.log(spaceText)
   return (
     <>
     <NavBarNotes

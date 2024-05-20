@@ -1,4 +1,4 @@
-const { spaces, user } = require("../../Models/index");
+const { spaces } = require("../../Models/index");
 
 const postSpaceText = async (req, res) => {
   try {
@@ -41,21 +41,16 @@ const editSpaceText = async (req, res) => {
 const renameSpaceText = async (req, res) => {
   try {
     const { text, documentId, objectId } = req.body;
-  //   await spaces.findByIdAndUpdate(objectId, {
-      
-  //   }, 
-  // );
 
-  await spaces.updateOne(
-    {_id: documentId, "Spaces._id" : objectId}, 
-    {$set: {"Spaces.$.text" : text}}
-  )
-
+    await spaces.updateOne(
+      { _id: documentId, "Spaces._id": objectId },
+      { $set: { "Spaces.$.text": text } }
+    );
 
     console.log("----RENAME SPACE ------");
     console.log("rename new text:", text);
     console.log("rename documentId:", documentId);
-    console.log('rename objectId:', objectId)
+    console.log("rename objectId:", objectId);
   } catch (error) {
     console.log("Error occured while upadting spaceText", error);
   }

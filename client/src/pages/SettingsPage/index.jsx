@@ -6,20 +6,17 @@ import {
   Divider,
   TextField,
   Typography,
-  Button,
-  Modal,
   useMediaQuery,
 } from "@mui/material";
-import { feedBack, shieldCheck } from "./assets";
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
 
 export default function index() {
   const { user } = useUser();
-  const FirstName = user.firstName.charAt(0).toUpperCase();
-  const navigate = useNavigate();
   const [isOpen, setOpen] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const FirstName = user.firstName.charAt(0).toUpperCase();
+  const navigate = useNavigate();
 
   const DesktopDeleteAccountModal = {
     position: "absolute",

@@ -6,6 +6,12 @@ import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { postData } from "../../../utils";
+import {
+  userAvatarStyle,
+  mobileUserAvatarStyle,
+  boxStyle,
+  buttonStyle,
+} from "./styles/index";
 
 export default function Index() {
   const { user } = useUser();
@@ -13,18 +19,19 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const open = Boolean(anchorEl);
 
   const handleNewUser = async (e) => {
-    e.preventDefault(); 
-     postData("http://localhost:3004/postnewuser",{
-       fullname: user.fullName,
-       userName: user.username, 
-       email: user.primaryEmailAddress.emailAddress,
-       userId: user.id,  
-       password: user.passwordEnabled, 
-       spaceId: null, 
-     }) 
-  }; 
+    e.preventDefault();
+    postData("http://localhost:3004/postnewuser", {
+      fullname: user.fullName,
+      userName: user.username,
+      email: user.primaryEmailAddress.emailAddress,
+      userId: user.id,
+      password: user.passwordEnabled,
+      spaceId: null,
+    });
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,41 +39,6 @@ export default function Index() {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const userAvatarStyle = {
-    position: "relative",
-    backgroundColor: "orange",
-    top: "2rem",
-    left: "2rem",
-    width: "3rem",
-    height: "3rem",
-    fontSize: "1.4rem",
-    cursor: "pointer",
-  };
-
-  const mobileUserAvatarStyle = {
-    position: "relative",
-    backgroundColor: "orange",
-    top: "2rem",
-    left: "2rem",
-    width: "3rem",
-    height: "3rem",
-    fontSize: "1.4rem",
-  };
-
-  const boxStyle = {
-    position: "relative",
-    display: "flex",
-    left: "1rem",
-  };
-
-  const buttonStyle = {
-    fontSize: "1rem",
-    color: "black",
-    width: "10rem",
-    left: "-2rem",
   };
 
   return (

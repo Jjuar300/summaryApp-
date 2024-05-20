@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import exitArrow from "./assets/ExitArrow.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function index({ submitClickFunction }) {
+export default function index() {
   const navigate = useNavigate();
   return (
     <>

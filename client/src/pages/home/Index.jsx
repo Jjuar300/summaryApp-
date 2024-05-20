@@ -12,7 +12,7 @@ export default function Index() {
 
   return (
     <>
-    <UserSignIn/>
+      <UserSignIn />
       <Notes />
       {isMobileScreen ? (
         <>

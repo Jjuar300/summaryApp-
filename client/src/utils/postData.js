@@ -19,7 +19,6 @@ const postData = async (
     } 
  }
  
-
  export {
   postData, 
  }

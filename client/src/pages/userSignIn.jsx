@@ -14,11 +14,5 @@ export default function userSignIn() {
   //   password: user.passwordEnabled,
   //   spaceId: null,
   // });
-
-  console.log("userName:", userFullname);
-  console.log("user id:", user.id);
-  console.log("user email:", user.primaryEmailAddress.emailAddress);
-  console.log("user password:", user.passwordEnabled);
-
   return <></>;
 }

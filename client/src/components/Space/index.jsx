@@ -1,12 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-import { useDispatch } from "react-redux";
-import {
-  handleInputValue,
-  shouldSpaceTextSubmit,
-  sendSpaceObjectId, 
-  handleSpaceText
-} from "../../Redux/createSpace";
 
 export default function index({
   text,
@@ -16,24 +9,19 @@ export default function index({
   inlineStyle,
   rightSpaceIconClick,
   setState,
-  setObjectId, 
-  ObjectId
+  setObjectId,
+  ObjectId,
 }) {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
-  const dispatch = useDispatch();
 
   const handleRightIconClick = (event) => {
     setState(text);
     rightSpaceIconClick(event);
-    dispatch(handleInputValue(text));
   };
 
   const handleSpaceClick = () => {
     setState(text);
-    setObjectId(ObjectId)
-    // dispatch(handleInputValue(text))
-      // dispatch(handleSpaceText(editText));
-   
+    setObjectId(ObjectId);
   };
 
   return (

@@ -1,16 +1,16 @@
-import { Button, useMediaQuery, Popover, Box, Typography } from "@mui/material";
+import { useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
-import SpaceModal from "../../../components/Modal";
-
-import React, { useEffect, useState, useRef } from "react";
-
-import { addcircle, dragIndicator, edit, noteCards } from "./assets";
-
-import { fetchData, postData, updateData, deleteData } from "../../../utils";
-
+import React, { useEffect, useState } from "react";
+import { addcircle, dragIndicator, noteCards } from "./assets";
+import { fetchData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
-
 import { useSelector, useDispatch } from "react-redux";
+
+import SpaceList from "./SpaceList";
+import SpaceModals from "./SpaceModals";
+import SpaceCreate from "./SpaceCreate";
+import PopOver from "./PopOver";
+
 import {
   handleSpaceText,
   handleInputValue,
@@ -23,23 +23,20 @@ export default function index() {
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
-  const [ObjectId, setObjectId] = useState(''); 
+  const [ObjectId, setObjectId] = useState("");
   const [spaces, setSpaces] = useState([]);
-  const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const [countSpaces, setCountSpaces] = useState(0);
-  const SpacesLength = spaces[0]?.Spaces.length;
+
+  const dispatch = useDispatch();
+  const open = Boolean(anchorEl);
+  const isMobileScreen = useMediaQuery("(max-width:400px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-  const spaceTextValue = useSelector((state) => state.createSpace.inputValue);
   const isSpaceTextSubmit = useSelector(
     (state) => state.createSpace.isSpaceTextSubmit
   );
-  const spaceText = useSelector((state) => state.createSpace.spaceText)
-
-  const dispatch = useDispatch();
-
+  const spaceText = useSelector((state) => state.createSpace.spaceText);
   let spaceId;
   let spaceObjectId;
 
@@ -48,22 +45,12 @@ export default function index() {
   });
 
   spaces[0]?.Spaces.map((data) => {
-    
-    if(spaceText === data?.text){
-      spaceObjectId = data?._id
+    if (spaceText === data?.text) {
+      spaceObjectId = data?._id;
     }
-    
   });
 
   dispatch(handleSpaceText(editText));
-
-  console.log('documentId:',spaceId);
-  console.log(spaceTextValue);
-  console.log(isSpaceTextSubmit);
-  console.log(editText);
-  console.log('objectId:',spaceObjectId);
-  console.log('space name:', spaceText)
-  console.log('object new id:', ObjectId)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,9 +59,6 @@ export default function index() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  console.log(text);
-  console.log(spaces);
 
   const handleButtonClicked = () => {
     setOpenModal(true);
@@ -89,14 +73,14 @@ export default function index() {
     updateData("http://localhost:3004/renamespacetext", {
       documentId: spaceId,
       text: editText,
-      objectId: ObjectId, 
+      objectId: ObjectId,
     });
   };
 
   const handleRenameSpace = () => {
     setRenameSpaceOpen(true);
     handleClose();
-    dispatch(sendSpaceObjectId(spaceObjectId))
+    dispatch(sendSpaceObjectId(spaceObjectId));
     dispatch(handleSpaceText(editText));
   };
 
@@ -148,11 +132,9 @@ export default function index() {
   };
 
   const handleCloseEditSpace = () => {
-    renameSpaceText(); 
-    // handleEditSpaceText();
+    renameSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
-    // setCountSpaces(spaceTextValue);
   };
 
   const handleChange = (e) => {
@@ -210,113 +192,56 @@ export default function index() {
 
   return (
     <>
-      <Popover
+      <PopOver
+        Popover={Popover}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          left: isMobileScreen ? "-3rem" : "-4rem",
-          width: "22rem",
-          textTransform: "",
-        }}
-      >
-        <PopoverContainer
-          text={"Rename"}
-          buttonStyle={renameButtonStyle}
-          submitOnClick={handleRenameSpace}
-        />
-        <PopoverContainer
-          text={"Delete"}
-          buttonStyle={deleteButonStyle}
-          submitOnClick={handleDeleteSpace}
-        />
-      </Popover>
-
-      <Box sx={createSpaceStyle}>
-        <Typography>Browse Space</Typography>
-      </Box>
-
-      <Box onClick={handleButtonClicked} sx={createSpaceStyle}>
-        <Typography>Create Space</Typography>
-
-        <Box
-          sx={{
-            position: "relative",
-            left: isMobileScreen ? "13rem" : "6rem",
-          }}
-        >
-          <img src={`${addcircle}`} />
-        </Box>
-      </Box>
-
-      <SpaceModal
-        onClick={handleCloseSave}
-        onChange={handleChange}
-        textQuestion={"Create a new Space"}
-        isText={true}
-        inputStyle={textFieldStyle}
-        isInput={true}
-        isOpen={isOpenModal}
-        textLeftButton={"Cancel"}
-        textRightButton={"Save"}
-        setOpen={setOpenModal}
-        inlineStyle={MobileSpaceModal}
-        textCount={LengthOfText}
+        handleClose={handleClose}
+        isMobileScreen={isMobileScreen}
+        PopoverContainer={PopoverContainer}
+        renameButtonStyle={renameButtonStyle}
+        handleRenameSpace={handleRenameSpace}
+        deleteButonStyle={deleteButonStyle}
+        handleDeleteSpace={handleDeleteSpace}
       />
 
-      <SpaceModal
-        onClick={handleCloseEditSpace}
-        onChange={handleEditChange}
-        setOpen={setRenameSpaceOpen}
-        textQuestion={"Edit Space"}
-        textLeftButton={"Cancel"}
-        textRightButton={"Save"}
-        isInput={true}
-        isOpen={isRenameSpaceOpen}
-        inlineStyle={MobileSpaceModal}
-        inputStyle={textFieldStyle}
-        isText={true}
-        previousText={editText}
-        textCount={LengthOfEditText}
+      <SpaceCreate
+        createSpaceStyle={createSpaceStyle}
+        handleButtonClicked={handleButtonClicked}
+        isMobileScreen={isMobileScreen}
+        addcircle={addcircle}
+        Box={Box}
+        Typography={Typography}
       />
 
-      {spaces.map((data) =>
-        data.Spaces.map((data) => (
-          <Space
-            key={data?._id}
-            text={data?.text}
-            inlineStyle={{
-              display: "flex",
-              position: "relative",
-              top: "11rem",
-              left: "-0.5rem",
-              ":hover": {
-                cursor: "pointer",
-                background: "#ededed",
-              },
-              width: "12rem",
-              padding: ".5rem",
-              paddingRight: isMobileScreen ? "11.4rem" : "1.3rem",
-              paddingLeft: isMobileScreen ? "4rem" : "3rem",
-              transition: "background .2s ease-in-out",
-              opacity: ".8",
-              fontSize: "1.2rem",
-              backgroundColor: editText === data?.Text && "#ededed",
-              borderRight: editText === data?.Text && "3px solid gray",
-            }}
-            isSpaceIcon={true}
-            rightSpaceIcon={dragIndicator}
-            leftSpaceIcon={noteCards}
-            rightSpaceIconClick={handleClick}
-            setState={setEditText}
-            editText={editText}
-            setObjectId={setObjectId}
-            ObjectId={data?._id}
-          />
-        ))
-      )}
+      <SpaceModals
+        handleChange={handleChange}
+        setOpenModal={setOpenModal}
+        isOpenModal={isOpenModal}
+        textFieldStyle={textFieldStyle}
+        MobileSpaceModal={MobileSpaceModal}
+        LengthOfEditText={LengthOfEditText}
+        LengthOfText={LengthOfText}
+        handleCloseEditSpace={handleCloseEditSpace}
+        handleEditChange={handleEditChange}
+        setRenameSpaceOpen={setRenameSpaceOpen}
+        isRenameSpaceOpen={isRenameSpaceOpen}
+        editText={editText}
+        handleCloseSave={handleCloseSave}
+      />
+
+      <SpaceList
+        countSpaces={countSpaces}
+        spaces={spaces}
+        isMobileScreen={isMobileScreen}
+        handleClick={handleClick}
+        setEditText={setEditText}
+        editText={editText}
+        setObjectId={setObjectId}
+        dragIndicator={dragIndicator}
+        noteCards={noteCards}
+        Space={Space}
+      />
     </>
   );
 }

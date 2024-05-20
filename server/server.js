@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3004;
 const app = express();
 const httpServer = http.createServer(app);
 const routes = require("./routes/index");
-const openAI = require('./openai/index')
+const openAI = require("./openai/index");
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ httpServer.listen(PORT, () => {
 });
 
 app.use(cors("*"));
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 app.use("/", routes);
