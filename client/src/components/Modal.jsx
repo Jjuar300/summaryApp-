@@ -19,7 +19,8 @@ export default function DeleteModal({
   const MaxLengthOfText = 20;
   return (
     <>
-      <Modal open={isOpen}>
+      <Modal
+      open={isOpen}>
         <Box sx={inlineStyle}>
           {isText ? (
             <Typography

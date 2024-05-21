@@ -21,7 +21,8 @@ export default function PopOver({
         sx={{
           display: "flex",
           flexDirection: "row",
-          left: isMobileScreen ? "-3rem" : "-4rem",
+          left: isMobileScreen ? "-3rem" : "8rem",
+          top: isMobileScreen ? '' : '10rem', 
           width: "22rem",
           textTransform: "",
         }}

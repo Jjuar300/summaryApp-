@@ -25,7 +25,7 @@ const getSpaceText = async (req, res) => {
   }
 };
 
-const editSpaceText = async (req, res) => {
+const addSpace = async (req, res) => {
   const { text, documentId } = req.body;
   try {
     const editSpaceText = await spaces.findByIdAndUpdate(documentId, {
@@ -75,7 +75,7 @@ const deleteSpace = async (req, res) => {
 module.exports = {
   postSpaceText,
   getSpaceText,
-  editSpaceText,
+  addSpace,
   deleteSpace,
   renameSpaceText,
 };

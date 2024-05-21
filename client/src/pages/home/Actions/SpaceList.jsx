@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function SpaceList({
   spaces,
   isMobileScreen,
@@ -8,10 +10,14 @@ export default function SpaceList({
   dragIndicator,
   noteCards,
   Space,
+  handleRightClick, 
+  setAnchorEl
 }) {
+
   return (
     <>
       {spaces.map((data) =>
+       (
         data.Spaces.map((data) => (
           <Space
             key={data?._id}
@@ -21,7 +27,7 @@ export default function SpaceList({
               position: "relative",
               top: "11rem",
               left: "-0.5rem",
-              ":hover": {
+              ":hover": { 
                 cursor: "pointer",
                 background: "#ededed",
               },
@@ -35,6 +41,7 @@ export default function SpaceList({
               backgroundColor: editText === data?.Text && "#ededed",
               borderRight: editText === data?.Text && "3px solid gray",
             }}
+            isRightIcon={true}
             isSpaceIcon={true}
             rightSpaceIcon={dragIndicator}
             leftSpaceIcon={noteCards}
@@ -43,8 +50,12 @@ export default function SpaceList({
             editText={editText}
             setObjectId={setObjectId}
             ObjectId={data?._id}
+            handleRightClick={handleRightClick}
+            setAchorEl={setAnchorEl}
           />
         ))
+
+       )
       )}
     </>
   );

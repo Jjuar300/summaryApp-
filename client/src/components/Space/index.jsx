@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import { memo, useState } from "react";
 
-export default function index({
+
+const  index = ({
   text,
   isSpaceIcon,
   leftSpaceIcon,
@@ -11,12 +13,13 @@ export default function index({
   setState,
   setObjectId,
   ObjectId,
-}) {
+  isRightIcon, 
+}) => {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
 
-  const handleRightIconClick = (event) => {
+  const handleRightIconClick = () => {
     setState(text);
-    rightSpaceIconClick(event);
+    // rightSpaceIconClick(event);
   };
 
   const handleSpaceClick = () => {
@@ -26,7 +29,8 @@ export default function index({
 
   return (
     <>
-      <Box onClick={handleSpaceClick} sx={inlineStyle}>
+      <Box 
+      onClick={handleSpaceClick} sx={inlineStyle}>
         <Typography
           sx={{
             width: "20rem",
@@ -34,7 +38,7 @@ export default function index({
         >
           {text}
         </Typography>
-        {isSpaceIcon ? (
+        {/* {isRightIcon ? (
           <Box
             onClick={handleRightIconClick}
             sx={{
@@ -47,7 +51,7 @@ export default function index({
           >
             <img src={`${rightSpaceIcon}`} />
           </Box>
-        ) : null}
+        ) : null} */}
 
         {isSpaceIcon ? (
           <Box
@@ -66,3 +70,5 @@ export default function index({
     </>
   );
 }
+
+export default memo(index); 

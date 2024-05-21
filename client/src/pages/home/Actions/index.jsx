@@ -26,7 +26,7 @@ export default function index() {
   const [ObjectId, setObjectId] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [countSpaces, setCountSpaces] = useState(0);
+  const [countSpaces, setCountSpaces] = useState();
 
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
@@ -53,6 +53,7 @@ export default function index() {
   dispatch(handleSpaceText(editText));
 
   const handleClick = (event) => {
+    event.preventDefault(); 
     setAnchorEl(event.currentTarget);
   };
 
@@ -64,7 +65,6 @@ export default function index() {
     setOpenModal(true);
     if (spaces.length === 0) {
       dispatch(shouldSpaceTextSubmit(true));
-      console.log("spaceTextInput true");
     }
   };
 
@@ -75,6 +75,7 @@ export default function index() {
       text: editText,
       objectId: ObjectId,
     });
+    setCountSpaces(Math.floor(Math.random() * 99));
   };
 
   const handleRenameSpace = () => {
@@ -95,9 +96,9 @@ export default function index() {
     });
   };
 
-  const handleEditSpaceText = async (e) => {
+  const handleAddSpaceText = async (e) => {
     e?.preventDefault();
-    updateData("http://localhost:3004/editspacetext", {
+    updateData("http://localhost:3004/addspacetext", {
       text: text,
       documentId: spaceId,
     });
@@ -111,22 +112,22 @@ export default function index() {
       text: editText,
     });
     handleClose();
-    setCountSpaces(countSpaces - 1);
+    setCountSpaces(Math.floor(Math.random() * 99));
   };
 
   useEffect(() => {
     fetchData("http://localhost:3004/getspacetext", setSpaces);
-  }, [countSpaces]);
+  },[countSpaces])
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
     handleNewUserId();
     dispatch(handleInputValue(text));
     isSpaceTextSubmit && handleSpaceTextSubmit();
-    handleEditSpaceText();
+    handleAddSpaceText();
     setOpenModal(false);
     setText("");
-    setCountSpaces(countSpaces + 1);
+    setCountSpaces(Math.floor(Math.random() * 99));
 
     dispatch(shouldSpaceTextSubmit(false));
   };
@@ -190,6 +191,11 @@ export default function index() {
     textTransform: "none",
   };
 
+  // const handleContext = (e) => {
+  //   console.log('click right')
+  //   handleClick(); 
+  // }
+
   return (
     <>
       <PopOver
@@ -230,11 +236,13 @@ export default function index() {
         handleCloseSave={handleCloseSave}
       />
 
-      <SpaceList
-        countSpaces={countSpaces}
+     <Box
+     onContextMenu={handleClick}
+     >
+     <SpaceList
         spaces={spaces}
         isMobileScreen={isMobileScreen}
-        handleClick={handleClick}
+        handleClick={handleClick}        
         setEditText={setEditText}
         editText={editText}
         setObjectId={setObjectId}
@@ -242,6 +250,7 @@ export default function index() {
         noteCards={noteCards}
         Space={Space}
       />
+     </Box>
     </>
   );
 }

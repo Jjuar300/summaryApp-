@@ -10,7 +10,7 @@ const persistConfig = {
   version: 1,
   storage,
   sessionStorage,
-  whitelist: ["createSpace"],
+  // whitelist: ["createSpace"],
 };
 
 const reducer = combineReducers({
