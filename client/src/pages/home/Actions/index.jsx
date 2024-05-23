@@ -36,9 +36,15 @@ export default function index() {
   const isSpaceTextSubmit = useSelector(
     (state) => state.createSpace.isSpaceTextSubmit
   );
+  const ObjectIdOfSpace = useSelector(state => state.createSpace.spaceObjectId)
   const spaceText = useSelector((state) => state.createSpace.spaceText);
   let spaceId;
   let spaceObjectId;
+
+  console.log('ObjectIdSpace:',ObjectIdOfSpace)
+  console.log('spaceObjectId:',spaceObjectId)
+  console.log('objectId:',ObjectId)
+  console.log(anchorEl)
 
   spaces.map((data) => {
     spaceId = data?._id;
@@ -47,16 +53,12 @@ export default function index() {
   spaces[0]?.Spaces.map((data) => {
     if (spaceText === data?.text) {
       spaceObjectId = data?._id;
+      setObjectId(data?._id)
     }
   });
 
   dispatch(handleSpaceText(editText));
-
-  const handleClick = (event) => {
-    event.preventDefault(); 
-    setAnchorEl(event.currentTarget);
-  };
-
+ 
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -191,11 +193,6 @@ export default function index() {
     textTransform: "none",
   };
 
-  // const handleContext = (e) => {
-  //   console.log('click right')
-  //   handleClick(); 
-  // }
-
   return (
     <>
       <PopOver
@@ -236,21 +233,15 @@ export default function index() {
         handleCloseSave={handleCloseSave}
       />
 
-     <Box
-     onContextMenu={handleClick}
-     >
      <SpaceList
         spaces={spaces}
         isMobileScreen={isMobileScreen}
-        handleClick={handleClick}        
         setEditText={setEditText}
         editText={editText}
-        setObjectId={setObjectId}
-        dragIndicator={dragIndicator}
         noteCards={noteCards}
         Space={Space}
+        setAnchorEl={setAnchorEl}
       />
-     </Box>
     </>
   );
 }

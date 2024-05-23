@@ -16,7 +16,7 @@ export default function DeleteModal({
   onChange,
   previousText,
 }) {
-  const MaxLengthOfText = 20;
+  const MaxLengthOfText = 25;
   return (
     <>
       <Modal
@@ -71,7 +71,7 @@ export default function DeleteModal({
                     fontSize: ".9rem",
                   }}
                 >
-                  {textCount}/20
+                  {textCount}/25
                 </Typography>
               </>
             ) : null}
