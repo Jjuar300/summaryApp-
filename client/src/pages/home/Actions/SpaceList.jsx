@@ -1,4 +1,6 @@
 import { Box } from "@mui/material";
+import { sendObjectId } from "../../../Redux/createSpace";
+import { useDispatch } from "react-redux";
 
 export default function SpaceList({
   spaces,
@@ -9,16 +11,20 @@ export default function SpaceList({
   Space,
   setAnchorEl,
 }) {
-  const handleClickContext = (e) => {
-    e.preventDefault();
-    setAnchorEl(e.currentTarget);
+
+  const dispatch = useDispatch(''); 
+  const handleClickContext = (event, value) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+    console.log("value:", value)
+    dispatch(sendObjectId(value))
   };
 
   return (
     <>
       {spaces.map((data) =>
         data.Spaces.map((data) => (
-          <Box onContextMenu={handleClickContext} key={data?._id}>
+          <Box onContextMenu={(e) => handleClickContext(e, data?._id)} key={data?._id}>
             <Space
               key={data?._id}
               text={data?.text}
@@ -45,6 +51,7 @@ export default function SpaceList({
               isSpaceIcon={true}
               leftSpaceIcon={noteCards}
               setState={setEditText}
+              ObjectId={data?._id}
             />
           </Box>
         ))

@@ -7,6 +7,7 @@ export const createSpace = createSlice({
     spaceText: "",
     spaceObjectId: "",
     isSpaceTextSubmit: true,
+    ObjectId: "", 
   },
 
   reducers: {
@@ -22,7 +23,9 @@ export const createSpace = createSlice({
     sendSpaceObjectId: (state, action) => {
       state.spaceObjectId = action.payload;
     },
-   
+    sendObjectId: (state, action) => {
+      state.ObjectId = action.payload; 
+    }
   },
 });
 
@@ -31,5 +34,6 @@ export const {
   handleSpaceText,
   shouldSpaceTextSubmit,
   sendSpaceObjectId,
+  sendObjectId, 
 } = createSpace.actions;
 export default createSpace.reducer;

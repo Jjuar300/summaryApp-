@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { memo } from "react";
+import { useDispatch } from "react-redux";
+import { sendObjectId} from "../../Redux/createSpace";
 
 const index = ({
   text,
@@ -8,11 +10,14 @@ const index = ({
   leftSpaceIcon,
   inlineStyle,
   setState,
+  ObjectId, 
 }) => {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const dispatch = useDispatch()
 
   const handleSpaceClick = () => {
     setState(text);
+    dispatch(sendObjectId(ObjectId))
   };
 
   return (

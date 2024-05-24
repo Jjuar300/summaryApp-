@@ -37,14 +37,19 @@ export default function index() {
     (state) => state.createSpace.isSpaceTextSubmit
   );
   const ObjectIdOfSpace = useSelector(state => state.createSpace.spaceObjectId)
+  const objectId = useSelector(state => state.createSpace.ObjectId)
   const spaceText = useSelector((state) => state.createSpace.spaceText);
   let spaceId;
   let spaceObjectId;
 
   console.log('ObjectIdSpace:',ObjectIdOfSpace)
   console.log('spaceObjectId:',spaceObjectId)
-  console.log('objectId:',ObjectId)
+  // console.log('objectId:',ObjectId)
   console.log(anchorEl)
+  console.log('editText:',editText)
+  console.log('spaceText:', spaceText)
+  console.log('spaceId:', spaceId)
+  console.log('redux objectId:', objectId)
 
   spaces.map((data) => {
     spaceId = data?._id;
@@ -52,8 +57,7 @@ export default function index() {
 
   spaces[0]?.Spaces.map((data) => {
     if (spaceText === data?.text) {
-      spaceObjectId = data?._id;
-      setObjectId(data?._id)
+      spaceObjectId = data?._id; 
     }
   });
 
@@ -75,7 +79,7 @@ export default function index() {
     updateData("http://localhost:3004/renamespacetext", {
       documentId: spaceId,
       text: editText,
-      objectId: ObjectId,
+      objectId: objectId,
     });
     setCountSpaces(Math.floor(Math.random() * 99));
   };
