@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSpace from "./createSpace";
+import SpaceNotes from "./SpaceNotes";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
@@ -10,11 +11,13 @@ const persistConfig = {
   version: 1,
   storage,
   sessionStorage,
-  // whitelist: ["createSpace"],
+  //  whitelist:[createSpace], 
+  // //  blacklist:[SpaceNotes], 
 };
 
 const reducer = combineReducers({
   createSpace: createSpace,
+  SpaceNotes: SpaceNotes, 
   middleware: [thunk],
 });
 

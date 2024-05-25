@@ -3,6 +3,7 @@ import { useMediaQuery } from "@mui/material";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { sendObjectId} from "../../Redux/createSpace";
+import { handleSpaceText } from "../../Redux/createSpace";
 
 const index = ({
   text,
@@ -18,6 +19,7 @@ const index = ({
   const handleSpaceClick = () => {
     setState(text);
     dispatch(sendObjectId(ObjectId))
+    dispatch(handleSpaceText(text))
   };
 
   return (

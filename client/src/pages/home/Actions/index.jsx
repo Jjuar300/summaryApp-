@@ -39,8 +39,11 @@ export default function index() {
   const ObjectIdOfSpace = useSelector(state => state.createSpace.spaceObjectId)
   const objectId = useSelector(state => state.createSpace.ObjectId)
   const spaceText = useSelector((state) => state.createSpace.spaceText);
+  const inputText = useSelector((state) => state.createSpace.inputValue)
+
   let spaceId;
   let spaceObjectId;
+  let lastObjectId; 
 
   console.log('ObjectIdSpace:',ObjectIdOfSpace)
   console.log('spaceObjectId:',spaceObjectId)
@@ -59,9 +62,9 @@ export default function index() {
     if (spaceText === data?.text) {
       spaceObjectId = data?._id; 
     }
+    lastObjectId = data?._id; 
   });
 
-  dispatch(handleSpaceText(editText));
  
   const handleClose = () => {
     setAnchorEl(null);
@@ -88,7 +91,7 @@ export default function index() {
     setRenameSpaceOpen(true);
     handleClose();
     dispatch(sendSpaceObjectId(spaceObjectId));
-    dispatch(handleSpaceText(editText));
+    // dispatch(handleSpaceText(editText));
   };
 
   const handleNewUserId = () => {
@@ -134,8 +137,10 @@ export default function index() {
     setOpenModal(false);
     setText("");
     setCountSpaces(Math.floor(Math.random() * 99));
-
     dispatch(shouldSpaceTextSubmit(false));
+   
+    dispatch(handleSpaceText(text))
+
   };
 
   const handleCloseEditSpace = () => {
