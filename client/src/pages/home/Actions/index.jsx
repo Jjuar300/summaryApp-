@@ -114,7 +114,7 @@ export default function index() {
     e?.preventDefault();
     updateData("http://localhost:3004/deletespace", {
       documentId: spaceId,
-      objectId: spaceObjectId,
+      objectId: objectId,
       text: editText,
     });
     handleClose();
