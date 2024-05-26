@@ -122,6 +122,7 @@ export default function index() {
     });
     handleClose();
     setCountSpaces(Math.floor(Math.random() * 99));
+    dispatch(handleSpaceText(''))
   };
 
   useEffect(() => {
