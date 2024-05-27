@@ -10,5 +10,5 @@ router.put("/deletespace", Space.deleteSpace);
 router.put("/renamespacetext", Space.renameSpaceText);
 
 // router.post("/postnewuser", User.newUser);
-router.post("/postnewuserid", User.newUserId);
+router.post("/userlogin", User.newUser);
 module.exports = router;

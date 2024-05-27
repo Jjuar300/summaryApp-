@@ -1,30 +1,36 @@
 import { Box } from "@mui/material";
-import { sendObjectId } from "../../../Redux/createSpace";
+import { sendObjectId, handleSpaceText } from "../../../Redux/createSpace";
 import { useDispatch } from "react-redux";
+import { noteCards } from "./assets";
+import { useMediaQuery } from "@mui/material";
 
 export default function SpaceList({
   spaces,
-  isMobileScreen,
   setEditText,
   editText,
-  noteCards,
   Space,
   setAnchorEl,
 }) {
-
-  const dispatch = useDispatch(''); 
-  const handleClickContext = (event, value) => {
+  const dispatch = useDispatch("");
+  const handleClickContext = (event, value, editText) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    console.log("value:", value)
-    dispatch(sendObjectId(value))
+    console.log("value:", value);
+    dispatch(sendObjectId(value));
+    setEditText(editText);
+    dispatch(handleSpaceText(editText));
   };
+
+  const isMobileScreen = useMediaQuery("(max-width:400px)");
 
   return (
     <>
       {spaces.map((data) =>
         data.Spaces.map((data) => (
-          <Box onContextMenu={(e) => handleClickContext(e, data?._id)} key={data?._id}>
+          <Box
+            onContextMenu={(e) => handleClickContext(e, data?._id, data?.text)}
+            key={data?._id}
+          >
             <Space
               key={data?._id}
               text={data?.text}

@@ -1,7 +1,6 @@
 import { useMediaQuery, Popover, Box, Typography } from "@mui/material";
 import { Space } from "../../../components";
-import React, { useEffect, useState } from "react";
-import { addcircle, dragIndicator, noteCards } from "./assets";
+import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,7 +22,6 @@ export default function index() {
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
-  const [ObjectId, setObjectId] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [countSpaces, setCountSpaces] = useState();
@@ -36,23 +34,12 @@ export default function index() {
   const isSpaceTextSubmit = useSelector(
     (state) => state.createSpace.isSpaceTextSubmit
   );
-  const ObjectIdOfSpace = useSelector(state => state.createSpace.spaceObjectId)
-  const objectId = useSelector(state => state.createSpace.ObjectId)
+
+  const objectId = useSelector((state) => state.createSpace.ObjectId);
   const spaceText = useSelector((state) => state.createSpace.spaceText);
-  const inputText = useSelector((state) => state.createSpace.inputValue)
 
   let spaceId;
   let spaceObjectId;
-  let lastObjectId; 
-
-  console.log('ObjectIdSpace:',ObjectIdOfSpace)
-  console.log('spaceObjectId:',spaceObjectId)
-  // console.log('objectId:',ObjectId)
-  console.log(anchorEl)
-  console.log('editText:',editText)
-  console.log('spaceText:', spaceText)
-  console.log('spaceId:', spaceId)
-  console.log('redux objectId:', objectId)
 
   spaces.map((data) => {
     spaceId = data?._id;
@@ -60,12 +47,10 @@ export default function index() {
 
   spaces[0]?.Spaces.map((data) => {
     if (spaceText === data?.text) {
-      spaceObjectId = data?._id; 
+      spaceObjectId = data?._id;
     }
-    lastObjectId = data?._id; 
   });
 
- 
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -91,7 +76,6 @@ export default function index() {
     setRenameSpaceOpen(true);
     handleClose();
     dispatch(sendSpaceObjectId(spaceObjectId));
-    // dispatch(handleSpaceText(editText));
   };
 
   const handleNewUserId = () => {
@@ -122,12 +106,12 @@ export default function index() {
     });
     handleClose();
     setCountSpaces(Math.floor(Math.random() * 99));
-    dispatch(handleSpaceText(''))
+    dispatch(handleSpaceText(""));
   };
 
   useEffect(() => {
     fetchData("http://localhost:3004/getspacetext", setSpaces);
-  },[countSpaces])
+  }, [countSpaces]);
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
@@ -139,15 +123,15 @@ export default function index() {
     setText("");
     setCountSpaces(Math.floor(Math.random() * 99));
     dispatch(shouldSpaceTextSubmit(false));
-   
-    dispatch(handleSpaceText(text))
 
+    dispatch(handleSpaceText(text));
   };
 
   const handleCloseEditSpace = () => {
     renameSpaceText();
     setRenameSpaceOpen(false);
     setEditText("");
+    dispatch(handleSpaceText(editText));
   };
 
   const handleChange = (e) => {
@@ -156,24 +140,6 @@ export default function index() {
 
   const handleEditChange = (e) => {
     setEditText(e.target.value);
-  };
-
-  const createSpaceStyle = {
-    display: "flex",
-    position: "relative",
-    top: "10rem",
-    left: isMobileScreen ? "-.6rem" : "-.3rem",
-    ":hover": {
-      cursor: "pointer",
-      background: "#fefefe",
-    },
-    width: "10rem",
-    padding: ".5rem",
-    paddingRight: isMobileScreen ? "11.4rem" : "3rem",
-    paddingLeft: isMobileScreen ? "3rem" : "1.5rem",
-    transition: "background .2s ease-in-out",
-    opacity: ".6",
-    fontSize: "1.2rem",
   };
 
   const MobileSpaceModal = {
@@ -218,14 +184,7 @@ export default function index() {
         handleDeleteSpace={handleDeleteSpace}
       />
 
-      <SpaceCreate
-        createSpaceStyle={createSpaceStyle}
-        handleButtonClicked={handleButtonClicked}
-        isMobileScreen={isMobileScreen}
-        addcircle={addcircle}
-        Box={Box}
-        Typography={Typography}
-      />
+      <SpaceCreate handleButtonClicked={handleButtonClicked} />
 
       <SpaceModals
         handleChange={handleChange}
@@ -243,12 +202,10 @@ export default function index() {
         handleCloseSave={handleCloseSave}
       />
 
-     <SpaceList
+      <SpaceList
         spaces={spaces}
-        isMobileScreen={isMobileScreen}
         setEditText={setEditText}
         editText={editText}
-        noteCards={noteCards}
         Space={Space}
         setAnchorEl={setAnchorEl}
       />

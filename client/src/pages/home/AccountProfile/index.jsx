@@ -1,7 +1,7 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
@@ -14,24 +14,43 @@ import {
 } from "./styles/index";
 
 export default function Index() {
+  
+  const renderAfterCalled = useRef(false)
   const { user } = useUser();
-  const FirstName = user.firstName.charAt(0).toUpperCase();
+  const userEmail = user.primaryEmailAddress.emailAddress; 
+  const firstLetterOfEmail = user.primaryEmailAddress.emailAddress.charAt(0).toUpperCase();
+  const userId = user?.id; 
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
 
-  const handleNewUser = async (e) => {
-    e.preventDefault();
-    postData("http://localhost:3004/postnewuser", {
-      fullname: user.fullName,
-      userName: user.username,
-      email: user.primaryEmailAddress.emailAddress,
-      userId: user.id,
-      password: user.passwordEnabled,
-      spaceId: null,
-    });
-  };
+  // const handleNewUser = async (e) => {
+  //   e.preventDefault();
+  //   postData("http://localhost:3004/postnewuser", {
+  //     email: userEmail,
+  //     userId: userId,
+  //     password: user.passwordEnabled,
+  //     spaceId: null,
+  //   });
+  // };
+
+  useEffect(() => {
+
+    if(!renderAfterCalled.current){
+      const handlePostUserData = () => {
+        postData("http://localhost:3004/userlogin", {
+          email: userEmail,
+          userId: userId,
+          password: user.passwordEnabled,
+          spaceId: null,
+        });
+      }
+      handlePostUserData(); 
+      renderAfterCalled.current = true; 
+    }
+
+  },[])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,7 +63,7 @@ export default function Index() {
   return (
     <>
       <UserAvatar
-        Text={FirstName}
+        Text={firstLetterOfEmail}
         submitOnClickFunction={handleClick}
         inlineStyle={isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle}
       />
