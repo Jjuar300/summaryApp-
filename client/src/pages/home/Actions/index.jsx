@@ -41,6 +41,8 @@ export default function index() {
   let spaceId;
   let spaceObjectId;
 
+ console.log(spaces)
+
   spaces.map((data) => {
     spaceId = data?._id;
   });
@@ -84,8 +86,8 @@ export default function index() {
 
   const handleSpaceTextSubmit = async (e) => {
     e?.preventDefault();
-    postData("http://localhost:3004/postspacetext", {
-      text: text,
+    postData("http://localhost:3004/spaces", {
+      name: text,
     });
   };
 

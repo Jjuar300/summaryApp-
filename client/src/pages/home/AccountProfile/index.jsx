@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-import { postData } from "../../../utils";
+import { postData, fetchData } from "../../../utils";
 import {
   userAvatarStyle,
   mobileUserAvatarStyle,
@@ -16,7 +16,7 @@ import {
 export default function Index() {
   
   const renderAfterCalled = useRef(false)
-  const { user } = useUser();
+  const { user } = useUser()
   const userEmail = user.primaryEmailAddress.emailAddress; 
   const firstLetterOfEmail = user.primaryEmailAddress.emailAddress.charAt(0).toUpperCase();
   const userId = user?.id; 
@@ -24,21 +24,29 @@ export default function Index() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
+  const [users, setUsers] = useState([]);
+  const [isUser, setUser] = useState(); 
 
-  // const handleNewUser = async (e) => {
-  //   e.preventDefault();
-  //   postData("http://localhost:3004/postnewuser", {
-  //     email: userEmail,
-  //     userId: userId,
-  //     password: user.passwordEnabled,
-  //     spaceId: null,
-  //   });
-  // };
+  // console.log('users:',users)
+  // console.log('userId:', userId)
+   // console.log('user:', user)
+
+  users.forEach((data) => {
+    
+    if(userId === data?.userId){
+      console.log('this userEmail:', data?.email );
+    }else if(userId === '') {
+      console.log('no user');
+    }
+   
+  });
+
 
   useEffect(() => {
 
     if(!renderAfterCalled.current){
-      const handlePostUserData = () => {
+      const handlePostUserData = (e) => {
+        e?.preventDefault();
         postData("http://localhost:3004/userlogin", {
           email: userEmail,
           userId: userId,
@@ -46,9 +54,13 @@ export default function Index() {
           spaceId: null,
         });
       }
-      handlePostUserData(); 
+
+      // if true ?  handlePostUserData(): null; 
       renderAfterCalled.current = true; 
     }
+
+ 
+   fetchData('http://localhost:3004/users', setUsers)
 
   },[])
 

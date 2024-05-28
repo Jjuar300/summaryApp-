@@ -26,14 +26,13 @@ export default function SpaceList({
   return (
     <>
       {spaces.map((data) =>
-        data.Spaces.map((data) => (
           <Box
-            onContextMenu={(e) => handleClickContext(e, data?._id, data?.text)}
+            onContextMenu={(e) => handleClickContext(e, data?._id, data?.name)}
             key={data?._id}
           >
             <Space
               key={data?._id}
-              text={data?.text}
+              text={data?.name}
               inlineStyle={{
                 display: "flex",
                 position: "relative",
@@ -60,7 +59,7 @@ export default function SpaceList({
               ObjectId={data?._id}
             />
           </Box>
-        ))
+        
       )}
     </>
   );

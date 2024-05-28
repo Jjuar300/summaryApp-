@@ -1,7 +1,7 @@
-const spaces = require("./spaces/index");
-const user = require("./User/index");
+const Space = require("./spaces/index");
+const User = require("./User/index");
 
 module.exports = {
-  spaces,
-  user,
+  Space,
+  User,
 };

@@ -1,15 +1,15 @@
-const { spaces } = require("../../Models/index");
+const { Space, User } = require("../../Models/index");
 
-const postSpaceText = async (req, res) => {
+const createSpace = async (req, res) => {
   try {
-    const { text } = req.body;
+    const { name, userId } = req.body;
 
-    const newSpaceText = await spaces.create({
-      Spaces: [{ text }],
-    });
+    const newSpace = await Space.create({name});
 
-    console.log(text);
-    res.json(newSpaceText);
+    await User.findOneAndUpdate({userId}, {
+      $set: {spaces: newSpace._id}
+    })
+    res.json(newSpace);
   } catch (error) {
     console.log(error);
   }
@@ -17,7 +17,7 @@ const postSpaceText = async (req, res) => {
 
 const getSpaceText = async (req, res) => {
   try {
-    const spaceTextData = await spaces.find({});
+    const spaceTextData = await Space.find({});
     res.json(spaceTextData);
   } catch (error) {
     console.log("Error occured while fetching data from mongodb:", error);
@@ -28,7 +28,7 @@ const getSpaceText = async (req, res) => {
 const addSpace = async (req, res) => {
   const { text, documentId } = req.body;
   try {
-    const editSpaceText = await spaces.findByIdAndUpdate(documentId, {
+    const editSpaceText = await Space.findByIdAndUpdate(documentId, {
       $push: { Spaces: { text } },
     });
     res.json(editSpaceText);
@@ -42,7 +42,7 @@ const renameSpaceText = async (req, res) => {
   try {
     const { text, documentId, objectId } = req.body;
 
-    await spaces.updateOne(
+    await Space.updateOne(
       { _id: documentId, "Spaces._id": objectId },
       { $set: { "Spaces.$.text": text } }
     );
@@ -59,7 +59,7 @@ const renameSpaceText = async (req, res) => {
 const deleteSpace = async (req, res) => {
   try {
     const { documentId, text, objectId } = req.body;
-    const deleteSpace = await spaces.findByIdAndUpdate(documentId, {
+    const deleteSpace = await Space.findByIdAndUpdate(documentId, {
       $pull: { Spaces: { _id: objectId } },
     });
     res.json(deleteSpace);
@@ -73,7 +73,7 @@ const deleteSpace = async (req, res) => {
 };
 
 module.exports = {
-  postSpaceText,
+  createSpace,
   getSpaceText,
   addSpace,
   deleteSpace,

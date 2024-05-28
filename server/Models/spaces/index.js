@@ -1,13 +1,8 @@
 const mongoose = require("mongoose");
 
-const newSpace = new mongoose.Schema({
-  Spaces: [
-    {
-      text: String,
-      id: { type: mongoose.Schema.Types.ObjectId },
-    },
-  ],
+const SpaceSchema = new mongoose.Schema({
+   name: String, 
 });
 
-const createNewSpace = mongoose.model("spaces", newSpace);
-module.exports = createNewSpace;
+const SpaceModel = mongoose.model("spaces", SpaceSchema);
+module.exports = SpaceModel;
