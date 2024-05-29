@@ -7,7 +7,7 @@ const createSpace = async (req, res) => {
     const newSpace = await Space.create({name});
 
     await User.findOneAndUpdate({userId}, {
-      $set: {spaces: newSpace._id}
+      $addToSet: {spaces: newSpace._id}
     })
     res.json(newSpace);
   } catch (error) {

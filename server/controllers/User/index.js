@@ -2,22 +2,24 @@ const { User } = require("../../Models");
 
 const newUser = async (req, res) => {
   try {
-    const { email, password, spaceId, userId } = req.body;
+    const { email, userId } = req.body;
+    
+    const userFound = await User.findOne({email}); 
+    
+    if(userFound){
+      return res.status(200).json(userFound);
+    }
 
-    const createNewUser = await User.create({
+    const newUser = await User.create({
       email: email,
-      password: password,
-      spaceIds: [spaceId],
       userId: userId,
     });
 
-    // createNewUser.spaceIds.push(spaceId);
-    // createNewUser.save();
-
-    console.log("==== New User =====");
-    console.log("user was created:", createNewUser);
+    await newUser.save();
+    res.status(201).json(newUser)
   } catch (error) {
     console.log(error);
+    res.status(500).json({error: 'Internal server error'})
   }
 };
 
@@ -33,7 +35,7 @@ const getUsers = async (req, res) => {
 
 const  getUserByUserId = async (req, res) => {
   try{
-    const user = await User.findOne({userId: req.params.userId}); 
+    const user = await User.findOne({userId: req.params.userId}).populate('spaces'); 
     if(!user){
       return response.status(400).json({error: 'No user found with this userId'})
     }

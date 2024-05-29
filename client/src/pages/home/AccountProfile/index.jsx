@@ -1,7 +1,7 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
@@ -15,7 +15,6 @@ import {
 
 export default function Index() {
   
-  const renderAfterCalled = useRef(false)
   const { user } = useUser()
   const userEmail = user.primaryEmailAddress.emailAddress; 
   const firstLetterOfEmail = user.primaryEmailAddress.emailAddress.charAt(0).toUpperCase();
@@ -24,45 +23,23 @@ export default function Index() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
-  const [users, setUsers] = useState([]);
-  const [isUser, setUser] = useState(); 
 
-  // console.log('users:',users)
-  // console.log('userId:', userId)
-   // console.log('user:', user)
+  // useEffect(() => {
 
-  users.forEach((data) => {
-    
-    if(userId === data?.userId){
-      console.log('this userEmail:', data?.email );
-    }else if(userId === '') {
-      console.log('no user');
-    }
-   
-  });
-
-
-  useEffect(() => {
-
-    if(!renderAfterCalled.current){
-      const handlePostUserData = (e) => {
-        e?.preventDefault();
-        postData("http://localhost:3004/userlogin", {
+   const getData = async () => {
+      const data = await fetchData(`/api/users/${userId}`); 
+      if(!data.userId){
+        postData("/api/users", {
           email: userEmail,
           userId: userId,
-          password: user.passwordEnabled,
-          spaceId: null,
         });
       }
+   
+   }
+  
+   getData(); 
 
-      // if true ?  handlePostUserData(): null; 
-      renderAfterCalled.current = true; 
-    }
-
- 
-   fetchData('http://localhost:3004/users', setUsers)
-
-  },[])
+  // },[userId])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

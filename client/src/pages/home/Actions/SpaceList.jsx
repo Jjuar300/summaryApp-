@@ -25,7 +25,7 @@ export default function SpaceList({
 
   return (
     <>
-      {spaces.map((data) =>
+      {spaces?.map((data) =>
           <Box
             onContextMenu={(e) => handleClickContext(e, data?._id, data?.name)}
             key={data?._id}

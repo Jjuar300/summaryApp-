@@ -9,12 +9,11 @@ const httpServer = http.createServer(app);
 const routes = require("./routes");
 const openAI = require("./openai");
 
-
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use("/", routes);
+app.use("/api", routes);
 
 try {
   mongoose.connect(process.env.MONGO_DATABASE);

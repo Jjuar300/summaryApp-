@@ -1,9 +1,10 @@
-import { useMediaQuery, Popover, Box, Typography } from "@mui/material";
+import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
 import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
+import { useUser } from "@clerk/clerk-react";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -17,7 +18,7 @@ import {
   sendSpaceObjectId,
 } from "../../../Redux/createSpace";
 
-export default function index() {
+export default function Index() {
   const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
@@ -34,6 +35,7 @@ export default function index() {
   const isSpaceTextSubmit = useSelector(
     (state) => state.createSpace.isSpaceTextSubmit
   );
+  const { user } = useUser()
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const spaceText = useSelector((state) => state.createSpace.spaceText);
@@ -43,15 +45,15 @@ export default function index() {
 
  console.log(spaces)
 
-  spaces.map((data) => {
-    spaceId = data?._id;
-  });
+  // spaces.map((data) => {
+  //   spaceId = data?._id;
+  // });
 
-  spaces[0]?.Spaces.map((data) => {
-    if (spaceText === data?.text) {
-      spaceObjectId = data?._id;
-    }
-  });
+  // spaces[0]?.Spaces.map((data) => {
+  //   if (spaceText === data?.text) {
+  //     spaceObjectId = data?._id;
+  //   }
+  // });
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -66,7 +68,7 @@ export default function index() {
 
   const renameSpaceText = async (e) => {
     e?.preventDefault();
-    updateData("http://localhost:3004/renamespacetext", {
+    updateData("/api/renamespacetext", {
       documentId: spaceId,
       text: editText,
       objectId: objectId,
@@ -80,28 +82,27 @@ export default function index() {
     dispatch(sendSpaceObjectId(spaceObjectId));
   };
 
-  const handleNewUserId = () => {
-    postData("http://localhost:3004/postnewuserid", { userId: spaceId });
-  };
 
   const handleSpaceTextSubmit = async (e) => {
     e?.preventDefault();
-    postData("http://localhost:3004/spaces", {
+    postData("/api/spaces", {
       name: text,
+      userId: user?.id,
     });
+    getUserData(); 
   };
 
-  const handleAddSpaceText = async (e) => {
-    e?.preventDefault();
-    updateData("http://localhost:3004/addspacetext", {
-      text: text,
-      documentId: spaceId,
-    });
-  };
+  // const handleAddSpaceText = async (e) => {
+  //   e?.preventDefault();
+  //   updateData("/api/addspacetext", {
+  //     text: text,
+  //     documentId: spaceId,
+  //   });
+  // };
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
-    updateData("http://localhost:3004/deletespace", {
+    updateData("/api/deletespace", {
       documentId: spaceId,
       objectId: objectId,
       text: editText,
@@ -110,17 +111,23 @@ export default function index() {
     setCountSpaces(Math.floor(Math.random() * 99));
     dispatch(handleSpaceText(""));
   };
+  
+  const getUserData = async () => {
+    const response = await fetchData(`/api/users/${user.id}`);
+    if(response.spaces){
+      setSpaces(response.spaces); 
+    }
+  }
 
   useEffect(() => {
-    fetchData("http://localhost:3004/getspacetext", setSpaces);
-  }, [countSpaces]);
+   getUserData(); 
+
+  }, []);
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
-    handleNewUserId();
     dispatch(handleInputValue(text));
-    isSpaceTextSubmit && handleSpaceTextSubmit();
-    handleAddSpaceText();
+    handleSpaceTextSubmit();
     setOpenModal(false);
     setText("");
     setCountSpaces(Math.floor(Math.random() * 99));
