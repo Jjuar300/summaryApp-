@@ -25,7 +25,7 @@ export default function Index() {
   const [editText, setEditText] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [countSpaces, setCountSpaces] = useState();
+  const [countSpaces, setCountSpaces] = useState(0);
 
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
@@ -44,16 +44,8 @@ export default function Index() {
   let spaceObjectId;
 
  console.log(spaces)
+ console.log(countSpaces)
 
-  // spaces.map((data) => {
-  //   spaceId = data?._id;
-  // });
-
-  // spaces[0]?.Spaces.map((data) => {
-  //   if (spaceText === data?.text) {
-  //     spaceObjectId = data?._id;
-  //   }
-  // });
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -68,7 +60,7 @@ export default function Index() {
 
   const renameSpaceText = async (e) => {
     e?.preventDefault();
-    updateData("/api/renamespacetext", {
+    updateData("/api/spaces", {
       documentId: spaceId,
       text: editText,
       objectId: objectId,
@@ -81,7 +73,6 @@ export default function Index() {
     handleClose();
     dispatch(sendSpaceObjectId(spaceObjectId));
   };
-
 
   const handleSpaceTextSubmit = async (e) => {
     e?.preventDefault();
@@ -102,10 +93,9 @@ export default function Index() {
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
-    updateData("/api/deletespace", {
-      documentId: spaceId,
-      objectId: objectId,
-      text: editText,
+    updateData("/api/spaces", {
+      spaceId: objectId,
+      name: editText,
     });
     handleClose();
     setCountSpaces(Math.floor(Math.random() * 99));
@@ -114,6 +104,7 @@ export default function Index() {
   
   const getUserData = async () => {
     const response = await fetchData(`/api/users/${user.id}`);
+  
     if(response.spaces){
       setSpaces(response.spaces); 
     }
@@ -121,8 +112,7 @@ export default function Index() {
 
   useEffect(() => {
    getUserData(); 
-
-  }, []);
+  },[]);
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
@@ -131,6 +121,7 @@ export default function Index() {
     setOpenModal(false);
     setText("");
     setCountSpaces(Math.floor(Math.random() * 99));
+
     dispatch(shouldSpaceTextSubmit(false));
 
     dispatch(handleSpaceText(text));

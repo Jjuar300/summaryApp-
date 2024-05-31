@@ -39,7 +39,7 @@ export default function Index() {
   
    getData(); 
 
-  // },[userId])
+  // },[])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
