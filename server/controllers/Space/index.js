@@ -1,3 +1,4 @@
+const { Types } = require("mongoose");
 const { Space, User } = require("../../Models/index");
 
 const createSpace = async (req, res) => {
@@ -59,9 +60,13 @@ const renameSpaceText = async (req, res) => {
 const deleteSpace = async (req, res) => {
   try {
     const { spaceId, name} = req.body;
-    const deleteSpace = await User.findByIdAndUpdate('6656793fdadf6ea20548f258', {
-       $pull: {spaces: {type: spaceId}},
-    });
+    const deleteSpace = await Space.findOneAndDelete({_id: spaceId});
+    const deleteUserSpaces = await User.findOneAndUpdate(
+      {_id: '6656793fdadf6ea20548f258'}, 
+      {$pull: {spaces: new Types.ObjectId(spaceId)}}
+    )
+
+    console.log(spaceId)
     res.json(deleteSpace);
   } catch (error) {
     console.log("Error occured while deleting data", error);
