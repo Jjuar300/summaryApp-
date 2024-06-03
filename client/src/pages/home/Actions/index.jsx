@@ -1,7 +1,7 @@
 import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
 import { useEffect, useState } from "react";
-import { fetchData, postData, updateData } from "../../../utils";
+import { deleteData, fetchData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
@@ -25,7 +25,6 @@ export default function Index() {
   const [editText, setEditText] = useState("");
   const [spaces, setSpaces] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [countSpaces, setCountSpaces] = useState(0);
 
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
@@ -42,10 +41,7 @@ export default function Index() {
 
   let spaceId;
   let spaceObjectId;
-
- console.log(spaces)
- console.log(countSpaces)
-
+  console.log(user)
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -60,12 +56,14 @@ export default function Index() {
 
   const renameSpaceText = async (e) => {
     e?.preventDefault();
-    updateData("/api/spaces", {
-      documentId: spaceId,
-      text: editText,
-      objectId: objectId,
-    });
-    setCountSpaces(Math.floor(Math.random() * 99));
+    try {
+      await updateData(`/api/spaces/${objectId}`, {
+        newName: editText,
+      });
+      getUserData(); 
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleRenameSpace = () => {
@@ -74,32 +72,29 @@ export default function Index() {
     dispatch(sendSpaceObjectId(spaceObjectId));
   };
 
-  const handleSpaceTextSubmit = async (e) => {
+  const addSpace = async (e) => {
     e?.preventDefault();
-    postData("/api/spaces", {
-      name: text,
-      userId: user?.id,
-    });
-    getUserData(); 
+    try {
+      await postData("/api/spaces", {
+        name: text,
+        userId: user?.id,
+      });
+      getUserData(); 
+    } catch (error) {
+      console.log(error)
+    }
   };
-
-  // const handleAddSpaceText = async (e) => {
-  //   e?.preventDefault();
-  //   updateData("/api/addspacetext", {
-  //     text: text,
-  //     documentId: spaceId,
-  //   });
-  // };
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
-    updateData("/api/spaces", {
-      spaceId: objectId,
-      name: editText,
-    });
-    handleClose();
-    setCountSpaces(Math.floor(Math.random() * 99));
-    dispatch(handleSpaceText(""));
+    try {
+     await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
+      handleClose();
+      dispatch(handleSpaceText(""));
+      getUserData(); 
+    } catch (error) {
+      console.log(error)
+    }
   };
   
   const getUserData = async () => {
@@ -117,10 +112,9 @@ export default function Index() {
   const handleCloseSave = (e) => {
     e?.preventDefault();
     dispatch(handleInputValue(text));
-    handleSpaceTextSubmit();
+    addSpace();
     setOpenModal(false);
     setText("");
-    setCountSpaces(Math.floor(Math.random() * 99));
 
     dispatch(shouldSpaceTextSubmit(false));
 
@@ -130,8 +124,8 @@ export default function Index() {
   const handleCloseEditSpace = () => {
     renameSpaceText();
     setRenameSpaceOpen(false);
-    setEditText("");
     dispatch(handleSpaceText(editText));
+    setEditText("");
   };
 
   const handleChange = (e) => {

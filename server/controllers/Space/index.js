@@ -4,7 +4,6 @@ const { Space, User } = require("../../Models/index");
 const createSpace = async (req, res) => {
   try {
     const { name, userId } = req.body;
-
     const newSpace = await Space.create({name});
 
     await User.findOneAndUpdate({userId}, {
@@ -26,6 +25,7 @@ const getSpaceText = async (req, res) => {
   }
 };
 
+
 const addSpace = async (req, res) => {
   const { text, documentId } = req.body;
   try {
@@ -39,37 +39,38 @@ const addSpace = async (req, res) => {
   }
 };
 
+
 const renameSpaceText = async (req, res) => {
   try {
-    const { text, documentId, objectId } = req.body;
+    const { newName } = req.body;
 
-    await Space.updateOne(
-      { _id: documentId, "Spaces._id": objectId },
-      { $set: { "Spaces.$.text": text } }
-    );
+   const renameSpace =  await Space.findOneAndUpdate(
+    {_id: req.params.id},
+     {
+      name: newName
+    }, 
+    {new: true}, 
+  )
 
-    console.log("----RENAME SPACE ------");
-    console.log("rename new text:", text);
-    console.log("rename documentId:", documentId);
-    console.log("rename objectId:", objectId);
+    res.json(renameSpace)
   } catch (error) {
     console.log("Error occured while upadting spaceText", error);
+    res.status(500).json({error:'Internal server error'})
   }
 };
 
 const deleteSpace = async (req, res) => {
   try {
-    const { spaceId, name} = req.body;
-    const deleteSpace = await Space.findOneAndDelete({_id: spaceId});
+    const deleteSpace = await Space.findOneAndDelete({_id: req.params.spaceId});
     const deleteUserSpaces = await User.findOneAndUpdate(
-      {_id: '6656793fdadf6ea20548f258'}, 
-      {$pull: {spaces: new Types.ObjectId(spaceId)}}
+      {userId: req.params.userId},
+      {$pull: {spaces: new Types.ObjectId(req.params.spaceId)}}
     )
 
-    console.log(spaceId)
     res.json(deleteSpace);
   } catch (error) {
     console.log("Error occured while deleting data", error);
+    res.status(500).json('Internal server error'); 
   }
 };
 
