@@ -5,7 +5,7 @@ const { OpenAI, Configuration } = require("openai");
 
 const openai = new OpenAI();
 
-const main = async () => {
+const main = async (message) => {
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -14,13 +14,15 @@ const main = async () => {
       },
       {
         role: "user",
-        content:
-          "give me a three paragraph about https://www.wired.com/story/geomagnetic-storm-aurora-night-sky/ ",
+        content: message,
       },
     ],
     model: "gpt-3.5-turbo",
   });
-  console.log(completion.choices[0].message.content);
+   const result = completion.choices[0].message.content;
+   return result;  
 };
 
-// main();
+module.exports = {
+  main, 
+}

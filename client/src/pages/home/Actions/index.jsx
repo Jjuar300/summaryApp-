@@ -41,7 +41,6 @@ export default function Index() {
 
   let spaceId;
   let spaceObjectId;
-  console.log(user)
 
   const handleClose = () => {
     setAnchorEl(null);

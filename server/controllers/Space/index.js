@@ -25,21 +25,6 @@ const getSpaceText = async (req, res) => {
   }
 };
 
-
-const addSpace = async (req, res) => {
-  const { text, documentId } = req.body;
-  try {
-    const editSpaceText = await Space.findByIdAndUpdate(documentId, {
-      $push: { Spaces: { text } },
-    });
-    res.json(editSpaceText);
-    console.log(documentId);
-  } catch (error) {
-    console.log("Error occured while updating data from mongodb:", error);
-  }
-};
-
-
 const renameSpaceText = async (req, res) => {
   try {
     const { newName } = req.body;
@@ -77,7 +62,6 @@ const deleteSpace = async (req, res) => {
 module.exports = {
   createSpace,
   getSpaceText,
-  addSpace,
   deleteSpace,
   renameSpaceText,
 };
