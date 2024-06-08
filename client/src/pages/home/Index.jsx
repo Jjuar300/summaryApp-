@@ -5,6 +5,7 @@ import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
 import Notes from "./Notes/index";
 import UserSignIn from "../userSignIn";
+import ChatGpt from "./ChatGpt/index";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
@@ -67,6 +68,8 @@ export default function Index() {
           <Actions />
         </Box>
       )}
+
+      <ChatGpt />
     </>
   );
 }
