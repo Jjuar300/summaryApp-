@@ -14,7 +14,7 @@ const main = async (message) => {
       },
       {
         role: "user",
-        content: `${message}`,
+        content: `summarize url one paragraph:${message}`,
       },
     ],
     model: "gpt-3.5-turbo",

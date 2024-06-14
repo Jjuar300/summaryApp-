@@ -8,7 +8,6 @@ router.get("/spaces", Space.getSpaceText);
 router.put("/spaces/:id", Space.renameSpaceText);
 
 router.post("/users", User.newUser);
-router.get("/users", User.getUsers)
 router.get('/users/:userId', User.getUserByUserId)
 router.delete("/users/:userId/spaces/:spaceId", Space.deleteSpace);
 

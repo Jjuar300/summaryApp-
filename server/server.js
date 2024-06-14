@@ -5,9 +5,7 @@ const http = require("http");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3004;
 const app = express();
-const httpServer = http.createServer(app);
 const routes = require("./routes");
-const openAI = require("./openai");
 
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
