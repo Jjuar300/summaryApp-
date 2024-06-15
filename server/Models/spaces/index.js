@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 
 const SpaceSchema = new mongoose.Schema({
    name: String, 
-   chatGpt: {
+   chatGpt: [{
       type: mongoose.Types.ObjectId, 
-      ref:'chatResponse', 
-   }
-});
+      ref:'chatGpt', 
+   }]
+}, 
+);
 
 const SpaceModel = mongoose.model("spaces", SpaceSchema);
 module.exports = SpaceModel;

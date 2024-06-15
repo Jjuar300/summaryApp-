@@ -4,7 +4,6 @@ const router = express.Router();
 const { Space, User, Chatgpt } = require("../controllers/index");
 
 router.post("/spaces", Space.createSpace);
-router.get("/spaces", Space.getSpaceText);
 router.put("/spaces/:id", Space.renameSpaceText);
 
 router.post("/users", User.newUser);

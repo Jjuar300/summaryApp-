@@ -15,16 +15,6 @@ const createSpace = async (req, res) => {
   }
 };
 
-const getSpaceText = async (req, res) => {
-  try {
-    const spaceTextData = await Space.find()
-    res.json(spaceTextData);
-  } catch (error) {
-    console.log("Error occured while fetching data from mongodb:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 const renameSpaceText = async (req, res) => {
   try {
     const { newName } = req.body;
@@ -61,7 +51,6 @@ const deleteSpace = async (req, res) => {
 
 module.exports = {
   createSpace,
-  getSpaceText,
   deleteSpace,
   renameSpaceText,
 };

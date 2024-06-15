@@ -2,12 +2,13 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { fetchData, postData } from "../../../utils";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useUser } from "@clerk/clerk-react";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState()
   const [chatgptData, setChatgptData] = useState([]); 
   const objectId = useSelector(state => state.createSpace.ObjectId)
-
+  const {user} = useUser(); 
 
   console.log(chatgptData)
   
@@ -25,8 +26,8 @@ export default function index() {
     }
   
     const getChatGpt = async () => {
-        const response = await fetchData('/api/chatgpt'); 
-        setChatgptData(response);                                      
+        const response = await fetchData(`/api/users/${user.id}`); 
+        setChatgptData(response.spaces);                                      
     }; 
 
     useEffect(() =>{
@@ -49,10 +50,12 @@ export default function index() {
        onClick={askGpt}
        >Send message</Button>
       {
-        chatgptData?.map(({_id, response}) => (
+        chatgptData?.map(({chatGpt}) => (
+           chatGpt.map(({_id, response}) => (
             <Typography
             key={_id}
             >{response}</Typography>
+           ))
         ))
       }
     </Box>

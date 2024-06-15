@@ -24,7 +24,6 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
 
-  // useEffect(() => {
 
    const getData = async () => {
       const data = await fetchData(`/api/users/${userId}`); 
@@ -39,7 +38,6 @@ export default function Index() {
   
    getData(); 
 
-  // },[])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

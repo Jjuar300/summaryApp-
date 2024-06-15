@@ -25,7 +25,7 @@ const newUser = async (req, res) => {
 
 const  getUserByUserId = async (req, res) => {
   try{
-    const user = await User.findOne({userId: req.params.userId}).populate('spaces'); 
+    const user = await User.findOne({userId: req.params.userId}).populate({path: 'spaces', populate:{path:'chatGpt'}})
     if(!user){
       return response.status(400).json({error: 'No user found with this userId'})
     }

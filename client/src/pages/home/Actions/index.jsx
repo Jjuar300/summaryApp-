@@ -100,6 +100,8 @@ export default function Index() {
     }
   }
 
+  // console.log(spaces)
+
   useEffect(() => {
    getUserData(); 
   },[]);
