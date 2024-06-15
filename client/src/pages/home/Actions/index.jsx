@@ -31,15 +31,11 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-  const isSpaceTextSubmit = useSelector(
-    (state) => state.createSpace.isSpaceTextSubmit
-  );
+ 
   const { user } = useUser()
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const spaceText = useSelector((state) => state.createSpace.spaceText);
 
-  let spaceId;
   let spaceObjectId;
 
   const handleClose = () => {

@@ -17,7 +17,7 @@ const createSpace = async (req, res) => {
 
 const getSpaceText = async (req, res) => {
   try {
-    const spaceTextData = await Space.find({});
+    const spaceTextData = await Space.find()
     res.json(spaceTextData);
   } catch (error) {
     console.log("Error occured while fetching data from mongodb:", error);

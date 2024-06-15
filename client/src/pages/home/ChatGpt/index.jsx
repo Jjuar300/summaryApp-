@@ -1,16 +1,22 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { fetchData, postData } from "../../../utils";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState()
   const [chatgptData, setChatgptData] = useState([]); 
+  const objectId = useSelector(state => state.createSpace.ObjectId)
 
+
+  console.log(chatgptData)
+  
     const askGpt = async (e) =>{
         e?.preventDefault();
         try {
             await postData('/api/chatgpt', {
-              message: askMessage, 
+              message: askMessage,
+              spaceId: objectId,  
             })
             getChatGpt();
         } catch (error) {
@@ -25,7 +31,7 @@ export default function index() {
 
     useEffect(() =>{
         getChatGpt(); 
-    },[chatgptData])
+    },[])
 
     return (
     <>

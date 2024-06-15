@@ -23,16 +23,6 @@ const newUser = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.json(users);
-  } catch (error) {
-    console.log("error occured while getting users", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 const  getUserByUserId = async (req, res) => {
   try{
     const user = await User.findOne({userId: req.params.userId}).populate('spaces'); 
@@ -47,7 +37,6 @@ const  getUserByUserId = async (req, res) => {
 }
 
 module.exports = {
-  newUser,
-  getUsers, 
+  newUser, 
   getUserByUserId, 
 };
