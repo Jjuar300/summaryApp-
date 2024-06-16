@@ -2,15 +2,14 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { fetchData, postData } from "../../../utils";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useUser } from "@clerk/clerk-react";
+import { Space } from "../../../components";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
   const [chatgptData, setChatgptData] = useState([]);
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const { user } = useUser();
 
-  console.log(chatgptData);
+  console.log(chatgptData[0]?._id);
 
   const askGpt = async (e) => {
     e?.preventDefault();
@@ -26,27 +25,15 @@ export default function index() {
   };
 
   const getChatGpt = async () => {
-    const response = await fetchData(`/api/users/${user.id}`);
-    setChatgptData(response.spaces);
+    const response = await fetchData(`/api/spaces/${objectId}`); 
+    if(response.chatGpt){
+     return setChatgptData(response.chatGpt);
+    }
   };
 
   useEffect(() => {
     getChatGpt();
   }, []);
-
-  let chatGptResponse;
-  let keyId;
-
-  chatgptData?.map(({ _id, chatGpt }) => {
-    if (_id === objectId) {
-      return chatGpt?.map(({ _id, response }) => {
-        keyId = _id;
-        chatGptResponse = response;
-      });
-    } else {
-      console.log("error: condition did not return response data");
-    }
-  });
 
   return (
     <>
@@ -59,7 +46,9 @@ export default function index() {
       >
         <TextField onChange={(e) => setAskMessage(e.target.value)} />
         <Button onClick={askGpt}>Send message</Button>
-        <Typography key={keyId}>{chatGptResponse}</Typography>
+        {chatgptData?.map(({ _id, response }) => (
+          <Typography key={_id}>{response}</Typography>
+        ))}
       </Box>
     </>
   );

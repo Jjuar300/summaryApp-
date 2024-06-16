@@ -16,7 +16,8 @@ const index = ({
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const dispatch = useDispatch()
 
-  const handleSpaceClick = () => {
+  const handleSpaceClick = (e) => {
+    e?.preventDefault(); 
     setState(text);
     dispatch(sendObjectId(ObjectId))
     dispatch(handleSpaceText(text))
