@@ -5,60 +5,62 @@ import { useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 
 export default function index() {
-  const [askMessage, setAskMessage] = useState()
-  const [chatgptData, setChatgptData] = useState([]); 
-  const objectId = useSelector(state => state.createSpace.ObjectId)
-  const {user} = useUser(); 
+  const [askMessage, setAskMessage] = useState();
+  const [chatgptData, setChatgptData] = useState([]);
+  const objectId = useSelector((state) => state.createSpace.ObjectId);
+  const { user } = useUser();
 
-  console.log(chatgptData)
-  
-    const askGpt = async (e) =>{
-        e?.preventDefault();
-        try {
-            await postData('/api/chatgpt', {
-              message: askMessage,
-              spaceId: objectId,  
-            })
-            getChatGpt();
-        } catch (error) {
-            console.log(error)
-        } 
+  console.log(chatgptData);
+
+  const askGpt = async (e) => {
+    e?.preventDefault();
+    try {
+      await postData("/api/chatgpt", {
+        message: askMessage,
+        spaceId: objectId,
+      });
+      getChatGpt();
+    } catch (error) {
+      console.log(error);
     }
-  
-    const getChatGpt = async () => {
-        const response = await fetchData(`/api/users/${user.id}`); 
-        setChatgptData(response.spaces);                                      
-    }; 
+  };
 
-    useEffect(() =>{
-        getChatGpt(); 
-    },[])
+  const getChatGpt = async () => {
+    const response = await fetchData(`/api/users/${user.id}`);
+    setChatgptData(response.spaces);
+  };
 
-    return (
+  useEffect(() => {
+    getChatGpt();
+  }, []);
+
+  let chatGptResponse;
+  let keyId;
+
+  chatgptData?.map(({ _id, chatGpt }) => {
+    if (_id === objectId) {
+      return chatGpt?.map(({ _id, response }) => {
+        keyId = _id;
+        chatGptResponse = response;
+      });
+    } else {
+      console.log("error: condition did not return response data");
+    }
+  });
+
+  return (
     <>
-    <Box
-    sx={{
-        position:'absolute', 
-        left:'23rem', 
-        top:'23rem', 
-    }}
-    >
-       <TextField
-       onChange={(e) => setAskMessage(e.target.value)}
-       />
-       <Button
-       onClick={askGpt}
-       >Send message</Button>
-      {
-        chatgptData?.map(({chatGpt}) => (
-           chatGpt.map(({_id, response}) => (
-            <Typography
-            key={_id}
-            >{response}</Typography>
-           ))
-        ))
-      }
-    </Box>
+      <Box
+        sx={{
+          position: "absolute",
+          left: "23rem",
+          top: "23rem",
+        }}
+      >
+        <TextField onChange={(e) => setAskMessage(e.target.value)} />
+        <Button onClick={askGpt}>Send message</Button>
+        <Typography key={keyId}>{chatGptResponse}</Typography>
+      </Box>
     </>
-  )
+  );
 }

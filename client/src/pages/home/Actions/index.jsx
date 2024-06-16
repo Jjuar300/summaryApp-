@@ -31,8 +31,8 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
- 
-  const { user } = useUser()
+
+  const { user } = useUser();
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
 
@@ -55,9 +55,9 @@ export default function Index() {
       await updateData(`/api/spaces/${objectId}`, {
         newName: editText,
       });
-      getUserData(); 
+      getUserData();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -74,37 +74,35 @@ export default function Index() {
         name: text,
         userId: user?.id,
       });
-      getUserData(); 
+      getUserData();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
-     await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
+      await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
-      getUserData(); 
+      getUserData();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-  
+
   const getUserData = async () => {
     const response = await fetchData(`/api/users/${user.id}`);
-  
-    if(response.spaces){
-      setSpaces(response.spaces); 
-    }
-  }
 
-  // console.log(spaces)
+    if (response.spaces) {
+      setSpaces(response.spaces);
+    }
+  };
 
   useEffect(() => {
-   getUserData(); 
-  },[]);
+    getUserData();
+  }, []);
 
   const handleCloseSave = (e) => {
     e?.preventDefault();

@@ -49,8 +49,18 @@ const deleteSpace = async (req, res) => {
   }
 };
 
+const getSpaces = async (req, res) =>{ 
+  try {
+    const spaces = await Space.find({})  
+  } catch (error) {
+    console.log("error: ", error)
+    res.status(500).json({error: 'internal error'})
+  }
+}
+
 module.exports = {
   createSpace,
   deleteSpace,
   renameSpaceText,
+  getSpaces, 
 };
