@@ -5,8 +5,8 @@ const { Space, User, Chatgpt } = require("../controllers/index");
 
 router.post("/spaces", Space.createSpace);
 router.put("/spaces/:id", Space.renameSpaceText);
-router.get('/spaces/:spaceId', Space.getSpaces)
-
+router.get('/users/:userId/spaces/:spaceId', Space.getSpaces)
+ 
 router.post("/users", User.newUser);
 router.get('/users/:userId', User.getUserByUserId)
 router.delete("/users/:userId/spaces/:spaceId", Space.deleteSpace);

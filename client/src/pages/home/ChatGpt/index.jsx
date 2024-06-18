@@ -3,13 +3,13 @@ import { fetchData, postData } from "../../../utils";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Space } from "../../../components";
+import { useUser } from "@clerk/clerk-react";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
   const [chatgptData, setChatgptData] = useState([]);
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-
-  console.log(chatgptData[0]?._id);
+  const {user} = useUser(); 
 
   const askGpt = async (e) => {
     e?.preventDefault();
@@ -25,15 +25,17 @@ export default function index() {
   };
 
   const getChatGpt = async () => {
-    const response = await fetchData(`/api/spaces/${objectId}`); 
+    const response = await fetchData(`/api/users/${user.id}/spaces/${objectId}`); 
     if(response.chatGpt){
      return setChatgptData(response.chatGpt);
     }
   };
 
+  console.log(chatgptData)
+
   useEffect(() => {
     getChatGpt();
-  }, []);
+  }, [objectId]);
 
   return (
     <>

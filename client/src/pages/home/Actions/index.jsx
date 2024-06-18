@@ -16,6 +16,7 @@ import {
   handleInputValue,
   shouldSpaceTextSubmit,
   sendSpaceObjectId,
+  sendObjectId,
 } from "../../../Redux/createSpace";
 
 export default function Index() {
@@ -35,6 +36,8 @@ export default function Index() {
   const { user } = useUser();
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
+
+ console.log('objectId: ', objectId)
 
   let spaceObjectId;
 
@@ -86,6 +89,7 @@ export default function Index() {
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
+      // dispatch(sendObjectId(0))
       getUserData();
     } catch (error) {
       console.log(error);
@@ -100,8 +104,25 @@ export default function Index() {
     }
   };
 
+  //experitment
+  const [chat,setChat] = useState([])
+  const getchat = async () => {
+    const response = await fetchData(`/api/users/${user.id}`);
+                                                            
+    if (response) {
+      setChat(response);
+    }
+  };
+
+  console.log('chat: ', chat)
+  //end
+
+
+  console.log('spaces: ', spaces)
+
   useEffect(() => {
     getUserData();
+    getchat(); 
   }, []);
 
   const handleCloseSave = (e) => {
