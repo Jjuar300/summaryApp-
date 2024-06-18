@@ -24,7 +24,7 @@ const index = ({
     setState(text);
     dispatch(sendObjectId(ObjectId))
     dispatch(handleSpaceText(text))
-    navigate(`/${ObjectId}`)
+    navigate(`/spaces/${ObjectId}`)
   };
 
   return (

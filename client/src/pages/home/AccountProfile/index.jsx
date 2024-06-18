@@ -14,30 +14,28 @@ import {
 } from "./styles/index";
 
 export default function Index() {
-  
-  const { user } = useUser()
-  const userEmail = user.primaryEmailAddress.emailAddress; 
-  const firstLetterOfEmail = user.primaryEmailAddress.emailAddress.charAt(0).toUpperCase();
-  const userId = user?.id; 
+  const { user } = useUser();
+  const userEmail = user.primaryEmailAddress.emailAddress;
+  const firstLetterOfEmail = user.primaryEmailAddress.emailAddress
+    .charAt(0)
+    .toUpperCase();
+  const userId = user?.id;
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
 
+  const getData = async () => {
+    const data = await fetchData(`/api/users/${userId}`);
+    if (!data.userId) {
+      postData("/api/users", {
+        email: userEmail,
+        userId: userId,
+      });
+    }
+  };
 
-   const getData = async () => {
-      const data = await fetchData(`/api/users/${userId}`); 
-      if(!data.userId){
-        postData("/api/users", {
-          email: userEmail,
-          userId: userId,
-        });
-      }
-   
-   }
-  
-   getData(); 
-
+  getData();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -99,6 +97,7 @@ export default function Index() {
             >
               <img style={{ width: "1.2rem" }} src={`${logout}`} />
               <Button
+                onClick={() => navigate("/")}
                 sx={{
                   fontSize: "1rem",
                   color: "black",

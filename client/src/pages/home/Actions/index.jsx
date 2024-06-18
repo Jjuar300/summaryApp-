@@ -104,25 +104,8 @@ export default function Index() {
     }
   };
 
-  //experitment
-  const [chat,setChat] = useState([])
-  const getchat = async () => {
-    const response = await fetchData(`/api/users/${user.id}`);
-                                                            
-    if (response) {
-      setChat(response);
-    }
-  };
-
-  console.log('chat: ', chat)
-  //end
-
-
-  console.log('spaces: ', spaces)
-
   useEffect(() => {
     getUserData();
-    getchat(); 
   }, []);
 
   const handleCloseSave = (e) => {

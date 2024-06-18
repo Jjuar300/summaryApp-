@@ -4,7 +4,6 @@ import { SettingsPage, Home, NotFound } from "../../pages";
 import { useSelector } from "react-redux";
 
 export default function index() {
-  const objectId = useSelector((state) => state.createSpace.ObjectId);
 
   return (
     <>
@@ -13,7 +12,7 @@ export default function index() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path={`/:id`} element={<Home/>} />
+          <Route path={`/spaces/:id`} element={<Home/>} />
         </Routes>
       </BrowserRouter>
     </>
