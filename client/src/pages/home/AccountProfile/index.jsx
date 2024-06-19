@@ -1,11 +1,13 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { postData, fetchData } from "../../../utils";
+import { useDispatch } from "react-redux";
+import { sendObjectId } from "../../../Redux/createSpace";
 import {
   userAvatarStyle,
   mobileUserAvatarStyle,
@@ -24,6 +26,7 @@ export default function Index() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch(); 
 
   const getData = async () => {
     const data = await fetchData(`/api/users/${userId}`);
@@ -44,6 +47,11 @@ export default function Index() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleOnClick = () => {
+    dispatch(sendObjectId(null))
+    navigate('/')
+  }
 
   return (
     <>
@@ -97,7 +105,7 @@ export default function Index() {
             >
               <img style={{ width: "1.2rem" }} src={`${logout}`} />
               <Button
-                onClick={() => navigate("/")}
+                onClick={handleOnClick}
                 sx={{
                   fontSize: "1rem",
                   color: "black",

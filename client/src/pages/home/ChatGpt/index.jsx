@@ -26,8 +26,8 @@ export default function index() {
 
   const getChatGpt = async () => {
     const response = await fetchData(`/api/users/${user.id}/spaces/${objectId}`); 
-    if(response.chatGpt){
-     return setChatgptData(response.chatGpt);
+    if(response?.chatGpt){
+     return setChatgptData(response?.chatGpt);
     }
   };
 

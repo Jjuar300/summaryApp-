@@ -39,7 +39,18 @@ const getChatGptData = async (req, res) => {
   }
 };
 
+const deleteChatGpt = async (req, res) => {
+  try {
+      const deleteChatGpt = await ChatGpt.findOneAndDelete({_id: req.params.chatGptId})
+      if(deleteChatGpt) return res.status(200).json({message: "chatGpt response was deleted"})
+    } catch (error) {
+      console.log("error occured while deleting chatGpt: ", error)
+    res.status(500).json({error: "Internal error"}); 
+  }
+}
+
 module.exports = {
   ChatgptResponse,
   getChatGptData,
+  deleteChatGpt, 
 };

@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import createSpace from "./createSpace";
 import SpaceNotes from "./SpaceNotes";
+import chatGpt from "./chatGpt";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
@@ -19,6 +20,7 @@ const persistConfig = {
 const reducer = combineReducers({
   createSpace: createSpace,
   SpaceNotes: SpaceNotes, 
+  chatGpt : chatGpt, 
   middleware: [thunk],
 });
 

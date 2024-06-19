@@ -1,7 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 import { SettingsPage, Home, NotFound } from "../../pages";
-import { useSelector } from "react-redux";
 
 export default function index() {
 

@@ -13,5 +13,6 @@ router.delete("/users/:userId/spaces/:spaceId", Space.deleteSpace);
 
 router.post('/chatgpt', Chatgpt.ChatgptResponse);
 router.get('/chatgpt', Chatgpt.getChatGptData);
+router.delete('/chatgpt/:chatGptId', Chatgpt.deleteChatGpt)
 
 module.exports = router;
