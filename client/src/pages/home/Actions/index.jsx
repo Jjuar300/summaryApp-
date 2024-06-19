@@ -16,6 +16,7 @@ import {
   handleInputValue,
   shouldSpaceTextSubmit,
   sendSpaceObjectId,
+  sendObjectId, 
 } from "../../../Redux/createSpace";
 
 export default function Index() {
@@ -35,9 +36,11 @@ export default function Index() {
   const { user } = useUser();
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  // const chatgptId = useSelector((state) => state.chatGpt.chatgptId); 
+  const chatgptId = useSelector((state) => state.chatGpt.chatgptId); 
 
  console.log('objectId: ', objectId)
+ console.log('chatGptId: ', chatgptId)
+
 
   let spaceObjectId;
 
@@ -88,9 +91,10 @@ export default function Index() {
     e?.preventDefault();
     try {
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
-      // await deleteData(`/api/chatgpt/${chatgptId}`)
+      await deleteData(`/api/chatgpt/${chatgptId}`)
       handleClose();
       dispatch(handleSpaceText(""));
+      dispatch(sendObjectId(0))
       getUserData();
     } catch (error) {
       console.log(error);
