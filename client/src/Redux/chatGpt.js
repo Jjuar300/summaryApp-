@@ -8,11 +8,12 @@ export const chatGpt  = createSlice({
     reducers: {
         setChatGptId: (state, action) => {
             state.chatgptId = action.payload; 
-        }
+        }, 
     }
 }); 
 
 export const {
     setChatGptId, 
+    addSpaces, 
 } = chatGpt.actions; 
 export default chatGpt.reducer; 

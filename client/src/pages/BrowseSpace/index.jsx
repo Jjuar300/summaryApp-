@@ -1,10 +1,13 @@
 import Actions from "../home/Actions";
 import AccountProfile from "../home/AccountProfile";
 import searchIcon from "./assets/search.svg";
+import { useSelector } from "react-redux";
 
 import { Box, Typography, TextField, InputAdornment } from "@mui/material";
 
-export default function index() {
+export default function Index() {
+
+
   return (
     <div>
       <Box

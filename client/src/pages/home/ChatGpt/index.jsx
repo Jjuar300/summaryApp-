@@ -2,7 +2,6 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { fetchData, postData } from "../../../utils";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Space } from "../../../components";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
@@ -34,12 +33,13 @@ export default function index() {
      return setChatgptData(response?.chatGpt);
     }
   };
-  
+
   dispatch(setChatGptId(chatgptId))
 
   useEffect(() => {
     getChatGpt();
   }, [objectId]);
+
 
   return (
     <>

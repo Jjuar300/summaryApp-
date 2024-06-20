@@ -25,7 +25,7 @@ export const createSpace = createSlice({
     },
     sendObjectId: (state, action) => {
       state.ObjectId = action.payload; 
-    }
+    }, 
   },
 });
 
