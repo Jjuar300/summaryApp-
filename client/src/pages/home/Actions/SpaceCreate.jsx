@@ -2,12 +2,14 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import {useMediaQuery} from "@mui/material";
 import { addcircle } from "./assets";
+import { useNavigate } from "react-router-dom";
 
 export default function SpaceCreate({
   handleButtonClicked,
 }) {
 
   const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const navigate = useNavigate(); 
 
   const createSpaceStyle = {
     display: "flex",
@@ -29,8 +31,8 @@ export default function SpaceCreate({
 
   return (
     <>
-      <Box sx={createSpaceStyle}>
-        <Typography>Browse Space</Typography>
+      <Box onClick={(e) => navigate('/browsespace')} sx={createSpaceStyle}>
+        <Typography>Browse All</Typography>
       </Box>
 
       <Box onClick={handleButtonClicked} sx={createSpaceStyle}>

@@ -1,9 +1,8 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-import { SettingsPage, Home, NotFound } from "../../pages";
+import { SettingsPage, Home, NotFound, BrowseSpace } from "../../pages";
 
 export default function index() {
-
   return (
     <>
       <BrowserRouter>
@@ -11,7 +10,8 @@ export default function index() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path={`/spaces/:id`} element={<Home/>} />
+          <Route path={`/spaces/:id`} element={<Home />} />
+          <Route path="/browsespace" element={<BrowseSpace/>}/>
         </Routes>
       </BrowserRouter>
     </>

@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, Drawer, Button } from "@mui/material";
+import { Box,useMediaQuery, Drawer, Button } from "@mui/material";
 import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";

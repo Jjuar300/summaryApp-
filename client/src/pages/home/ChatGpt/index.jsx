@@ -34,6 +34,7 @@ export default function index() {
      return setChatgptData(response?.chatGpt);
     }
   };
+  
   dispatch(setChatGptId(chatgptId))
 
   useEffect(() => {

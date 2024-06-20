@@ -39,13 +39,24 @@ const renameSpaceText = async (req, res) => {
 
 const deleteSpace = async (req, res) => {
   try {
+    const userId = req.params.userId
+
     const deleteSpace = await Space.findOneAndDelete({
       _id: req.params.spaceId,
     });
 
+    await User.findOneAndUpdate(
+      {userId}, 
+      {
+        $pull: {spaces: req.params.spaceId}
+      }
+    )
+
+    console.log('user:', req.params.userId); 
+    console.log('spaceId: ', req.params.spaceId)
+
     res.json(deleteSpace);
   } catch (error) {
-    console.log("Error occured while deleting data", error);
     res.status(500).json("Internal server error");
   }
 };

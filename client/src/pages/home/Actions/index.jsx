@@ -5,6 +5,7 @@ import { deleteData, fetchData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -16,7 +17,6 @@ import {
   handleInputValue,
   shouldSpaceTextSubmit,
   sendSpaceObjectId,
-  sendObjectId, 
 } from "../../../Redux/createSpace";
 
 export default function Index() {
@@ -32,15 +32,12 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-
+  
+  const navigate = useNavigate(); 
   const { user } = useUser();
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const chatgptId = useSelector((state) => state.chatGpt.chatgptId); 
-
- console.log('objectId: ', objectId)
- console.log('chatGptId: ', chatgptId)
-
+  const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
 
   let spaceObjectId;
 
@@ -86,16 +83,15 @@ export default function Index() {
     }
   };
 
-
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
-      await deleteData(`/api/chatgpt/${chatgptId}`)
+      await deleteData(`/api/chatgpt/${chatgptId}`);
       handleClose();
       dispatch(handleSpaceText(""));
-      dispatch(sendObjectId(0))
       getUserData();
+      navigate('/browsespace')
     } catch (error) {
       console.log(error);
     }
