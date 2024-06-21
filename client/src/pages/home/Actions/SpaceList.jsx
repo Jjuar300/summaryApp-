@@ -15,7 +15,6 @@ export default function SpaceList({
   const handleClickContext = (event, value, editText) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    console.log("value:", value);
     dispatch(sendObjectId(value));
     setEditText(editText);
     dispatch(handleSpaceText(editText));

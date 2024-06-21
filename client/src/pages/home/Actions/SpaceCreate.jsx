@@ -29,9 +29,14 @@ export default function SpaceCreate({
     fontSize: "1.2rem",
   };
 
+  const handleBrowse = (e) =>{ 
+    e?.preventDefault(); 
+    navigate('/browsespace');
+  }
+
   return (
     <>
-      <Box onClick={(e) => navigate('/browsespace')} sx={createSpaceStyle}>
+      <Box onClick={handleBrowse} sx={createSpaceStyle}>
         <Typography>Browse All</Typography>
       </Box>
 
