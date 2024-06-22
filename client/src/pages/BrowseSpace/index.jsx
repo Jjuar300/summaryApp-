@@ -1,8 +1,10 @@
 import Actions from "../home/Actions";
 import AccountProfile from "../home/AccountProfile";
 import searchIcon from "./assets/search.svg";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useGetData } from "../../hooks";
+import { useNavigate } from "react-router-dom";
+import { sendObjectId } from "../../Redux/createSpace";
 
 import { Box, Typography, TextField, InputAdornment } from "@mui/material";
 import { useState } from "react";
@@ -10,6 +12,8 @@ import { useState } from "react";
 export default function Index() {
   const { space } = useGetData();
   const [search, setSearch] = useState(''); 
+  const navigate = useNavigate(); 
+  const dispatch = useDispatch(); 
 
   const handleSearchChange = (e) => {
    setSearch(e.target.value); 
@@ -17,6 +21,12 @@ export default function Index() {
 
 
   const filterSpaces = space.filter(({name}) => name.toLowerCase().includes(search.toLowerCase())); 
+
+ const handleClick = (e, ObjectId) =>{ 
+  e?.preventDefault(); 
+  dispatch(sendObjectId(ObjectId))
+  navigate(`/spaces/${ObjectId}`)
+ }
 
   return (
     <div>
@@ -76,11 +86,19 @@ export default function Index() {
       >
         {
         filterSpaces?.map(({ _id, name }) => (
-          <Typography sx={{ 
+     
+         <Typography
+         onClick={(e) => handleClick(e, _id)}
+          sx={{ 
             fontSize: "1.3rem", 
             padding:'.5rem', 
             color:'#3f3f3f',
-            ":hover" : {cursor:'pointer'}
+            width:'32rem', 
+            ":hover": {
+              cursor: "pointer",
+              background: "#ededed",
+            },
+            transition: "background .2s ease-in-out"
              }} key={_id}>
             {name}
           </Typography>
