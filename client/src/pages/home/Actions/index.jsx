@@ -1,11 +1,12 @@
 import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
-import { useEffect, useState } from "react";
-import { deleteData, fetchData, postData, updateData } from "../../../utils";
+import { useState } from "react";
+import { deleteData, postData, updateData } from "../../../utils";
 import { PopoverContainer } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { useGetData } from "../../../hooks";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -15,7 +16,6 @@ import PopOver from "./PopOver";
 import {
   handleSpaceText,
   handleInputValue,
-  shouldSpaceTextSubmit,
   sendSpaceObjectId,
 } from "../../../Redux/createSpace";
 
@@ -24,7 +24,6 @@ export default function Index() {
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
-  const [spaces, setSpaces] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
@@ -32,9 +31,10 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
-  
-  const navigate = useNavigate(); 
+
+  const navigate = useNavigate();
   const { user } = useUser();
+  const { space, getUserData } = useGetData();
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
@@ -47,9 +47,6 @@ export default function Index() {
 
   const handleButtonClicked = () => {
     setOpenModal(true);
-    if (spaces.length === 0) {
-      dispatch(shouldSpaceTextSubmit(true));
-    }
   };
 
   const renameSpaceText = async (e) => {
@@ -91,23 +88,11 @@ export default function Index() {
       handleClose();
       dispatch(handleSpaceText(""));
       getUserData();
-      navigate('/browsespace')
+      navigate("/browsespace");
     } catch (error) {
       console.log(error);
     }
   };
-
-  const getUserData = async () => {
-    const response = await fetchData(`/api/users/${user.id}`);
-
-    if (response.spaces) {
-      setSpaces(response.spaces);
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
@@ -115,13 +100,12 @@ export default function Index() {
     addSpace();
     setOpenModal(false);
     setText("");
-
-    dispatch(shouldSpaceTextSubmit(false));
-
     dispatch(handleSpaceText(text));
+
   };
 
-  const handleCloseEditSpace = () => {
+  const handleCloseEditSpace = (e) => {
+    e?.preventDefault(); 
     renameSpaceText();
     setRenameSpaceOpen(false);
     dispatch(handleSpaceText(editText));
@@ -181,6 +165,7 @@ export default function Index() {
       <SpaceCreate handleButtonClicked={handleButtonClicked} />
 
       <SpaceModals
+        text={text}
         handleChange={handleChange}
         setOpenModal={setOpenModal}
         isOpenModal={isOpenModal}
@@ -197,7 +182,7 @@ export default function Index() {
       />
 
       <SpaceList
-        spaces={spaces}
+        spaces={space}
         setEditText={setEditText}
         editText={editText}
         Space={Space}

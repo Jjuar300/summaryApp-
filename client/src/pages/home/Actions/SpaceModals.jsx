@@ -14,10 +14,12 @@ export default function SpaceModals({
   LengthOfEditText,
   handleChange,
   handleCloseSave,
+  text, 
 }) {
   return (
     <>
       <SpaceModal
+        text={text}
         onClick={handleCloseSave}
         onChange={handleChange}
         textQuestion={"Create a new Space"}
@@ -33,6 +35,7 @@ export default function SpaceModals({
       />
 
       <SpaceModal
+        text={editText}
         onClick={handleCloseEditSpace}
         onChange={handleEditChange}
         setOpen={setRenameSpaceOpen}

@@ -15,8 +15,12 @@ export default function DeleteModal({
   inputStyle,
   onChange,
   previousText,
+  text, 
 }) {
+
   const MaxLengthOfText = 25;
+  const textWithoutSpaces = text.replace(/\s+/g, '')
+
   return (
     <>
       <Modal
@@ -48,7 +52,7 @@ export default function DeleteModal({
               {textInformation}
             </Typography>
           ) : null}
-
+c
           <form>
             {isInput ? (
               <>
@@ -77,14 +81,18 @@ export default function DeleteModal({
             ) : null}
 
             <Button
-              onClick={onClick}
+              onClick={textWithoutSpaces && onClick}
               sx={{
                 position: "absolute",
                 top: "11rem",
                 left: "17rem",
-                backgroundColor: "#47046e",
+                backgroundColor: textWithoutSpaces ? "#47046e" : 'gray',              
                 color: "white",
                 width: "6rem",
+                ":hover" : {
+                  cursor: textWithoutSpaces ? 'pointer' : 'auto', 
+                  backgroundColor: textWithoutSpaces ? '#370355' : 'gray'},
+                  opacity: textWithoutSpaces ? '1' : '.1',
               }}
             >
               {textRightButton}
