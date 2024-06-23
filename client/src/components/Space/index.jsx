@@ -4,7 +4,6 @@ import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendObjectId} from "../../Redux/createSpace";
 import { handleSpaceText } from "../../Redux/createSpace";
-import { postData } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 const index = ({

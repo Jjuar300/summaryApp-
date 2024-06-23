@@ -52,9 +52,6 @@ const deleteSpace = async (req, res) => {
       }
     )
 
-    console.log('user:', req.params.userId); 
-    console.log('spaceId: ', req.params.spaceId)
-
     res.json(deleteSpace);
   } catch (error) {
     res.status(500).json("Internal server error");

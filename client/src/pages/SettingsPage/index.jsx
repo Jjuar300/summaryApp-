@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
+import { deleteData} from "../../utils";
 
 export default function index() {
   const { user } = useUser();
@@ -48,8 +49,11 @@ export default function index() {
     left: "8rem",
   };
 
-  const handleUserDelete = () => {
+  const handleUserDelete = async () => {
     user?.delete();
+    await deleteData(`/api/users/${user?.id}`, {
+      
+    }); 
     navigate("/");
   };
 
@@ -151,6 +155,7 @@ export default function index() {
         />
       ) : (
         <DeleteModal
+          isInput={false}
           isText={true}
           textQuestion={"Are your sure you want to delete your Account?"}
           textInformation={

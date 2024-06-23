@@ -33,11 +33,25 @@ const getUserByUserId = async (req, res) => {
     }
     res.json(user);
   } catch (error) {
+    console.log('error occurred when getting user data')
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
+const deleteUser = async (req, res) => {
+ try {
+    // const {userId} = req.body; 
+    const userDelete = await User.findOneAndDelete({userId: req.params.userId}); 
+     
+    console.log('delete user: ', req.params.userId);  
+    await userDelete.save(); 
+  } catch (error) {
+  res.status(500).json({error: 'internal error'})
+ }
+}
+
 module.exports = {
   newUser,
   getUserByUserId,
+  deleteUser, 
 };
