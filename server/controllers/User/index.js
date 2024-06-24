@@ -1,4 +1,4 @@
-const { User } = require("../../Models");
+const { User, Space } = require("../../Models");
 
 const newUser = async (req, res) => {
   try {
@@ -40,11 +40,15 @@ const getUserByUserId = async (req, res) => {
 
 const deleteUser = async (req, res) => {
  try {
-    // const {userId} = req.body; 
+    const{spaces} = req.body; 
+    const spaceIds = spaces?.map((item) => item._id)
+
     const userDelete = await User.findOneAndDelete({userId: req.params.userId}); 
-     
-    console.log('delete user: ', req.params.userId);  
+    const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})
+
     await userDelete.save(); 
+    await spaceDelete.save();
+    
   } catch (error) {
   res.status(500).json({error: 'internal error'})
  }

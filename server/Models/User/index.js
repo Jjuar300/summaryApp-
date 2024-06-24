@@ -13,10 +13,7 @@ const UserSchema = new mongoose.Schema({
       ref:'spaces', 
     }
   ],
-  chatGpt: [{
-    type: mongoose.Types.ObjectId, 
-    ref:'chatGpt', 
- }]
+
 });
 
 const UserModel = mongoose.model("user", UserSchema);

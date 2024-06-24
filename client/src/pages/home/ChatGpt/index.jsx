@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
+import { useGetChatgpt } from "../../../hooks";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
-  const [chatgptData, setChatgptData] = useState([]);
+  // const [chatgptData, setChatgptData] = useState([]);
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const {user} = useUser(); 
+  const {chatgptData} = useGetChatgpt(); 
   const chatgptId = chatgptData[0]?._id; 
   const dispatch = useDispatch(); 
 
@@ -27,18 +29,18 @@ export default function index() {
     }
   };
 
-  const getChatGpt = async () => {
-    const response = await fetchData(`/api/users/${user.id}/spaces/${objectId}`); 
-    if(response?.chatGpt){
-     return setChatgptData(response?.chatGpt);
-    }
-  };
+  // const getChatGpt = async () => {
+  //   const response = await fetchData(`/api/users/${user.id}/spaces/${objectId}`); 
+  //   if(response?.chatGpt){
+  //    return setChatgptData(response?.chatGpt);
+  //   }
+  // };
 
   dispatch(setChatGptId(chatgptId))
 
-  useEffect(() => {
-    getChatGpt();
-  }, [objectId]);
+  // useEffect(() => {
+  //   getChatGpt();
+  // }, [objectId]);
 
 
   return (

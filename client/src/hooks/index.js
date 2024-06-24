@@ -1,4 +1,4 @@
 import useGetData from "./useGetData";
+import useGetChatgpt from "./useGetChatgpt";
 
-
-export  {useGetData}
+export  {useGetData, useGetChatgpt}

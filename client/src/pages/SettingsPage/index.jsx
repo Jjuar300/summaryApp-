@@ -3,6 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
+  Button,
   Divider,
   TextField,
   Typography,
@@ -11,6 +12,7 @@ import {
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData} from "../../utils";
+import {useGetData} from '../../hooks/index'
 
 export default function index() {
   const { user } = useUser();
@@ -18,6 +20,9 @@ export default function index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
+  const {space} = useGetData(); 
+
+ console.log('spaces:', space)
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -49,10 +54,11 @@ export default function index() {
     left: "8rem",
   };
 
+
   const handleUserDelete = async () => {
     user?.delete();
     await deleteData(`/api/users/${user?.id}`, {
-      
+      spaces: space, 
     }); 
     navigate("/");
   };
