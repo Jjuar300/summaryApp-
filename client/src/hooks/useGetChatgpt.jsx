@@ -1,7 +1,7 @@
 import { fetchData } from "../utils";
 import { useUser } from "@clerk/clerk-react";
 import { useSelector } from "react-redux";
-
+import { useState, useEffect } from "react";
 
 export default function useGetChatgpt() {
     const {user} = useUser(); 
@@ -20,5 +20,5 @@ export default function useGetChatgpt() {
         getChatGpt();
       }, [objectId]);
     
-    return {chatgptData}
+    return {chatgptData, getChatGpt}
 }

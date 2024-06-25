@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData} from "../../utils";
-import {useGetData} from '../../hooks/index'
+import {useGetData, useGetChatgpt} from '../../hooks/index'
 
 export default function index() {
   const { user } = useUser();
@@ -21,8 +21,10 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
   const {space} = useGetData(); 
+  const {chatgptData} = useGetChatgpt(); 
 
  console.log('spaces:', space)
+ console.log('chatGPt: ',chatgptData)
 
   const DesktopDeleteAccountModal = {
     position: "absolute",

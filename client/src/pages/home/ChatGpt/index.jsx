@@ -1,18 +1,15 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { fetchData, postData } from "../../../utils";
-import { useEffect, useState } from "react";
+import { postData } from "../../../utils";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
 import { useGetChatgpt } from "../../../hooks";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
-  // const [chatgptData, setChatgptData] = useState([]);
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const {user} = useUser(); 
-  const {chatgptData} = useGetChatgpt(); 
+  const {chatgptData, getChatGpt} = useGetChatgpt(); 
   const chatgptId = chatgptData[0]?._id; 
   const dispatch = useDispatch(); 
 
@@ -29,19 +26,7 @@ export default function index() {
     }
   };
 
-  // const getChatGpt = async () => {
-  //   const response = await fetchData(`/api/users/${user.id}/spaces/${objectId}`); 
-  //   if(response?.chatGpt){
-  //    return setChatgptData(response?.chatGpt);
-  //   }
-  // };
-
   dispatch(setChatGptId(chatgptId))
-
-  // useEffect(() => {
-  //   getChatGpt();
-  // }, [objectId]);
-
 
   return (
     <>

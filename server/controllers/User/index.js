@@ -1,4 +1,4 @@
-const { User, Space } = require("../../Models");
+const { User, Space, ChatGpt } = require("../../Models");
 
 const newUser = async (req, res) => {
   try {
@@ -42,13 +42,19 @@ const deleteUser = async (req, res) => {
  try {
     const{spaces} = req.body; 
     const spaceIds = spaces?.map((item) => item._id)
+    const chatGptIds = spaces?.map((item) => item?.chatGpt?.map((item) => item._id)); 
 
     const userDelete = await User.findOneAndDelete({userId: req.params.userId}); 
     const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})
+    const chatgptDelete = await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
 
     await userDelete.save(); 
     await spaceDelete.save();
-    
+    await chatgptDelete.save(); 
+
+    console.log('spacesIds:', spaceIds); 
+    console.log('chatgptIds:', chatGptIds)
+
   } catch (error) {
   res.status(500).json({error: 'internal error'})
  }
