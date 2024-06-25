@@ -2,6 +2,8 @@ import { fetchData } from "../utils";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { sendObjectId } from "../Redux/createSpace";
 
 export default function useGetData() {
     const [space, setSpaces] = useState([]); 

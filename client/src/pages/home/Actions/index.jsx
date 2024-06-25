@@ -17,6 +17,7 @@ import {
   handleSpaceText,
   handleInputValue,
   sendSpaceObjectId,
+  sendObjectId,
 } from "../../../Redux/createSpace";
 
 export default function Index() {
@@ -95,14 +96,16 @@ export default function Index() {
   };
 
   const handleCloseSave = (e) => {
-    e?.preventDefault();
+    e?.preventDefault(); 
     dispatch(handleInputValue(text));
     addSpace();
     setOpenModal(false);
     setText("");
     dispatch(handleSpaceText(text));
-
   };
+
+  // space?.map(({_id}) => dispatch(sendObjectId(_id)));   
+  console.log('objectId:', objectId)
 
   const handleCloseEditSpace = (e) => {
     e?.preventDefault(); 
