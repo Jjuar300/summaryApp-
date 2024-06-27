@@ -26,7 +26,7 @@ const index = ({
     navigate(`/spaces/${ObjectId}`)
   };
 
-  return (
+  return (  
     <>
       <Box onClick={handleSpaceClick} sx={inlineStyle} >
         <Typography

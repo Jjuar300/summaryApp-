@@ -12,8 +12,8 @@ const persistConfig = {
   version: 1,
   storage,
   sessionStorage,
-  //  whitelist:[SpaceNotes], 
-   blacklist: [createSpace] 
+  //  whitelist:[createSpace], 
+  //  blacklist: [createSpace] 
 };
 
 const reducer = combineReducers({

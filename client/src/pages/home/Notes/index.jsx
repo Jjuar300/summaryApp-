@@ -15,6 +15,6 @@ export default function index() {
     <NavBarNotes
     spaceText={spaceText}
     />
-    </>
+    </>           
   )
 }

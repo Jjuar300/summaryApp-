@@ -68,14 +68,20 @@ export default function Index() {
     dispatch(sendSpaceObjectId(spaceObjectId));
   };
 
+
   const addSpace = async (e) => {
     e?.preventDefault();
     try {
-      await postData("/api/spaces", {
+      const response = await postData("/api/spaces", {
         name: text,
         userId: user?.id,
       });
       getUserData();
+      const createdSapaceId = response?._id; 
+      console.log('created spaceID',createdSapaceId)
+      dispatch(sendObjectId(createdSapaceId))
+      navigate(`/spaces/${createdSapaceId}`)
+
     } catch (error) {
       console.log(error);
     }
@@ -97,6 +103,7 @@ export default function Index() {
 
   const handleCloseSave = (e) => {
     e?.preventDefault(); 
+    getUserData(); 
     dispatch(handleInputValue(text));
     addSpace();
     setOpenModal(false);
@@ -104,7 +111,6 @@ export default function Index() {
     dispatch(handleSpaceText(text));
   };
 
-  // space?.map(({_id}) => dispatch(sendObjectId(_id)));   
   console.log('objectId:', objectId)
 
   const handleCloseEditSpace = (e) => {

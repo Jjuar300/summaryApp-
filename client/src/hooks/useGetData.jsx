@@ -9,6 +9,7 @@ export default function useGetData() {
     const [space, setSpaces] = useState([]); 
     const {user} = useUser(); 
     const spaceText = useSelector((state) => state.createSpace.spaceText)
+    const objectId = useSelector((state) => state.createSpace.ObjectId);
 
     const getUserData = async () => {
         const response = await fetchData(`/api/users/${user?.id}`);
@@ -20,7 +21,7 @@ export default function useGetData() {
     
       useEffect(() => {
         getUserData();
-      }, [spaceText]);
+      }, [spaceText, objectId]);
     
 
     return {space, getUserData}
