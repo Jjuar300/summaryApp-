@@ -5,6 +5,7 @@ import {
   Typography,
   Tooltip,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { postData } from "../../../utils";
 import { useState } from "react";
@@ -12,7 +13,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
 import { useGetChatgpt } from "../../../hooks";
-import attachment from "./assets/attachment.svg";
+import { attachment, send } from "./assets/index";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
@@ -65,7 +66,8 @@ export default function index() {
                       position: "relative",
                       padding: ".5rem",
                       opacity: ".5",
-                      left: "1rem",
+                      left: ".6rem",
+                      top: ".3rem",
                       height: "2rem",
                       borderRadius: 2,
                       transition: "background .2s ease-in-out",
@@ -83,15 +85,15 @@ export default function index() {
           sx={{
             backgroundColor: "rgba(233, 232, 240, 1)",
             color: "gray",
-            padding: ".9rem",
+            padding: ".8rem",
             width: "10rem",
             ":hover": { backgroundColor: "rgba(221, 218, 240, 1)" },
-            fontSize: "1rem",
           }}
-          onClick={askGpt}
+          // onClick={askGpt}
         >
-          Upload
+          <img src={send} style={{ width: "2rem" }} />
         </Button>
+
         {chatgptData?.map(({ _id, response }) => (
           <Typography key={_id}>{response}</Typography>
         ))}

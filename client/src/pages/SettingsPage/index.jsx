@@ -3,7 +3,6 @@ import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Button,
   Divider,
   TextField,
   Typography,
@@ -12,7 +11,7 @@ import {
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData} from "../../utils";
-import {useGetData, useGetChatgpt} from '../../hooks/index'
+import {useGetData} from '../../hooks/index'
 
 export default function index() {
   const { user } = useUser();
@@ -21,10 +20,6 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
   const {space} = useGetData(); 
-  const {chatgptData} = useGetChatgpt(); 
-
- console.log('spaces:', space)
- console.log('chatGPt: ',chatgptData)
 
   const DesktopDeleteAccountModal = {
     position: "absolute",

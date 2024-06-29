@@ -78,7 +78,6 @@ export default function Index() {
       });
       getUserData();
       const createdSapaceId = response?._id; 
-      console.log('created spaceID',createdSapaceId)
       dispatch(sendObjectId(createdSapaceId))
       navigate(`/spaces/${createdSapaceId}`)
 
@@ -110,8 +109,6 @@ export default function Index() {
     setText("");
     dispatch(handleSpaceText(text));
   };
-
-  console.log('objectId:', objectId)
 
   const handleCloseEditSpace = (e) => {
     e?.preventDefault(); 
