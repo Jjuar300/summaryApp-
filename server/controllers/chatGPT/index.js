@@ -4,7 +4,6 @@ const { User, Space } = require("../../Models/index");
 
 const ChatgptResponse = async (req, res) => {
   try {
-    const userId = 'user_2h43t1TCVVMT4P1SASFjd5hTsiS'
     const { message, spaceId } = req.body;
     const response = await main(message);
     const newChatgpt = await ChatGpt.create({

@@ -6,7 +6,6 @@ export default function Notes({ spaceText }) {
       <Box
         sx={{
           position: "relative",
-          borderBottom: "1px solid black",
           width: "98rem",
           left: "15.2rem",
           top: "1rem",
@@ -27,31 +26,6 @@ export default function Notes({ spaceText }) {
           {spaceText}
         </Typography>
 
-        <Typography
-          sx={{
-            position: "absolute",
-            fontSize: "1.2rem",
-            color: "#484848",
-            fontWeight: "bold",
-            left: "72rem",
-            top: "0rem",
-          }}
-        >
-          Edit Notes Icon
-        </Typography>
-
-        <Typography
-          sx={{
-            position: "absolute",
-            fontSize: "1.2rem",
-            left: "85rem",
-            top: "0rem",
-            color: "#484848",
-            fontWeight: "bold",
-          }}
-        >
-          Ask question!
-        </Typography>
       </Box>
     </>
   );
