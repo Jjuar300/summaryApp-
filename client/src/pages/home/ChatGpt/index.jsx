@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
 import { useGetChatgpt } from "../../../hooks";
-import { attachment, send } from "./assets/index";
+import { attachment, effortless, feedBack, send, streamline } from "./assets/index";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
@@ -85,18 +85,57 @@ export default function index() {
           sx={{
             backgroundColor: "rgba(233, 232, 240, 1)",
             color: "gray",
-            padding: ".8rem",
+            padding: "1.1rem",
             width: "10rem",
             ":hover": { backgroundColor: "rgba(221, 218, 240, 1)" },
           }}
           // onClick={askGpt}
         >
-          <img src={send} style={{ width: "2rem" }} />
+          <img src={send} style={{ width: "1.3rem" }} />
         </Button>
 
         {chatgptData?.map(({ _id, response }) => (
           <Typography key={_id}>{response}</Typography>
         ))}
+      </Box>
+
+      <Box
+      sx={{
+        position:'absolute', 
+        display:'flex', 
+        left:'45rem',
+        top:'32rem' , 
+        justifyItems:'center', 
+        gap:'3rem', 
+      }}
+      >
+      <img src={effortless} style={{width:'15rem'}}/>
+      <img src={streamline} style={{width:'15rem'}}/>
+
+      </Box>
+
+      <Box
+       sx={{
+        position:'absolute', 
+        left:'50rem',
+        top:'45rem' , 
+      }}
+      >
+      <Button
+      startIcon={<img src={feedBack} />}
+      sx={{
+        backgroundColor:'black', 
+
+        color:'white', 
+        width:"23rem",
+        height:'3rem', 
+        ":hover" : {
+          backgroundColor:'#333333'
+        }
+      }}
+      >
+        Feedback
+      </Button>
       </Box>
     </>
   );
