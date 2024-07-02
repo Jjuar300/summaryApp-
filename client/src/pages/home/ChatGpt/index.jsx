@@ -5,7 +5,6 @@ import {
   Typography,
   Tooltip,
   InputAdornment,
-  IconButton,
 } from "@mui/material";
 import { postData } from "../../../utils";
 import { useState } from "react";
@@ -14,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
 import { useGetChatgpt } from "../../../hooks";
 import { attachment, effortless, feedBack, send, streamline } from "./assets/index";
+import { useNavigate } from "react-router-dom";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
@@ -21,6 +21,7 @@ export default function index() {
   const { chatgptData, getChatGpt } = useGetChatgpt();
   const chatgptId = chatgptData[0]?._id;
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
 
   const askGpt = async (e) => {
     e?.preventDefault();
@@ -90,6 +91,7 @@ export default function index() {
             ":hover": { backgroundColor: "rgba(221, 218, 240, 1)" },
           }}
           // onClick={askGpt}
+          onClick={() => navigate('/summary')}
         >
           <img src={send} style={{ width: "1.3rem" }} />
         </Button>
