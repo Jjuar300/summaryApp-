@@ -1,76 +1,108 @@
 import {Box,  Button,  Typography } from "@mui/material";
 import AccountProfile from '../home/AccountProfile'
-import Actions from '../home/Actions'
+import Actions from '../home/Actions'; 
+import Notes from '../home/Notes'
+
+
 import {
   EditorContent, 
   useEditor, 
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'; 
+import Placeholder from '@tiptap/extension-placeholder'
 
-// import Document from '@tiptap/extension-document'; 
-// import Paragraph from '@tiptap/extension-paragraph'; 
-// import Text from "@tiptap/extension-text";
-// import Link from "@tiptap/extension-link";
-// import Bold from "@tiptap/extension-bold";
-// import Underline from "@tiptap/extension-underline";
-// import Italic from "@tiptap/extension-italic";
-// import Strike from "@tiptap/extension-strike";
-// import Code from "@tiptap/extension-code";
-// import History from "@tiptap/extension-history";
-
-import { useCallback } from "react";
+import { bold } from "./assets";
+import './styles/index.css'
 
 export default function index() {
   
 const editor = useEditor({
-  extensions: [StarterKit], 
-  content: '<h1>Hello world</h1>',
+  extensions: [
+    StarterKit,
+    Placeholder.configure({
+      placeholder:'type something here...',
+    }), 
+  ], 
+  //  content: "", 
 })
-
-
-  // const editor = useEditor({
-  //   extensions: [
-  //     Document, 
-  //     History, 
-  //     Paragraph, 
-  //     Text, 
-  //     Link.configure({openOnClick: false}), 
-  //     Bold, 
-  //     Underline, 
-  //     Italic, 
-  //     Strike, 
-  //     Code, 
-  //   ], 
-  // })
-
-// const toggleBold = useCallback(() => {
-//   editor.chain().focus().toggleBold().run(); 
-// }, [editor]); 
 
   return (
     <div>
    
-   <AccountProfile/>
-   <Actions/>
+   <Notes/>
 
-   <EditorContent editor={editor} />
-    <Button
+    <Box
+    sx={{
+      position:'sticky',
+    }}
+    >
+    <AccountProfile/>
+    <Actions/>
+    </Box>
+
+    <Box
+    sx={{
+     position:'absolute', 
+     top:'8rem',
+     left:'40rem', 
+     backgroundColor:'black', 
+     width:'23rem',
+     height:'3rem', 
+     border:'1px solid blue'  
+    }}
+    >
+
+<Button
     onClick={() => editor.chain().focus().toggleBold().run()}
     sx={{
-      position:'absolute', 
-      left:'34rem', 
+          backgroundColor:'black', 
+        ":hover" : {backgroundColor:'#2b2b2b'}
     }}
-    >Bold</Button>
+    >
+     <img src={bold} />
+
+    </Button>
 
     <Button
     onClick={() => editor.chain().focus().toggleStrike().run()}
       sx={{
-        position:'absolute', 
-        left:'40rem', 
+        backgroundColor:'black', 
+        ":hover" : {backgroundColor:'#2b2b2b'}
       }}
     >
-      Strike
+     strike
     </Button>
+
+    </Box>
+
+
+   {/* <Box
+   sx={{
+    position:'absolute', 
+    width:'50rem',
+    height:'43.3rem',  
+    // border:'1px solid red', 
+    left:'35rem', 
+    overflowY: 'auto' 
+  }}
+   > */}
+  
+  <EditorContent 
+  className="editor-content"
+  style={{
+    position:'absolute', 
+    width:'60rem',  
+    // border:'1px solid red', 
+    left:'30rem', 
+    overflowY: 'auto' ,
+    height:'43.3rem',
+    fontSize:'1.2rem', 
+    msOverflowStyle:'none', 
+    scrollbarWidth:'none'
+  }}
+   editor={editor} />
+  
+   {/* </Box> */}
 
     </div>
   )

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/api", routes);
 
 try {
-  mongoose.connect(process.env.MONGO_DATABASE);
+  mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE)
   console.log('DB connected:')
 } catch (error) {
   console.log(`${error}: did not connect`);
