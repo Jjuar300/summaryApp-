@@ -54,12 +54,14 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            // backgroundColor: "#f9f9f9",
+            backgroundColor: "#F8F5FD",
             width: "16rem",
             height: "59.8rem",
             left: ".2rem",
             top: ".05rem",
             // borderRight: "1px solid #cfcfcf",
+            borderTopRightRadius:'1rem',
+            borderBottomRightRadius:'1rem', 
           }}
         >
           <AccountProfile />

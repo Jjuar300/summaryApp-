@@ -6,7 +6,7 @@ export default function Notes({ spaceText }) {
       <Box
         sx={{
           position: "relative",
-          width: "98rem",
+          width: "16rem",
           left: "15.2rem",
           top: "1rem",
           paddingLeft: "2rem",
