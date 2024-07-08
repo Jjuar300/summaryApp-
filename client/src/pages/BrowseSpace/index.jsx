@@ -29,22 +29,50 @@ export default function Index() {
  }
 
   return (
+    
     <div>
+         <Box
+           sx={{
+             position: "absolute",
+             backgroundColor: "#F8F5FD",
+             width: "16rem",
+             height: "59.8rem",
+             left: ".2rem",
+             top: ".05rem",
+             // borderRight: "1px solid #cfcfcf",
+             borderTopRightRadius:'1rem',
+             borderBottomRightRadius:'1rem', 
+           }}
+           >
+           <AccountProfile />
+           <Actions />
+         </Box>
+      <Box
+       sx={{
+        position:'absolute', 
+        backgroundColor:'#FAF6FF',
+         height:'58rem', 
+         borderRadius:'1rem',
+         width:'98.6rem',
+         left:'17rem',   
+         top:'.5rem', 
+      }}
+      >
       <Box
         sx={{
           position: "absolute",
-          left: "40rem",
+          left: "30rem",
           top: "8rem",
           width: "32rem",
         }}
-      >
+        >
         <Typography
           sx={{
             fontSize: "2rem",
             color: "#757676",
             fontWeight: "bold",
           }}
-        >
+          >
           Browse All
         </Typography>
 
@@ -59,53 +87,38 @@ export default function Index() {
               </InputAdornment>
             ),
           }}
-        />
+          />
       </Box>
+
 
       <Box
         sx={{
           position: "absolute",
-          backgroundColor: "#F8F5FD",
-          width: "16rem",
-          height: "59.8rem",
-          left: ".2rem",
-          top: ".05rem",
-          // borderRight: "1px solid #cfcfcf",
-          borderTopRightRadius:'1rem',
-          borderBottomRightRadius:'1rem', 
-        }}
-      >
-        <AccountProfile />
-        <Actions />
-      </Box>
-
-      <Box
-        sx={{
-          position: "absolute",
-          left: "40rem",
+          left: "30rem",
           top: "17rem",
         }}
-      >
+        >
         {
-        filterSpaces?.map(({ _id, name }) => (
-     
-         <Typography
-         onClick={(e) => handleClick(e, _id)}
-          sx={{ 
-            fontSize: "1.3rem", 
-            padding:'.5rem', 
-            color:'#3f3f3f',
-            width:'32rem', 
-            ":hover": {
-              cursor: "pointer",
-              background: "#ededed",
-            },
-            transition: "background .2s ease-in-out"
-             }} key={_id}>
+          filterSpaces?.map(({ _id, name }) => (
+            
+            <Typography
+            onClick={(e) => handleClick(e, _id)}
+            sx={{ 
+              fontSize: "1.3rem", 
+              padding:'.5rem', 
+              color:'#3f3f3f',
+              width:'32rem', 
+              ":hover": {
+                cursor: "pointer",
+                background: "#ededed",
+              },
+              transition: "background .2s ease-in-out"
+            }} key={_id}>
             {name}
           </Typography>
         ))}
       </Box>
+        </Box>
     </div>
   );
 }

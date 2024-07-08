@@ -24,32 +24,44 @@ import {
   task,
 } from "./assets";
 import "./styles/index.css";
+import { useTiptap } from "../../hooks";
 
 export default function index() {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: "type something here...",
-      }),
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
+ const {editor} = useTiptap(); 
 
-      Heading.configure({
-        levels: [1, 2, 3],
-      }),
+//  const response = chatgptData?.map(({response}) => {
+//       return response; 
+//     })
 
-      Underline,
-      TaskList,
-      TaskItem,
-      // content:'chatgpt response goes here!'
-    ],
-  });
+//   const contentResponse = response[0]; 
+
+// console.log('response:', contentResponse)
+
+
+  // const editor = useEditor({
+  //   extensions: [
+  //     StarterKit,
+  //     Placeholder.configure({
+  //       placeholder: "type something here...",
+  //     }),
+  //     TextAlign.configure({
+  //       types: ["heading", "paragraph"],
+  //     }),
+
+  //     Heading.configure({
+  //       levels: [1, 2, 3],
+  //     }),
+
+  //     Underline,
+  //     TaskList,
+  //     TaskItem,
+
+  //   ],
+  // });
+
 
   return (
     <div>
-     
 
       <Box
         sx={{
@@ -78,7 +90,7 @@ export default function index() {
          left:'17rem',   
       }}
       >
-         
+
   <Box
   sx={{
     position:'absolute', 
@@ -94,7 +106,7 @@ export default function index() {
     display: "flex",
     position: "absolute",
     top: "10rem",
-    left: "25rem",
+    left: "24rem",
     backgroundColor: "#363636",
     width: "50rem",
     height: "3rem",
@@ -231,7 +243,8 @@ export default function index() {
 
 </Box>
 
-<EditorContent
+
+    <EditorContent
   className="editor-content"
   style={{
     position: "absolute",
@@ -243,12 +256,13 @@ export default function index() {
     height: "33rem",
     fontSize: "1.2rem",
     msOverflowStyle: "none",
-    // scrollbarWidth: "none",
+    scrollbarWidth: "none",
     lineHeight:'2rem',
-    border:'1px solid purple', 
+    // border:'1px solid purple', 
   }}
   editor={editor}
 />
+ 
 
 <Box
   sx={{

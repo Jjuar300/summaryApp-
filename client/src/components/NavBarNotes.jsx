@@ -16,11 +16,12 @@ export default function Notes({ spaceText }) {
       >
         <Typography
           sx={{
-            fontSize: "1.2rem",
+            fontSize: "1.7rem",
             left: "18rem",
             top: "2rem",
             color: "#484848",
             fontWeight: "bold",
+            textAlign:'center', 
           }}
         >
           {spaceText}

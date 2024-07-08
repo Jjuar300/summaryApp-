@@ -11,9 +11,17 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
-import { useGetChatgpt } from "../../../hooks";
-import { attachment, effortless, feedBack, send, streamline } from "./assets/index";
+import { useGetChatgpt, useTiptap } from "../../../hooks";
+import {
+  attachment,
+  effortless,
+  feedBack,
+  send,
+  streamline,
+} from "./assets/index";
 import { useNavigate } from "react-router-dom";
+
+import Notes from "../Notes/index";
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
@@ -21,7 +29,17 @@ export default function index() {
   const { chatgptData, getChatGpt } = useGetChatgpt();
   const chatgptId = chatgptData[0]?._id;
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const {editor} = useTiptap(); 
+
+
+  const response = chatgptData?.map(({response}) => {
+    return response; 
+  })
+
+const contentResponse = response[0]; 
+
+console.log('response:', contentResponse)
 
   const askGpt = async (e) => {
     e?.preventDefault();
@@ -38,106 +56,128 @@ export default function index() {
 
   dispatch(setChatGptId(chatgptId));
 
+  const handleOnclick = async () => {
+    await askGpt();
+    navigate("/summary");
+  };
+
   return (
     <>
       <Box
         sx={{
+          // border:'1px solid red',
           position: "absolute",
-          left: "45rem",
-          top: "23rem",
+          backgroundColor: "#FAF6FF",
+          height: "58rem",
+          borderRadius: "1rem",
+          width: "98.6rem",
+          left: "17rem",
+          top: ".5rem",
         }}
       >
-        <TextField
-          type="url"
-          size="medium"
-          placeholder="Enter a link here"
+        <Box
           sx={{
-            width: "25rem",
+            position: "absolute",
+            left: "20rem",
+            top: "5rem",
           }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment>
-                <Tooltip placement="top" title="upload file">
-                  <Box
-                    sx={{
-                      ":hover": {
-                        cursor: "pointer",
-                        backgroundColor: "#ebeceb",
-                      },
-                      position: "relative",
-                      padding: ".5rem",
-                      opacity: ".5",
-                      left: ".6rem",
-                      top: ".3rem",
-                      height: "2rem",
-                      borderRadius: 2,
-                      transition: "background .2s ease-in-out",
-                    }}
-                  >
-                    <img src={attachment} />
-                  </Box>
-                </Tooltip>
-              </InputAdornment>
-            ),
-          }}
-          onChange={(e) => setAskMessage(e.target.value)}
-        />
-        <Button
-          sx={{
-            backgroundColor: "rgba(233, 232, 240, 1)",
-            color: "gray",
-            padding: "1.1rem",
-            width: "10rem",
-            ":hover": { backgroundColor: "rgba(221, 218, 240, 1)" },
-          }}
-          // onClick={askGpt}
-          onClick={() => navigate('/summary')}
         >
-          <img src={send} style={{ width: "1.3rem" }} />
-        </Button>
+          <Notes />
+        </Box>
 
-        {chatgptData?.map(({ _id, response }) => (
-          <Typography key={_id}>{response}</Typography>
-        ))}
-      </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            left: "30rem",
+            top: "15rem",
+          }}
+        >
+          <TextField
+            type="url"
+            size="medium"
+            placeholder="Enter a link here"
+            sx={{
+              width: "25rem",
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment>
+                  <Tooltip placement="top" title="upload file">
+                    <Box
+                      sx={{
+                        ":hover": {
+                          cursor: "pointer",
+                          backgroundColor: "#ebeceb",
+                        },
+                        position: "relative",
+                        padding: ".5rem",
+                        opacity: ".5",
+                        left: ".6rem",
+                        top: ".3rem",
+                        height: "2rem",
+                        borderRadius: 2,
+                        transition: "background .2s ease-in-out",
+                      }}
+                    >
+                      <img src={attachment} />
+                    </Box>
+                  </Tooltip>
+                </InputAdornment>
+              ),
+            }}
+            onChange={(e) => setAskMessage(e.target.value)}
+          />
+          <Button
+            sx={{
+              backgroundColor: "rgba(233, 232, 240, 1)",
+              color: "gray",
+              padding: "1.1rem",
+              width: "10rem",
+              ":hover": { backgroundColor: "rgba(221, 218, 240, 1)" },
+            }}
+            onClick={handleOnclick}
+          >
+            <img src={send} style={{ width: "1.3rem" }} />
+          </Button>
+        </Box>
 
-      <Box
-      sx={{
-        position:'absolute', 
-        display:'flex', 
-        left:'45rem',
-        top:'32rem' , 
-        justifyItems:'center', 
-        gap:'3rem', 
-      }}
-      >
-      <img src={effortless} style={{width:'15rem'}}/>
-      <img src={streamline} style={{width:'15rem'}}/>
+        <Box
+          sx={{
+            position: "absolute",
+            display: "flex",
+            left: "31rem",
+            top: "23rem",
+            justifyItems: "center",
+            gap: "3rem",
+          }}
+        >
+          <img src={effortless} style={{ width: "15rem" }} />
+          <img src={streamline} style={{ width: "15rem" }} />
+        </Box>
 
-      </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            left: "36rem",
+            top: "35rem",
+          }}
+        >
+          <Button
+            startIcon={<img src={feedBack} />}
+            sx={{
+              backgroundColor: "black",
 
-      <Box
-       sx={{
-        position:'absolute', 
-        left:'50rem',
-        top:'45rem' , 
-      }}
-      >
-      <Button
-      startIcon={<img src={feedBack} />}
-      sx={{
-        backgroundColor:'black', 
-
-        color:'white', 
-        width:"23rem",
-        height:'3rem', 
-        ":hover" : {
-          backgroundColor:'#333333'
-        }
-      }}
-      >
-        Feedback
-      </Button>
+              color: "white",
+              width: "23rem",
+              height: "3rem",
+              ":hover": {
+                backgroundColor: "#333333",
+              },
+            }}
+          >
+            Feedback
+          </Button>
+        </Box>
       </Box>
     </>
   );

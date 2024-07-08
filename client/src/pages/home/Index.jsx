@@ -3,7 +3,6 @@ import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
-import Notes from "./Notes/index";
 import ChatGpt from "./ChatGpt/index";
 
 export default function Index() {
@@ -12,7 +11,6 @@ export default function Index() {
 
   return (
     <>
-      <Notes />
       {isMobileScreen ? (
         <>
           <Drawer open={open}>
