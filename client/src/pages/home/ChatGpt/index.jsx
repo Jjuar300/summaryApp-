@@ -32,7 +32,6 @@ export default function index() {
   const navigate = useNavigate();
   const {editor} = useTiptap(); 
 
-
   const response = chatgptData?.map(({response}) => {
     return response; 
   })
@@ -40,6 +39,7 @@ export default function index() {
 const contentResponse = response[0]; 
 
 console.log('response:', contentResponse)
+
 
   const askGpt = async (e) => {
     e?.preventDefault();

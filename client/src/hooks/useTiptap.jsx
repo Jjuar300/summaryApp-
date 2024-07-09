@@ -16,7 +16,7 @@ export default function useTiptap() {
       return response; 
     })
 
-  const contentResponse = response[0]; 
+  const contentResponse = response; 
 
 console.log('response:', contentResponse)
 
@@ -39,8 +39,8 @@ console.log('response:', contentResponse)
           TaskList,
           TaskItem,
         ],
-      content: contentResponse, 
+      // content: contentResponse, 
       });
 
-    return {editor}
+    return {editor, contentResponse}
 }

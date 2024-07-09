@@ -2,6 +2,8 @@ import { Box, Button } from "@mui/material";
 import AccountProfile from "../home/AccountProfile";
 import Actions from "../home/Actions";
 import Notes from "../home/Notes";
+import ChatGpt from '../home/ChatGpt/index'
+import {useGetChatgpt} from "../../hooks";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -27,37 +29,37 @@ import "./styles/index.css";
 import { useTiptap } from "../../hooks";
 
 export default function index() {
- const {editor} = useTiptap(); 
+const {chatgptData} = useGetChatgpt() 
 
-//  const response = chatgptData?.map(({response}) => {
-//       return response; 
-//     })
+let content; 
+ const response = chatgptData?.map(({response}) => {
+      content= response; 
+    })
 
-//   const contentResponse = response[0]; 
+  const contentResponse = content; 
 
-// console.log('response:', contentResponse)
+console.log('response summary:', contentResponse)
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: "type something here...",
+      }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
 
-  // const editor = useEditor({
-  //   extensions: [
-  //     StarterKit,
-  //     Placeholder.configure({
-  //       placeholder: "type something here...",
-  //     }),
-  //     TextAlign.configure({
-  //       types: ["heading", "paragraph"],
-  //     }),
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
 
-  //     Heading.configure({
-  //       levels: [1, 2, 3],
-  //     }),
-
-  //     Underline,
-  //     TaskList,
-  //     TaskItem,
-
-  //   ],
-  // });
+      Underline,
+      TaskList,
+      TaskItem,
+    ],
+    content: `<div>${content}</div>`, 
+  });
 
 
   return (
@@ -90,6 +92,13 @@ export default function index() {
          left:'17rem',   
       }}
       >
+
+        <Button
+        onClick={() =>     editor.chain().focus().setContent(contentResponse).run()
+        }
+        >
+          send content
+        </Button>
 
   <Box
   sx={{
@@ -277,6 +286,7 @@ export default function index() {
     opacity: ".8",
   }}
 />
+
       </Box>
 
     </div>
