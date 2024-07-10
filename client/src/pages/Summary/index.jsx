@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import AccountProfile from "../home/AccountProfile";
 import Actions from "../home/Actions";
 import Notes from "../home/Notes";
@@ -27,18 +27,38 @@ import {
 } from "./assets";
 import "./styles/index.css";
 import { useTiptap } from "../../hooks";
+import { useState, useEffect } from "react";
 
 export default function index() {
 const {chatgptData} = useGetChatgpt() 
+const [content, setContent] = useState(); 
 
-let content; 
- const response = chatgptData?.map(({response}) => {
-      content= response; 
-    })
 
-  const contentResponse = content; 
+useEffect(() => {
+const savedContent = localStorage.getItem('editorContent')
 
-console.log('response summary:', contentResponse)
+   if(savedContent){
+  setContent(savedContent); 
+ }
+},[])
+
+const realContent = localStorage.getItem('editorContent');
+
+let contentResponse; 
+
+ chatgptData?.map(({response}) => {
+    contentResponse= response; 
+  })
+
+ console.log('content:', contentResponse)
+
+  const handleOnclick = () => {
+    editor.chain().focus().insertContent(content).run(); 
+  }
+  
+  const handleOnChange = (e) => {
+    setContent(e.target.value)
+  }
 
   const editor = useEditor({
     extensions: [
@@ -58,9 +78,12 @@ console.log('response summary:', contentResponse)
       TaskList,
       TaskItem,
     ],
-    content: `<div>${content}</div>`, 
+    content: realContent, 
+    onUpdate: ({editor}) => {
+     const html = editor.getHTML(); 
+     localStorage.setItem('editorContent', html); 
+    }
   });
-
 
   return (
     <div>
@@ -80,7 +103,7 @@ console.log('response summary:', contentResponse)
         <AccountProfile />
         <Actions />
       </Box>
-   
+
       <Box
       sx={{
         // border:'1px solid red', 
@@ -94,11 +117,16 @@ console.log('response summary:', contentResponse)
       >
 
         <Button
-        onClick={() =>     editor.chain().focus().setContent(contentResponse).run()
-        }
+        onClick={handleOnclick}
         >
           send content
         </Button>
+
+       <TextField
+        onChange={handleOnChange}
+       />
+
+       {content}
 
   <Box
   sx={{
@@ -108,6 +136,8 @@ console.log('response summary:', contentResponse)
   }}
   >
   <Notes />
+
+  {/* <ChatGpt/> */}
   </Box>
 
 <Box

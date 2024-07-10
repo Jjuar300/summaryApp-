@@ -32,15 +32,6 @@ export default function index() {
   const navigate = useNavigate();
   const {editor} = useTiptap(); 
 
-  const response = chatgptData?.map(({response}) => {
-    return response; 
-  })
-
-const contentResponse = response[0]; 
-
-console.log('response:', contentResponse)
-
-
   const askGpt = async (e) => {
     e?.preventDefault();
     try {
@@ -58,7 +49,8 @@ console.log('response:', contentResponse)
 
   const handleOnclick = async () => {
     await askGpt();
-    navigate("/summary");
+    // editor.chain().focus().insertContent().run()
+    // navigate("/summary");
   };
 
   return (
