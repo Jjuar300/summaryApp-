@@ -22,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import Notes from "../Notes/index";
+import Summary from '../../Summary/index'
 
 export default function index() {
   const [askMessage, setAskMessage] = useState();
@@ -47,9 +48,12 @@ export default function index() {
 
   dispatch(setChatGptId(chatgptId));
 
+
   const handleOnclick = async () => {
     await askGpt();
-    // editor.chain().focus().insertContent().run()
+    const formatted = chatgptData?.map(data => `<p>${data?.response}</p>`).join(''); 
+    localStorage.setItem('editorContent', formatted);
+    editor.commands.setContent(formatted) 
     // navigate("/summary");
   };
 
@@ -67,6 +71,9 @@ export default function index() {
           top: ".5rem",
         }}
       >
+
+<Summary/>
+
         <Box
           sx={{
             position: "absolute",

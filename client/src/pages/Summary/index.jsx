@@ -78,7 +78,7 @@ console.log('html:', editor?.getHTML())
 
   return (
     <div>
-      <Box
+      {/* <Box
         sx={{
           position: "absolute",
           backgroundColor: "#F8F5FD",
@@ -92,22 +92,23 @@ console.log('html:', editor?.getHTML())
       >
         <AccountProfile />
         <Actions />
-      </Box>
+      </Box> */}
 
       <Box
         sx={{
           // border:'1px solid red',
           position: "absolute",
-          backgroundColor: "#FAF6FF",
+          // backgroundColor: "#FAF6FF",
           height: "58rem",
           borderRadius: "1rem",
           width: "98.6rem",
-          left: "17rem",
+          left: "-3rem",
+          top:'3rem', 
         }}
       >
-        <Button
+        {/* <Button
         onClick={handleOnclick}
-        >sendChagpt</Button>
+        >sendChagpt</Button> */}
 
         <Box
           sx={{
