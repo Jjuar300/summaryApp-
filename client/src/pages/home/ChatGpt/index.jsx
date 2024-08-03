@@ -50,12 +50,20 @@ export default function index() {
 
 
   const handleOnclick = async () => {
-    await askGpt();
-    const formatted = chatgptData?.map(data => `<p>${data?.response}</p>`).join(''); 
-    localStorage.setItem('editorContent', formatted);
-    editor.commands.setContent(formatted) 
+    // await askGpt();
+    try{
+      const editorContent = editor?.getJSON(); 
+       await postData('/api/chatgpt', {
+        message: JSON.stringify({editorContent}),
+        spaceId:objectId, 
+       })
+    }catch(error){
+      console.log(error); 
+    }
     // navigate("/summary");
   };
+
+ console.log('jsonContent:', editor?.getJSON())
 
   return (
     <>

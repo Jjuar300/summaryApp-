@@ -28,12 +28,10 @@ import {
 import "./styles/index.css";
 import { useTiptap } from "../../hooks";
 import { useState, useEffect } from "react";
-import { postData } from "../../utils";
+import { fetchData, postData } from "../../utils";
 
 export default function index() {
   const { chatgptData } = useGetChatgpt();
-
-  // let contentResponse;
 
   const contentResponse = chatgptData?.map(({ response }) => {
     return response;
@@ -42,6 +40,10 @@ export default function index() {
   console.log("content:", contentResponse);
 
   const contentStorage = localStorage.getItem('editorContent')
+
+ console.log('contentStorage:', contentStorage)
+
+
 
   const editor = useEditor({
     extensions: [
@@ -61,7 +63,7 @@ export default function index() {
       TaskList,
       TaskItem,
     ],
-    content: contentStorage,
+  
     onUpdate: ({ editor }) => {
       const html = editor?.getHTML(); 
         localStorage.setItem('editorContent', html)
@@ -73,8 +75,6 @@ export default function index() {
    localStorage.setItem('editorContent', formatted);
    editor.commands.setContent(formatted) 
   }
-
-console.log('html:', editor?.getHTML())
 
   return (
     <div>
