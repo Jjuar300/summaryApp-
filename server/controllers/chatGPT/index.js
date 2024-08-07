@@ -47,8 +47,26 @@ const deleteChatGpt = async (req, res) => {
   }
 }
 
+const updateChatgpt = async (req, res) => {
+  try{
+    const chatgptId = req.params.chatGptId; 
+    const {html} = req.body; 
+    const updateResponse = await ChatGpt.findOneAndUpdate(
+      {_id: chatgptId}, 
+      {
+        response: html, 
+      }
+    )
+    res.json(updateResponse)
+  }catch(error){
+    res.status(500).json({error: "Internal error"}); 
+    console.log('Error orccured while updating the chatgpt response!')
+  }
+}
+
 module.exports = {
   ChatgptResponse,
   getChatGptData,
   deleteChatGpt, 
+  updateChatgpt, 
 };

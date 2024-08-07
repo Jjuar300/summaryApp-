@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setChatGptId } from "../../../Redux/chatGpt";
-import { useGetChatgpt, useTiptap } from "../../../hooks";
+import { useGetChatgpt } from "../../../hooks";
 import {
   attachment,
   effortless,
@@ -22,25 +22,24 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import Notes from "../Notes/index";
-import Summary from '../../Summary/index'
 
-export default function index() {
+export default function index( {handleClick}) {
   const [askMessage, setAskMessage] = useState();
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const { chatgptData, getChatGpt } = useGetChatgpt();
   const chatgptId = chatgptData[0]?._id;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const {editor} = useTiptap(); 
 
   const askGpt = async (e) => {
     e?.preventDefault();
     try {
-      await postData("/api/chatgpt", {
+     const response =  await postData("/api/chatgpt", {
         message: askMessage,
         spaceId: objectId,
       });
       getChatGpt();
+    //  editor.commands.setContent(response?.response)
+    //  console.log('data:', response?.response)
     } catch (error) {
       console.log(error);
     }
@@ -51,19 +50,8 @@ export default function index() {
 
   const handleOnclick = async () => {
     // await askGpt();
-    try{
-      const editorContent = editor?.getJSON(); 
-       await postData('/api/chatgpt', {
-        message: JSON.stringify({editorContent}),
-        spaceId:objectId, 
-       })
-    }catch(error){
-      console.log(error); 
-    }
-    // navigate("/summary");
+    handleClick(); 
   };
-
- console.log('jsonContent:', editor?.getJSON())
 
   return (
     <>
@@ -79,8 +67,6 @@ export default function index() {
           top: ".5rem",
         }}
       >
-
-<Summary/>
 
         <Box
           sx={{

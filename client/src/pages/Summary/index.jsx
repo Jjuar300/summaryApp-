@@ -26,16 +26,15 @@ import {
   task,
 } from "./assets";
 import "./styles/index.css";
-import { useTiptap } from "../../hooks";
 import { useState, useEffect } from "react";
-import { fetchData, postData } from "../../utils";
+import { fetchData, postData, updateData } from "../../utils";
 
-export default function index() {
+export default function index({content}) {
   const { chatgptData } = useGetChatgpt();
 
   const contentResponse = chatgptData?.map(({ response }) => {
     return response;
-  }).join('');
+  }).join('')
 
   console.log("content:", contentResponse);
 
@@ -43,7 +42,15 @@ export default function index() {
 
  console.log('contentStorage:', contentStorage)
 
-
+ const updateEditorContent = async (html) => {
+     try{
+        await updateData(`/api/chatgpt/66b18197d2bb2629fa788217`, {
+          html: html, 
+        })
+     }catch(error){
+      console.log('error:',error)
+     }
+ }
 
   const editor = useEditor({
     extensions: [
@@ -58,21 +65,21 @@ export default function index() {
       Heading.configure({
         levels: [1, 2, 3],
       }),
-
+        
       Underline,
       TaskList,
       TaskItem,
     ],
-  
+
+    // content: 'djdjdj', 
     onUpdate: ({ editor }) => {
       const html = editor?.getHTML(); 
-        localStorage.setItem('editorContent', html)
+        updateEditorContent(html)
     },
   });
 
  const handleOnclick = () => {
    const formatted = chatgptData?.map(data => `<p>${data?.response}</p>`).join(''); 
-   localStorage.setItem('editorContent', formatted);
    editor.commands.setContent(formatted) 
   }
 
@@ -95,15 +102,16 @@ export default function index() {
       </Box> */}
 
       <Box
+
         sx={{
           // border:'1px solid red',
           position: "absolute",
-          // backgroundColor: "#FAF6FF",
+          backgroundColor: "#FAF6FF",
           height: "58rem",
           borderRadius: "1rem",
           width: "98.6rem",
-          left: "-3rem",
-          top:'3rem', 
+          left: "17rem",
+          top: ".5rem",
         }}
       >
         {/* <Button

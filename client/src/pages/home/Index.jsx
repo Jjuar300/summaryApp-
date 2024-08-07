@@ -1,13 +1,36 @@
-import { Box,useMediaQuery, Drawer, Button } from "@mui/material";
+import { Box, useMediaQuery, Drawer, Button } from "@mui/material";
 import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
 import ChatGpt from "./ChatGpt/index";
+import Summary from "../Summary";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useGetChatgpt } from "../../hooks";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [open, setOpen] = useState(false);
+  const [isGptSend, GptSend] = useState(false);
+  const [content, setcontent] = useState("");
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+  });
+
+  const { chatgptData } = useGetChatgpt();
+
+  const handleClick = () => {
+    GptSend(true);
+    const formatted = chatgptData
+      ?.map((data) => `<p>${data?.response}</p>`)
+      .join("");
+    editor.commands.setContent(formatted);
+    setContent('formatted');
+  };
+
+  console.log("editorIn home:", editor?.getHTML());
 
   return (
     <>
@@ -58,16 +81,17 @@ export default function Index() {
             left: ".2rem",
             top: ".05rem",
             // borderRight: "1px solid #cfcfcf",
-            borderTopRightRadius:'1rem',
-            borderBottomRightRadius:'1rem', 
+            borderTopRightRadius: "1rem",
+            borderBottomRightRadius: "1rem",
           }}
         >
           <AccountProfile />
           <Actions />
         </Box>
-      )}
+      )};
 
-      <ChatGpt />
+     <Summary/>
+
     </>
   );
 }

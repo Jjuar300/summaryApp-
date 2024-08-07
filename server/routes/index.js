@@ -14,6 +14,7 @@ router.delete('/users/:userId', User.deleteUser)
 
 router.post('/chatgpt', Chatgpt.ChatgptResponse);
 router.get('/chatgpt', Chatgpt.getChatGptData);
-router.delete('/chatgpt/:chatGptId', Chatgpt.deleteChatGpt)
+router.delete('/chatgpt/:chatGptId', Chatgpt.deleteChatGpt);
+router.put('/chatgpt/:chatGptId',Chatgpt.updateChatgpt);
 
 module.exports = router;
