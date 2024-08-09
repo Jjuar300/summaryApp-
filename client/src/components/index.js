@@ -4,6 +4,7 @@ import NavBar from './NavBar/index';
 import Space from './Space/index'; 
 import Modal from './Modal'; 
 import NavBarNotes from './NavBarNotes'; 
+import AddImage from "./AddImage/index";
 
 export {
     UserAvatar,
@@ -11,5 +12,6 @@ export {
     NavBar, 
     Space,
     Modal, 
-    NavBarNotes, 
+    NavBarNotes,
+    AddImage,  
 }

@@ -7,7 +7,7 @@ export default function Notes({ spaceText }) {
         sx={{
           position: "relative",
           width: "16rem",
-          left: "15.2rem",
+          left: "-18rem",
           top: "1rem",
           paddingLeft: "2rem",
           borderColor: "#cfcfcf",

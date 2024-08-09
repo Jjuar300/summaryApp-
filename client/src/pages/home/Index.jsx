@@ -8,6 +8,7 @@ import Summary from "../Summary";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useGetChatgpt } from "../../hooks";
+import { AddImage } from "../../components";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
@@ -91,7 +92,7 @@ export default function Index() {
       )};
 
      <Summary/>
-
+     <AddImage/>
     </>
   );
 }

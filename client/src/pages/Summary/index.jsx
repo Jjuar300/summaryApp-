@@ -109,7 +109,7 @@ export default function index({content}) {
           backgroundColor: "#FAF6FF",
           height: "58rem",
           borderRadius: "1rem",
-          width: "98.6rem",
+          width: "60rem",
           left: "17rem",
           top: ".5rem",
         }}
@@ -127,10 +127,9 @@ export default function index({content}) {
         >
           <Notes />
 
-          {/* <ChatGpt/> */}
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             position: "absolute",
@@ -269,7 +268,7 @@ export default function index({content}) {
           >
             <img src={task} />
           </Button>
-        </Box>
+        </Box> */}
 
         <EditorContent
           className="editor-content"
@@ -277,7 +276,7 @@ export default function index({content}) {
             position: "absolute",
             width: "60rem",
             padding: "5rem",
-            left: "15rem",
+            left: "6rem",
             top: "14rem",
             overflowY: "auto",
             height: "33rem",
@@ -290,19 +289,6 @@ export default function index({content}) {
           editor={editor}
         />
 
-        <Box
-          sx={{
-            position: "absolute",
-            // border:'1px solid green',
-            left: "16rem",
-            width: "67rem",
-            height: "2.2rem",
-            top: "55rem",
-            filter: "blur(20px)",
-            backgroundColor: "white",
-            opacity: ".8",
-          }}
-        />
       </Box>
     </div>
   );

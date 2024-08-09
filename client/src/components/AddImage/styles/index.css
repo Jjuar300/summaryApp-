@@ -1,0 +1,18 @@
+
+.linkIcon {
+    position: absolute;
+    left: 36rem;
+    top: 1rem;
+    width: 2rem;
+    opacity: .8;
+    border-radius: 2rem;
+    padding: .3rem;
+    background-color:#787877;
+    transition: background-color  4s ease;
+}
+
+.linkIcon:hover {
+ cursor: pointer;
+ opacity: 1;
+ background-color:#787878;
+}
