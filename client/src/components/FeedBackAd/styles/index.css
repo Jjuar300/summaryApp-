@@ -1,0 +1,36 @@
+
+.card {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: absolute;
+    top: 40rem;
+    left: 1rem;
+    background-color: #c9c6d4;
+    width: 12rem;
+    height: 6rem;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.feedBackButton{
+    /* position: absolute; */
+    background-color: black;
+    color: white;
+    border-radius: .2rem;
+    width: 6rem;
+    height: 1.6rem;
+    top: 4.5rem;
+    left: 3rem;
+    cursor: pointer;
+}; 
+
+/* .feedBackButton:hover{
+    cursor: pointer;
+} */
+
+/* .feedBackText{
+    top: 3rem;
+} */

@@ -2,7 +2,7 @@ import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
 import { useState } from "react";
 import { deleteData, postData, updateData } from "../../../utils";
-import { PopoverContainer } from "../../../components";
+import { PopoverContainer, FeedbackAd } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
@@ -194,6 +194,8 @@ export default function Index() {
         Space={Space}
         setAnchorEl={setAnchorEl}
       />
+
+      <FeedbackAd/>
     </>
   );
 }
