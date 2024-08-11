@@ -14,7 +14,7 @@ export default function SpaceCreate({
   const createSpaceStyle = {
     display: "flex",
     position: "relative",
-    top: "10rem",
+    top: "5rem",
     left: isMobileScreen ? "-.6rem" : "-.3rem",
     ":hover": {
       cursor: "pointer",

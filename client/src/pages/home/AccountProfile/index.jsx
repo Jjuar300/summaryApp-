@@ -1,13 +1,14 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { postData, fetchData } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
+import { setOnClick } from "../../../Redux/feedBack";
 import {
   userAvatarStyle,
   mobileUserAvatarStyle,
@@ -16,7 +17,7 @@ import {
 } from "./styles/index";
 
 export default function Index() {
-  const { user } = useUser();
+  const { user,isSignedIn } = useUser();
   const userEmail = user.primaryEmailAddress.emailAddress;
   const firstLetterOfEmail = user.primaryEmailAddress.emailAddress
     .charAt(0)
@@ -49,9 +50,14 @@ export default function Index() {
   };
 
   const handleOnClick = () => {
+     navigate('/')
     dispatch(sendObjectId(null))
-    navigate('/')
+    if(isSignedIn){
+      dispatch(setOnClick(true))
+    }  
   }
+
+  console.log('isSignIn:', isSignedIn)
 
   return (
     <>

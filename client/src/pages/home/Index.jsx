@@ -78,10 +78,9 @@ export default function Index() {
             position: "absolute",
             backgroundColor: "#F8F5FD",
             width: "16rem",
-            height: "59.8rem",
+            height: "59rem",
             left: ".2rem",
             top: ".05rem",
-            // borderRight: "1px solid #cfcfcf",
             borderTopRightRadius: "1rem",
             borderBottomRightRadius: "1rem",
           }}

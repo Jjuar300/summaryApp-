@@ -32,7 +32,7 @@ export default function SpaceList({
             inlineStyle={{
               display: "flex",
               position: "relative",
-              top: "11rem",
+              top: "7rem",
               left: "-0.5rem",
               ":hover": {
                 cursor: "pointer",
