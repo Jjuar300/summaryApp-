@@ -76,7 +76,7 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            backgroundColor: "#F8F5FD",
+            backgroundColor: "#f4f4f4",
             width: "16rem",
             height: "59rem",
             left: ".2rem",

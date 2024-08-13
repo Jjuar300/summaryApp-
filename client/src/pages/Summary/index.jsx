@@ -106,7 +106,7 @@ export default function index({content}) {
         sx={{
           // border:'1px solid red',
           position: "absolute",
-          backgroundColor: "#FAF6FF",
+          backgroundColor: "#f4f4f4",
           height: "58rem",
           borderRadius: "1rem",
           width: "60rem",

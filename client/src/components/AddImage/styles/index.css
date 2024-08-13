@@ -1,5 +1,9 @@
 
-.linkIcon {
+*{
+    border: 1px solid orange;
+}
+
+.linkIcon1 {
     position: absolute;
     left: 36rem;
     top: 1rem;
@@ -7,12 +11,24 @@
     opacity: .8;
     border-radius: 2rem;
     padding: .3rem;
-    background-color:#787877;
-    transition: background-color  4s ease;
+    background-color:#c5c5ba;
+    transition: background-color  0.3s ease;
+    cursor: pointer; 
+};
+
+.linkIcon1:hover{
+    background-color: rgb(155, 163, 163);
 }
 
-.linkIcon:hover {
- cursor: pointer;
- opacity: 1;
- background-color:#787878;
-}
+.linkIcon2 {
+    position: absolute;
+    left: 36rem;
+    top: 9rem; 
+    width: 2rem;
+    opacity: .8;
+    border-radius: 2rem;
+    padding: .3rem;
+    background-color:#c5c5ba;
+    transition:  top 0.2s ease;
+};
+
