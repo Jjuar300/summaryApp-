@@ -1,34 +1,33 @@
+/* *{
+    border: 1px solid red;
+} */
 
-*{
-    border: 1px solid orange;
+.imageContainer {
+  position: absolute;
+  background-color: #f4f4f4;
+  width: 40rem;
+  height: 58rem;
+  left: 76rem;
+  border-radius: 1rem;
+  top: 0.5rem;
+}
+
+.linkIcon1:hover {
+  opacity: 1;
 }
 
 .linkIcon1 {
-    position: absolute;
-    left: 36rem;
-    top: 1rem;
-    width: 2rem;
-    opacity: .8;
-    border-radius: 2rem;
-    padding: .3rem;
-    background-color:#c5c5ba;
-    transition: background-color  0.3s ease;
-    cursor: pointer; 
-};
-
-.linkIcon1:hover{
-    background-color: rgb(155, 163, 163);
+  position: absolute;
+  left: 112rem;
+  top: 2rem;
+  opacity: 0.8;
+  width: 2rem;
+  border-radius: 2rem;
+  padding: 0.3rem;
+  background-color: #c6c6c5;
+  transform: rotate(180deg);
+  transition: background-color 0.3s ease, top 0.2s ease, transform 0.3s ease,
+    opacity 0.3s ease;
+  cursor: pointer;
+  z-index: 999;
 }
-
-.linkIcon2 {
-    position: absolute;
-    left: 36rem;
-    top: 9rem; 
-    width: 2rem;
-    opacity: .8;
-    border-radius: 2rem;
-    padding: .3rem;
-    background-color:#c5c5ba;
-    transition:  top 0.2s ease;
-};
-

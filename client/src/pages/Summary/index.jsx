@@ -109,7 +109,7 @@ export default function index({content}) {
           backgroundColor: "#f4f4f4",
           height: "58rem",
           borderRadius: "1rem",
-          width: "60rem",
+          width: "58rem",
           left: "17rem",
           top: ".5rem",
         }}
@@ -274,7 +274,7 @@ export default function index({content}) {
           className="editor-content"
           style={{
             position: "absolute",
-            width: "60rem",
+            width: "40rem",
             padding: "5rem",
             left: "6rem",
             top: "14rem",
