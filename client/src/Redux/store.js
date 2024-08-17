@@ -3,6 +3,8 @@ import createSpace from "./createSpace";
 import SpaceNotes from "./SpaceNotes";
 import chatGpt from "./chatGpt";
 import feedBack from "./feedBack";
+import imageContainer from './imageContainer'; 
+
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
@@ -23,6 +25,7 @@ const reducer = combineReducers({
   chatGpt : chatGpt, 
   feedBack: feedBack, 
   middleware: [thunk],
+  imageContainer: imageContainer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
