@@ -1,58 +1,42 @@
-import { lazy } from "react";
+import { lazy, useState } from "react";
 import dogSleep from "./assets/dogSleep.jpg";
 import "./styles/images.css";
-import { useDispatch } from "react-redux";
-import { setFileName } from "../../Redux/imageContainer";
-import  darkImage  from './assets/darkImage.jpg';  
+import { useDispatch, useSelector } from "react-redux";
+import { setFileName, setImageClick } from "../../Redux/imageContainer";
+import darkImage from "./assets/darkImage.jpg";
 import azy from "./assets/azy.jpg";
 import triku from "./assets/triku.jpg";
 import outWinter from "./assets/outwinter.jpg";
-import {lazyload} from 'react-lazyload'
+import LazyLoad from "react-lazyload";
+
 
 export default function Images() {
+  const isTranslate = useSelector((state) => state.imageContainer.isImageClick); 
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(setFileName(outWinter));
+  const images = [darkImage, azy, triku, outWinter, dogSleep];
+
+  const handleClick = (imageName) => {
+    dispatch(setFileName(imageName));
+    if(imageName) return     dispatch(setImageClick(!isTranslate))
   };
 
   return (
-    <div className="images">
-      <img
-        onClick={handleClick}
-        className="sleepydog"
-        src={dogSleep}
-        alt="image"
-      />
+    <div className='images'>
+      {images.map((image, index) => (
+        <LazyLoad>
+          <img
+            loading="lazy"
+            key={index}
+            onClick={() => handleClick(image)}
+            className="darkimage"
+            src={image}
+            alt="image"
+          />
+        </LazyLoad>
+      ))}
 
-      <img
-        onClick={handleClick}
-        className="darkimage"
-        src={darkImage}
-        alt="image"
-      />
-
-      <img 
-      onClick={handleClick} 
-      className="azy" 
-      src={azy} 
-      alt="image" 
-      />
-
-      <img 
-      onClick={handleClick} 
-      className="triku" src={triku} 
-      alt="image"
-      />
-
-      <img
-        onClick={handleClick}
-        className="outwinter"
-        src={outWinter}
-        alt="image"
-      />
-
-      <button>Upload</button>
+      <button className="upload">UPLOAD</button>
     </div>
   );
 }

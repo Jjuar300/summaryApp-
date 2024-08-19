@@ -3,7 +3,6 @@ import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
-import ChatGpt from "./ChatGpt/index";
 import Summary from "../Summary";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";

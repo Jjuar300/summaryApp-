@@ -1,9 +1,8 @@
-import { lazy } from "react";
-import cozyImage from "../darkImage.jpg";
-import { useState } from "react";
+import { useState, lazy } from "react";
 import LinkIcon from "./assets/link.svg";
-import Images from "./Images";
 import { useSelector } from "react-redux";
+import LazyLoad from "react-lazyload";
+const Images = lazy(() => import('./Images'))
 
 import "./styles/index.css";
 import "./styles/linkicon.css";
@@ -11,7 +10,8 @@ import "./styles/linkicon.css";
 export default function AddImage() {
   const [isHover, setHover] = useState(false);
   const [isLinkClick, setLinkClick] = useState(false);
-  const image = useSelector(state => state.imageContainer.fileName)
+  const image = useSelector((state) => state.imageContainer.fileName);
+  const isTranslate = useSelector((state) => state.imageContainer.isImageClick); 
 
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
@@ -21,16 +21,21 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
+  console.log('isTranslate:', isTranslate)
+
   return (
     <>
       {isHover && (
         <div onMouseEnter={handleHover} onMouseLeave={handleHover}>
-          <img
-            onClick={handleLinkClick}
-            className={isLinkClick ? "linkIcon2" : "linkIcon1"}
-            src={LinkIcon}
-            alt="icon"
-          />
+          <LazyLoad>
+            <img
+              loading="lazy"
+              onClick={handleLinkClick}
+              className={isLinkClick ? "linkIcon2" : "linkIcon1"}
+              src={LinkIcon}
+              alt="icon"
+            />
+          </LazyLoad>
         </div>
       )}
 
@@ -39,21 +44,25 @@ export default function AddImage() {
         onMouseLeave={handleHover}
         className="imageContainer"
       >
-        <img
-          className="cozyImage"
-          style={{
-            position: "absolute",
-            width: "40rem",
-            height: isLinkClick ? "50rem" : "58rem",
-            top: isLinkClick ? "8rem" : "0rem",
-            borderRadius: "1rem",
-            objectFit: "cover",
-            // opacity:'1', 
-            transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-          }}
-          src={image}
-          alt="add image here"
-        />
+        <LazyLoad>
+          <img
+          loading="lazy"
+            className= { isTranslate ? 'translate' : 'cozyImage'}
+            style={{
+              position: "absolute",
+              width: "40rem",
+              height: isLinkClick ? "50rem" : "58rem",
+              top: isLinkClick ? "8rem" : "0rem",
+              borderRadius: "1rem",
+              objectFit: "cover",
+              // opacity:'1',
+              transition:
+                "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+            }}
+            src={image}
+            alt="add image here"
+          />
+        </LazyLoad>
 
         <Images />
       </div>
