@@ -22,7 +22,7 @@ export default function Images() {
   };
 
   return (
-    <div className='images'>
+    <div   className='images'>
       {images.map((image, index) => (
         <LazyLoad>
           <img

@@ -1,4 +1,4 @@
-import { useState, lazy } from "react";
+import { useState, lazy, Suspense } from "react";
 import LinkIcon from "./assets/link.svg";
 import { useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
@@ -64,8 +64,12 @@ export default function AddImage() {
           />
         </LazyLoad>
 
-        <Images />
       </div>
+
+     {/* <Suspense fallback={<div>loading...</div>} >
+     {isLinkClick && <Images/>}
+     </Suspense> */}
+    
     </>
   );
 }
