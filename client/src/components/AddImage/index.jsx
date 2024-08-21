@@ -66,9 +66,9 @@ export default function AddImage() {
 
       </div>
 
-     {/* <Suspense fallback={<div>loading...</div>} >
-     {isLinkClick && <Images/>}
-     </Suspense> */}
+   <LazyLoad>
+     <Suspense> {isLinkClick && <Images/>}</Suspense>
+     </LazyLoad>
     
     </>
   );

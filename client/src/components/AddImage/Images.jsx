@@ -3,18 +3,24 @@ import dogSleep from "./assets/dogSleep.jpg";
 import "./styles/images.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setFileName, setImageClick } from "../../Redux/imageContainer";
-import darkImage from "./assets/darkImage.jpg";
+import flower from "./assets/flower.jpg";
 import azy from "./assets/azy.jpg";
 import triku from "./assets/triku.jpg";
 import outWinter from "./assets/outwinter.jpg";
+
 import LazyLoad from "react-lazyload";
 
+// const darkImage = lazy(() => import('./assets/darkImage.jpg'));
+// const azy = lazy(() => import('./assets/azy.jpg'));
+// const triku = lazy(() => import('./assets/triku.jpg'));
+// const outWinter = lazy(() => import('./assets/outWinter.jpg'));
+// const dogSleep = lazy(() => import('./assets/dogSleep.jpg'));
 
 export default function Images() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick); 
   const dispatch = useDispatch();
 
-  const images = [darkImage, azy, triku, outWinter, dogSleep];
+  const images = [flower, azy, triku, outWinter, dogSleep];
 
   const handleClick = (imageName) => {
     dispatch(setFileName(imageName));
@@ -24,7 +30,7 @@ export default function Images() {
   return (
     <div   className='images'>
       {images.map((image, index) => (
-        <LazyLoad>
+        <LazyLoad >
           <img
             loading="lazy"
             key={index}
@@ -35,6 +41,7 @@ export default function Images() {
           />
         </LazyLoad>
       ))}
+  
 
       <button className="upload">UPLOAD</button>
     </div>
