@@ -30,7 +30,6 @@ export default function Index() {
     setContent('formatted');
   };
 
-  console.log("editorIn home:", editor?.getHTML());
 
   return (
     <>

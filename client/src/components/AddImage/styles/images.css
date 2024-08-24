@@ -26,6 +26,23 @@
     transition: transform 0.4s ease-in-out; 
 }; 
 
+.imagetitle{
+    position: absolute;
+    top: 2rem;
+    left: 32rem;
+    font-size: 34;
+}
+
+/* .images2{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top: 2.5rem;
+    gap: 1rem;
+    left: 78rem;
+    transition: transform 0.4s ease-in-out; 
+    display: none; 
+} */
 
 .outwinter{
     position: relative;
@@ -69,6 +86,7 @@
     border-radius: .5rem;
     object-fit: cover;
     cursor: pointer;
+    animation: images 4s;
 }
 
 .sleepydog{
@@ -81,3 +99,10 @@
    object-fit: cover;
    cursor: pointer;
 }; 
+
+@keyframes images {
+    from {opacity: 0; 
+    } 
+    to {opacity: 1; 
+    }
+};

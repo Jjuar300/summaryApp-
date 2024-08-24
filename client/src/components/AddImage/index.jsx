@@ -2,7 +2,9 @@ import { useState, lazy, Suspense } from "react";
 import LinkIcon from "./assets/link.svg";
 import { useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
-const Images = lazy(() => import('./Images'))
+import { IKImage } from "imagekitio-react";
+
+const Images = lazy(() => import("./Images"));
 
 import "./styles/index.css";
 import "./styles/linkicon.css";
@@ -11,7 +13,7 @@ export default function AddImage() {
   const [isHover, setHover] = useState(false);
   const [isLinkClick, setLinkClick] = useState(false);
   const image = useSelector((state) => state.imageContainer.fileName);
-  const isTranslate = useSelector((state) => state.imageContainer.isImageClick); 
+  const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
 
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
@@ -21,7 +23,7 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
-  console.log('isTranslate:', isTranslate)
+  const urlEnpoint = import.meta.env.IMAGEKIT_URL_KEY;
 
   return (
     <>
@@ -44,32 +46,28 @@ export default function AddImage() {
         onMouseLeave={handleHover}
         className="imageContainer"
       >
-        <LazyLoad>
-          <img
-          loading="lazy"
-            className= { isTranslate ? 'translate' : 'cozyImage'}
-            style={{
-              position: "absolute",
-              width: "40rem",
-              height: isLinkClick ? "50rem" : "58rem",
-              top: isLinkClick ? "8rem" : "0rem",
-              borderRadius: "1rem",
-              objectFit: "cover",
-              // opacity:'1',
-              transition:
-                "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-            }}
-            src={image}
-            alt="add image here"
-          />
-        </LazyLoad>
 
+        <IKImage
+        loading="lazy"
+          className={isTranslate ? "translate" : "cozyImage"}
+          style={{
+            position: "absolute",
+            width: "40rem",
+            height: isLinkClick ? "50rem" : "58rem",
+            top: isLinkClick ? "8rem" : "0rem",
+            borderRadius: "1rem",
+            objectFit: "cover",
+            // opacity:'1',
+            transition:
+              "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+          }}
+          urlEndpoint="https://ik.imagekit.io/4pwok1cjp/"
+          path={image}
+        />
       </div>
 
-   <LazyLoad>
-     <Suspense> {isLinkClick && <Images/>}</Suspense>
-     </LazyLoad>
-    
+    {isLinkClick && <Suspense>
+      <Images /></Suspense>}
     </>
   );
 }

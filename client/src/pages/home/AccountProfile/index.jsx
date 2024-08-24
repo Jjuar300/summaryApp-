@@ -57,8 +57,6 @@ export default function Index() {
     }  
   }
 
-  console.log('isSignIn:', isSignedIn)
-
   return (
     <>
       <UserAvatar

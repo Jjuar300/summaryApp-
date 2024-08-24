@@ -8,7 +8,7 @@
     left: 112rem;
     top: 10rem;
     opacity: .8;
-    width: 2rem;
+    width: 1.5rem;
     border-radius: 2rem;
     padding: .3rem;
     background-color:#c6c6c5;
@@ -16,4 +16,10 @@
     transition:  top 0.2s ease, transform 0.3s ease, opacity 0.3s ease;
     cursor: pointer; 
     z-index: 999; 
+    animation: linkicon2 .3s; 
 }; 
+
+@keyframes linkicon2{
+  from {opacity: .3} 
+  to {opacity: .8}
+}

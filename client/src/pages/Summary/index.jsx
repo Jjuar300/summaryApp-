@@ -36,11 +36,7 @@ export default function index({content}) {
     return response;
   }).join('')
 
-  console.log("content:", contentResponse);
-
   const contentStorage = localStorage.getItem('editorContent')
-
- console.log('contentStorage:', contentStorage)
 
  const updateEditorContent = async (html) => {
      try{
