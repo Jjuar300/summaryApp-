@@ -10,8 +10,6 @@ export default function Images() {
   const dispatch = useDispatch();
   const publicKey = import.meta.env.IMAGEKIT_PLUBLIC_KEY;
 
-console.log(URLENDPOINT)
-
 const images = [
     'azy.jpg', 
     'tower.jpg', 
