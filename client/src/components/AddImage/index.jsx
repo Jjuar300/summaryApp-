@@ -23,7 +23,7 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
-  const urlEnpoint = import.meta.env.IMAGEKIT_URL_KEY;
+  const urlEnpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
 
   return (
     <>
@@ -61,7 +61,7 @@ export default function AddImage() {
             transition:
               "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
           }}
-          urlEndpoint="https://ik.imagekit.io/4pwok1cjp/"
+          urlEndpoint={urlEnpoint}
           path={image}
         />
       </div>

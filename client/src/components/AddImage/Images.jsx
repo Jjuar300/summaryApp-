@@ -5,17 +5,17 @@ import {IKImage} from 'imagekitio-react';
 import LazyLoad from "react-lazyload";
 
 export default function Images() {
-  const URLENDPOINT = import.meta.env.IMAGEKIT_URL_KEY; 
+  const urlEnpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
+  const publickey = import.meta.env.VITE_PUBLIC_KEY; 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const dispatch = useDispatch();
-  const publicKey = import.meta.env.IMAGEKIT_PLUBLIC_KEY;
 
 const images = [
-    'azy.jpg', 
+    'leaf.jpg', 
+    'rocks.jpg', 
     'tower.jpg', 
-    'flower.jpg', 
-    'outwinter.jpg', 
-    'triku.jpg', 
+    'window.jpg', 
+    'sunrise.jpg', 
   ]
 
   const handleClick = (imageName) => {
@@ -40,8 +40,8 @@ const images = [
           role="presentation"
           decoding="async"
           key={index}
-          publicKey={publicKey}
-          urlEndpoint={'https://ik.imagekit.io/4pwok1cjp/'}
+          urlEndpoint={urlEnpoint}
+          publicKey={publickey}
           path={`${image}`}
           />
         </LazyLoad>
