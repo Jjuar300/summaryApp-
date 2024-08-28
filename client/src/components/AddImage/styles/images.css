@@ -9,6 +9,7 @@
   border: 0.1rem solid rgb(201, 198, 198);
   color: rgb(117, 111, 111);
   cursor: pointer;
+  animation: images 1s;
 }
 
 .upload:hover {
@@ -87,7 +88,7 @@
   cursor: pointer;
   /* opacity: 0; */
   /* transition: opacity 2s ease-in-out; */
-  animation: images 1.5s;
+  animation: images 1s;
 }
 
 .sleepydog {
