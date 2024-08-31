@@ -34,7 +34,6 @@ app.get('/auth', (req,res) => {
   res.send(result); 
 })
 
-
 app.listen(PORT, () => {
   console.log("SERVER RUNNING ON PORT: ", PORT);
 });

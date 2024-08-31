@@ -1,11 +1,10 @@
 import "./styles/images.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setFileName, setImageClick } from "../../Redux/imageContainer";
-import { IKContext, IKImage, IKUpload } from "imagekitio-react";
+import { IKContext, IKImage, IKUpload, } from "imagekitio-react";
 import LazyLoad from "react-lazyload";
 import { useMemo, useState } from "react";
-import imagekit from 'imagekit'
-import ImageKit from "imagekit";
+
 
 export default function Images() {
   const urlEnpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
@@ -13,13 +12,8 @@ export default function Images() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null); 
-
-  // const imagekit = new ImageKit ({
-  //  url: urlEnpoint, 
-  //  publicKey: publickey, 
-   
-  // }); 
-
+  
+  
   const authenticator = async () => {
     try {
       const response = await fetch('http://localhost:3004/auth'); 
@@ -40,22 +34,6 @@ export default function Images() {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]); 
   }; 
-
-  const handleUpload = async () => {
-    try {
-      
-      const file = selectedFile; 
-      const fileName = file.name; 
-      const uploadResult = await imagekit.upload({
-        file: file, 
-        fileName: fileName, 
-      })
-
-      console.log('upload successful:', uploadResult); 
-    } catch (error) {
-      console.error('upload error:', error); 
-    }
-  }
 
   const images = [
     "leaf.jpg",
@@ -96,10 +74,11 @@ export default function Images() {
       <div className={"images"}>
         {mapImages}
         {/* <button className="upload" onClick={handleUpload} >UPLOAD</button> */}
-        {/* <input type="file" onChange={handleFileChange} /> */}
+        <input type="file" onChange={(e) => handleFileChange(e)} />
       
       <IKContext
-      authenticationEndpoint='https://localhost3004:/auth'
+      transformationPosition='path'
+      authenticationEndpoint='http://localhost:3004/auth'
       publicKey='public_GjEtjvvBdROHsJ46QIVXwiNKWGo'
       urlEndpoint={urlEnpoint}
       authenticator={authenticator}
