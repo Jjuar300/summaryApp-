@@ -1,39 +1,43 @@
 import "./styles/images.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setFileName, setImageClick } from "../../Redux/imageContainer";
-import { IKContext, IKImage, IKUpload, } from "imagekitio-react";
+import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 import LazyLoad from "react-lazyload";
-import { useMemo, useState } from "react";
-
+import { useEffect, useMemo, useState } from "react";
+import AWS from "aws-sdk";
 
 export default function Images() {
   const urlEnpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
   const publickey = import.meta.env.VITE_PUBLIC_KEY;
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = useState(null); 
-  
-  
-  const authenticator = async () => {
-    try {
-      const response = await fetch('http://localhost:3004/auth'); 
-    if(!response.ok){
-      const errorText = await response.text(); 
-      throw new Error(`Request failed with status ${response.status}: ${errorText}`); 
-    }; 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
-    const data = await response.json(); 
-    const {signature, expire, token} = data;
-    return {signature, expire, token}; 
-
-    } catch (error) {
-      throw new Error(`Authentication request fail ${error.message}`)
-    }
-  }
+  useEffect(() => {
+    const config = {
+      accessKeyId: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+      region: import.meta.env.VITE_AWS_REGION,
+    };
+    AWS.config.update(config);
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: import.meta.env.VITE_AWS_S3_BUCKET,
+      Key: "leaf.jpg",
+    };
+    s3.getSignedUrl("getObject", params, (err, url) => {
+      if (err) {
+        console.error(err);
+      } else {
+        setImageUrl(url);
+      }
+    });
+  }, []);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]); 
-  }; 
+    setSelectedFile(event.target.files[0]);
+  };
 
   const images = [
     "leaf.jpg",
@@ -48,21 +52,15 @@ export default function Images() {
     if (imageName) return dispatch(setImageClick(!isTranslate));
   };
 
- console.log('selectedFile:', selectedFile?.name)
-
   const mapImages = useMemo(() => {
     return images.map((image, index) => (
       <LazyLoad key={index}>
-        <IKImage
+        <img
           onClick={() => handleClick(image)}
-          className="darkimage"
           loading="lazy"
-          role="presentation"
-          decoding="async"
-          key={index}
-          urlEndpoint={urlEnpoint}
-          publicKey={publickey}
-          path={`${image}`}
+          className="darkimage"
+          src={`${import.meta.env.VITE_AWS_URL}${image}`}
+          alt=""
         />
       </LazyLoad>
     ));
@@ -75,17 +73,6 @@ export default function Images() {
         {mapImages}
         {/* <button className="upload" onClick={handleUpload} >UPLOAD</button> */}
         <input type="file" onChange={(e) => handleFileChange(e)} />
-      
-      <IKContext
-      transformationPosition='path'
-      authenticationEndpoint='http://localhost:3004/auth'
-      publicKey='public_GjEtjvvBdROHsJ46QIVXwiNKWGo'
-      urlEndpoint={urlEnpoint}
-      authenticator={authenticator}
-      >
-      <IKUpload
-      fileName={selectedFile?.name}/>
-      </IKContext>
       </div>
     </div>
   );

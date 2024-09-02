@@ -46,9 +46,8 @@ export default function AddImage() {
         onMouseLeave={handleHover}
         className="imageContainer"
       >
-
-        <IKImage
-        loading="lazy"
+        {/* <IKImage
+          loading="lazy"
           className={isTranslate ? "translate" : "cozyImage"}
           style={{
             position: "absolute",
@@ -63,11 +62,29 @@ export default function AddImage() {
           }}
           urlEndpoint={urlEnpoint}
           path={image}
-        />
+        /> */}
+
+        <img 
+        className={isTranslate ? "translate" : "cozyImage"}
+        style={{
+          position: "absolute",
+          width: "40rem",
+          height: isLinkClick ? "50rem" : "58rem",
+          top: isLinkClick ? "8rem" : "0rem",
+          borderRadius: "1rem",
+          objectFit: "cover",
+          // opacity:'1',
+          transition:
+            "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+        }}
+        loading="lazy" src={`${import.meta.env.VITE_AWS_URL}${image}`} alt="" />
       </div>
 
-    {isLinkClick && <Suspense>
-      <Images /></Suspense>}
+      {isLinkClick && (
+        <Suspense>
+          <Images />
+        </Suspense>
+      )}
     </>
   );
 }
