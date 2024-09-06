@@ -2,7 +2,6 @@ import { useState, lazy, Suspense } from "react";
 import LinkIcon from "./assets/link.svg";
 import { useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
-import { IKImage } from "imagekitio-react";
 
 const Images = lazy(() => import("./Images"));
 
@@ -22,8 +21,6 @@ export default function AddImage() {
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
   };
-
-  const urlEnpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
 
   return (
     <>
@@ -46,8 +43,7 @@ export default function AddImage() {
         onMouseLeave={handleHover}
         className="imageContainer"
       >
-        {/* <IKImage
-          loading="lazy"
+        <img
           className={isTranslate ? "translate" : "cozyImage"}
           style={{
             position: "absolute",
@@ -60,24 +56,10 @@ export default function AddImage() {
             transition:
               "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
           }}
-          urlEndpoint={urlEnpoint}
-          path={image}
-        /> */}
-
-        <img 
-        className={isTranslate ? "translate" : "cozyImage"}
-        style={{
-          position: "absolute",
-          width: "40rem",
-          height: isLinkClick ? "50rem" : "58rem",
-          top: isLinkClick ? "8rem" : "0rem",
-          borderRadius: "1rem",
-          objectFit: "cover",
-          // opacity:'1',
-          transition:
-            "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-        }}
-        loading="lazy" src={`${import.meta.env.VITE_AWS_URL}${image}`} alt="" />
+          loading="lazy"
+          src={`${import.meta.env.VITE_AWS_URL}${image}`}
+          alt=""
+        />
       </div>
 
       {isLinkClick && (

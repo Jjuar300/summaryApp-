@@ -20,8 +20,6 @@
     "@tiptap/extension-task-list": "^2.4.0",
     "@tiptap/pm": "^2.4.0",
     "aws-sdk": "^2.1687.0",
-    "imagekit": "^5.1.0",
-    "imagekitio-react": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-lazyload": "^3.2.1",
