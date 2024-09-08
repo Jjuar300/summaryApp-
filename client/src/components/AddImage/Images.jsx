@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFileName, setImageClick } from "../../Redux/imageContainer";
 import LazyLoad from "react-lazyload";
 import { useMemo, useState } from "react";
-// import AWS from 'aws-sdk'; 
-import S3 from 'react-aws-s3'
+import AWS from 'aws-sdk'; 
+// import S3 from 'react-aws-s3'
 
 export default function Images() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
@@ -16,16 +16,16 @@ export default function Images() {
     try {
 
       const config = {
-        accessKeyId: `${import.meta.env.VITE_AWS_ACCESS_KEY}`, 
-        secretAccessKey: `${import.meta.env.VITE_AWS_SECRET_ACCESS_KEY}`,
-        region: `${import.meta.env.VITE_AWS_REGION}`,
+        accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY, 
+        secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+        region: import.meta.env.VITE_AWS_REGION,
      
       }
 
      const s3Client = new AWS.S3(config); 
 
      const params = {
-      Bucket: `${import.meta.env.VITE_AWS_S3_BUCKET}`,
+      Bucket: import.meta.env.VITE_AWS_S3_BUCKET,
       Key: file?.name, 
       Body: file, 
      }
