@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFileName, setImageClick } from "../../Redux/imageContainer";
 import LazyLoad from "react-lazyload";
 import { useMemo, useState } from "react";
-import AWS from 'aws-sdk'; 
+// import AWS from 'aws-sdk'; 
+import S3 from 'react-aws-s3'
 
 export default function Images() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
@@ -13,20 +14,29 @@ export default function Images() {
 
   const uploadFile = async (file) =>{ 
     try {
-    const s3 = new AWS.S3({
-      accessKeyId: `${import.meta.env.VITE_AWS_ACCESS_KEY}`,
-      secretAccessKey: `${import.meta.env.VITE_AWS_SECRET_ACCESS_KEY}`, 
-      region: `${import.meta.env.VITE_AWS_REGION}`
-    })
 
-    const params = {
-      Bucket:`${import.meta.env.VITE_AWS_S3_BUCKET}`, 
+      const config = {
+        accessKeyId: `${import.meta.env.VITE_AWS_ACCESS_KEY}`, 
+        secretAccessKey: `${import.meta.env.VITE_AWS_SECRET_ACCESS_KEY}`,
+        region: `${import.meta.env.VITE_AWS_REGION}`,
+     
+      }
+
+     const s3Client = new AWS.S3(config); 
+
+     const params = {
+      Bucket: `${import.meta.env.VITE_AWS_S3_BUCKET}`,
       Key: file?.name, 
-      Body:file, 
-    }
+      Body: file, 
+     }
 
-    const data = await s3.upload(params).promise(); 
-    console.log('Error uploading file:', data); 
+     s3Client.upload(params, (err, data) => {
+      if(err){
+        console.error(err);
+      }else{
+        console.log('File uploaded successfuly:', data.Location);
+      }
+     })
 
     } catch (error) {
       console.error('error uploading error:', error)
