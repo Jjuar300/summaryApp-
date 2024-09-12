@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+
 
 const { Space, User, Chatgpt } = require("../controllers/index");
 
@@ -16,5 +18,15 @@ router.post('/chatgpt', Chatgpt.ChatgptResponse);
 router.get('/chatgpt', Chatgpt.getChatGptData);
 router.delete('/chatgpt/:chatGptId', Chatgpt.deleteChatGpt);
 router.put('/chatgpt/:chatGptId',Chatgpt.updateChatgpt);
+
+//upload images
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage });
+
+
+router.post('/file', upload.single('file'), (req, res) =>{
+
+    console.log('file:', req.file.originalname)
+  })
 
 module.exports = router;

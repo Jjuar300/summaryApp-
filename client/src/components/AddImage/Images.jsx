@@ -5,6 +5,7 @@ import LazyLoad from "react-lazyload";
 import { useMemo, useState } from "react";
 import AWS from 'aws-sdk'; 
 // import S3 from 'react-aws-s3'
+import {postData} from '../../utils/postData'; 
 
 export default function Images() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
@@ -12,40 +13,60 @@ export default function Images() {
   const [selectedFile, setSelectedFile] = useState(null);
 
 
-  const uploadFile = async (file) =>{ 
-    try {
+  // const uploadFile = async (file) =>{ 
+  //   try {
 
-      const config = {
-        accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY, 
-        secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-        region: import.meta.env.VITE_AWS_REGION,
+  //     const config = {
+  //       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY, 
+  //       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //       region: import.meta.env.VITE_AWS_REGION,
      
-      }
+  //     }
 
-     const s3Client = new AWS.S3(config); 
+  //    const s3Client = new AWS.S3(config); 
 
-     const params = {
-      Bucket: import.meta.env.VITE_AWS_S3_BUCKET,
-      Key: file?.name, 
-      Body: file, 
-     }
+  //    const params = {
+  //     Bucket: import.meta.env.VITE_AWS_S3_BUCKET,
+  //     Key: file?.name, 
+  //     Body: file, 
+  //    }
 
-     s3Client.upload(params, (err, data) => {
-      if(err){
-        console.error(err);
-      }else{
-        console.log('File uploaded successfuly:', data.Location);
-      }
-     })
+  //    s3Client.upload(params, (err, data) => {
+  //     if(err){
+  //       console.error(err);
+  //     }else{
+  //       console.log('File uploaded successfuly:', data.Location);
+  //     }
+  //    })
 
-    } catch (error) {
-      console.error('error uploading error:', error)
-    }
-  }
+  //   } catch (error) {
+  //     console.error('error uploading error:', error)
+  //   }
+  // }
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0]; 
+    setSelectedFile(file);
+
+    const form = new FormData(); 
+    form.append('file', file)
+
+     await fetch('/api/file', {
+      method: 'POST', 
+      body: form,
+     }) 
+
   };
+
+  // const uploadfile = async () => {
+  //   const form = new FormData(); 
+  //   form.append('file', selectedFile)
+
+  //    await fetch('/api/file', {
+  //     method: 'POST', 
+  //     body: form,
+  //    }) 
+  // }
 
   const images = [
     "leaf.jpg",
@@ -79,8 +100,8 @@ export default function Images() {
       <div className="imagetitle">Images</div>
       <div className={"images"}>
         {mapImages}
-        <button className="upload" onClick={() => uploadFile(selectedFile)} >UPLOAD</button>
-        <input type="file" onChange={(e) => handleFileChange(e)} />
+        <button className="upload" >UPLOAD</button>
+        <input type="file" name='file' onChange={(e) => handleFileChange(e)} />
       </div>
     </div>
   );
