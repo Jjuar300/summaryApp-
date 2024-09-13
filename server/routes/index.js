@@ -4,6 +4,7 @@ const multer = require('multer');
 
 
 const { Space, User, Chatgpt } = require("../controllers/index");
+const { uploadToS3 } = require("../services/aws/s3.js");
 
 router.post("/spaces", Space.createSpace);
 router.put("/spaces/:id", Space.renameSpaceText);
@@ -25,8 +26,12 @@ const upload = multer({ storage });
 
 
 router.post('/file', upload.single('file'), (req, res) =>{
+    const file = req.file
 
-    console.log('file:', req.file.originalname)
+    console.log('file:', req.file)
+    const {error, key} = uploadToS3({file})
+    if (error) return res.status(500).json({message: error.message}); 
+    return res.status(201).json({key});    
   })
 
 module.exports = router;
