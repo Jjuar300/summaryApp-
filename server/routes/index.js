@@ -27,9 +27,12 @@ const upload = multer({ storage });
 
 router.post('/file', upload.single('file'), (req, res) =>{
     const file = req.file
+    const fileName = req.file.originalname; 
+
+    console.log('fileName:', fileName);
 
     console.log('file:', req.file)
-    const {error, key} = uploadToS3({file})
+    const {error, key} = uploadToS3({file, fileName})
     if (error) return res.status(500).json({message: error.message}); 
     return res.status(201).json({key});    
   })

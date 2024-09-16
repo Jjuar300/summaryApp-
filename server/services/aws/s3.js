@@ -1,15 +1,24 @@
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const {v4: uuid} = require('uuid');
+const {fromIni} = require('@aws-sdk/credential-provider-ini');
+const {SecretsManagerClient} = require('@aws-sdk/client-secrets-manager');
 
 const s3 = new S3Client();
 const Bucket = process.env.AWS_S3_BUCKET;
 
-const uploadToS3 = async ({ file, userId }) => {
+const client = new SecretsManagerClient({
+  region: process.env.AWS_REGION, 
+  credentials: fromIni({profile: "default_source"})
+})
+
+const uploadToS3 = async ({ file, fileName }) => {
  try {
-  const key = `${userId}/${uuid()}`;
+  // const key = `${userId}/${uuid()}`;
+  
+  console.log('fileNaming:', fileName)
   const command = new PutObjectCommand({
     Bucket: Bucket,
-    key: key,
+    key: fileName,
     Body: file.buffer,
     ContentType: file.mimetype, 
   });
