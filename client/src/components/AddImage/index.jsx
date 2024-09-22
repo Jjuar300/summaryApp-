@@ -12,7 +12,12 @@ export default function AddImage() {
   const [isHover, setHover] = useState(false);
   const [isLinkClick, setLinkClick] = useState(false);
   const image = useSelector((state) => state.imageContainer.fileName);
+  const isFile = useSelector((state) => state.imageContainer.isFile); 
+  const fileLink = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
+
+  console.log('isFile:', isFile); 
+  console.log('fileLink:', fileLink); 
 
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
@@ -59,8 +64,7 @@ export default function AddImage() {
               "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
           }}
           loading="lazy"
-          src={`${import.meta.env.VITE_AWS_URL}${image}`}
-
+          src={ isFile ? fileLink : `${import.meta.env.VITE_AWS_URL}${image}`}
           alt=""
         />
       </div>
