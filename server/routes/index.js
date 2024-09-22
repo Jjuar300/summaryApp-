@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 
-
 const { Space, User, Chatgpt } = require("../controllers/index");
 const { uploadToS3 } = require("../services/aws/s3.js");
 
@@ -28,11 +27,15 @@ const upload = multer({ storage });
 router.post('/file', upload.single('file'), (req, res) =>{
     const file = req.file
     const fileName = req.file.originalname; 
+    
+    const userId = req.headers["x-user-id"]; 
 
     console.log('fileName:', fileName);
+    console.log('userId:', userId);
 
     console.log('file:', req.file)
     const {error, key} = uploadToS3({file, fileName})
+   
     if (error) return res.status(500).json({message: error.message}); 
     return res.status(201).json({key});    
   })

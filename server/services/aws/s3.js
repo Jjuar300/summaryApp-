@@ -13,12 +13,13 @@ const client = new SecretsManagerClient({
 
 const uploadToS3 = async ({ file, fileName }) => {
  try {
-  // const key = `${userId}/${uuid()}`;
+  const key = `${fileName}`;
   
-  console.log('fileNaming:', fileName)
+  console.log('key:', key)
+
   const command = new PutObjectCommand({
     Bucket: Bucket,
-    key: fileName,
+    Key: key,
     Body: file.buffer,
     ContentType: file.mimetype, 
   });
