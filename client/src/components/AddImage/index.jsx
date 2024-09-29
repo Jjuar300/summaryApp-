@@ -16,9 +16,6 @@ export default function AddImage() {
   const fileLink = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
 
-  console.log('isFile:', isFile); 
-  console.log('fileLink:', fileLink); 
-
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
   };
@@ -27,7 +24,7 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
-  console.log('image:',image)
+  console.log('isFile:', isFile)
 
   return (
     <>
@@ -50,8 +47,9 @@ export default function AddImage() {
         onMouseLeave={handleHover}
         className="imageContainer"
       >
+
         <img
-          className={isTranslate ? "translate" : "cozyImage"}
+          className={isTranslate ? "translate" : 'cozyImage' }
           style={{
             position: "absolute",
             width: "40rem",
@@ -59,9 +57,7 @@ export default function AddImage() {
             top: isLinkClick ? "8rem" : "0rem",
             borderRadius: "1rem",
             objectFit: "cover",
-            // opacity:'1',
-            transition:
-              "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+            transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
           }}
           loading="lazy"
           src={ isFile ? fileLink : `${import.meta.env.VITE_AWS_URL}${image}`}

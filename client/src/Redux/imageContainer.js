@@ -12,8 +12,8 @@ export const imageContainer = createSlice({
         setFileName:(state, action) => {
             state.fileName = action.payload; 
         }, 
-        setImageClick: (state, action) =>{ 
-            state.isImageClick = action.payload; 
+        setImageClick: (state) => { 
+            state.isImageClick = !state.isImageClick; 
         }, 
         setFile: (state, action) => {
             state.isFile = action.payload; 

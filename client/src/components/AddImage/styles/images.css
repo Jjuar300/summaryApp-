@@ -1,18 +1,22 @@
 /* *{
     border: 1px solid blue;
 } */
-
-.upload {
+.upload-label{
   width: 6rem;
   height: 3rem;
   border-radius: 0.5rem;
   border: 0.1rem solid rgb(201, 198, 198);
   color: rgb(117, 111, 111);
   cursor: pointer;
-  animation: images 1s;
+  text-align: center;
+  display: block;
+  font-size: 1.3rem;
+  line-height: 2.5rem;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.upload:hover {
+
+.upload-label:hover{
   background-color: rgba(221, 221, 221, 0.577);
 }
 
@@ -32,17 +36,6 @@
   left: 32rem;
   font-size: 34;
 }
-
-/* .images2{
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    top: 2.5rem;
-    gap: 1rem;
-    left: 78rem;
-    transition: transform 0.4s ease-in-out; 
-    display: none; 
-} */
 
 .outwinter {
   position: relative;

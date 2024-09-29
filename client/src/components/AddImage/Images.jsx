@@ -10,7 +10,6 @@ import LazyLoad from "react-lazyload";
 import { useMemo, useState } from "react";
 
 export default function Images() {
-  const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -41,8 +40,9 @@ export default function Images() {
 
   const handleClick = (imageName) => {
     dispatch(setFileName(imageName));
+    dispatch(setFile(false))
+    if (imageName) return dispatch(setImageClick());
     if (imageName) return dispatch(setFile(false));
-    if (imageName) return dispatch(setImageClick(!isTranslate));
   };
 
   const mapImages = useMemo(() => {
@@ -64,8 +64,14 @@ export default function Images() {
       <div className="imagetitle">Images</div>
       <div className={"images"}>
         {mapImages}
-        <button className="upload">UPLOAD</button>
-        <input type="file" name="file" onChange={(e) => handleFileChange(e)} />
+        <input 
+        style={{
+         display: 'none', 
+         cursor:'pointer', 
+        }}
+        type="file" id="file" onChange={(e) => handleFileChange(e)} />
+       <label className="upload-label" htmlFor="file">upload</label>
+      
       </div>
     </div>
   );
