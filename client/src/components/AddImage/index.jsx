@@ -24,7 +24,7 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
-  console.log('isFile:', isFile)
+  console.log('fileLink:', fileLink)
 
   return (
     <>

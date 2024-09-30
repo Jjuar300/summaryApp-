@@ -7,16 +7,18 @@ import {
   setFileLink, 
 } from "../../Redux/imageContainer";
 import LazyLoad from "react-lazyload";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = async (event) => {
+   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
     dispatch(setFile(true));
+    dispatch(setImageClick());
+
 
     const form = new FormData();
     form.append("file", file);
@@ -27,7 +29,10 @@ export default function Images() {
     });
 
     const data = await response.json();
-    dispatch(setFileLink(data?.fileLink)); 
+    if(data?.fileLink){
+      dispatch(setFileLink(data?.fileLink));
+    }
+
   };
 
   const images = [
