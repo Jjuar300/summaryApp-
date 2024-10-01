@@ -24,8 +24,6 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
-  console.log('fileLink:', fileLink)
-
   return (
     <>
       {isHover && (
@@ -61,7 +59,6 @@ export default function AddImage() {
           }}
           loading="lazy"
           src={ isFile ? fileLink : `${import.meta.env.VITE_AWS_URL}${image}`}
-          alt=""
         />
       </div>
 

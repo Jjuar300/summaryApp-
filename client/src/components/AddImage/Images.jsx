@@ -32,7 +32,6 @@ export default function Images() {
     if(data?.fileLink){
       dispatch(setFileLink(data?.fileLink));
     }
-
   };
 
   const images = [
