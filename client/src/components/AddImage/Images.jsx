@@ -13,6 +13,7 @@ export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
 
+
    const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -30,9 +31,11 @@ export default function Images() {
 
     const data = await response.json();
     if(data?.fileLink){
-      dispatch(setFileLink(data?.fileLink));
+     return dispatch(setFileLink(data?.fileLink));
     }
+
   };
+
 
   const images = [
     "leaf.jpg",

@@ -24,6 +24,10 @@ export default function AddImage() {
     setLinkClick(!isLinkClick);
   };
 
+  console.log('fileLink on index:', fileLink)
+  // const fileLink = `https://${Bucket}.s3.${Region}.amazonaws.com/${fileName}`
+
+
   return (
     <>
       {isHover && (
