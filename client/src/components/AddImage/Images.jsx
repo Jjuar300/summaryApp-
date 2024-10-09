@@ -30,6 +30,11 @@ export default function Images() {
     });
 
     const data = await response.json();
+    
+    const fileLink = data?.fileLink.split(' ').join()
+
+    console.log('fileLink:', fileLink)
+
     if(data?.fileLink){
      return dispatch(setFileLink(data?.fileLink));
     }

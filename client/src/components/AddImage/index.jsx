@@ -20,13 +20,12 @@ export default function AddImage() {
     setHover(event.type === "mouseenter");
   };
 
+  console.log('fileLink at image:', fileLink)
+
+
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
   };
-
-  console.log('fileLink on index:', fileLink)
-  // const fileLink = `https://${Bucket}.s3.${Region}.amazonaws.com/${fileName}`
-
 
   return (
     <>
@@ -63,7 +62,7 @@ export default function AddImage() {
           }}
           loading="lazy"
           src={ isFile ? fileLink : `${import.meta.env.VITE_AWS_URL}${image}`}
-        />
+          />
       </div>
 
       {isLinkClick && (
