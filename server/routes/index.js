@@ -43,4 +43,17 @@ router.post("/file", upload.single("file"), (req, res) => {
   return res.status(201).json({ fileLink });
 });
 
+router.get('/file', async (req, res) => {
+
+try {
+  const params = { 
+    Bucket: process.env.AWS_S3_BUCKET, 
+    
+
+  }
+} catch (error) {
+  console.log('error occur when getting s3 files:',error)
+}
+})
+
 module.exports = router;
