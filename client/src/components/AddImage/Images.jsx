@@ -41,6 +41,9 @@ export default function Images() {
 
   };
 
+  useEffect(() => {
+    //you need to get the 
+  },[])
 
   const images = [
     "leaf.jpg",
