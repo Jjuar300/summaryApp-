@@ -15,35 +15,26 @@ export default function Images() {
 
 
    const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    dispatch(setFile(true));
-    dispatch(setImageClick());
+     const file = event.target.files[0];
+     setSelectedFile(file);
+     dispatch(setFile(true));
+     dispatch(setImageClick());
+     
+     const form = new FormData();
+     form.append("file", file);
+     
+     const response = await fetch("/api/file", {
+       method: "POST",
+       body: form,
+      });
+      
+      const data = await response.json();
+                  
+        if(response.ok){
+          dispatch(setFileLink(data?.fileLink));
+        }
 
-
-    const form = new FormData();
-    form.append("file", file);
-
-    const response = await fetch("/api/file", {
-      method: "POST",
-      body: form,
-    });
-
-    const data = await response.json();
-    
-    const fileLink = data?.fileLink.split(' ').join()
-
-    console.log('fileLink:', fileLink)
-
-    if(data?.fileLink){
-     return dispatch(setFileLink(data?.fileLink));
-    }
-
-  };
-
-  useEffect(() => {
-    //you need to get the 
-  },[])
+      };
 
   const images = [
     "leaf.jpg",
