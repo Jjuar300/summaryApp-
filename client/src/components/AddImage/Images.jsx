@@ -8,11 +8,12 @@ import {
 } from "../../Redux/imageContainer";
 import LazyLoad from "react-lazyload";
 import { useEffect, useMemo, useState } from "react";
+import {useUser} from '@clerk/clerk-react'; 
 
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const {user} = useUser(); 
 
    const handleFileChange = async (event) => {
      const file = event.target.files[0];
@@ -22,7 +23,8 @@ export default function Images() {
      
      const form = new FormData();
      form.append("file", file);
-     
+     form.append("userId", user?.id); 
+
      const response = await fetch("/api/file", {
        method: "POST",
        body: form,

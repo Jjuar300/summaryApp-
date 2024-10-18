@@ -11,9 +11,9 @@ const client = new SecretsManagerClient({
   credentials: fromIni({profile: "default_source"})
 })
 
-const uploadToS3 = async ({ file, fileName }) => {
+const uploadToS3 = async ({ file, fileName, userId }) => {
  try {
-  const key = `${fileName}`;
+  const key = `${userId}/${fileName}`;
   
   console.log('key:', key)
 
