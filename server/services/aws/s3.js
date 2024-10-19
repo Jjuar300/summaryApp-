@@ -1,4 +1,4 @@
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
 const {fromIni} = require('@aws-sdk/credential-provider-ini');
 const {SecretsManagerClient} = require('@aws-sdk/client-secrets-manager');
 
@@ -14,8 +14,6 @@ const client = new SecretsManagerClient({
 const uploadToS3 = async ({ file, fileName, userId }) => {
  try {
   const key = `${userId}/${fileName}`;
-  
-  console.log('key:', key)
 
   const command = new PutObjectCommand({
     Bucket: Bucket,
@@ -30,6 +28,28 @@ const uploadToS3 = async ({ file, fileName, userId }) => {
 }
 };
 
+//getting file from s3
+
+const getFileS3 = async ({fileName, userId}) => {
+  
+try {
+  const key = `${userId}/${fileName}`;
+  const params = {
+    Bucket: Bucket, 
+    Key: key, 
+  }; 
+
+  const command = new GetObjectCommand(params); 
+
+  console.log('object:', command); 
+   await s3. send(command); 
+} catch (error) {
+  console.log('error occured when getting file from s3 bucket', error)
+}
+
+}
+
 module.exports = {
 uploadToS3, 
+getFileS3, 
 }
