@@ -42,7 +42,8 @@ try {
   const command = new GetObjectCommand(params); 
 
   console.log('object:', command); 
-   await s3. send(command); 
+   await s3.send(command); 
+   return {command}
 } catch (error) {
   console.log('error occured when getting file from s3 bucket', error)
 }

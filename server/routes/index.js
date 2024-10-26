@@ -40,13 +40,26 @@ router.post("/file", upload.single("file"), (req, res) => {
   console.log("file:", req.file);
   const { error} = uploadToS3({ file, fileName, userId });
  
-  const fileObject = getFileS3({fileName, userId})
-
-
+  
+  
   console.log("fileLink:", fileLink);
   if (error) return res.status(500).json({ message: error.message });
   return res.status(201).json({ fileLink });
 });
 
+router.get("/file", async (req, res) => {
+  // const fileName = req.file.originalname;
+  // const {userId} = req.body; 
+
+  const user = req.headers['x-user-id']; 
+  console.log('user:', user)
+
+  try {
+    // const {command} = await getFileS3(fileName, userId);
+    // return res.json(command);  
+  } catch (error) {
+    console.log('error on sendObject:', error)
+  }
+})
 
 module.exports = router;
