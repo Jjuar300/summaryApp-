@@ -35,7 +35,6 @@ export default function Images() {
         if(response.ok){
           dispatch(setFileLink(data?.fileLink));
         }
-
       };
 
   const images = [
@@ -67,20 +66,6 @@ export default function Images() {
     ));
   }, [images]);
 
-
- //getting the objects from s3
- const [data, setData] = useState(); 
- useEffect(() => {
-   const getImage = async () =>{ 
-     const response = fetch('/api/file'); 
-    if(!response.ok) throw new Error("Failed to fetch s3 image"); 
-    const data = (await response).json(); 
-    setData(data);
-   } 
-return getImage; 
-},[])
-
-console.log('s3 data:', data)
 
   return (
     <div>
