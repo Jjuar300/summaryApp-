@@ -9,11 +9,13 @@ import {
 import LazyLoad from "react-lazyload";
 import { useEffect, useMemo, useState } from "react";
 import {useUser} from '@clerk/clerk-react'; 
+import { useS3image } from "../../hooks";
 
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
   const {user} = useUser(); 
+  const {getS3image} = useS3image(); 
 
    const handleFileChange = async (event) => {
      const file = event.target.files[0];
@@ -35,6 +37,7 @@ export default function Images() {
         if(response.ok){
           dispatch(setFileLink(data?.fileLink));
         }
+        getS3image(); 
       };
 
   const images = [

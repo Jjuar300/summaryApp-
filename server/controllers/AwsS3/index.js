@@ -1,5 +1,7 @@
 const { uploadToS3, getFileS3 } = require("../../services/aws/s3.js");
 const { S3image } = require("../../Models/index.js");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 
 const uploadFile = async (req, res) => {
   try {
@@ -28,6 +30,7 @@ const uploadFile = async (req, res) => {
 const getS3File = async (req, res) => {
   try {
     const s3Images = await S3image.find({});
+    
     res.json(s3Images);
   } catch (error) {
     console.log("error occured while getting s3 image:", error);
