@@ -12,9 +12,9 @@ import "./styles/linkicon.css";
 export default function AddImage() {
   const [isHover, setHover] = useState(false);
   const [isLinkClick, setLinkClick] = useState(false);
-  // const image = useSelector((state) => state.imageContainer.fileName);
+  const selectImage = useSelector((state) => state.imageContainer.fileName);
   const isFile = useSelector((state) => state.imageContainer.isFile); 
-  const fileLink = useSelector((state) => state.imageContainer.fileLink); 
+  const fileName = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const {image} = useS3image(); 
 
@@ -22,8 +22,8 @@ export default function AddImage() {
     setHover(event.type === "mouseenter");
   };
 
-  console.log('fileLink at image:', fileLink)
-
+  console.log('isfile:', isFile)
+  console.log('selected image:', selectImage)
 
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
@@ -41,32 +41,36 @@ export default function AddImage() {
     
     fetchS3Images(); 
     
-  },[isFile])
+  },[fileName])
   
   const s3Image = useMemo(() => {
-    return image.map((image, index) => (
-      <img
-      key={index}
-      className={isTranslate ? "translate" : 'cozyImage' }
-      style={{
-        position: "absolute",
-        width: "40rem",
-        height: isLinkClick ? "50rem" : "58rem",
-        top: isLinkClick ? "8rem" : "0rem",
-        borderRadius: "1rem",
-        objectFit: "cover",
-        transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-      }}
-      loading="lazy"
-      src={ isFile ? image.signedurl : `${import.meta.env.VITE_AWS_URL}${image}`}
-      />
-     )); 
+    return image.map((image, index) => {
+      if(image?.filename === fileName) {
+        return <img
+        key={index}
+        className={isTranslate ? "translate" : 'cozyImage' }
+        style={{
+          position: "absolute",
+          width: "40rem",
+          height: isLinkClick ? "50rem" : "58rem",
+          top: isLinkClick ? "8rem" : "0rem",
+          borderRadius: "1rem",
+          objectFit: "cover",
+          transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+        }}
+        loading="lazy"
+        src={ isFile ? image.signedurl : `${import.meta.env.VITE_AWS_URL}${selectImage}`}
+        />
+      }
+    }); 
   },[s3Images])
 
   console.log('s3images data:',s3Images[0]?.signedurl)
-  // s3Images.map((image) => (
-  //   console.log('images:', image.filename)
-  // ))
+  // s3Images.map((image) => {
+  //   if(image?.filename === 'monkey.png') {
+  //     return console.log('filelink file:', image?.signedurl)
+  //   }
+  // })
 
   return (
     <>

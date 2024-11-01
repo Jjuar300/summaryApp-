@@ -35,9 +35,9 @@ export default function Images() {
       const data = await response.json();
                   
         if(response.ok){
-          dispatch(setFileLink(data?.fileLink));
+          dispatch(setFileLink(file?.name));
+          getS3image(); 
         }
-        getS3image(); 
       };
 
   const images = [
