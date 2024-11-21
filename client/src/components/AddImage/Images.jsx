@@ -36,7 +36,7 @@ export default function Images() {
                   
         if(response.ok){
           dispatch(setFileLink(file?.name));
-          getS3image(); 
+          // getS3image(); 
         }
       };
 

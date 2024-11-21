@@ -16,7 +16,7 @@ export default function AddImage() {
   const isFile = useSelector((state) => state.imageContainer.isFile); 
   const fileName = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
-  const {image} = useS3image(); 
+  const {images, signedUrl} = useS3image(); 
 
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
@@ -24,53 +24,29 @@ export default function AddImage() {
 
   console.log('isfile:', isFile)
   console.log('selected image:', selectImage)
+  console.log('islinkClick:', isLinkClick)
 
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
   };
 
   //getting s3 images
-  const [s3Images, setS3Images] = useState([]); 
-  useEffect(() => {
+  // const [s3Images, setS3Images] = useState([]); 
+  // useEffect(() => {
     
-    const fetchS3Images = async () =>{
-      const response = await fetch('api/file')
-      const data = await response.json(); 
-      return setS3Images(data); 
-    }
-    
-    fetchS3Images(); 
-    
-  },[fileName])
-  
-  const s3Image = useMemo(() => {
-    return image.map((image, index) => {
-      if(image?.filename === fileName) {
-        return <img
-        key={index}
-        className={isTranslate ? "translate" : 'cozyImage' }
-        style={{
-          position: "absolute",
-          width: "40rem",
-          height: isLinkClick ? "50rem" : "58rem",
-          top: isLinkClick ? "8rem" : "0rem",
-          borderRadius: "1rem",
-          objectFit: "cover",
-          transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-        }}
-        loading="lazy"
-        src={ isFile ? image.signedurl : `${import.meta.env.VITE_AWS_URL}${selectImage}`}
-        />
-      }
-    }); 
-  },[s3Images])
-
-  console.log('s3images data:',s3Images[0]?.signedurl)
-  // s3Images.map((image) => {
-  //   if(image?.filename === 'monkey.png') {
-  //     return console.log('filelink file:', image?.signedurl)
+  //   const fetchS3Images = async () =>{
+  //     const response = await fetch('api/file')
+  //     const data = await response.json(); 
+  //     return setS3Images(data); 
   //   }
-  // })
+    
+  //   fetchS3Images(); 
+    
+  // },[fileName])
+
+  // console.log('s3Image:', s3Images);
+  console.log('images:', images)
+  console.log('signedUrl:', signedUrl)
 
   return (
     <>
@@ -94,21 +70,27 @@ export default function AddImage() {
         className="imageContainer"
       >
 
-        {/* <img
-          className={isTranslate ? "translate" : 'cozyImage' }
-          style={{
-            position: "absolute",
-            width: "40rem",
-            height: isLinkClick ? "50rem" : "58rem",
-            top: isLinkClick ? "8rem" : "0rem",
-            borderRadius: "1rem",
-            objectFit: "cover",
-            transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
-          }}
-          loading="lazy"
-          src={ isFile ? s3Images[0]?.signedurl : `${import.meta.env.VITE_AWS_URL}${image}`}
-          /> */}
-       {s3Image}
+       {
+        images?.map((image, index) => {
+          if(image?.filename === fileName) {
+            return <img
+            key={index}
+            className={isTranslate ? "translate" : 'cozyImage' }
+            style={{
+              position: "absolute",
+              width: "40rem",
+              height: isLinkClick ? "50rem" : "58rem",
+              top: isLinkClick ? "8rem" : "0rem",
+              borderRadius: "1rem",
+              objectFit: "cover",
+              transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+            }}
+            loading="lazy"
+            src={ isFile ? signedUrl : `${import.meta.env.VITE_AWS_URL}${selectImage}`}
+            />
+          }
+        })
+       }
       </div>
 
       {isLinkClick && (

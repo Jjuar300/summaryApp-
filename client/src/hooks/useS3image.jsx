@@ -16,5 +16,8 @@ export default function useS3image() {
     getS3image()  
   },[fileName])
 
-    return {image, getS3image}
+  const images = image?.s3Images; 
+  const signedUrl = image?.url; 
+
+    return {images,signedUrl, getS3image}
 }
