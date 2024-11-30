@@ -3,7 +3,7 @@ const { S3image } = require("../../Models/index.js");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 
-const client = new S3Client({region: process.env.AWS_REGION})
+const client = new S3Client({region: process.env.AWS_REGION}); 
 
 const uploadFile = async (req, res) => {
   try {
@@ -47,11 +47,11 @@ const getS3File = async (req, res) => {
 
 
     // console.log('response:',response)
-    console.log('signeUrl:', url)
-    console.log('images:', s3Images)
-    console.log('newcommand:', command)
+    // console.log('signeUrl:', url)
+    // console.log('images:', s3Images)
+    // console.log('newcommand:', command)
 
-    res.json({s3Images, url});
+    res.json({s3Images});
   } catch (error) {
     console.log("error occured while getting s3 image:", error);
   }
