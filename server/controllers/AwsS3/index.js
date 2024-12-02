@@ -1,9 +1,18 @@
+require("dotenv").config();
 const { uploadToS3, getFileS3 } = require("../../services/aws/s3.js");
 const { S3image } = require("../../Models/index.js");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { GetObjectCommand, S3Client } = require("@aws-sdk/client-s3");
+const { SecretsManagerClient } = require("@aws-sdk/client-secrets-manager");
+const { fromIni } = require("@aws-sdk/credential-provider-ini");
 
-const client = new S3Client({region: process.env.AWS_REGION}); 
+const region = process.env.AWS_REGION; 
+const s3 = new S3Client({region: region});
+
+const client = new SecretsManagerClient({
+  region: region,
+  credentials: fromIni({ profile: "default_source" }),
+});
 
 const uploadFile = async (req, res) => {
   try {
@@ -19,7 +28,7 @@ const uploadFile = async (req, res) => {
 
     await S3image.create({
       filename: fileName,
-      userId: userId, 
+      userId: userId,
     });
 
     if (error) return res.status(500).json({ message: error.message });
@@ -31,27 +40,25 @@ const uploadFile = async (req, res) => {
 
 const getS3File = async (req, res) => {
   try {
-
-    // console.log('body data:', req.body)
-
     const s3Images = await S3image.find({});
-    
- const command =  s3Images.map(({filename, userId}) => {
-      const response = new GetObjectCommand({Bucket: process.env.AWS_S3_BUCKET, Key: `${userId}/${filename}`}); 
-       return response;
-    })
-    
-    // const command = new GetObjectCommand({Bucket: process.env.AWS_S3_BUCKET, Key: 'user_2iLmH5ASuNDXCAJGj4EaIYrIicc/nike.jpg'}); 
-    const url = await getSignedUrl(client, command, {expiresIn: 36000}); 
-    // const response = await client.send(command)
 
+    const command = s3Images.map(({ filename, userId }) => {
+      const response = new GetObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: `${userId}/${filename}`,
+      });
+      return response;
+    });
 
-    // console.log('response:',response)
-    // console.log('signeUrl:', url)
-    // console.log('images:', s3Images)
-    // console.log('newcommand:', command)
+    const url = await getSignedUrl( s3, command, { expiresIn: 36000 });
 
-    res.json({s3Images});
+    // const url = s3Images.map(({ filename, userId }) => (
+    //    getFileS3(filename, userId)
+    // ));
+
+    console.log('url map:', url)
+
+    res.json({ s3Images });
   } catch (error) {
     console.log("error occured while getting s3 image:", error);
   }
