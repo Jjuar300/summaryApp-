@@ -28,25 +28,7 @@ export default function AddImage() {
 
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
-  };
-
-  //getting s3 images
-  // const [s3Images, setS3Images] = useState([]); 
-  // useEffect(() => {
-    
-  //   const fetchS3Images = async () =>{
-  //     const response = await fetch('api/file')
-  //     const data = await response.json(); 
-  //     return setS3Images(data); 
-  //   }
-    
-  //   fetchS3Images(); 
-    
-  // },[fileName])
-
-  // console.log('s3Image:', s3Images);
-  console.log('images:', images)
-  console.log('signedUrl:', signedUrl)
+  }
 
   return (
     <>

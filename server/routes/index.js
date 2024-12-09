@@ -4,6 +4,7 @@ const multer = require("multer");
 
 const { Space, User, Chatgpt, AwsS3 } = require("../controllers/index");
 const { uploadToS3, getFileS3 } = require("../services/aws/s3.js");
+const {Imagekit} = require('../controllers/index.js'); 
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -22,7 +23,8 @@ router.get("/chatgpt", Chatgpt.getChatGptData);
 router.delete("/chatgpt/:chatGptId", Chatgpt.deleteChatGpt);
 router.put("/chatgpt/:chatGptId", Chatgpt.updateChatgpt);
 
-router.post('/file', upload.single('file'), AwsS3.uploadFile)
-router.get('/file', AwsS3.getS3File); 
+// router.post('/file', upload.single('file'), AwsS3.uploadFile)  //we will use imagekit
+// router.get('/file', AwsS3.getS3File);  // using imagekit
+router.get('./authImage', Imagekit.uploadFileImageKit)
 
 module.exports = router;
