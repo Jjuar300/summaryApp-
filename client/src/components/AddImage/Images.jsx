@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useS3image } from "../../hooks";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
+import {generateUploadButton} from '@uploadthing/react'
 
 export default function Images() {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export default function Images() {
   const { user } = useUser();
   const { getS3image } = useS3image();
 
-  const publicKey = import.meta.env.VITE_IMAGEKIT_PLUBLIC_KEY;
+  const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
 
   const authenticator = async () => {
@@ -33,6 +34,7 @@ export default function Images() {
       }
 
       const data = await response.json();
+      console.log('image data:', data)
       const { signature, expire, token } = data;
       return { signature, expire, token };
     } catch (error) {
@@ -58,13 +60,13 @@ export default function Images() {
     form.append("file", file);
     form.append("userId", user?.id);
 
-    const response = await fetch("/api/file", {
+    const response = await fetch("/api/authImage", {
       method: "POST",
       body: form,
     });
 
     const data = await response.json();
-
+    console.log('data:', data)
     if (response.ok) {
       dispatch(setFileLink(file?.name));
       // getS3image();
@@ -112,19 +114,21 @@ export default function Images() {
           }}
           type="file"
           id="file"
-          onChange={(e) => handleFileChange(e)}
+          // onChange={(e) => handleFileChange(e)}
         />
         <label className="upload-label" htmlFor="file">
           upload
         </label>
 
       <IKContext
+        
         urlEndpoint={urlEndpoint}
         publicKey={publicKey}
         authenticator={authenticator}
       >
         <IKUpload 
-        useUniqueFileName
+        onChange={(e) => handleFileChange(e)}
+        fileName={`${selectedFile?.name}`}
         onError={onError}
         onSuccess={onSuccess}
         />

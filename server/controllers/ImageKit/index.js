@@ -11,6 +11,11 @@ const uploadFileImageKit = async (req,res) => {
   try {
     const result = imagekit.getAuthenticationParameters(); 
     res.send(result)
+  //  const uploadResponse = await imagekit.upload({
+  //   file: req.file.buffer, 
+  //   fileName: req.file.originalname, 
+  //  }); 
+  //  res.status(200).json(uploadResponse); 
   } catch (error) {
     console.log('error occured uploading file:', error)
   }
