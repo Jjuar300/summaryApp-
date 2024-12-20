@@ -3,6 +3,7 @@ import LinkIcon from "./assets/link.svg";
 import { useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
 import { useS3image } from "../../hooks";
+import { IKImage } from "imagekitio-react";
 
 const Images = lazy(() => import("./Images"));
 
@@ -18,13 +19,11 @@ export default function AddImage() {
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const {images, signedUrl} = useS3image(); 
 
+  const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY
+
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
   };
-
-  console.log('isfile:', isFile)
-  console.log('selected image:', selectImage)
-  console.log('islinkClick:', isLinkClick)
 
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
@@ -52,7 +51,7 @@ export default function AddImage() {
         className="imageContainer"
       >
 
-       {
+       {/* {
         images?.map((image, index) => {
           if(image?.filename === fileName) {
             return <img
@@ -72,7 +71,10 @@ export default function AddImage() {
             />
           }
         })
-       }
+       } */}
+       <IKImage
+        urlEndpoint={urlEndpoint}
+       />
       </div>
 
       {isLinkClick && (

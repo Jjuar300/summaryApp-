@@ -11,16 +11,19 @@ import { useEffect, useMemo, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useS3image } from "../../hooks";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
-import {generateUploadButton} from '@uploadthing/react'
+import { generateUploadButton } from "@uploadthing/react";
 
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [successData, setSuccessData] = useState();
   const { user } = useUser();
   const { getS3image } = useS3image();
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
+
+console.log('successData:', successData?.filePath); 
 
   const authenticator = async () => {
     try {
@@ -34,7 +37,7 @@ export default function Images() {
       }
 
       const data = await response.json();
-      console.log('image data:', data)
+      console.log("image data:", data);
       const { signature, expire, token } = data;
       return { signature, expire, token };
     } catch (error) {
@@ -48,15 +51,16 @@ export default function Images() {
 
   const onSuccess = (res) => {
     console.log("Success", res);
+    setSuccessData(res);
   };
 
   const UploadProgress = (progress) => {
-    console.log('Progress', progress); 
-  }; 
+    console.log("Progress", progress);
+  };
 
   const onUploadStart = (evt) => {
-    console.log("start", evt)
-  }
+    console.log("start", evt);
+  };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -74,7 +78,7 @@ export default function Images() {
     });
 
     const data = await response.json();
-    console.log('data:', data)
+    console.log("data:", data);
     if (response.ok) {
       dispatch(setFileLink(file?.name));
       // getS3image();
@@ -128,22 +132,21 @@ export default function Images() {
           upload
         </label>
 
-      <IKContext
-        
-        urlEndpoint={urlEndpoint}
-        publicKey={publicKey}
-        authenticator={authenticator}
-      >
-        <IKUpload 
-        useUniqueFileName={true}
-        // onChange={(e) => handleFileChange(e)}
-        fileName={`${selectedFile?.name}`}
-        onError={onError}
-        onSuccess={onSuccess}
-        onProgress={UploadProgress}
-        onUploadStart={onUploadStart}
-        />
-      </IKContext>
+        <IKContext
+          urlEndpoint={urlEndpoint}
+          publicKey={publicKey}
+          authenticator={authenticator}
+        >
+          <IKUpload
+            useUniqueFileName={true}
+            // onChange={(e) => handleFileChange(e)}
+            fileName={`${selectedFile?.name}`}
+            onError={onError}
+            onSuccess={onSuccess}
+            onProgress={UploadProgress}
+            onUploadStart={onUploadStart}
+          />
+        </IKContext>
       </div>
     </div>
   );
