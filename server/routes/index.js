@@ -25,7 +25,7 @@ router.put("/chatgpt/:chatGptId", Chatgpt.updateChatgpt);
 
 // router.post('/file', upload.single('file'), AwsS3.uploadFile)  //we will use imagekit
 // router.get('/file', AwsS3.getS3File);  // using imagekit
-// router.get('/authImage', Imagekit.uploadFileImageKit)
-router.post('/authImage',upload.single('file'), Imagekit.uploadFileImageKit )
+router.get('/authImage', Imagekit.uploadFileImageKit)
+// router.post('/authImage',upload.single('file'), Imagekit.uploadFileImageKit )
 
 module.exports = router;

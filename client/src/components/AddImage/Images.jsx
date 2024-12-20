@@ -50,6 +50,14 @@ export default function Images() {
     console.log("Success", res);
   };
 
+  const UploadProgress = (progress) => {
+    console.log('Progress', progress); 
+  }; 
+
+  const onUploadStart = (evt) => {
+    console.log("start", evt)
+  }
+
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -127,10 +135,13 @@ export default function Images() {
         authenticator={authenticator}
       >
         <IKUpload 
-        onChange={(e) => handleFileChange(e)}
+        useUniqueFileName={true}
+        // onChange={(e) => handleFileChange(e)}
         fileName={`${selectedFile?.name}`}
         onError={onError}
         onSuccess={onSuccess}
+        onProgress={UploadProgress}
+        onUploadStart={onUploadStart}
         />
       </IKContext>
       </div>
