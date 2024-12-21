@@ -18,6 +18,9 @@ export default function AddImage() {
   const fileName = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const {images, signedUrl} = useS3image(); 
+  const userImage = useSelector(state => state.imagekit.path); 
+
+  console.log('userImage:', userImage); 
 
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY
 
@@ -73,7 +76,18 @@ export default function AddImage() {
         })
        } */}
        <IKImage
+      className={isTranslate ? "translate" : 'cozyImage' }
+      style={{
+        position: "absolute",
+        width: "40rem",
+        height: isLinkClick ? "50rem" : "58rem",
+        top: isLinkClick ? "8rem" : "0rem",
+        borderRadius: "1rem",
+        objectFit: "cover",
+        transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
+      }}
         urlEndpoint={urlEndpoint}
+        path={`${userImage}`}
        />
       </div>
 

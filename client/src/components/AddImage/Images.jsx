@@ -12,18 +12,22 @@ import { useUser } from "@clerk/clerk-react";
 import { useS3image } from "../../hooks";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 import { generateUploadButton } from "@uploadthing/react";
+import { setSuccessData } from "../../Redux/imagekit";
 
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [successData, setSuccessData] = useState();
+  // const [successData, setSuccessData] = useState();
   const { user } = useUser();
   const { getS3image } = useS3image();
+  const userUploadImage = useSelector(state => state.imagekit.path); 
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
+  const userId = user?.id; 
 
-console.log('successData:', successData?.filePath); 
+// console.log('successData:', successData?.filePath); 
+console.log('imagekit image:', userUploadImage); 
 
   const authenticator = async () => {
     try {
@@ -51,7 +55,8 @@ console.log('successData:', successData?.filePath);
 
   const onSuccess = (res) => {
     console.log("Success", res);
-    setSuccessData(res);
+    // setSuccessData(res);
+    dispatch(setSuccessData(res.filePath))
   };
 
   const UploadProgress = (progress) => {
@@ -145,6 +150,7 @@ console.log('successData:', successData?.filePath);
             onSuccess={onSuccess}
             onProgress={UploadProgress}
             onUploadStart={onUploadStart}
+            folder={userId}
           />
         </IKContext>
       </div>
