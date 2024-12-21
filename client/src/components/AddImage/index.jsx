@@ -13,14 +13,13 @@ import "./styles/linkicon.css";
 export default function AddImage() {
   const [isHover, setHover] = useState(false);
   const [isLinkClick, setLinkClick] = useState(false);
-  const selectImage = useSelector((state) => state.imageContainer.fileName);
+  const fileName = useSelector((state) => state.imageContainer.fileName);
   const isFile = useSelector((state) => state.imageContainer.isFile); 
-  const fileName = useSelector((state) => state.imageContainer.fileLink); 
+  // const fileName = useSelector((state) => state.imageContainer.fileLink); 
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const {images, signedUrl} = useS3image(); 
   const userImage = useSelector(state => state.imagekit.path); 
-
-  console.log('userImage:', userImage); 
+  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT; 
 
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY
 
@@ -75,8 +74,9 @@ export default function AddImage() {
           }
         })
        } */}
+
        <IKImage
-      className={isTranslate ? "translate" : 'cozyImage' }
+      className={ isTranslate ? "translate" : 'cozyImage' }
       style={{
         position: "absolute",
         width: "40rem",
@@ -87,7 +87,7 @@ export default function AddImage() {
         transition: "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
       }}
         urlEndpoint={urlEndpoint}
-        path={`${userImage}`}
+        path={isFile ? `${userImage}` : `note_taking_app/${fileName}`}
        />
       </div>
 

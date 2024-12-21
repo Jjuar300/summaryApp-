@@ -17,7 +17,6 @@ import { setSuccessData } from "../../Redux/imagekit";
 export default function Images() {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
-  // const [successData, setSuccessData] = useState();
   const { user } = useUser();
   const { getS3image } = useS3image();
   const userUploadImage = useSelector(state => state.imagekit.path); 
@@ -25,9 +24,7 @@ export default function Images() {
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id; 
-
-// console.log('successData:', successData?.filePath); 
-console.log('imagekit image:', userUploadImage); 
+  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT; 
 
   const authenticator = async () => {
     try {
@@ -55,8 +52,9 @@ console.log('imagekit image:', userUploadImage);
 
   const onSuccess = (res) => {
     console.log("Success", res);
-    // setSuccessData(res);
     dispatch(setSuccessData(res.filePath))
+    dispatch(setFile(true))
+    dispatch(setImageClick(true));
   };
 
   const UploadProgress = (progress) => {
@@ -71,7 +69,6 @@ console.log('imagekit image:', userUploadImage);
     const file = event.target.files[0];
     setSelectedFile(file);
     dispatch(setFile(true));
-    dispatch(setImageClick());
 
     const form = new FormData();
     form.append("file", file);
@@ -101,27 +98,24 @@ console.log('imagekit image:', userUploadImage);
   const handleClick = (imageName) => {
     dispatch(setFileName(imageName));
     dispatch(setFile(false));
-    if (imageName) return dispatch(setImageClick());
-    if (imageName) return dispatch(setFile(false));
+    dispatch(setImageClick());
+    // if (imageName) return dispatch(setFile(false));
   };
 
   const mapImages = useMemo(() => {
     return images.map((image, index) => (
-      <LazyLoad key={index}>
-        <img
-          onClick={() => handleClick(image)}
-          loading="lazy"
-          className="darkimage"
-          src={`${import.meta.env.VITE_AWS_URL}${image}`}
-          alt=""
-        />
-      </LazyLoad>
+        <IKImage
+        key={index}
+        className="darkimage"
+        urlEndpoint={imagekitUrl}
+        path={`note_taking_app/${image}`}
+        onClick={() => handleClick(image)}
+      />
     ));
-  }, [images]);
+  },[]);
 
   return (
     <div>
-      <div className="imagetitle">Images</div>
       <div className={"images"}>
         {mapImages}
         <input
@@ -133,9 +127,7 @@ console.log('imagekit image:', userUploadImage);
           id="file"
           // onChange={(e) => handleFileChange(e)}
         />
-        <label className="upload-label" htmlFor="file">
-          upload
-        </label>
+
 
         <IKContext
           urlEndpoint={urlEndpoint}
@@ -143,6 +135,11 @@ console.log('imagekit image:', userUploadImage);
           authenticator={authenticator}
         >
           <IKUpload
+          style={{
+            display: 'none', 
+            cursor: 'pointer', 
+          }}
+          id="imagekitFile"
             useUniqueFileName={true}
             // onChange={(e) => handleFileChange(e)}
             fileName={`${selectedFile?.name}`}
@@ -153,6 +150,10 @@ console.log('imagekit image:', userUploadImage);
             folder={userId}
           />
         </IKContext>
+
+        <label className="upload-label" htmlFor="imagekitFile">
+          upload
+        </label>
       </div>
     </div>
   );
