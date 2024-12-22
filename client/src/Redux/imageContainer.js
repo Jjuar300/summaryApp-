@@ -6,7 +6,6 @@ export const imageContainer = createSlice({
         fileName: '', 
         isImageClick: false, 
         isFile: false, 
-        fileLink: '', 
     }, 
     reducers:{
         setFileName:(state, action) => {
@@ -18,16 +17,12 @@ export const imageContainer = createSlice({
         setFile: (state, action) => {
             state.isFile = action.payload; 
         }, 
-        setFileLink: (state, action) => {
-            state.fileLink = action.payload; 
-        }
     }
 })
 
 export const {
     setFileName, 
     setImageClick, 
-    setFile, 
-    setFileLink, 
+    setFile,  
 } = imageContainer.actions; 
 export default imageContainer.reducer; 

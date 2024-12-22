@@ -1,30 +1,23 @@
 import "./styles/images.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setFileName,
   setImageClick,
   setFile,
-  setFileLink,
 } from "../../Redux/imageContainer";
-import LazyLoad from "react-lazyload";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
-import { useS3image } from "../../hooks";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
-import { generateUploadButton } from "@uploadthing/react";
 import { setSuccessData } from "../../Redux/imagekit";
 
 export default function Images() {
   const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = useState(null);
   const { user } = useUser();
-  const { getS3image } = useS3image();
-  const userUploadImage = useSelector(state => state.imagekit.path); 
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
-  const userId = user?.id; 
-  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT; 
+  const userId = user?.id;
+  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
 
   const authenticator = async () => {
     try {
@@ -52,8 +45,8 @@ export default function Images() {
 
   const onSuccess = (res) => {
     console.log("Success", res);
-    dispatch(setSuccessData(res.filePath))
-    dispatch(setFile(true))
+    dispatch(setSuccessData(res.filePath));
+    dispatch(setFile(true));
     dispatch(setImageClick(true));
   };
 
@@ -63,28 +56,6 @@ export default function Images() {
 
   const onUploadStart = (evt) => {
     console.log("start", evt);
-  };
-
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    dispatch(setFile(true));
-
-    const form = new FormData();
-    form.append("file", file);
-    form.append("userId", user?.id);
-
-    const response = await fetch("/api/authImage", {
-      method: "POST",
-      body: form,
-    });
-
-    const data = await response.json();
-    console.log("data:", data);
-    if (response.ok) {
-      dispatch(setFileLink(file?.name));
-      // getS3image();
-    }
   };
 
   const images = [
@@ -99,12 +70,11 @@ export default function Images() {
     dispatch(setFileName(imageName));
     dispatch(setFile(false));
     dispatch(setImageClick());
-    // if (imageName) return dispatch(setFile(false));
   };
 
   const mapImages = useMemo(() => {
     return images.map((image, index) => (
-        <IKImage
+      <IKImage
         key={index}
         className="darkimage"
         urlEndpoint={imagekitUrl}
@@ -112,7 +82,7 @@ export default function Images() {
         onClick={() => handleClick(image)}
       />
     ));
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -125,9 +95,7 @@ export default function Images() {
           }}
           type="file"
           id="file"
-          // onChange={(e) => handleFileChange(e)}
         />
-
 
         <IKContext
           urlEndpoint={urlEndpoint}
@@ -135,14 +103,12 @@ export default function Images() {
           authenticator={authenticator}
         >
           <IKUpload
-          style={{
-            display: 'none', 
-            cursor: 'pointer', 
-          }}
-          id="imagekitFile"
+            style={{
+              display: "none",
+              cursor: "pointer",
+            }}
+            id="imagekitFile"
             useUniqueFileName={true}
-            // onChange={(e) => handleFileChange(e)}
-            fileName={`${selectedFile?.name}`}
             onError={onError}
             onSuccess={onSuccess}
             onProgress={UploadProgress}
