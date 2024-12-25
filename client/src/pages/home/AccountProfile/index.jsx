@@ -1,7 +1,7 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import {  useEffect, useState } from "react";
+import { useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
@@ -17,7 +17,7 @@ import {
 } from "./styles/index";
 
 export default function Index() {
-  const { user,isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
   const userEmail = user.primaryEmailAddress.emailAddress;
   const firstLetterOfEmail = user.primaryEmailAddress.emailAddress
     .charAt(0)
@@ -27,19 +27,15 @@ export default function Index() {
   const navigate = useNavigate();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-  const getData = async () => {
-    const data = await fetchData(`/api/users/${userId}`);
-    if (!data.userId) {
-      postData("/api/users", {
-        email: userEmail,
-        userId: userId,
-      });
-    }
-  };
-
-  getData();
+  const data = fetchData(`/api/users/${userId}`);
+  if (!data.userId) {
+    postData("/api/users", {
+      email: userEmail,
+      userId: userId,
+    });
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,12 +46,12 @@ export default function Index() {
   };
 
   const handleOnClick = () => {
-     navigate('/')
-    dispatch(sendObjectId(null))
-    if(isSignedIn){
-      dispatch(setOnClick(true))
-    }  
-  }
+    navigate("/");
+    dispatch(sendObjectId(null));
+    if (isSignedIn) {
+      dispatch(setOnClick(true));
+    }
+  };
 
   return (
     <>

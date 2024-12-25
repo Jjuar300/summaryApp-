@@ -1,4 +1,3 @@
-const { Types } = require("mongoose");
 const { Space, User } = require("../../Models/index");
 
 const createSpace = async (req, res) => {
@@ -8,10 +7,9 @@ const createSpace = async (req, res) => {
 
     await User.findOneAndUpdate(
       { userId },
-      {
-        $addToSet: { spaces: newSpace._id },
-      }
+      { $addToSet: { spaces: newSpace?.id } }
     );
+
     res.json(newSpace);
   } catch (error) {
     console.log(error);
@@ -39,18 +37,18 @@ const renameSpaceText = async (req, res) => {
 
 const deleteSpace = async (req, res) => {
   try {
-    const userId = req.params.userId
+    const userId = req.params.userId;
 
     const deleteSpace = await Space.findOneAndDelete({
       _id: req.params.spaceId,
     });
 
     await User.findOneAndUpdate(
-      {userId}, 
+      { userId },
       {
-        $pull: {spaces: req.params.spaceId}
+        $pull: { spaces: req.params.spaceId },
       }
-    )
+    );
 
     res.json(deleteSpace);
   } catch (error) {

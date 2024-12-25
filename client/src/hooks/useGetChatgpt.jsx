@@ -15,7 +15,6 @@ export default function useGetChatgpt() {
          return setChatgptData(response?.chatGpt);
         }
       };
-        
       useEffect(() => {
         getChatGpt();
       }, [objectId]);

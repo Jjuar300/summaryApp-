@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 import {useMediaQuery} from "@mui/material";
 import { addcircle } from "./assets";

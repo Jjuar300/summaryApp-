@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendObjectId} from "../../Redux/createSpace";
 import { handleSpaceText } from "../../Redux/createSpace";
 import { useNavigate } from "react-router-dom";
