@@ -10,7 +10,6 @@ app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE)
   console.log('DB connected:')

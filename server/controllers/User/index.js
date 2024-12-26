@@ -15,10 +15,13 @@ const newUser = async (req, res) => {
       userId: userId,
     });
 
+    console.log('userid:', userId)
+
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+    console.log('error:', error)
   }
 };
 
@@ -40,7 +43,7 @@ const getUserByUserId = async (req, res) => {
 
 const deleteUser = async (req, res) => {
  try {
-    const{spaces} = req.body; 
+    const {spaces} = req.body; 
     const spaceIds = spaces?.map((item) => item._id)
     const chatGptIds = spaces?.map((item) => item?.chatGpt?.map((item) => item._id)); 
 
@@ -49,16 +52,17 @@ const deleteUser = async (req, res) => {
     const chatgptDelete = await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
 
     await userDelete.save(); 
-    await spaceDelete.save();
-    await chatgptDelete.save(); 
+    // await spaceDelete.save();
+    // await chatgptDelete.save(); 
 
     console.log('spacesIds:', spaceIds); 
     console.log('chatgptIds:', chatGptIds)
-
+    console.log('delete userId:', req.params.userId);
   } catch (error) {
   res.status(500).json({error: 'internal error'})
+  console.log('error:', error)
  }
-}
+};
 
 module.exports = {
   newUser,

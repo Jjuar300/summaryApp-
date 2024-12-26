@@ -37,6 +37,8 @@ export default function Index() {
   const { user } = useUser();
   const { space, getUserData } = useGetData();
 
+  console.log('spaces:', space)
+
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
 
@@ -72,11 +74,11 @@ export default function Index() {
   const addSpace = async (e) => {
     e?.preventDefault();
     try {
+      getUserData();
       const response = await postData("/api/spaces", {
         name: text,
         userId: user?.id,
       });
-      getUserData();
       const createdSapaceId = response?._id; 
       dispatch(sendObjectId(createdSapaceId))
       navigate(`/spaces/${createdSapaceId}`)

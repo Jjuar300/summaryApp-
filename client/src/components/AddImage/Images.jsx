@@ -31,7 +31,6 @@ export default function Images() {
       }
 
       const data = await response.json();
-      console.log("image data:", data);
       const { signature, expire, token } = data;
       return { signature, expire, token };
     } catch (error) {
@@ -39,24 +38,24 @@ export default function Images() {
     }
   };
 
-  const onError = (err) => {
-    console.log("success:", err);
-  };
+  // const onError = (err) => {
+  //   console.log("success:", err);
+  // };
 
   const onSuccess = (res) => {
-    console.log("Success", res);
+    // console.log("Success", res);
     dispatch(setSuccessData(res.filePath));
     dispatch(setFile(true));
     dispatch(setImageClick(true));
   };
 
-  const UploadProgress = (progress) => {
-    console.log("Progress", progress);
-  };
+  // const UploadProgress = (progress) => {
+  //   console.log("Progress", progress);
+  // };
 
-  const onUploadStart = (evt) => {
-    console.log("start", evt);
-  };
+  // const onUploadStart = (evt) => {
+  //   console.log("start", evt);
+  // };
 
   const images = [
     "leaf.jpg",
@@ -109,10 +108,10 @@ export default function Images() {
             }}
             id="imagekitFile"
             useUniqueFileName={true}
-            onError={onError}
+            // onError={onError}
             onSuccess={onSuccess}
-            onProgress={UploadProgress}
-            onUploadStart={onUploadStart}
+            // onProgress={UploadProgress}
+            // onUploadStart={onUploadStart}
             folder={userId}
           />
         </IKContext>

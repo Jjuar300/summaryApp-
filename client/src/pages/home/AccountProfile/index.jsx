@@ -1,7 +1,7 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
@@ -29,13 +29,16 @@ export default function Index() {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
 
-  const data = fetchData(`/api/users/${userId}`);
-  if (!data.userId) {
-    postData("/api/users", {
-      email: userEmail,
-      userId: userId,
-    });
-  }
+  const getUserData = async () => {
+     if(userId) {
+      postData("/api/users", {
+        email: userEmail,
+        userId: userId,
+      });
+     }
+  }; 
+
+  getUserData(); 
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

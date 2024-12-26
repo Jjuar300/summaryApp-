@@ -53,10 +53,9 @@ export default function index() {
 
 
   const handleUserDelete = async () => {
+    await deleteData(`/api/users/${user?.id}`); 
     user?.delete();
-    await deleteData(`/api/users/${user?.id}`, {
-      spaces: space, 
-    }); 
+    console.log('userdeleteid:', user?.id)
     navigate("/");
   };
 
