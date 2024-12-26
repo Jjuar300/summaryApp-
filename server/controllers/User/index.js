@@ -21,7 +21,7 @@ const newUser = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
-    console.log('error:', error)
+    console.log('error occured while creating new user:', error)
   }
 };
 
@@ -43,11 +43,13 @@ const getUserByUserId = async (req, res) => {
 
 const deleteUser = async (req, res) => {
  try {
+
+    const userId = req.params.userId; 
     const {spaces} = req.body; 
     const spaceIds = spaces?.map((item) => item._id)
     const chatGptIds = spaces?.map((item) => item?.chatGpt?.map((item) => item._id)); 
 
-    const userDelete = await User.findOneAndDelete({userId: req.params.userId}); 
+    const userDelete = await User.findOneAndDelete({ userId }); 
     const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})
     const chatgptDelete = await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
 
@@ -60,7 +62,7 @@ const deleteUser = async (req, res) => {
     console.log('delete userId:', req.params.userId);
   } catch (error) {
   res.status(500).json({error: 'internal error'})
-  console.log('error:', error)
+  console.log('error occurred while deleting user:', error)
  }
 };
 

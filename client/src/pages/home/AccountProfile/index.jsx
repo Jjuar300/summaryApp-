@@ -36,6 +36,7 @@ export default function Index() {
         userId: userId,
       });
      }
+     console.log('userId:', userId); 
   }; 
 
   getUserData(); 
