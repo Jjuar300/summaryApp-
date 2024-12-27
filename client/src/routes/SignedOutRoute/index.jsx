@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import NotFound from "../../pages/NotFound/Index";
 import LandingPage from "../../pages/LandingPage/index";
 
@@ -7,8 +7,8 @@ export default function index() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<LandingPage />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
     </>

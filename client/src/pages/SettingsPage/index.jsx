@@ -15,7 +15,7 @@ import {useGetData} from '../../hooks/index'
 
 export default function index() {
   const { user } = useUser();
-  const {session} = useClerk(); 
+  const {session, signOut} = useClerk(); 
   const [isOpen, setOpen] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
@@ -56,8 +56,9 @@ export default function index() {
 
 
   const handleUserDelete = async () => {
-    user?.delete();
+    await user?.delete();
     await deleteData(`/api/users/${user?.id}`); 
+    await signOut();
   };
 
   const rightButtonStyle = {
