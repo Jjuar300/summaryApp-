@@ -70,7 +70,6 @@ export default function Index() {
     dispatch(sendSpaceObjectId(spaceObjectId));
   };
 
-
   const addSpace = async (e) => {
     e?.preventDefault();
     try {

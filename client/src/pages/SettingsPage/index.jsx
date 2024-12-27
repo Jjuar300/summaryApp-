@@ -1,5 +1,5 @@
 import { UserAvatar, NavBar } from "../../components";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -15,11 +15,14 @@ import {useGetData} from '../../hooks/index'
 
 export default function index() {
   const { user } = useUser();
+  const {session} = useClerk(); 
   const [isOpen, setOpen] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
   const {space} = useGetData(); 
+
+  console.log('session:',session.getToken())
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -53,10 +56,8 @@ export default function index() {
 
 
   const handleUserDelete = async () => {
-    await deleteData(`/api/users/${user?.id}`); 
     user?.delete();
-    console.log('userdeleteid:', user?.id)
-    navigate("/");
+    await deleteData(`/api/users/${user?.id}`); 
   };
 
   const rightButtonStyle = {

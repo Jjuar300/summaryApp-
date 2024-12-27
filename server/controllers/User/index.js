@@ -49,11 +49,11 @@ const deleteUser = async (req, res) => {
     const spaceIds = spaces?.map((item) => item._id)
     const chatGptIds = spaces?.map((item) => item?.chatGpt?.map((item) => item._id)); 
 
-    const userDelete = await User.findOneAndDelete({ userId }); 
+    const userDelete = await User.findOneAndDelete({ userId: userId }); 
     const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})
     const chatgptDelete = await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
 
-    await userDelete.save(); 
+    // await userDelete.save(); 
     // await spaceDelete.save();
     // await chatgptDelete.save(); 
 
