@@ -21,6 +21,8 @@ router.get("/chatgpt", Chatgpt.getChatGptData);
 router.delete("/chatgpt/:chatGptId", Chatgpt.deleteChatGpt);
 router.put("/chatgpt/:chatGptId", Chatgpt.updateChatgpt);
 
-router.get('/authImage', Imagekit.uploadFileImageKit)
+//imagekit
+router.get('/authImage', Imagekit.uploadFileImageKit);
+router.post('/imagekitfolder', Imagekit.deleteImagekitFolder);
 
 module.exports = router;

@@ -21,6 +21,23 @@ const uploadFileImageKit = async (req,res) => {
   }
 }; 
 
+const deleteImagekitFolder = async (req, res) => {
+try {
+  const {folderName} = req.body; 
+  imagekit.deleteFolder(`${folderName}`, (error, result) => {
+    if(error){
+      console.log('error:', error)
+    }else{
+      console.log('result:', result)
+    }
+  }); 
+  console.log('folderName:', folderName); 
+} catch (error) {
+  console.log('error:', error); 
+}
+}
+
 module.exports = {
     uploadFileImageKit, 
+    deleteImagekitFolder, 
 }

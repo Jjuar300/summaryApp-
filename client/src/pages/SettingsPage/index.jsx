@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
-import { deleteData} from "../../utils";
+import { deleteData, postData} from "../../utils";
 import {useGetData} from '../../hooks/index'
 
 export default function index() {
@@ -56,6 +56,11 @@ export default function index() {
 
 
   const handleUserDelete = async () => {
+    
+    // postData('/api/imagekitfolder', {
+    //   folderName: imagekitFolderName, 
+    // }); 
+
     await user?.delete();
     await deleteData(`/api/users/${user?.id}`); 
     await signOut();
