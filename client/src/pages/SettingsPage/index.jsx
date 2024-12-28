@@ -10,19 +10,19 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import DeleteModal from "../../components/Modal";
-import { deleteData, postData} from "../../utils";
-import {useGetData} from '../../hooks/index'
+import { deleteData, postData } from "../../utils";
+import { useGetData } from "../../hooks/index";
 
 export default function index() {
   const { user } = useUser();
-  const {session, signOut} = useClerk(); 
+  const { session, signOut } = useClerk();
   const [isOpen, setOpen] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
-  const {space} = useGetData(); 
+  const { space } = useGetData();
 
-  console.log('session:',session.getToken())
+  console.log("session:", session.getToken());
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -54,15 +54,12 @@ export default function index() {
     left: "8rem",
   };
 
-
   const handleUserDelete = async () => {
-    
-    // postData('/api/imagekitfolder', {
-    //   folderName: imagekitFolderName, 
-    // }); 
-
+    postData("/api/imagekitfolder", {
+      folderName: user?.id,
+    });
     await user?.delete();
-    await deleteData(`/api/users/${user?.id}`); 
+    await deleteData(`/api/users/${user?.id}`);
     await signOut();
   };
 
