@@ -15,8 +15,6 @@ const newUser = async (req, res) => {
       userId: userId,
     });
 
-    console.log('userid:', userId)
-
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
@@ -45,9 +43,9 @@ const deleteUser = async (req, res) => {
  try {
 
     const userId = req.params.userId; 
-    const {spaces} = req.body; 
-    const spaceIds = spaces?.map((item) => item._id)
-    const chatGptIds = spaces?.map((item) => item?.chatGpt?.map((item) => item._id)); 
+    const {space} = req.body; 
+    const spaceIds = space?.map((item) => item._id)
+    const chatGptIds = space?.map((item) => item?.chatGpt?.map((item) => item._id)); 
 
     const userDelete = await User.findOneAndDelete({ userId: userId }); 
     const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})

@@ -21,14 +21,18 @@ export default function Index() {
 
   const { chatgptData } = useGetChatgpt();
 
-  const handleClick = () => {
-    GptSend(true);
-    const formatted = chatgptData
-      ?.map((data) => `<p>${data?.response}</p>`)
-      .join("");
-    editor.commands.setContent(formatted);
-    setContent('formatted');
-  };
+  // const handleClick = () => {
+  //   GptSend(true);
+  //   const formatted = chatgptData
+  //     ?.map((data) => `<p>${data?.response}</p>`)
+  //     .join("");
+  //   editor.commands.setContent(formatted);
+  //   setContent('formatted');
+  // };
+
+
+  // dispatch(setFile(false));
+  // dispatch(setFileName("sunrise.jpg"));
 
 
   return (

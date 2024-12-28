@@ -12,6 +12,8 @@ import { useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
 import { useGetData } from "../../hooks/index";
+import { isUserCreated } from "../../Redux/imageContainer";
+import { useDispatch } from "react-redux";
 
 export default function index() {
   const { user } = useUser();
@@ -21,6 +23,7 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const navigate = useNavigate();
   const { space } = useGetData();
+  const dispatch = useDispatch(); 
 
   console.log("session:", session.getToken());
 
@@ -57,7 +60,9 @@ export default function index() {
   const handleUserDelete = async () => {
     postData("/api/imagekitfolder", {
       folderName: user?.id,
+      space, 
     });
+    dispatch(isUserCreated(true)); 
     await user?.delete();
     await deleteData(`/api/users/${user?.id}`);
     await signOut();

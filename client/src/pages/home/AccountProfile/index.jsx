@@ -1,11 +1,11 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-import { postData, fetchData } from "../../../utils";
+import { postData } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
@@ -30,16 +30,13 @@ export default function Index() {
   const dispatch = useDispatch();
 
   const getUserData = async () => {
-     if(userId) {
-      postData("/api/users", {
-        email: userEmail,
-        userId: userId,
-      });
-     }
-     console.log('userId:', userId); 
-  }; 
+     await postData("/api/users", {
+      email: userEmail,
+      userId: userId,
+    });
+  };
 
-  getUserData(); 
+  getUserData();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

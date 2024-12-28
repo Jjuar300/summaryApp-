@@ -31,7 +31,6 @@ try {
       console.log('result:', result)
     }
   }); 
-  console.log('folderName:', folderName); 
 } catch (error) {
   console.log('error:', error); 
 }

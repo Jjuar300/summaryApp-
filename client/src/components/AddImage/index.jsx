@@ -15,7 +15,11 @@ export default function AddImage() {
   const isFile = useSelector((state) => state.imageContainer.isFile);
   const isTranslate = useSelector((state) => state.imageContainer.isImageClick);
   const userImage = useSelector((state) => state.imagekit.path);
+  const isUser = useSelector((state) => state.imageContainer.isUser)
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
+
+
+  console.log('isUser:', isUser); 
 
   const handleHover = (event) => {
     setHover(event.type === "mouseenter");
@@ -24,6 +28,12 @@ export default function AddImage() {
   const handleLinkClick = () => {
     setLinkClick(!isLinkClick);
   };
+
+  const handleImageDisplay = () =>  {
+    return isFile ? `${userImage}` : `note_taking_app/${fileName}`
+  }
+
+  console.log('isFile:', isFile)
 
   return (
     <>
@@ -59,8 +69,9 @@ export default function AddImage() {
               "height 0.2s ease, top 0.2s ease, opacity 0.3s ease-in-out",
           }}
           urlEndpoint={urlEndpoint}
-          path={isFile ? `${userImage}` : `note_taking_app/${fileName}`}
-        />
+          path={ isUser ? `note_taking_app/sunrise.jpg` :  handleImageDisplay() }
+          // path={handleImageDisplay()}
+/>
       </div>
 
       {isLinkClick && (

@@ -4,6 +4,7 @@ import {
   setFileName,
   setImageClick,
   setFile,
+  isUserCreated, 
 } from "../../Redux/imageContainer";
 import { useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
@@ -47,6 +48,7 @@ export default function Images() {
     dispatch(setSuccessData(res.filePath));
     dispatch(setFile(true));
     dispatch(setImageClick(true));
+    dispatch(isUserCreated(false))
   };
 
   // const UploadProgress = (progress) => {
@@ -69,6 +71,7 @@ export default function Images() {
     dispatch(setFileName(imageName));
     dispatch(setFile(false));
     dispatch(setImageClick());
+    dispatch(isUserCreated(false))
   };
 
   const mapImages = useMemo(() => {
