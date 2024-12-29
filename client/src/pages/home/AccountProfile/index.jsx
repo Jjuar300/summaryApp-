@@ -30,7 +30,7 @@ export default function Index() {
   const dispatch = useDispatch();
 
   const getUserData = async () => {
-     await postData("/api/users", {
+    await postData("/api/users", {
       email: userEmail,
       userId: userId,
     });

@@ -1,6 +1,5 @@
 import { UserAvatar, NavBar } from "../../components";
 import { useUser, useClerk } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Divider,
@@ -17,15 +16,12 @@ import { useDispatch } from "react-redux";
 
 export default function index() {
   const { user } = useUser();
-  const { session, signOut } = useClerk();
+  const { signOut } = useClerk();
   const [isOpen, setOpen] = useState();
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
-  const navigate = useNavigate();
   const { space } = useGetData();
-  const dispatch = useDispatch(); 
-
-  console.log("session:", session.getToken());
+  const dispatch = useDispatch();
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -60,11 +56,12 @@ export default function index() {
   const handleUserDelete = async () => {
     postData("/api/imagekitfolder", {
       folderName: user?.id,
-      space, 
     });
-    dispatch(isUserCreated(true)); 
+    dispatch(isUserCreated(true));
     await user?.delete();
-    await deleteData(`/api/users/${user?.id}`);
+    await deleteData(`/api/users/${user?.id}`, {
+      space,
+    });
     await signOut();
   };
 

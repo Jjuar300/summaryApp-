@@ -19,7 +19,6 @@ const newUser = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
-    console.log('error occured while creating new user:', error)
   }
 };
 
@@ -34,38 +33,27 @@ const getUserByUserId = async (req, res) => {
     }
     res.json(user);
   } catch (error) {
-    console.log('error occurred when getting user data')
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
 const deleteUser = async (req, res) => {
- try {
+  try {
+    const userId = req.params.userId;
+    const { space } = req.body;
+    const spaceIds = space?.map((item) => item._id);
+    // const chatGptIds = space?.map((item) => item?.chatGpt?.map((item) => item._id));
 
-    const userId = req.params.userId; 
-    const {space} = req.body; 
-    const spaceIds = space?.map((item) => item._id)
-    const chatGptIds = space?.map((item) => item?.chatGpt?.map((item) => item._id)); 
-
-    const userDelete = await User.findOneAndDelete({ userId: userId }); 
-    const spaceDelete = await Space.deleteMany({_id: {$in: spaceIds}})
-    const chatgptDelete = await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
-
-    // await userDelete.save(); 
-    // await spaceDelete.save();
-    // await chatgptDelete.save(); 
-
-    console.log('spacesIds:', spaceIds); 
-    console.log('chatgptIds:', chatGptIds)
-    console.log('delete userId:', req.params.userId);
+    await User.findOneAndDelete({ userId: userId });
+    await Space.deleteMany({ _id: { $in: spaceIds } });
+    //  await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
   } catch (error) {
-  res.status(500).json({error: 'internal error'})
-  console.log('error occurred while deleting user:', error)
- }
+    res.status(500).json({ error: "internal error" });
+  }
 };
 
 module.exports = {
   newUser,
   getUserByUserId,
-  deleteUser, 
+  deleteUser,
 };

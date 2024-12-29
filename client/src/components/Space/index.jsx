@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
-import { sendObjectId} from "../../Redux/createSpace";
+import { sendObjectId } from "../../Redux/createSpace";
 import { handleSpaceText } from "../../Redux/createSpace";
 import { useNavigate } from "react-router-dom";
 
@@ -12,23 +12,23 @@ const index = ({
   leftSpaceIcon,
   inlineStyle,
   setState,
-  ObjectId, 
+  ObjectId,
 }) => {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
-  const dispatch = useDispatch()
-  const navigate = useNavigate(); 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSpaceClick = (e) => {
-    e?.preventDefault(); 
+    e?.preventDefault();
     setState(text);
-    dispatch(sendObjectId(ObjectId))
-    dispatch(handleSpaceText(text))
-    navigate(`/spaces/${ObjectId}`)
+    dispatch(sendObjectId(ObjectId));
+    dispatch(handleSpaceText(text));
+    navigate(`/spaces/${ObjectId}`);
   };
 
-  return (  
+  return (
     <>
-      <Box onClick={handleSpaceClick} sx={inlineStyle} >
+      <Box onClick={handleSpaceClick} sx={inlineStyle}>
         <Typography
           sx={{
             width: "20rem",

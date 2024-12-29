@@ -17,7 +17,7 @@ const uploadFileImageKit = async (req,res) => {
   //  }); 
   //  res.status(200).json(uploadResponse); 
   } catch (error) {
-    console.log('error occured uploading file:', error)
+    res.status(500).json({error: 'Internal error'})
   }
 }; 
 
@@ -32,7 +32,7 @@ try {
     }
   }); 
 } catch (error) {
-  console.log('error:', error); 
+  res.status(500).json({error: 'Internal error'})
 }
 }
 

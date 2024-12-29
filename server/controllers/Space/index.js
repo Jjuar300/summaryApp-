@@ -12,7 +12,7 @@ const createSpace = async (req, res) => {
 
     res.json(newSpace);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({error: 'Internal error'})
   }
 };
 
@@ -30,7 +30,6 @@ const renameSpaceText = async (req, res) => {
 
     res.json(renameSpace);
   } catch (error) {
-    console.log("Error occured while upadting spaceText", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -64,7 +63,7 @@ const getSpaces = async (req, res) => {
     if (!spaces) return res.status(400).json({ error: "no spaces were found" });
     res.json(spaces);
   } catch (error) {
-    res.status(500).json({ error: "internal error" });
+    res.status(500).json({ error: "Internal error" });
   }
 };
 

@@ -15,19 +15,17 @@ export default function DeleteModal({
   inputStyle,
   onChange,
   previousText,
-  text, 
+  text,
 }) {
-
   const MaxLengthOfText = 25;
 
-  let isTextWithoutSpaces = text?.replace(/\s+/g, '')
-  
-  isInput ? isTextWithoutSpaces : isTextWithoutSpaces = true; 
+  let isTextWithoutSpaces = text?.replace(/\s+/g, "");
+
+  isInput ? isTextWithoutSpaces : (isTextWithoutSpaces = true);
 
   return (
     <>
-      <Modal
-      open={isOpen}>
+      <Modal open={isOpen}>
         <Box sx={inlineStyle}>
           {isText ? (
             <Typography
@@ -41,7 +39,6 @@ export default function DeleteModal({
               {textQuestion}
             </Typography>
           ) : null}
-
           {isText ? (
             <Typography
               sx={{
@@ -55,7 +52,7 @@ export default function DeleteModal({
               {textInformation}
             </Typography>
           ) : null}
-c
+          c
           <form>
             {isInput ? (
               <>
@@ -89,19 +86,19 @@ c
                 position: "absolute",
                 top: "11rem",
                 left: "17rem",
-                backgroundColor: isTextWithoutSpaces ? "#47046e" : 'gray',              
+                backgroundColor: isTextWithoutSpaces ? "#47046e" : "gray",
                 color: "white",
                 width: "6rem",
-                ":hover" : {
-                  cursor: isTextWithoutSpaces ? 'pointer' : 'auto', 
-                  backgroundColor: isTextWithoutSpaces ? '#370355' : 'gray'},
-                  opacity: isTextWithoutSpaces ? '1' : '.1',
+                ":hover": {
+                  cursor: isTextWithoutSpaces ? "pointer" : "auto",
+                  backgroundColor: isTextWithoutSpaces ? "#370355" : "gray",
+                },
+                opacity: isTextWithoutSpaces ? "1" : ".1",
               }}
             >
               {textRightButton}
             </Button>
           </form>
-
           <Button
             onClick={() => setOpen(false)}
             sx={{

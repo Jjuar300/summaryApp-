@@ -21,12 +21,11 @@ export default function Notes({ spaceText }) {
             top: "2rem",
             color: "#484848",
             fontWeight: "bold",
-            textAlign:'center', 
+            textAlign: "center",
           }}
         >
           {spaceText}
         </Typography>
-
       </Box>
     </>
   );

@@ -1,8 +1,5 @@
-import { Box, Button, TextField } from "@mui/material";
-import AccountProfile from "../home/AccountProfile";
-import Actions from "../home/Actions";
+import { Box} from "@mui/material";
 import Notes from "../home/Notes";
-import ChatGpt from "../home/ChatGpt/index";
 import { useGetChatgpt } from "../../hooks";
 
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -67,7 +64,6 @@ export default function index({content}) {
       TaskItem,
     ],
 
-    // content: 'djdjdj', 
     onUpdate: ({ editor }) => {
       const html = editor?.getHTML(); 
         updateEditorContent(html)

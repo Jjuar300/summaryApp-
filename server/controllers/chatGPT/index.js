@@ -15,15 +15,12 @@ const ChatgptResponse = async (req, res) => {
       $addToSet: { chatGpt: newChatgpt._id },
     }, 
   );
-   console.log('spaceId:',spaceId)
     const chatgptFound = await ChatGpt.findOne({ message });
 
     if (chatgptFound) return res.status(200).json(chatgptFound);
 
     res.Status(201).json(newChatgpt);
   } catch (error) {
-    console.log(error);
-    console.log('error occured chatGptResponse function:', error)
     res.status(500).json({ message: "internal server error" });
   }
 };
@@ -33,7 +30,6 @@ const getChatGptData = async (req, res) => {
     const chatGptData = await ChatGpt.find({});
     res.json(chatGptData);
   } catch (error) {
-    console.log("error in the chatGptDatat function: ", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -60,7 +56,6 @@ const updateChatgpt = async (req, res) => {
     res.json(updateResponse)
   }catch(error){
     res.status(500).json({error: "Internal error"}); 
-    console.log('Error orccured while updating the chatgpt response!')
   }
 }
 
