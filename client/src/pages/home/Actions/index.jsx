@@ -37,8 +37,6 @@ export default function Index() {
   const { user } = useUser();
   const { space, getUserData } = useGetData();
 
-  console.log('spaces:', space)
-
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
 
