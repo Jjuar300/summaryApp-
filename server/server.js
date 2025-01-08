@@ -1,4 +1,5 @@
 require("dotenv").config();
+process.removeAllListeners('warning');
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -12,7 +13,6 @@ app.use(express.json());
 
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE)
-  console.log('DB connected:')
 } catch (error) {
   console.log(`${error}: did not connect`);
 }
