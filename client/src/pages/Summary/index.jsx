@@ -1,6 +1,7 @@
 import { Box} from "@mui/material";
 import Notes from "../home/Notes";
 import { useGetChatgpt } from "../../hooks";
+import { HoverIconExtension } from "../../Tiptap/Extensions";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -77,21 +78,6 @@ export default function index({content}) {
 
   return (
     <div>
-      {/* <Box
-        sx={{
-          position: "absolute",
-          backgroundColor: "#F8F5FD",
-          width: "16rem",
-          height: "59.7rem",
-          left: ".2rem",
-          top: ".05rem",
-          borderTopRightRadius: "1rem",
-          borderBottomRightRadius: "1rem",
-        }}
-      >
-        <AccountProfile />
-        <Actions />
-      </Box> */}
 
       <Box
 
@@ -123,20 +109,6 @@ export default function index({content}) {
 
         <EditorContent
           className="editor-content"
-          style={{
-            position: "absolute",
-            width: "40rem",
-            padding: "5rem",
-            left: "2rem",
-            top: "3rem",
-            overflowY: "auto",
-            height: "33rem",
-            fontSize: "1.2rem",
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-            lineHeight: "2rem",
-            // border:'1px solid purple',
-          }}
           editor={editor}
         />
 

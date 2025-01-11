@@ -65,7 +65,6 @@ export default function AddImage() {
           }}
           urlEndpoint={urlEndpoint}
           path={isUser ? `note_taking_app/sunrise.jpg` : handleImageDisplay()}
-          // path={handleImageDisplay()}
         />
       </div>
 
