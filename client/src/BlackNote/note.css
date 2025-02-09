@@ -1,0 +1,8 @@
+.bn-container[data-background-theming-css] .bn-editor {
+    position: absolute;
+    background-color: #f4f4f4;
+    color: black;
+    left: 2rem;
+    width: 50rem;
+    height: 52rem;
+}

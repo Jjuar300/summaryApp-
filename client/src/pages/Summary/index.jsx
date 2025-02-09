@@ -1,7 +1,18 @@
-import { Box} from "@mui/material";
+import { Box, Button} from "@mui/material";
 import Notes from "../home/Notes";
 import { useGetChatgpt } from "../../hooks";
-import { HoverIconExtension } from "../../Tiptap/Extensions";
+import { HoverIconExtension } from "../../Tiptap/extensions/Extensions";
+import { HighlightExtension } from "../../Tiptap/extensions/Highlight";
+import { NotionHover } from "../../Tiptap/extensions/NotionHover";
+import { CustomNode } from "../../Tiptap/extensions/CustomNode";
+
+//blocknote
+import "@blocknote/core/fonts/inter.css";
+import "@blocknote/mantine/style.css";
+import {BlockNoteView} from '@blocknote/mantine'
+import { useCreateBlockNote } from "@blocknote/react";
+import '../../BlackNote/note.css'
+//
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -29,6 +40,14 @@ import { fetchData, postData, updateData } from "../../utils";
 
 export default function index({content}) {
   const { chatgptData } = useGetChatgpt();
+  const BlockNoteEditor = useCreateBlockNote({
+    
+    domAttributes: {
+      block: {class: 'hello-world'}
+    }, 
+
+    initialContent: [{type: 'paragraph', content: ''}],
+  }); 
 
   const contentResponse = chatgptData?.map(({ response }) => {
     return response;
@@ -48,6 +67,8 @@ export default function index({content}) {
 
   const editor = useEditor({
     extensions: [
+      CustomNode,
+      // NotionHover, 
       StarterKit,
       Placeholder.configure({
         placeholder: "type something here...",
@@ -69,6 +90,7 @@ export default function index({content}) {
       const html = editor?.getHTML(); 
         updateEditorContent(html)
     },
+    content: '<div class="custom-node" >click me</div>'
   });
 
  const handleOnclick = () => {
@@ -79,6 +101,7 @@ export default function index({content}) {
   return (
     <div>
 
+   <Button onClick={() => editor.chain().focus().insertCustomNode().run()} >Insert Custom Node</Button>
       <Box
 
         sx={{
@@ -92,9 +115,6 @@ export default function index({content}) {
           top: ".5rem",
         }}
       >
-        {/* <Button
-        onClick={handleOnclick}
-        >sendChagpt</Button> */}
 
         <Box
           sx={{
@@ -106,11 +126,8 @@ export default function index({content}) {
           <Notes />
 
         </Box>
-
-        <EditorContent
-          className="editor-content"
-          editor={editor}
-        />
+          
+         <BlockNoteView editor={BlockNoteEditor} theme={'light'} data-background-theming-css />
 
       </Box>
     </div>
