@@ -4,37 +4,11 @@ import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
 import Summary from "../Summary";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useGetChatgpt } from "../../hooks";
 import { AddImage } from "../../components";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const [open, setOpen] = useState(false);
-  const [isGptSend, GptSend] = useState(false);
-  const [content, setcontent] = useState("");
-
-  const editor = useEditor({
-    extensions: [StarterKit],
-  });
-
-  const { chatgptData } = useGetChatgpt();
-
-  // const handleClick = () => {
-  //   GptSend(true);
-  //   const formatted = chatgptData
-  //     ?.map((data) => `<p>${data?.response}</p>`)
-  //     .join("");
-  //   editor.commands.setContent(formatted);
-  //   setContent('formatted');
-  // };
-
-
-  // dispatch(setFile(false));
-  // dispatch(setFileName("sunrise.jpg"));
-
-
   return (
     <>
       {isMobileScreen ? (
@@ -90,10 +64,10 @@ export default function Index() {
           <AccountProfile />
           <Actions />
         </Box>
-      )};
-
-     <Summary/>
-     <AddImage/>
+      )}
+      ;
+      <Summary />
+      <AddImage />
     </>
   );
 }
