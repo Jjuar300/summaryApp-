@@ -5,17 +5,59 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteEditor } from "@blocknote/core";
+
 import "./styles/note.css";
 
 import "./styles/index.css";
+import { useEffect, useMemo, useState } from "react";
 export default function index() {
-  const BlockNoteEditor = useCreateBlockNote({
-    domAttributes: {
-      block: { class: "hello-world" },
-    },
+  // const BlockNoteEditor = useCreateBlockNote({
+  //   domAttributes: {
+  //     block: { class: "hello-world" },
+  //   },
 
-    initialContent: [{ type: "paragraph", content: "" }],
-  });
+  //   initialContent: [{ type: "paragraph", content: "" }],
+  // });
+
+  const [initialContent, setInitialContent] = useState(null);
+  const [editor, setEditor] = useState(null);
+
+  useEffect(() => {
+    const saveContent = localStorage.getItem("editorContent");
+
+    if (saveContent) return setInitialContent(JSON.stringify(saveContent));
+  }, []);
+
+  // const blockEditor = useMemo(() => {
+
+  //   if(!editor){
+  //     const newEditor = BlockNoteEditor.create({
+  //       initialContent: initialContent || undefined,
+  //     });
+
+  //     setEditor(newEditor);
+  //   }
+
+  // }, [initialContent]);
+
+  useEffect(() => {
+    if (!editor) {
+      const newEditor = BlockNoteEditor.create({
+        initialContent: initialContent || undefined,
+      });
+
+      setEditor(newEditor);
+    }
+  }, [initialContent]);
+
+  const handleSave = async () => {
+    if (editor) {
+      const blocks = await editor.getAllBlocks();
+      localStorage.setItem("editorContent", JSON.stringify(blocks));
+      console.log("Content saved!");
+    }
+  };
 
   return (
     <div>
@@ -41,8 +83,9 @@ export default function index() {
         </Box>
 
         <BlockNoteView
-          editor={BlockNoteEditor}
+          editor={editor}
           theme={"light"}
+          onChange={handleSave}
           data-background-theming-css
         />
       </Box>
