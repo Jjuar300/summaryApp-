@@ -10,6 +10,7 @@ import "./styles/note.css";
 
 import "./styles/index.css";
 import { useEffect, useState } from "react";
+import { fetchData, postData } from "../../utils";
 
 export default function index() {
   const [initialContent, setInitialContent] = useState(undefined);
@@ -19,16 +20,27 @@ export default function index() {
   });
 
   const handleEditorChange = async (jsonBlock) => {
-    localStorage.setItem("editorContent", JSON.stringify(jsonBlock));
+    // localStorage.setItem("editorContent", JSON.stringify(jsonBlock));
+    //  console.log('JSONBlock', JSON.stringify(jsonBlock))
+    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock) });
+  };
+
+  const fetchUserNote = async () => {
+    // const savedContent = localStorage.getItem('editorContent')
+
+    const savedContent = await fetchData("/api/userNotes");
+    console.log("savedContent", savedContent?.content);
+    if (savedContent) {
+      const blocks = JSON.parse(savedContent?.content);
+      return setInitialContent(blocks);
+    }
   };
 
   useEffect(() => {
-    const savedContent = localStorage.getItem("editorContent");
-    if (savedContent) {
-      const blocks = JSON.parse(savedContent);
-      return setInitialContent(blocks);
-    }
-  }, []);
+    fetchUserNote();
+  },[]);
+
+  console.log("initialContent", initialContent);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Space, User, Chatgpt } = require("../controllers/index");
+const { Space, User, Chatgpt, Notes } = require("../controllers/index");
 const {Imagekit} = require('../controllers/index.js'); 
 
 //spaces 
@@ -24,5 +24,9 @@ router.put("/chatgpt/:chatGptId", Chatgpt.updateChatgpt);
 //imagekit
 router.get('/authImage', Imagekit.uploadFileImageKit);
 router.post('/imagekitfolder', Imagekit.deleteImagekitFolder);
+
+//userNotes
+router.post('/userNotes', Notes.create); 
+router.get('/userNotes', Notes.data)
 
 module.exports = router;

@@ -10,12 +10,7 @@ const imagekit = new Imagekit({
 const uploadFileImageKit = async (req,res) => {
   try {
     const result = imagekit.getAuthenticationParameters(); 
-    res.send(result)
-  //  const uploadResponse = await imagekit.upload({
-  //   file: req.file.buffer, 
-  //   fileName: req.file.originalname, 
-  //  }); 
-  //  res.status(200).json(uploadResponse); 
+    res.send(result) 
   } catch (error) {
     res.status(500).json({error: 'Internal error'})
   }
