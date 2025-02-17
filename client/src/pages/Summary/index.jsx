@@ -10,10 +10,11 @@ import "./styles/note.css";
 
 import "./styles/index.css";
 import { useEffect, useState } from "react";
-import { fetchData, postData } from "../../utils";
+import { fetchData, postData, updateData } from "../../utils";
 
 export default function index() {
-  const [initialContent, setInitialContent] = useState(undefined);
+  const [initialContent, setInitialContent] = useState(0);
+  const contentId = initialContent[0]?.id; 
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
@@ -22,13 +23,15 @@ export default function index() {
   const handleEditorChange = async (jsonBlock) => {
     // localStorage.setItem("editorContent", JSON.stringify(jsonBlock));
     //  console.log('JSONBlock', JSON.stringify(jsonBlock))
-    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock) });
+    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock), id: JSON.stringify(jsonBlock[0]?.id) });
+    // await updateData('/api/update', {content: JSON.stringify(jsonBlock) })
   };
+
 
   const fetchUserNote = async () => {
     // const savedContent = localStorage.getItem('editorContent')
-
-    const savedContent = await fetchData("/api/userNotes");
+     
+    const savedContent = await fetchData(`/api/userNotes`);
     console.log("savedContent", savedContent?.content);
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.content);
@@ -41,6 +44,7 @@ export default function index() {
   },[]);
 
   console.log("initialContent", initialContent);
+  console.log('contentId:', contentId); 
 
   return (
     <div>
