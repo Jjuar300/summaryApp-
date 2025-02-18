@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const userNotes = new mongoose.Schema({
     content: String, 
-    id: String, 
+    userId: String, 
 }); 
 
 const Notes = mongoose.model('Notes', userNotes); 

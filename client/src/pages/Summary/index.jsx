@@ -5,16 +5,17 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import { BlockNoteEditor } from "@blocknote/core";
+import { useUser } from "@clerk/clerk-react";
 
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
 
 export default function index() {
   const [initialContent, setInitialContent] = useState(0);
-  const contentId = initialContent[0]?.id; 
+  const {user} = useUser()
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
@@ -23,15 +24,15 @@ export default function index() {
   const handleEditorChange = async (jsonBlock) => {
     // localStorage.setItem("editorContent", JSON.stringify(jsonBlock));
     //  console.log('JSONBlock', JSON.stringify(jsonBlock))
-    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock), id: JSON.stringify(jsonBlock[0]?.id) });
-    // await updateData('/api/update', {content: JSON.stringify(jsonBlock) })
+    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock), userId: user?.id});
+    await updateData('/api/userNotes', {content: JSON.stringify(jsonBlock), userId: user?.id })
   };
 
 
   const fetchUserNote = async () => {
     // const savedContent = localStorage.getItem('editorContent')
      
-    const savedContent = await fetchData(`/api/userNotes`);
+    const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
     console.log("savedContent", savedContent?.content);
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.content);
@@ -43,8 +44,6 @@ export default function index() {
     fetchUserNote();
   },[]);
 
-  console.log("initialContent", initialContent);
-  console.log('contentId:', contentId); 
 
   return (
     <div>
