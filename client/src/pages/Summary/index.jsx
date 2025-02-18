@@ -10,30 +10,30 @@ import { useUser } from "@clerk/clerk-react";
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
 
 export default function index() {
   const [initialContent, setInitialContent] = useState(0);
-  const {user} = useUser()
+  const { user } = useUser();
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
 
   const handleEditorChange = async (jsonBlock) => {
-    // localStorage.setItem("editorContent", JSON.stringify(jsonBlock));
-    //  console.log('JSONBlock', JSON.stringify(jsonBlock))
-    await postData("/api/userNotes", { content: JSON.stringify(jsonBlock), userId: user?.id});
-    await updateData('/api/userNotes', {content: JSON.stringify(jsonBlock), userId: user?.id })
+    await postData("/api/userNotes", {
+      content: JSON.stringify(jsonBlock),
+      userId: user?.id,
+    });
+    await updateData("/api/userNotes", {
+      content: JSON.stringify(jsonBlock),
+      userId: user?.id,
+    });
   };
 
-
   const fetchUserNote = async () => {
-    // const savedContent = localStorage.getItem('editorContent')
-     
     const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
-    console.log("savedContent", savedContent?.content);
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.content);
       return setInitialContent(blocks);
@@ -42,8 +42,22 @@ export default function index() {
 
   useEffect(() => {
     fetchUserNote();
-  },[]);
+  }, []);
 
+  /*
+
+  --use redux to store a boolean. 
+  -- when user clicks to an element to 
+  switch page then it will setState to true. 
+  --else if the page is not clicked then the boolean 
+  will not change. 
+
+  ex: 
+
+   useEffect(() => {
+    fetchUserNote();
+  }, [boolean]);
+  */
 
   return (
     <div>
