@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Notes from "../home/Notes";
 
 import "@blocknote/core/fonts/inter.css";
@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
 
 export default function index() {
-  const [initialContent, setInitialContent] = useState(0);
+  const [initialContent, setInitialContent] = useState(undefined);
   const { user } = useUser();
 
   const editor = BlockNoteEditor.create({
@@ -22,14 +22,26 @@ export default function index() {
   });
 
   const handleEditorChange = async (jsonBlock) => {
+    
     await postData("/api/userNotes", {
       content: JSON.stringify(jsonBlock),
       userId: user?.id,
-    });
-    await updateData("/api/userNotes", {
-      content: JSON.stringify(jsonBlock),
-      userId: user?.id,
-    });
+    })
+
+    // if(initialContent === undefined) {
+    //   null
+    // }else{
+    //  await updateData("/api/updateUserNotes", {
+    //    content: JSON.stringify(jsonBlock),
+    //    userId: user?.id,
+    //  });
+
+    // }
+   
+      // await updateData("/api/updateUserNotes", {
+    //   content: JSON.stringify(jsonBlock),
+    //   userId: user?.id,
+    // });
   };
 
   const fetchUserNote = async () => {
@@ -44,6 +56,9 @@ export default function index() {
     fetchUserNote();
   }, []);
 
+
+  console.log('initialContent:', initialContent)
+
   /*
 
   --use redux to store a boolean. 
@@ -54,9 +69,24 @@ export default function index() {
 
   ex: 
 
+  index.js
+
+  const isNoteSaved = useSelector(state => state.Notes.saveNoteData)
+
    useEffect(() => {
     fetchUserNote();
-  }, [boolean]);
+  }, [isNoteSaved]);
+  
+  
+  space.jsx
+  AccountProfile.jsx
+  browseAll.jsx
+
+  const dispatch = useDispatch(); 
+
+  function onClick() {
+   dipatch(true)
+  }
   */
 
   return (

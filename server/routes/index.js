@@ -28,6 +28,6 @@ router.post('/imagekitfolder', Imagekit.deleteImagekitFolder);
 //userNotes
 router.post('/userNotes', Notes.create); 
 router.get('/userNotes/:userId', Notes.data)
-router.put('/userNotes', Notes.update )
+router.put('/updateUserNotes', Notes.update )
 
 module.exports = router;
