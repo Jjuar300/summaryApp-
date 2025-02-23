@@ -3,16 +3,13 @@ const { Notes } = require("../../Models/index");
 const create = async (req, res) => {
   try {
     const { content, userId } = req.body;
-    if (userId){
-      return console.log('Note not created')
+    console.log('content:', content)
+    if(content == undefined){
+      return console.log('no content found!')
     }else{
-      return console.log('Note is created')
-    //  return Notes.create({ content, userId });
+      return await Notes.create({ content, userId });
     }
- 
-   console.log('content:', content)
-   console.log('userId:', userId)
-   console.log('isUser:', !userId)
+
   } catch (error) {
     res.status(500).json({ error: "internal error" });
     console.log("error occurred when creating Note:", error);
@@ -25,6 +22,7 @@ const data = async (req, res) => {
     res.json(userNotes);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+    console.log('erro occured getting note Data:', error)
   }
 };
 
@@ -38,7 +36,7 @@ const update = async (req, res) => {
     res.json(updateNote);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
-    console.log('error ocurred when updating Note:', error)
+    console.log("error ocurred when updating Note:", error);
   }
 };
 

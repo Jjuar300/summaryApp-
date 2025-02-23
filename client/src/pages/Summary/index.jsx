@@ -10,40 +10,50 @@ import { useUser } from "@clerk/clerk-react";
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { setNoteData } from "../../Redux/Notes";
 
 export default function index() {
-  const [initialContent, setInitialContent] = useState(undefined);
+  const [initialContent, setInitialContent] = useState(0);
+  const [note, setNote] = useState([])
+
   const { user } = useUser();
+  const isNote = useSelector(state => state.NotesData.isCreated);
+  const dispatch = useDispatch(); 
+  const noteText =  initialContent[0]?.content[0]?.text; 
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
+ 
 
-  const handleEditorChange = async (jsonBlock) => {
-    
-    await postData("/api/userNotes", {
-      content: JSON.stringify(jsonBlock),
-      userId: user?.id,
-    })
+  console.log('noteText:', noteText)
+  console.log('isNote:', isNote)
+  console.log('initialContent:', initialContent)
+  console.log('isNote:', note?._id == null)
+  console.log('note:', note)
 
-    // if(initialContent === undefined) {
-    //   null
-    // }else{
-    //  await updateData("/api/updateUserNotes", {
-    //    content: JSON.stringify(jsonBlock),
-    //    userId: user?.id,
-    //  });
-
-    // }
+ const handleEditorChange = async (jsonBlock) => {
    
-      // await updateData("/api/updateUserNotes", {
-    //   content: JSON.stringify(jsonBlock),
-    //   userId: user?.id,
-    // });
+     dispatch(setNoteData(false))
+    if (note?._id == null ) {
+   
+      await postData("/api/userNotes", {
+        content: JSON.stringify(jsonBlock),
+        userId: user?.id,
+      });
+    
+        
+    } else {
+      await updateData("/api/updateUserNotes", {
+        content: JSON.stringify(jsonBlock),
+        userId: user?.id,
+      });
+    }
   };
-
+  
   const fetchUserNote = async () => {
     const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
     if (savedContent) {
@@ -52,45 +62,21 @@ export default function index() {
     }
   };
 
-  useEffect(() => {
-    fetchUserNote();
-  }, []);
-
-
-  console.log('initialContent:', initialContent)
-
-  /*
-
-  --use redux to store a boolean. 
-  -- when user clicks to an element to 
-  switch page then it will setState to true. 
-  --else if the page is not clicked then the boolean 
-  will not change. 
-
-  ex: 
-
-  index.js
-
-  const isNoteSaved = useSelector(state => state.Notes.saveNoteData)
-
-   useEffect(() => {
-    fetchUserNote();
-  }, [isNoteSaved]);
-  
-  
-  space.jsx
-  AccountProfile.jsx
-  browseAll.jsx
-
-  const dispatch = useDispatch(); 
-
-  function onClick() {
-   dipatch(true)
+  const getNoteUserId = async () => {
+    const response = await fetchData(`/api/userNotes/${user?.id}`);
+    setNote(response); 
   }
-  */
 
+  useEffect(() => {
+    getNoteUserId(); 
+    fetchUserNote();
+    handleEditorChange(); 
+    
+  },[]);
+  
   return (
     <div>
+    <Button onClick={() => dispatch(setNoteData(true))} >reset</Button>
       <Box
         sx={{
           position: "absolute",
