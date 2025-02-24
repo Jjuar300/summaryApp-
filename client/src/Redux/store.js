@@ -5,7 +5,6 @@ import chatGpt from "./chatGpt";
 import feedBack from "./feedBack";
 import imageContainer from './imageContainer'; 
 import imagekit from "./imagekit";
-import NotesData from './Notes'; 
 
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
@@ -17,7 +16,7 @@ const persistConfig = {
   version: 1,
   storage,
   sessionStorage,
-  //  whitelist:[imageContainer], 
+  //  whitelist:[], 
   //  blacklist: [createSpace] 
 };
 
@@ -29,7 +28,6 @@ const reducer = combineReducers({
   middleware: [thunk],
   imageContainer: imageContainer, 
   imagekit: imagekit,
-  NotesData: NotesData,  
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

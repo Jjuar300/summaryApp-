@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import Notes from "../home/Notes";
 
 import "@blocknote/core/fonts/inter.css";
@@ -10,42 +10,35 @@ import { useUser } from "@clerk/clerk-react";
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { setNoteData } from "../../Redux/Notes";
 
 export default function index() {
-  const [initialContent, setInitialContent] = useState(0);
-  const [note, setNote] = useState([])
+  const [initialContent, setInitialContent] = useState(undefined);
+  const [noteId, setNote] = useState([]);
 
   const { user } = useUser();
-  const isNote = useSelector(state => state.NotesData.isCreated);
-  const dispatch = useDispatch(); 
-  const noteText =  initialContent[0]?.content[0]?.text; 
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
- 
 
-  console.log('noteText:', noteText)
-  console.log('isNote:', isNote)
-  console.log('initialContent:', initialContent)
-  console.log('isNote:', note?._id == null)
-  console.log('note:', note)
-
- const handleEditorChange = async (jsonBlock) => {
-   
-     dispatch(setNoteData(false))
-    if (note?._id == null ) {
-   
+  const handleEditorChange = async (jsonBlock) => {
+    if (noteId == undefined) {
+      /*
+    I added setTimeout() to delay
+    getting the noteId so it won't 
+    duplicate documents in the note
+    collection in mongodb. 
+    */
+      setTimeout(async () => {
+        await getNoteUserId();
+      }, 1000);
       await postData("/api/userNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
+        isNoteId: noteId == undefined,
       });
-    
-        
     } else {
       await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
@@ -53,7 +46,7 @@ export default function index() {
       });
     }
   };
-  
+
   const fetchUserNote = async () => {
     const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
     if (savedContent) {
@@ -64,19 +57,17 @@ export default function index() {
 
   const getNoteUserId = async () => {
     const response = await fetchData(`/api/userNotes/${user?.id}`);
-    setNote(response); 
-  }
+    setNote(response?._id);
+  };
 
   useEffect(() => {
-    getNoteUserId(); 
+    getNoteUserId();
     fetchUserNote();
-    handleEditorChange(); 
-    
-  },[]);
-  
+    handleEditorChange();
+  }, [noteId]);
+
   return (
     <div>
-    <Button onClick={() => dispatch(setNoteData(true))} >reset</Button>
       <Box
         sx={{
           position: "absolute",
