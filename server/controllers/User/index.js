@@ -26,7 +26,7 @@ const getUserByUserId = async (req, res) => {
   try {
     const user = await User.findOne({ userId: req.params.userId }).populate({
       path: "spaces",
-      populate: { path: "chatGpt" },
+      populate: { path: "notes" },
     });
     if (!user) {
       return res.status(400).json({ error: "No user found with this userId" });
@@ -34,6 +34,7 @@ const getUserByUserId = async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+    console.log("error getuser:", error)
   }
 };
 

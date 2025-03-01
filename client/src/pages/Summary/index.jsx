@@ -12,12 +12,16 @@ import "./styles/note.css";
 import "./styles/index.css";
 import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
+import { useSelector } from "react-redux";
 
 export default function index() {
   const [initialContent, setInitialContent] = useState(undefined);
   const [noteId, setNote] = useState([]);
-
+  const [savedData, setSavedData] = useState([]); 
+  const spaceId = useSelector(state => state.createSpace.ObjectId)
+  const noteMongoId = savedData?.notes?.[0]?._id; 
   const { user } = useUser();
+
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
@@ -34,23 +38,29 @@ export default function index() {
       setTimeout(async () => {
         await getNoteUserId();
       }, 1000);
+      
       await postData("/api/userNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
         isNoteId: noteId == undefined,
+        spaceId: spaceId, 
       });
     } else {
       await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
+        noteDoId: noteMongoId, 
       });
     }
   };
 
   const fetchUserNote = async () => {
-    const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
+    // const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
+    const savedContent = await fetchData(`/api/users/${user?.id}/spaces/${spaceId}`);
+    setSavedData(savedContent)
+
     if (savedContent) {
-      const blocks = JSON.parse(savedContent?.content);
+      const blocks = JSON.parse(savedContent?.notes?.[0]?.content);
       return setInitialContent(blocks);
     }
   };
@@ -64,7 +74,7 @@ export default function index() {
     getNoteUserId();
     fetchUserNote();
     handleEditorChange();
-  }, [noteId]);
+  }, [noteId, spaceId]);
 
   return (
     <div>

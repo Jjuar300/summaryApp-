@@ -58,7 +58,8 @@ const deleteSpace = async (req, res) => {
 const getSpaces = async (req, res) => {
   try {
     const spaces = await Space.findById(req.params.spaceId).populate({
-      path: "chatGpt",
+      path: "notes",
+      // path: 'notes'
     });
     if (!spaces) return res.status(400).json({ error: "no spaces were found" });
     res.json(spaces);

@@ -1,11 +1,18 @@
-const { Notes } = require("../../Models/index");
+const { Notes, Space } = require("../../Models/index");
 
 const create = async (req, res) => {
   try {
-    const { content, userId, isNoteId } = req.body;
+    const { content, userId, isNoteId, spaceId  } = req.body;
 
     if (isNoteId) {
-      await Notes.create({ content, userId });
+      const note =  await Notes.create({ content, userId });
+  
+      await Space.findOneAndUpdate(
+       {_id: spaceId}, 
+       {$addToSet: {notes: note._id}}
+      )
+      
+      
     } else {
       console.log("Note already created!");
     }
@@ -27,11 +34,12 @@ const data = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { content, userId } = req.body;
-    const updateNote = await Notes.findOneAndUpdate({
-      content: content,
-      userId,
-    });
+    const { content, userId, noteDoId} = req.body;
+
+    const updateNote = await Notes.findByIdAndUpdate(noteDoId, {
+      content: content ,
+      userId, 
+    })
     res.json(updateNote);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });

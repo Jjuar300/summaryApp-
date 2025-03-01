@@ -5,5 +5,5 @@ const userNotes = new mongoose.Schema({
     userId: String, 
 }); 
 
-const Notes = mongoose.model('Notes', userNotes); 
+const Notes = mongoose.model('notes', userNotes); 
 module.exports = Notes; 

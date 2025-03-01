@@ -5,6 +5,10 @@ const SpaceSchema = new mongoose.Schema({
    chatGpt: [{
       type: mongoose.Types.ObjectId, 
       ref:'chatGpt', 
+   }],  
+   notes: [{
+      type: mongoose.Types.ObjectId, 
+      ref: 'notes', 
    }]
 }, 
 );
