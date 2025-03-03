@@ -4,6 +4,8 @@ const create = async (req, res) => {
   try {
     const { content, userId, isNoteId, spaceId  } = req.body;
 
+    console.log('isNoteId:', isNoteId)
+
     if (isNoteId) {
       const note =  await Notes.create({ content, userId });
   

@@ -20,14 +20,22 @@ export default function index() {
   const [savedData, setSavedData] = useState([]); 
   const spaceId = useSelector(state => state.createSpace.ObjectId)
   const noteMongoId = savedData?.notes?.[0]?._id; 
+  const isNoteId = savedData?.notes?.[0]?._id == noteId; 
   const { user } = useUser();
-
+  
+  console.log('noteId:', noteId)
+  console.log('spaceId:', spaceId)
+  console.log('savedData:',savedData)
+  console.log('isNoteId:', isNoteId)
+  console.log('isnoteUndefined:', noteId == undefined)
+  console.log('noteMongoId:', noteMongoId)
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
 
   const handleEditorChange = async (jsonBlock) => {
+   
     if (noteId == undefined) {
       /*
     I added setTimeout() to delay
@@ -42,7 +50,7 @@ export default function index() {
       await postData("/api/userNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
-        isNoteId: noteId == undefined,
+        isNoteId: isNoteId,
         spaceId: spaceId, 
       });
     } else {
@@ -109,3 +117,57 @@ export default function index() {
     </div>
   );
 }
+
+
+       
+/*
+client: 
+
+if (isNoteId *true*) {
+  
+  setTimeout(async () => {
+    await getNoteUserId();
+  }, 1000);
+  
+  await postData("/api/userNotes", {
+    content: JSON.stringify(jsonBlock),
+    userId: user?.id,
+    isNoteId: isNoteId,
+    spaceId: spaceId, 
+  });
+} else {
+  await updateData("/api/updateUserNotes", {
+    content: JSON.stringify(jsonBlock),
+    userId: user?.id,
+    noteDoId: noteMongoId, 
+  });
+}
+};
+
+backend: 
+
+const create = async (req, res) => {
+  try {
+    const { content, userId, isNoteId, spaceId  } = req.body;
+
+    console.log('isNoteId:', isNoteId)
+
+    if (isNoteId *true* ) {
+      const note =  await Notes.create({ content, userId });
+  
+      await Space.findOneAndUpdate(
+       {_id: spaceId *romandId*}, 
+       {$addToSet: {notes: note._id}}
+      )
+      
+      
+    } else {
+      console.log("Note already created!");
+    }
+  } catch (error) {
+    res.status(500).json({ error: "internal error" });
+    console.log("error occurred when creating Note:", error);
+  }
+};
+
+*/
