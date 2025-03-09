@@ -13,54 +13,74 @@ import "./styles/index.css";
 import { useEffect, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
 import { useSelector } from "react-redux";
+import { useGetData } from "../../hooks";
 
 export default function index() {
   const [initialContent, setInitialContent] = useState(undefined);
   const [noteId, setNote] = useState([]);
   const [savedData, setSavedData] = useState([]); 
+  const userData = useGetData(); 
   const spaceId = useSelector(state => state.createSpace.ObjectId)
-  const noteMongoId = savedData?.notes?.[0]?._id; 
-  const isNoteId = savedData?.notes?.[0]?._id == noteId; 
+  // const noteMongoId = savedData?.notes?.[0]?._id; 
+  const isNoteId = savedData?.notes?.[0]?._id; 
+  const isSpaceId = userData.space.find(space => space._id == spaceId)
+  const isNote =  isSpaceId?.notes[0]?._id; 
   const { user } = useUser();
-  
-  console.log('noteId:', noteId)
+
+  // console.log('noteId:', noteId)
   console.log('spaceId:', spaceId)
   console.log('savedData:',savedData)
   console.log('isNoteId:', isNoteId)
-  console.log('isnoteUndefined:', noteId == undefined)
-  console.log('noteMongoId:', noteMongoId)
+  console.log('isnoteUndefined:', noteId === undefined)
+  // console.log('noteMongoId:', noteMongoId)
+  console.log('isNote:', isNote)
 
+  console.log('isSavedData:',savedData)
+  console.log('isSpaceId:', isSpaceId)
+  console.log('isNoteCreate:', userData.space.some(obj => obj?._id === spaceId))
+  console.log('initialContent:', initialContent)
+  
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
 
   const handleEditorChange = async (jsonBlock) => {
-   
-    if (noteId == undefined) {
-      /*
-    I added setTimeout() to delay
-    getting the noteId so it won't 
-    duplicate documents in the note
-    collection in mongodb. 
-    */
-      setTimeout(async () => {
-        await getNoteUserId();
-      }, 1000);
+     console.log('isNoteValue:', isNote)
+    if (isNote === undefined) {
       
-      await postData("/api/userNotes", {
+     return  await postData("/api/userNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
-        isNoteId: isNoteId,
+        // isNoteId: isNote,
         spaceId: spaceId, 
       });
     } else {
-      await updateData("/api/updateUserNotes", {
+     return await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
-        noteDoId: noteMongoId, 
+        noteDoId: isNote, 
       });
     }
+  
   };
+
+  const handlePostEditor = async (jsonBlock) => {
+    return  await postData("/api/userNotes", {
+      content: JSON.stringify(jsonBlock),
+      userId: user?.id,
+      // isNoteId: isNote,
+      spaceId: spaceId, 
+    });
+  }
+
+  const handleUpdateEditor = async (jsonBlock) =>{ 
+    return await updateData("/api/updateUserNotes", {
+      content: JSON.stringify(jsonBlock),
+      userId: user?.id,
+      noteDoId: isNote, 
+    });
+  }
+
 
   const fetchUserNote = async () => {
     // const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
@@ -73,16 +93,18 @@ export default function index() {
     }
   };
 
-  const getNoteUserId = async () => {
-    const response = await fetchData(`/api/userNotes/${user?.id}`);
-    setNote(response?._id);
-  };
+  // const getNoteUserId = async () => {
+  //   const response = await fetchData(`/api/userNotes/${user?.id}/spaces/${spaceId}`);
+  //   setNote(response);
+  // };
 
   useEffect(() => {
-    getNoteUserId();
+    // getNoteUserId();
+    // handleEditorChange();
+    handlePostEditor();
+    handleUpdateEditor();
     fetchUserNote();
-    handleEditorChange();
-  }, [noteId, spaceId]);
+  }, [spaceId]);
 
   return (
     <div>
@@ -109,7 +131,7 @@ export default function index() {
 
         <BlockNoteView
           editor={editor}
-          onChange={() => handleEditorChange(editor.document)}
+          onChange={() => !isNote ? handlePostEditor(editor.document) : handleUpdateEditor(editor.document)}
           theme={"light"}
           data-background-theming-css
         />
@@ -123,7 +145,14 @@ export default function index() {
 /*
 client: 
 
-if (isNoteId *true*) {
+ const isSpaceId = *match if there is
+ a space called roman empire if so
+ then create note for that space, else if
+ is other new space then create note else
+ then update content. 
+ *
+
+if (isSpaceId) {
   
   setTimeout(async () => {
     await getNoteUserId();

@@ -1,12 +1,12 @@
 const { Notes, Space } = require("../../Models/index");
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   try {
     const { content, userId, isNoteId, spaceId  } = req.body;
 
     console.log('isNoteId:', isNoteId)
 
-    if (isNoteId) {
+    // if (!isNoteId) {
       const note =  await Notes.create({ content, userId });
   
       await Space.findOneAndUpdate(
@@ -15,9 +15,10 @@ const create = async (req, res) => {
       )
       
       
-    } else {
-      console.log("Note already created!");
-    }
+    // } else {
+    //   console.log("Note already created!");
+    //   next()
+    // }
   } catch (error) {
     res.status(500).json({ error: "internal error" });
     console.log("error occurred when creating Note:", error);
@@ -26,7 +27,12 @@ const create = async (req, res) => {
 
 const data = async (req, res) => {
   try {
-    const userNotes = await Notes.findOne({ userId: `${req.params.userId}` });
+    const {spaceId, userId} = req.params; 
+
+    console.log('spaceId:', spaceId); 
+    console.log('userId:', userId); 
+
+    const userNotes = await Notes.findOne({ _id: `${spaceId}` });
     return res.json(userNotes);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
