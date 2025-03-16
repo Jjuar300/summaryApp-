@@ -12,6 +12,7 @@ export default function SpaceList({
   setAnchorEl,
 }) {
   const dispatch = useDispatch("");
+
   const handleClickContext = (event, value, editText) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);

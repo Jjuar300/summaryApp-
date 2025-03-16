@@ -2,6 +2,9 @@ import { Box, Typography } from "@mui/material";
 import {useMediaQuery} from "@mui/material";
 import { addcircle } from "./assets";
 import { useNavigate } from "react-router-dom";
+import { useUserNote } from "../../../hooks";
+import { useDispatch } from "react-redux";
+import { setRun } from "../../../Redux/SpaceNotes";
 
 export default function SpaceCreate({
   handleButtonClicked,
@@ -9,6 +12,8 @@ export default function SpaceCreate({
 
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const navigate = useNavigate(); 
+  const {fetchUserNote} = useUserNote();
+  const dispatch = useDispatch();
 
   const createSpaceStyle = {
     display: "flex",
@@ -29,8 +34,10 @@ export default function SpaceCreate({
   };
 
   const handleBrowse = (e) =>{ 
-    e?.preventDefault(); 
+    e?.preventDefault();
+    dispatch(setRun(false)) 
     navigate('/browsespace');
+    fetchUserNote();
   }
 
   return (

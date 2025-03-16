@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { REHYDRATE } from "redux-persist/es/constants";
 
 export const SpaceNotes = createSlice({
   name: "spaceNotes",
   initialState: {
     spaceText: "",
-    isNoteId: "", 
+    isRun: true, 
   },
 
   reducers: {
@@ -12,11 +13,16 @@ export const SpaceNotes = createSlice({
       state.spaceText = action.payload;
     },
 
-    setNoteId: (state, action) => {
-      state.isNoteId = action.payload; 
+    setRun: (state, action) => {
+      state.isRun = action.payload; 
     }
   },
+  extraReducers: (builder) =>{
+    builder.addCase(REHYDRATE, (state) =>{ 
+      state.isRun = false
+    })
+  } 
 });
 
-export const { handleSpaceText, setNoteId } = SpaceNotes.actions;
+export const { handleSpaceText, setRun } = SpaceNotes.actions;
 export default SpaceNotes.reducer;

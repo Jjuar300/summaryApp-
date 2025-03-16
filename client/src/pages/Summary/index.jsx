@@ -10,11 +10,10 @@ import { useUser } from "@clerk/clerk-react";
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useGetData, useUserNote } from "../../hooks";
-import { setNoteId } from "../../Redux/SpaceNotes";
 
 export default function index() {
   // const [initialContent, setInitialContent] = useState(undefined);
@@ -23,13 +22,12 @@ export default function index() {
   const {savedData, initialContent, fetchUserNote} = useUserNote(); 
   const spaceId = useSelector(state => state.createSpace.ObjectId)
   // const noteMongoId = savedData?.notes?.[0]?._id; 
-  
+  const hasRun = useSelector(state => state.SpaceNotes.isRun)
+
   const isSpaceId = userData.space.find(space => space._id === spaceId)
   const isNote =  isSpaceId?.notes[0]?._id; 
   const { user } = useUser();
   const isNoteId = isSpaceId?.notes[0]?._id; 
-  const dispatch = useDispatch(); 
-  const isNoteRedux = useSelector(state => state.SpaceNotes.isNoteId);
 
   // console.log('noteId:', noteId)
   console.log('spaceId:', spaceId)
@@ -37,73 +35,47 @@ export default function index() {
   console.log('isNoteId:', isNoteId)
   // console.log('noteMongoId:', noteMongoId)
   console.log('isNote:', isNote)
+  console.log('hasRun:', hasRun)
 
   console.log('isSavedData:',savedData)
   console.log('isSpaceId:', isSpaceId)
   console.log('isNoteCreate:', userData.space.some(obj => obj?._id === spaceId))
   console.log('initialContent:', initialContent)
-  console.log('isNoteRedux:', isNoteRedux)
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
-  isNoteId === undefined ? dispatch(setNoteId(undefined)) :  dispatch(setNoteId(isNoteId))
 
-  
    const handleEditorChange = async (jsonBlock) => {
-    console.log('isNoteValue:', isNote)
-    if (isNoteRedux === undefined) {
-      
-       await postData("/api/userNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        // isNoteId: isNoteRedux,
-        spaceId: spaceId, 
-      });
-    } else {
-     await updateData("/api/updateUserNotes", {
+         if(isNote === undefined){
+      await postData("/api/userNotes", {
+         content: JSON.stringify(jsonBlock),
+         userId: user?.id,
+         spaceId: spaceId, 
+        });
+    }else{
+    await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
         noteDoId: isNote, 
       });
     }
-  
+    
   };
-
-  const postEditorChange = async (jsonBlock) => {
   
-     if(isNote === undefined ){
-      await postData("/api/userNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        // isNoteId: spaceId,
-        spaceId: spaceId, 
-      });
-     }
-
+  const runEditor = () =>{ 
+    if(hasRun){
+      return  handleEditorChange();
+    }else{
+     return null
+    }
   }
-  
-  const updateEditorChange = async (jsonBlock) => {
-    await updateData("/api/updateUserNotes", {
-      content: JSON.stringify(jsonBlock),
-      userId: user?.id,
-      noteDoId: isNote, 
-    });
-  }
-  
-  //  const fetchUserNote = async () => {
-  //   // const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
-  //   const savedContent = await fetchData(`/api/users/${user?.id}/spaces/${spaceId}`);
-  //   setSavedData(savedContent)
-  //   if (savedContent) {
-  //     const blocks = JSON.parse(savedContent?.notes?.[0]?.content);
-  //     return setInitialContent(blocks);
-  //   }
-  // };
 
   useEffect(() => {
-    fetchUserNote()
-  }, [spaceId]);
+    fetchUserNote();
+    runEditor();
+
+  },[spaceId, hasRun])
 
   return (
     <div>
@@ -130,7 +102,7 @@ export default function index() {
 
         <BlockNoteView
           editor={editor}
-          onChange={() => isNote === undefined ? postEditorChange(editor.document) : updateEditorChange(editor.document)}
+          onChange={() => handleEditorChange(editor.document)}
           theme={"light"}
           data-background-theming-css
         />

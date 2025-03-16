@@ -2,11 +2,8 @@ const { Notes, Space } = require("../../Models/index");
 
 const create = async (req, res, next) => {
   try {
-    const { content, userId, isNoteId, spaceId  } = req.body;
-
-    console.log('isNoteId:', isNoteId)
-
-    // if (isNoteId !== undefined) {
+    const { content, userId, spaceId  } = req.body;
+      
       const note =  await Notes.create({ content, userId });
   
       await Space.findOneAndUpdate(
@@ -14,10 +11,8 @@ const create = async (req, res, next) => {
        {$addToSet: {notes: note._id}}
       )
       
-      
-    // } else {
-    //   console.log("Note already created!");
-    // }
+
+
   } catch (error) {
     res.status(500).json({ error: "internal error" });
     console.log("error occurred when creating Note:", error);

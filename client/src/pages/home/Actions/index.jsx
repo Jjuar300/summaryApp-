@@ -6,7 +6,8 @@ import { PopoverContainer, FeedbackAd } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import { useGetData, useUserNote } from "../../../hooks";
+import { useGetData } from "../../../hooks";
+import { setRun } from "../../../Redux/SpaceNotes";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -36,7 +37,6 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
-  const {fetchUserNote} = useUserNote(); 
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
@@ -49,7 +49,7 @@ export default function Index() {
 
   const handleButtonClicked = () => {
     setOpenModal(true);
-    fetchUserNote(); 
+    dispatch(setRun(true))
   };
 
   const renameSpaceText = async (e) => {
