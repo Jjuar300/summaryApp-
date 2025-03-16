@@ -6,7 +6,7 @@ const create = async (req, res, next) => {
 
     console.log('isNoteId:', isNoteId)
 
-    // if (!isNoteId) {
+    // if (isNoteId !== undefined) {
       const note =  await Notes.create({ content, userId });
   
       await Space.findOneAndUpdate(
@@ -17,7 +17,6 @@ const create = async (req, res, next) => {
       
     // } else {
     //   console.log("Note already created!");
-    //   next()
     // }
   } catch (error) {
     res.status(500).json({ error: "internal error" });
