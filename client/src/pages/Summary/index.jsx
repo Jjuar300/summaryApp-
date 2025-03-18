@@ -59,8 +59,7 @@ export default function index() {
         userId: user?.id,
         noteDoId: isNote, 
       });
-    }
-    
+    } 
   };
   
   const runEditor = () =>{ 
