@@ -29,5 +29,6 @@ router.post('/imagekitfolder', Imagekit.deleteImagekitFolder);
 router.post('/userNotes', Notes.create); 
 router.get('/userNotes/:userId/space/:spaceId', Notes.data)
 router.put('/updateUserNotes', Notes.update )
+router.delete('/deleteNote/:noteId', Notes.remove)
 
 module.exports = router;

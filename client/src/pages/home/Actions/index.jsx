@@ -6,8 +6,8 @@ import { PopoverContainer, FeedbackAd } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import { useGetData } from "../../../hooks";
-import { setRun } from "../../../Redux/SpaceNotes";
+import { useGetData, useUserNote } from "../../../hooks";
+import { setRun, setNoteId } from "../../../Redux/SpaceNotes";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -37,9 +37,13 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
+  const spaceId = useSelector(state => state.createSpace.ObjectId)
+
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const chatgptId = useSelector((state) => state.chatGpt.chatgptId);
+  const isSpaceId = space.find(space => space._id === spaceId )
+
+  console.log('[Actions/index.js-46] isNoteIndex: ', isSpaceId?.notes[0]?._id)
 
   let spaceObjectId;
 
@@ -49,7 +53,8 @@ export default function Index() {
 
   const handleButtonClicked = () => {
     setOpenModal(true);
-    dispatch(setRun(true))
+    dispatch(setRun(true));
+    useUserNote();
   };
 
   const renameSpaceText = async (e) => {
@@ -73,7 +78,6 @@ export default function Index() {
   const addSpace = async (e) => {
     e?.preventDefault();
     try {
-      getUserData();
       const response = await postData("/api/spaces", {
         name: text,
         userId: user?.id,
@@ -90,8 +94,8 @@ export default function Index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
+      await deleteData(`/api/deleteNote/${isSpaceId?.notes[0]?._id}`)
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
-      await deleteData(`/api/chatgpt/${chatgptId}`);
       handleClose();
       dispatch(handleSpaceText(""));
       getUserData();
@@ -109,6 +113,7 @@ export default function Index() {
     setOpenModal(false);
     setText("");
     dispatch(handleSpaceText(text));
+    dispatch(setNoteId(isSpaceId?.notes[0]?._id))
   };
 
   const handleCloseEditSpace = (e) => {

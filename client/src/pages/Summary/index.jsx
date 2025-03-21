@@ -21,20 +21,18 @@ export default function index() {
   const userData = useGetData(); 
   const {savedData, initialContent, fetchUserNote} = useUserNote(); 
   const spaceId = useSelector(state => state.createSpace.ObjectId)
-  // const noteMongoId = savedData?.notes?.[0]?._id; 
+  const isNoteId = useSelector(state => state.SpaceNotes.noteId)
   const hasRun = useSelector(state => state.SpaceNotes.isRun)
 
   const isSpaceId = userData.space.find(space => space._id === spaceId)
   const isNote =  isSpaceId?.notes[0]?._id; 
   const { user } = useUser();
-  const isNoteId = isSpaceId?.notes[0]?._id; 
+  // const isNoteId = isSpaceId?.notes[0]?._id; 
 
-  // console.log('noteId:', noteId)
   console.log('spaceId:', spaceId)
   console.log('savedData:',savedData)
   console.log('isNoteId:', isNoteId)
-  // console.log('noteMongoId:', noteMongoId)
-  console.log('isNote:', isNote)
+
   console.log('hasRun:', hasRun)
 
   console.log('isSavedData:',savedData)
