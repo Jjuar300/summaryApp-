@@ -2,7 +2,7 @@ import { Box, Button, Typography, Modal, TextField } from "@mui/material";
 
 export default function DeleteModal({
   isOpen,
-  setOpen,
+  setOpenModal,
   onClick,
   inlineStyle,
   textQuestion,
@@ -100,7 +100,7 @@ export default function DeleteModal({
             </Button>
           </form>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={() => setOpenModal()}
             sx={{
               position: "absolute",
               top: "11rem",

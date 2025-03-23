@@ -2,8 +2,8 @@ const { Notes, Space } = require("../../Models/index");
 
 const create = async (req, res, next) => {
   try {
-    const { content, userId, spaceId } = req.body;
-
+    const { content, userId, spaceId} = req.body;
+    
     const note = await Notes.create({ content, userId });
 
     await Space.findOneAndUpdate(

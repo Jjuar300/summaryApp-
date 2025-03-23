@@ -29,7 +29,7 @@ export default function SpaceModals({
         isOpen={isOpenModal}
         textLeftButton={"Cancel"}
         textRightButton={"Save"}
-        setOpen={setOpenModal}
+        setOpenModal={setOpenModal}
         inlineStyle={MobileSpaceModal}
         textCount={LengthOfText}
       />

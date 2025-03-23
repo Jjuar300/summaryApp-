@@ -98,6 +98,7 @@ export default function Index() {
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
+      dispatch(setRun(false))
       getUserData();
       navigate("/browsespace");
     } catch (error) {
@@ -109,12 +110,18 @@ export default function Index() {
     e?.preventDefault(); 
     getUserData(); 
     dispatch(handleInputValue(text));
+    // if(isSpaceId?.notes[0]?._id) return  dispatch(setRun(false))
     addSpace();
     setOpenModal(false);
     setText("");
     dispatch(handleSpaceText(text));
-    dispatch(setNoteId(isSpaceId?.notes[0]?._id))
+    // useUserNote();
   };
+
+  const handleCancelModal = () =>{ 
+    setOpenModal(false); 
+    dispatch(setRun(false))
+  }
 
   const handleCloseEditSpace = (e) => {
     e?.preventDefault(); 
@@ -179,7 +186,7 @@ export default function Index() {
       <SpaceModals
         text={text}
         handleChange={handleChange}
-        setOpenModal={setOpenModal}
+        setOpenModal={handleCancelModal}
         isOpenModal={isOpenModal}
         textFieldStyle={textFieldStyle}
         MobileSpaceModal={MobileSpaceModal}

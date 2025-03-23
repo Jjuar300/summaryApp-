@@ -12,16 +12,17 @@ import "./styles/note.css";
 import "./styles/index.css";
 import { useEffect, useMemo, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetData, useUserNote } from "../../hooks";
+import { setNoteId } from "../../Redux/SpaceNotes";
 
 export default function index() {
   // const [initialContent, setInitialContent] = useState(undefined);
   // const [savedData, setSavedData] = useState([]); 
+  
   const userData = useGetData(); 
   const {savedData, initialContent, fetchUserNote} = useUserNote(); 
   const spaceId = useSelector(state => state.createSpace.ObjectId)
-  const isNoteId = useSelector(state => state.SpaceNotes.noteId)
   const hasRun = useSelector(state => state.SpaceNotes.isRun)
 
   const isSpaceId = userData.space.find(space => space._id === spaceId)
@@ -31,7 +32,7 @@ export default function index() {
 
   console.log('spaceId:', spaceId)
   console.log('savedData:',savedData)
-  console.log('isNoteId:', isNoteId)
+  console.log('isNote:', isNote)
 
   console.log('hasRun:', hasRun)
 
@@ -55,22 +56,22 @@ export default function index() {
     await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
-        noteDoId: isNote, 
+        noteDoId: isSpaceId?.notes[0]?._id, 
       });
     } 
   };
   
   const runEditor = () =>{ 
     if(hasRun){
-      return  handleEditorChange();
+        return  handleEditorChange();
     }else{
      return null
     }
   }
 
   useEffect(() => {
-    fetchUserNote();
     runEditor();
+    fetchUserNote();
 
   },[spaceId, hasRun])
 
