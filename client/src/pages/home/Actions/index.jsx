@@ -37,15 +37,17 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
-  const spaceId = useSelector(state => state.createSpace.ObjectId)
-
+  const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
-  const isSpaceId = space.find(space => space._id === spaceId )
-
-  console.log('[Actions/index.js-46] isNoteIndex: ', isSpaceId?.notes[0]?._id)
-
+  const isSpaceId = space.find((space) => space._id === spaceId);
   let spaceObjectId;
+
+  window.addEventListener("popstate", () => {
+    dispatch(setRun(false));
+  });
+
+  window.addEventListener('')
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -82,10 +84,9 @@ export default function Index() {
         name: text,
         userId: user?.id,
       });
-      const createdSapaceId = response?._id; 
-      dispatch(sendObjectId(createdSapaceId))
-      navigate(`/spaces/${createdSapaceId}`)
-
+      const createdSapaceId = response?._id;
+      dispatch(sendObjectId(createdSapaceId));
+      navigate(`/spaces/${createdSapaceId}`);
     } catch (error) {
       console.log(error);
     }
@@ -94,11 +95,11 @@ export default function Index() {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
-      await deleteData(`/api/deleteNote/${isSpaceId?.notes[0]?._id}`)
+      await deleteData(`/api/deleteNote/${isSpaceId?.notes[0]?._id}`);
       await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
-      dispatch(setRun(false))
+      dispatch(setRun(false));
       getUserData();
       navigate("/browsespace");
     } catch (error) {
@@ -107,8 +108,8 @@ export default function Index() {
   };
 
   const handleCloseSave = (e) => {
-    e?.preventDefault(); 
-    getUserData(); 
+    e?.preventDefault();
+    getUserData();
     dispatch(handleInputValue(text));
     // if(isSpaceId?.notes[0]?._id) return  dispatch(setRun(false))
     addSpace();
@@ -118,13 +119,13 @@ export default function Index() {
     // useUserNote();
   };
 
-  const handleCancelModal = () =>{ 
-    setOpenModal(false); 
-    dispatch(setRun(false))
-  }
+  const handleCancelModal = () => {
+    setOpenModal(false);
+    dispatch(setRun(false));
+  };
 
   const handleCloseEditSpace = (e) => {
-    e?.preventDefault(); 
+    e?.preventDefault();
     renameSpaceText();
     setRenameSpaceOpen(false);
     dispatch(handleSpaceText(editText));
@@ -208,7 +209,7 @@ export default function Index() {
         setAnchorEl={setAnchorEl}
       />
 
-      <FeedbackAd/>
+      <FeedbackAd />
     </>
   );
 }

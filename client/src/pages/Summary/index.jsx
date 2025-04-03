@@ -30,6 +30,11 @@ export default function index() {
   const { user } = useUser();
   // const isNoteId = isSpaceId?.notes[0]?._id; 
 
+
+
+
+
+
   console.log('spaceId:', spaceId)
   console.log('savedData:',savedData)
   console.log('isNote:', isNote)
