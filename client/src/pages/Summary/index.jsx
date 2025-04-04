@@ -10,30 +10,25 @@ import { useUser } from "@clerk/clerk-react";
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { fetchData, postData, updateData } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetData, useUserNote } from "../../hooks";
 import { setNoteId } from "../../Redux/SpaceNotes";
 
-export default function index() {
+export default function Index() {
   // const [initialContent, setInitialContent] = useState(undefined);
-  // const [savedData, setSavedData] = useState([]); 
-  
-  const userData = useGetData(); 
-  const {savedData, initialContent, fetchUserNote} = useUserNote(); 
-  const spaceId = useSelector(state => state.createSpace.ObjectId)
-  const hasRun = useSelector(state => state.SpaceNotes.isRun)
+  // const [savedData, setSavedData] = useState([]);
 
-  const isSpaceId = userData.space.find(space => space._id === spaceId)
-  const isNote =  isSpaceId?.notes[0]?._id; 
+  const userData = useGetData();
+  const { savedData, initialContent, fetchUserNote } = useUserNote();
+  const spaceId = useSelector((state) => state.createSpace.ObjectId);
+  const hasRun = useSelector((state) => state.SpaceNotes.isRun);
+
+  const isSpaceId = userData.space.find((space) => space._id === spaceId);
+  const isNote = isSpaceId?.notes[0]?._id;
   const { user } = useUser();
-  // const isNoteId = isSpaceId?.notes[0]?._id; 
-
-
-
-
-
+  const didRun = useRef(false);
 
   console.log('spaceId:', spaceId)
   console.log('savedData:',savedData)
@@ -50,35 +45,38 @@ export default function index() {
     initialContent: initialContent,
   });
 
-   const handleEditorChange = async (jsonBlock) => {
-         if(isNote === undefined){
+  const handleEditorChange = async (jsonBlock) => {
+    if (isNote === undefined) {
       await postData("/api/userNotes", {
-         content: JSON.stringify(jsonBlock),
-         userId: user?.id,
-         spaceId: spaceId, 
-        });
-    }else{
-    await updateData("/api/updateUserNotes", {
         content: JSON.stringify(jsonBlock),
         userId: user?.id,
-        noteDoId: isSpaceId?.notes[0]?._id, 
+        spaceId: spaceId,
       });
-    } 
-  };
-  
-  const runEditor = () =>{ 
-    if(hasRun){
-        return  handleEditorChange();
-    }else{
-     return null
+    } else {
+      await updateData("/api/updateUserNotes", {
+        content: JSON.stringify(jsonBlock),
+        userId: user?.id,
+        noteDoId: isSpaceId?.notes[0]?._id,
+      });
     }
-  }
+  };
+
+  const runEditor = () => {
+    if (hasRun) {
+      return handleEditorChange();
+    } else {
+      return null;
+    }
+  };
 
   useEffect(() => {
+    if (didRun.current) return;
+
+    console.log("handleUseEffect");
     runEditor();
     fetchUserNote();
-
-  },[spaceId, hasRun])
+    didRun.current = true;
+  }, [spaceId, hasRun]);
 
   return (
     <div>

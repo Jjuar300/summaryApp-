@@ -1,6 +1,6 @@
 import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { deleteData, postData, updateData } from "../../../utils";
 import { PopoverContainer, FeedbackAd } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
@@ -46,8 +46,6 @@ export default function Index() {
   window.addEventListener("popstate", () => {
     dispatch(setRun(false));
   });
-
-  window.addEventListener('')
 
   const handleClose = () => {
     setAnchorEl(null);
