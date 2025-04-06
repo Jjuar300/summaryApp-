@@ -5,61 +5,25 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import { BlockNoteEditor } from "@blocknote/core";
-import { useUser } from "@clerk/clerk-react";
 
 import "./styles/note.css";
 
 import "./styles/index.css";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchData, postData, updateData } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { useGetData, useUserNote } from "../../hooks";
-import { setNoteId } from "../../Redux/SpaceNotes";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useUserNote } from "../../hooks";
 
 export default function Index() {
-  // const [initialContent, setInitialContent] = useState(undefined);
-  // const [savedData, setSavedData] = useState([]);
-
-  const userData = useGetData();
-  const { savedData, initialContent, fetchUserNote, handleEditorChange } = useUserNote();
+  const { initialContent, fetchUserNote, handleEditorChange } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
   const hasRun = useSelector((state) => state.SpaceNotes.isRun);
-
-  const isSpaceId = userData.space.find((space) => space._id === spaceId);
-  const isNote = isSpaceId?.notes[0]?._id;
-  const { user } = useUser();
-  const didRun = useRef(false);
-
-  console.log('spaceId:', spaceId)
-  console.log('savedData:',savedData)
-  console.log('isNote:', isNote)
-
-  console.log('hasRun:', hasRun)
-
-  console.log('isSavedData:',savedData)
-  console.log('isSpaceId:', isSpaceId)
-  console.log('isNoteCreate:', userData.space.some(obj => obj?._id === spaceId))
-  console.log('initialContent:', initialContent)
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
   });
 
-  const runEditor = () => {
-    if (hasRun) {
-      return handleEditorChange();
-    } else {
-      return null;
-    }
-  };
-
   useEffect(() => {
-    
-    if (didRun.current) return;
     fetchUserNote();
-    runEditor();
-    didRun.current = true;
-    
   }, [spaceId, hasRun]);
 
   return (

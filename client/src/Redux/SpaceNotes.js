@@ -18,9 +18,6 @@ export const SpaceNotes = createSlice({
       state.isRun = action.payload; 
     }, 
 
-    setNoteId: (state, action) => { 
-     state.noteId = action.payload; 
-    }
   },
   extraReducers: (builder) =>{
     builder.addCase(REHYDRATE, (state) =>{ 
@@ -29,5 +26,5 @@ export const SpaceNotes = createSlice({
   } 
 });
 
-export const { handleSpaceText, setRun, setNoteId } = SpaceNotes.actions;
+export const { handleSpaceText, setRun} = SpaceNotes.actions;
 export default SpaceNotes.reducer;

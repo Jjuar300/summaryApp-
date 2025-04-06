@@ -1,13 +1,13 @@
 import { useMediaQuery, Popover } from "@mui/material";
 import { Space } from "../../../components";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { deleteData, postData, updateData } from "../../../utils";
 import { PopoverContainer, FeedbackAd } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useGetData, useUserNote } from "../../../hooks";
-import { setRun, setNoteId } from "../../../Redux/SpaceNotes";
+import { setRun} from "../../../Redux/SpaceNotes";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -37,7 +37,7 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
-  const {handleEditorChange} = useUserNote()
+  const { fetchUserNote} = useUserNote()
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
@@ -53,11 +53,10 @@ export default function Index() {
   };
 
   const handleButtonClicked = () => {
+    getUserData();  
     setOpenModal(true);
     dispatch(setRun(true));
-    useUserNote();
-    handleEditorChange();
-    getUserData();  
+
   };
 
   const renameSpaceText = async (e) => {
@@ -88,6 +87,11 @@ export default function Index() {
       const createdSapaceId = response?._id;
       dispatch(sendObjectId(createdSapaceId));
       navigate(`/spaces/${createdSapaceId}`);
+      await postData("/api/userNotes", {
+        userId: user?.id,
+        spaceId: createdSapaceId,
+      });
+      fetchUserNote(); 
     } catch (error) {
       console.log(error);
     }
@@ -110,14 +114,12 @@ export default function Index() {
 
   const handleCloseSave = (e) => {
     e?.preventDefault();
-    getUserData();
     dispatch(handleInputValue(text));
-    // if(isSpaceId?.notes[0]?._id) return  dispatch(setRun(false))
     addSpace();
     setOpenModal(false);
     setText("");
     dispatch(handleSpaceText(text));
-    // useUserNote();
+    getUserData();
   };
 
   const handleCancelModal = () => {

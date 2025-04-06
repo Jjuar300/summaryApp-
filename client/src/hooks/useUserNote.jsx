@@ -1,37 +1,28 @@
-import { fetchData, updateData,postData } from "../utils";
+import { fetchData, updateData, postData } from "../utils";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import {useGetData} from '../hooks'
+import { useGetData } from "../hooks";
 
 export default function useUserNote() {
   const { user } = useUser();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
+
   const [savedData, setSavedData] = useState([]);
   const [initialContent, setInitialContent] = useState(undefined);
 
-    const userData = useGetData();
+  const userData = useGetData();
   const isSpaceId = userData.space.find((space) => space._id === spaceId);
-  const isNote = isSpaceId?.notes[0]?._id;
 
   const handleEditorChange = async (jsonBlock) => {
-    if (isNote === undefined) {
-      await postData("/api/userNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        spaceId: spaceId,
-      });
-    } else {
-      await updateData("/api/updateUserNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        noteDoId: isSpaceId?.notes[0]?._id,
-      });
-    }
+    await updateData("/api/updateUserNotes", {
+      content: JSON.stringify(jsonBlock),
+      userId: user?.id,
+      noteDoId: isSpaceId?.notes[0]?._id,
+    });
   };
 
   const fetchUserNote = async () => {
-    // const savedContent = await fetchData(`/api/userNotes/${user?.id}`);
     const savedContent = await fetchData(
       `/api/users/${user?.id}/spaces/${spaceId}`
     );
@@ -42,5 +33,10 @@ export default function useUserNote() {
     }
   };
 
-  return { fetchUserNote, savedData, initialContent, handleEditorChange };
+  return {
+    fetchUserNote,
+    savedData,
+    initialContent,
+    handleEditorChange,
+  };
 }
