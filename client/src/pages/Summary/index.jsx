@@ -21,7 +21,7 @@ export default function Index() {
   // const [savedData, setSavedData] = useState([]);
 
   const userData = useGetData();
-  const { savedData, initialContent, fetchUserNote } = useUserNote();
+  const { savedData, initialContent, fetchUserNote, handleEditorChange } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
   const hasRun = useSelector((state) => state.SpaceNotes.isRun);
 
@@ -45,22 +45,6 @@ export default function Index() {
     initialContent: initialContent,
   });
 
-  const handleEditorChange = async (jsonBlock) => {
-    if (isNote === undefined) {
-      await postData("/api/userNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        spaceId: spaceId,
-      });
-    } else {
-      await updateData("/api/updateUserNotes", {
-        content: JSON.stringify(jsonBlock),
-        userId: user?.id,
-        noteDoId: isSpaceId?.notes[0]?._id,
-      });
-    }
-  };
-
   const runEditor = () => {
     if (hasRun) {
       return handleEditorChange();
@@ -70,12 +54,12 @@ export default function Index() {
   };
 
   useEffect(() => {
+    
     if (didRun.current) return;
-
-    console.log("handleUseEffect");
-    runEditor();
     fetchUserNote();
+    runEditor();
     didRun.current = true;
+    
   }, [spaceId, hasRun]);
 
   return (

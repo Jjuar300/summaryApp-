@@ -37,6 +37,7 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
+  const {handleEditorChange} = useUserNote()
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
@@ -55,6 +56,8 @@ export default function Index() {
     setOpenModal(true);
     dispatch(setRun(true));
     useUserNote();
+    handleEditorChange();
+    getUserData();  
   };
 
   const renameSpaceText = async (e) => {
