@@ -1,4 +1,4 @@
-import { useMediaQuery, Popover } from "@mui/material";
+import { useMediaQuery, Popover, Box } from "@mui/material";
 import { Space } from "../../../components";
 import { useState } from "react";
 import { deleteData, postData, updateData } from "../../../utils";
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useGetData, useUserNote } from "../../../hooks";
-import { setRun} from "../../../Redux/SpaceNotes";
+import { setRun } from "../../../Redux/SpaceNotes";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -37,7 +37,7 @@ export default function Index() {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
-  const { fetchUserNote} = useUserNote()
+  const { fetchUserNote } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
@@ -53,10 +53,9 @@ export default function Index() {
   };
 
   const handleButtonClicked = () => {
-    getUserData();  
+    getUserData();
     setOpenModal(true);
     dispatch(setRun(true));
-
   };
 
   const renameSpaceText = async (e) => {
@@ -91,7 +90,7 @@ export default function Index() {
         userId: user?.id,
         spaceId: createdSapaceId,
       });
-      fetchUserNote(); 
+      fetchUserNote();
     } catch (error) {
       console.log(error);
     }
@@ -204,13 +203,24 @@ export default function Index() {
         handleCloseSave={handleCloseSave}
       />
 
-      <SpaceList
-        spaces={space}
-        setEditText={setEditText}
-        editText={editText}
-        Space={Space}
-        setAnchorEl={setAnchorEl}
-      />
+      <Box
+        sx={{
+          overflow: "auto",
+          position: 'absolute', 
+          top:'13.7rem', 
+          height:'38rem', 
+          width:'16rem', 
+          scrollbarWidth:'none', 
+        }}
+      >
+        <SpaceList
+          spaces={space}
+          setEditText={setEditText}
+          editText={editText}
+          Space={Space}
+          setAnchorEl={setAnchorEl}
+        />
+      </Box>
 
       <FeedbackAd />
     </>

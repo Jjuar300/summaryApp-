@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Popper } from "@mui/material";
 import { sendObjectId, handleSpaceText } from "../../../Redux/createSpace";
 import { useDispatch } from "react-redux";
 import { noteCards } from "./assets";
@@ -27,13 +27,14 @@ export default function SpaceList({
     <>
       {spaces?.map(({ _id, name }) => (
         <Box onContextMenu={(e) => handleClickContext(e, _id, name)} key={_id}>
+          
           <Space
             key={_id}
             text={name}
             inlineStyle={{
               display: "flex",
               position: "relative",
-              top: "7rem",
+              top: "0.7rem",
               left: "-0.5rem",
               ":hover": {
                 cursor: "pointer",
