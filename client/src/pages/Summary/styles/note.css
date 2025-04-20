@@ -6,3 +6,9 @@
     width: 50rem;
     height: 52rem;
 }
+
+@media (max-width: 430px) {
+    .bn-container[data-background-theming-css] .bn-editor{
+        width: 26rem;
+    }
+}

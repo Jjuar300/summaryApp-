@@ -10,10 +10,10 @@ const userAvatarStyle = {
 };
 
 const mobileUserAvatarStyle = {
-  position: "relative",
+  position: "absolute",
   backgroundColor: "orange",
-  top: "2rem",
-  left: "2rem",
+  top: "-2rem",
+  left: "-6rem",
   width: "3rem",
   height: "3rem",
   fontSize: "1.4rem",

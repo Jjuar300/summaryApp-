@@ -7,16 +7,21 @@ import Summary from "../Summary";
 import { AddImage } from "../../components";
 
 export default function Index() {
-  const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [open, setOpen] = useState(false);
   return (
     <>
       {isMobileScreen ? (
         <>
-          <Drawer open={open}>
+          <Drawer open={open}
+          anchor="left"
+          PaperProps={{sx:{
+            height:'58rem',
+          }}}
+          >
             <Box
               sx={{
-                width: "25rem",
+                width: "20rem",
               }}
             >
               <AccountProfile />
@@ -25,7 +30,7 @@ export default function Index() {
                 onClick={() => setOpen(false)}
                 sx={{
                   position: "absolute",
-                  left: "18rem",
+                  left: "15rem",
                   top: "1rem",
                   opacity: ".4",
                 }}
@@ -43,6 +48,7 @@ export default function Index() {
               top: "1rem",
               opacity: ".4",
               transform: "rotate(.5turn)",
+              zIndex:'999'
             }}
           >
             <img src={`${ExitArrow}`} />
@@ -61,13 +67,13 @@ export default function Index() {
             borderBottomRightRadius: "1rem",
           }}
         >
+             <AddImage />
           <AccountProfile />
           <Actions />
         </Box>
       )}
       ;
       <Summary />
-      <AddImage />
     </>
   );
 }

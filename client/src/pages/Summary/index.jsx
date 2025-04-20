@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Notes from "../home/Notes";
 
 import "@blocknote/core/fonts/inter.css";
@@ -17,6 +17,7 @@ export default function Index() {
   const { initialContent, fetchUserNote, handleEditorChange } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
   const hasRun = useSelector((state) => state.SpaceNotes.isRun);
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
 
   const editor = BlockNoteEditor.create({
     initialContent: initialContent,
@@ -34,8 +35,8 @@ export default function Index() {
           backgroundColor: "#f4f4f4",
           height: "58rem",
           borderRadius: "1rem",
-          width: "58rem",
-          left: "17rem",
+          width: isMobileScreen ? "28rem" : '58rem',
+          left: isMobileScreen ? '-2rem' : "17rem",
           top: ".5rem",
         }}
       >
