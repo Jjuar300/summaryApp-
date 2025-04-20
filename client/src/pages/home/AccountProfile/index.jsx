@@ -9,14 +9,9 @@ import { postData } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
-import {
-  userAvatarStyle,
-  mobileUserAvatarStyle,
-  boxStyle,
-  buttonStyle,
-} from "./styles/index";
+import { boxStyle, buttonStyle } from "./styles/index";
 
-export default function Index() {
+export default function Index({ avatarStyle }) {
   const { user, isSignedIn } = useUser();
   const userEmail = user.primaryEmailAddress.emailAddress;
   const firstLetterOfEmail = user.primaryEmailAddress.emailAddress
@@ -25,7 +20,6 @@ export default function Index() {
   const userId = user?.id;
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const isMobileScreen = useMediaQuery("(max-width:400px)");
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
 
@@ -59,7 +53,7 @@ export default function Index() {
       <UserAvatar
         Text={firstLetterOfEmail}
         submitOnClickFunction={handleClick}
-        inlineStyle={isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle}
+        inlineStyle={avatarStyle}
       />
       <Popover
         open={open}

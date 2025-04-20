@@ -9,23 +9,48 @@ import { AddImage } from "../../components";
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [open, setOpen] = useState(false);
+
+  const userAvatarStyle = {
+    position: "relative",
+    backgroundColor: "orange",
+    top: "55rem",
+    left: "11rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+    cursor: "pointer",
+  };
+
+  const mobileUserAvatarStyle = {
+    position: "absolute",
+    backgroundColor: "orange",
+    bottom: "1.5rem",
+    right: "2rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+  };
+
   return (
     <>
       {isMobileScreen ? (
         <>
-          <Drawer open={open}
-          anchor="left"
-          PaperProps={{sx:{
-            height:'58rem',
-          }}}
+          <Drawer
+            open={open}
+            anchor="left"
+            PaperProps={{
+              sx: {
+                height: "58rem",
+              },
+            }}
           >
             <Box
               sx={{
                 width: "20rem",
               }}
             >
-              <AccountProfile />
-              <Actions />
+              <AccountProfile avatarStyle={mobileUserAvatarStyle} />
+              <Actions setOpen={setOpen} />
               <Button
                 onClick={() => setOpen(false)}
                 sx={{
@@ -48,7 +73,7 @@ export default function Index() {
               top: "1rem",
               opacity: ".4",
               transform: "rotate(.5turn)",
-              zIndex:'999'
+              zIndex: "999",
             }}
           >
             <img src={`${ExitArrow}`} />
@@ -67,8 +92,8 @@ export default function Index() {
             borderBottomRightRadius: "1rem",
           }}
         >
-             <AddImage />
-          <AccountProfile />
+          <AddImage />
+          <AccountProfile avatarStyle={userAvatarStyle} />
           <Actions />
         </Box>
       )}

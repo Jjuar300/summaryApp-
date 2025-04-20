@@ -21,7 +21,7 @@ import {
   sendObjectId,
 } from "../../../Redux/createSpace";
 
-export default function Index() {
+export default function Index({setOpen}) {
   const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
@@ -214,6 +214,7 @@ export default function Index() {
         }}
       >
         <SpaceList
+          setOpen={setOpen}
           spaces={space}
           setEditText={setEditText}
           editText={editText}
