@@ -22,6 +22,7 @@ export default function Index({ avatarStyle }) {
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
 
   const getUserData = async () => {
     await postData("/api/users", {
@@ -60,7 +61,8 @@ export default function Index({ avatarStyle }) {
         anchorEl={anchorEl}
         onClose={handleClose}
         sx={{
-          left: "4rem",
+          left: isMobileScreen ? '1rem' : "4rem",
+          top: isMobileScreen ? '-5rem' : '0rem',
           width: "12rem",
         }}
       >

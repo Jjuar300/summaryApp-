@@ -33,11 +33,11 @@ export default function Index() {
         sx={{
           position: "absolute",
           backgroundColor: "#f4f4f4",
-          height: "58rem",
-          borderRadius: "1rem",
-          width: isMobileScreen ? "28rem" : '58rem',
+          height: isMobileScreen ? '58.2rem'  : "58rem",
+          borderRadius: isMobileScreen ? '0rem' : "1rem",
+          width: isMobileScreen ? "28.7rem" : '58rem',
           left: isMobileScreen ? '-2rem' : "17rem",
-          top: ".5rem",
+          top: "-.1rem",
         }}
       >
         <Box

@@ -6,7 +6,13 @@ import { useGetData } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { sendObjectId } from "../../Redux/createSpace";
 
-import { Box, Typography, TextField, InputAdornment } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  InputAdornment,
+  useMediaQuery,
+} from "@mui/material";
 import { useState } from "react";
 
 export default function Index() {
@@ -14,6 +20,7 @@ export default function Index() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -29,41 +36,69 @@ export default function Index() {
     navigate(`/spaces/${ObjectId}`);
   };
 
+  const userAvatarStyle = {
+    position: "relative",
+    backgroundColor: "orange",
+    top: "55rem",
+    left: "11rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+    cursor: "pointer",
+  };
+
+  const mobileUserAvatarStyle = {
+    position: "absolute",
+    backgroundColor: "orange",
+    bottom: "1.5rem",
+    right: "2rem",
+    width: "3rem",
+    height: "3rem",
+    fontSize: "1.4rem",
+  };
+
   return (
     <div>
-      <Box
-        sx={{
-          position: "absolute",
-          backgroundColor: "#F8F5FD",
-          width: "16rem",
-          height: "59.8rem",
-          left: ".2rem",
-          top: ".05rem",
-          // borderRight: "1px solid #cfcfcf",
-          borderTopRightRadius: "1rem",
-          borderBottomRightRadius: "1rem",
-        }}
-      >
-        <AccountProfile />
-        <Actions />
-      </Box>
+      {isMobileScreen ? null : (
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "#F8F5FD",
+            width: isMobileScreen ? "23rem" : "16rem",
+            height: "59.8rem",
+            left: ".2rem",
+            top: ".05rem",
+            // borderRight: "1px solid #cfcfcf",
+            borderTopRightRadius: "1rem",
+            borderBottomRightRadius: "1rem",
+          }}
+        >
+          <AccountProfile
+            avatarStyle={
+              isMobileScreen ? mobileUserAvatarStyle : userAvatarStyle
+            }
+          />
+          <Actions />
+        </Box>
+      )}
+
       <Box
         sx={{
           position: "absolute",
           backgroundColor: "#FAF6FF",
-          height: "58rem",
-          borderRadius: "1rem",
-          width: "98.6rem",
-          left: "17rem",
-          top: ".5rem",
+          height: isMobileScreen ? "58.3rem" : "58rem",
+          borderRadius: isMobileScreen ? "0rem" : "1rem",
+          width: isMobileScreen ? "27.8rem" : "98.6rem",
+          left: isMobileScreen ? "-1rem" : "17rem",
+          top: isMobileScreen ? "-.2rem" : ".5rem",
         }}
       >
         <Box
           sx={{
             position: "absolute",
-            left: "30rem",
+            left: isMobileScreen ? "2rem" : "30rem",
             top: "8rem",
-            width: "32rem",
+            width: isMobileScreen ? "23rem" : "32rem",
           }}
         >
           <Typography
@@ -93,8 +128,9 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            left: "30rem",
+            left: isMobileScreen ? "4rem" : "30rem",
             top: "17rem",
+            width: isMobileScreen ? "20rem" : "0rem",
           }}
         >
           {filterSpaces?.map(({ _id, name }) => (
@@ -104,7 +140,7 @@ export default function Index() {
                 fontSize: "1.3rem",
                 padding: ".5rem",
                 color: "#3f3f3f",
-                width: "32rem",
+                width: isMobileScreen ? "19rem" : "32rem",
                 ":hover": {
                   cursor: "pointer",
                   background: "#ededed",
