@@ -30,7 +30,7 @@ export default function Index({setOpen}) {
 
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
-  const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
 
@@ -147,9 +147,9 @@ export default function Index({setOpen}) {
     backgroundColor: "white",
     width: "25rem",
     height: "15rem",
-    top: isMobileScreen ? "10rem" : "20rem",
+    top: isMobileScreen ? "15rem" : "20rem",
     borderRadius: "1rem",
-    left: isMobileScreen ? null : "45rem",
+    left: isMobileScreen ? '.5rem' : "45rem",
   };
 
   const textFieldStyle = {

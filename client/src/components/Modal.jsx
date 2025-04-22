@@ -1,4 +1,5 @@
 import { Box, Button, Typography, Modal, TextField } from "@mui/material";
+import {useMediaQuery} from "@mui/material";
 
 export default function DeleteModal({
   isOpen,
@@ -22,6 +23,8 @@ export default function DeleteModal({
   let isTextWithoutSpaces = text?.replace(/\s+/g, "");
 
   isInput ? isTextWithoutSpaces : (isTextWithoutSpaces = true);
+  const isMobileScreen = useMediaQuery("(max-width:400px)");
+
 
   return (
     <>
