@@ -20,7 +20,6 @@ export default function SpaceList({
     dispatch(sendObjectId(value));
     setEditText(editText);
     dispatch(handleSpaceText(editText));
-    console.log('click ai')
   };
 
   const isMobileScreen = useMediaQuery("(max-width:400px)");
@@ -29,7 +28,7 @@ export default function SpaceList({
     <>
       {spaces?.map(({ _id, name }) => (
         <Box onContextMenu={(e) => handleClickContext(e, _id, name)} key={_id}
-        onClick={() => setOpen(false)}
+        onClick={() => dispatch(setOpen(false))}
         >
           
           <Space

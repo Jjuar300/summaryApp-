@@ -5,10 +5,16 @@ import ExitArrow from "./assets/ExitArrow.svg";
 import { useState } from "react";
 import Summary from "../Summary";
 import { AddImage } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpen } from "../../Redux/homePage";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
+  const dispatch = useDispatch(); 
+  const open = useSelector(state => state.homePage.open)
+
+  console.log('isOpen:',open)
 
   const userAvatarStyle = {
     position: "relative",
@@ -52,7 +58,7 @@ export default function Index() {
               <AccountProfile avatarStyle={mobileUserAvatarStyle} />
               <Actions setOpen={setOpen} />
               <Button
-                onClick={() => setOpen(false)}
+                onClick={() => dispatch(setOpen(false))}
                 sx={{
                   position: "absolute",
                   left: "15rem",
@@ -66,7 +72,7 @@ export default function Index() {
           </Drawer>
 
           <Button
-            onClick={() => setOpen(true)}
+            onClick={() => dispatch(setOpen(true))}
             sx={{
               position: "absolute",
               left: "1rem",

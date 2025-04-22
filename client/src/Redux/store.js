@@ -5,6 +5,7 @@ import chatGpt from "./chatGpt";
 import feedBack from "./feedBack";
 import imageContainer from './imageContainer'; 
 import imagekit from "./imagekit";
+import homePage from './homePage'; 
 
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   middleware: [thunk],
   imageContainer: imageContainer, 
   imagekit: imagekit,
+  homePage: homePage, 
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

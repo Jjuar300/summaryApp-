@@ -1,10 +1,13 @@
 import Actions from "../home/Actions";
 import AccountProfile from "../home/AccountProfile";
 import searchIcon from "./assets/search.svg";
-import { useDispatch } from "react-redux";
+import exitArrow from "./assets/ExitArrow.svg";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetData } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { sendObjectId } from "../../Redux/createSpace";
+import { setOpen } from "../../Redux/homePage";
+import DrawerComp from "../../components/Drawer";
 
 import {
   Box,
@@ -12,6 +15,7 @@ import {
   TextField,
   InputAdornment,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -21,6 +25,9 @@ export default function Index() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
+  const open = useSelector((state) => state.homePage.open);
+
+  console.log("isOpen:", open);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -34,6 +41,7 @@ export default function Index() {
     e?.preventDefault();
     dispatch(sendObjectId(ObjectId));
     navigate(`/spaces/${ObjectId}`);
+    dispatch(setOpen(false));
   };
 
   const userAvatarStyle = {
@@ -59,7 +67,30 @@ export default function Index() {
 
   return (
     <div>
-      {isMobileScreen ? null : (
+      {isMobileScreen ? (
+        <DrawerComp
+          open={open}
+          avatarStyle={mobileUserAvatarStyle}
+          setOpen={setOpen}
+          icon={exitArrow}
+        />
+      ) : null}
+
+      {isMobileScreen ? (
+        <Button
+          onClick={() => dispatch(setOpen(true))}
+          sx={{
+            position: "absolute",
+            left: "1rem",
+            top: "1rem",
+            opacity: ".4",
+            transform: "rotate(.5turn)",
+            zIndex: "999",
+          }}
+        >
+          <img src={`${exitArrow}`} />
+        </Button>
+      ) : (
         <Box
           sx={{
             position: "absolute",
@@ -68,7 +99,6 @@ export default function Index() {
             height: "59.8rem",
             left: ".2rem",
             top: ".05rem",
-            // borderRight: "1px solid #cfcfcf",
             borderTopRightRadius: "1rem",
             borderBottomRightRadius: "1rem",
           }}

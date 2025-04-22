@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserNote } from "../../../hooks";
 import { useDispatch } from "react-redux";
 import { setRun } from "../../../Redux/SpaceNotes";
+import { setOpen } from "../../../Redux/homePage";
 
 export default function SpaceCreate({
   handleButtonClicked,
@@ -38,6 +39,7 @@ export default function SpaceCreate({
     dispatch(setRun(false)) 
     navigate('/browsespace');
     fetchUserNote();
+    dispatch(setOpen(false))
   }
 
   return (
