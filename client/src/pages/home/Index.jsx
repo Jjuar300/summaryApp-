@@ -2,11 +2,11 @@ import { Box, useMediaQuery, Drawer, Button } from "@mui/material";
 import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
-import { useState } from "react";
 import Summary from "../Summary";
 import { AddImage } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../../Redux/homePage";
+import FeedBack from '../FeedBack/index'
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
@@ -57,6 +57,7 @@ export default function Index() {
             >
               <AccountProfile avatarStyle={mobileUserAvatarStyle} />
               <Actions setOpen={setOpen} />
+              <FeedBack/>
               <Button
                 onClick={() => dispatch(setOpen(false))}
                 sx={{

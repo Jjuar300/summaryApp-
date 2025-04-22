@@ -6,10 +6,11 @@ import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { postData } from "../../../utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
+import { setOpen } from "../../../Redux/feedBack";
 
 export default function Index({ avatarStyle }) {
   const { user, isSignedIn } = useUser();
@@ -85,6 +86,7 @@ export default function Index({ avatarStyle }) {
           />
 
           <PopoverContainer
+            submitOnClick={() => dispatch(setOpen(true))}
             imageIcon={feedBack}
             text={"Feedback"}
             boxStyle={boxStyle}

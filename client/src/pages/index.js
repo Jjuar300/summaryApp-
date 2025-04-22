@@ -5,4 +5,11 @@ import SettingsPage from "./SettingsPage/index";
 import BrowseSpace from "./BrowseSpace/index";
 import Summary from "./Summary/index";
 
-export { LandingPage, NotFound, Home, SettingsPage, BrowseSpace, Summary };
+export {
+  LandingPage,
+  NotFound,
+  Home,
+  SettingsPage,
+  BrowseSpace,
+  Summary,
+};

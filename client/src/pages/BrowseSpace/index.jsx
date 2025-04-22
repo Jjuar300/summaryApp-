@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { sendObjectId } from "../../Redux/createSpace";
 import { setOpen } from "../../Redux/homePage";
 import DrawerComp from "../../components/Drawer";
+import Feedback from "../FeedBack/index";
 
 import {
   Box,
@@ -26,8 +27,6 @@ export default function Index() {
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const open = useSelector((state) => state.homePage.open);
-
-  console.log("isOpen:", open);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -67,6 +66,8 @@ export default function Index() {
 
   return (
     <div>
+      {isMobileScreen ? <Feedback /> : null}
+
       {isMobileScreen ? (
         <DrawerComp
           open={open}
