@@ -6,7 +6,7 @@ import Summary from "../Summary";
 import { AddImage } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../../Redux/homePage";
-import FeedBack from '../FeedBack/index'
+import FeedBack from '../../components/FeedBack'
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
