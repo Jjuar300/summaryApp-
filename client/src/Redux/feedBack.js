@@ -5,6 +5,7 @@ export const feedBack = createSlice({
   initialState: {
     isOnClick: true,
     isOpen: false,
+    isNotify: false,
   },
   reducers: {
     setOnClick: (state, action) => {
@@ -13,8 +14,11 @@ export const feedBack = createSlice({
     setFeedBackOpen: (state, action) => {
       state.isOpen = action.payload;
     },
+    setNotify: (state, action) => {
+      state.isNotify = action.payload;
+    },
   },
 });
 
-export const { setFeedBackOpen, setOnClick } = feedBack.actions;
+export const { setFeedBackOpen, setOnClick, setNotify } = feedBack.actions;
 export default feedBack.reducer;

@@ -3,7 +3,7 @@ import Actions from "./Actions/index";
 import AccountProfile from "./AccountProfile/index";
 import ExitArrow from "./assets/ExitArrow.svg";
 import Summary from "../Summary";
-import { AddImage } from "../../components";
+import { AddImage, Feed } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../../Redux/homePage";
 import FeedBack from '../FeedBack/index'; 
@@ -12,6 +12,7 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const dispatch = useDispatch(); 
   const open = useSelector(state => state.homePage.open)
+  const isNotifyOpen = useSelector(state => state.feedBack.isNotify)
 
   const userAvatarStyle = {
     position: "relative",
@@ -33,9 +34,14 @@ export default function Index() {
     height: "3rem",
     fontSize: "1.4rem",
   };
+  
+  function showNotification(){
+    if(isNotifyOpen) return <Feed/>
+  }
 
   return (
     <>
+     {isMobileScreen ? showNotification() : null}
       {isMobileScreen ? (
         <>
           <Drawer

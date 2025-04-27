@@ -8,7 +8,21 @@
   left: 0rem;
   border-bottom-left-radius: 0.3rem;
   border-bottom-right-radius: 0.3rem;
-  animation: notify .2s linear;
+  animation: notify 0.2s linear;
+}
+
+.notifySendBack {
+  position: absolute;
+  background-color: #6b21a8;
+  width: 100vw;
+  height: 7vh;
+  top: -5rem;
+  z-index: 9999;
+  left: 0rem;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  animation: notifyBack 0.2s linear;
+  opacity: 0;
 }
 
 .thumbsUp {
@@ -16,18 +30,18 @@
   width: 2rem;
   left: 3rem;
   top: 1rem;
-  animation: move 1s linear;
+  animation: move 0.5s linear;
   animation-delay: 1s;
 }
 
 @keyframes move {
   0% {
-    transform: rotate(-40deg);
+    transform: rotate(0deg);
   }
 
   50% {
     /* width: 1rem; */
-    transform: rotate(10deg);
+    transform: rotate(-40deg);
   }
   100% {
     /* transform: translateX(4px); */
@@ -38,9 +52,13 @@
 
 @keyframes notify {
   0% {
-    top: -2rem;
+    top: -5rem;
   }
-  100% {
+}
+
+@keyframes notifyBack {
+  0% {
     top: 0rem;
+    opacity: 1;
   }
 }

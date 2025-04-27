@@ -6,6 +6,7 @@ import Modal from './Modal';
 import NavBarNotes from './NavBarNotes'; 
 import AddImage from "./AddImage/index";
 import FeedbackAd from "./FeedBackAd";
+import Feed from "./Feed";
 
 export {
     UserAvatar,
@@ -15,5 +16,6 @@ export {
     Modal, 
     NavBarNotes,
     AddImage,  
-    FeedbackAd, 
+    FeedbackAd,
+    Feed,  
 }

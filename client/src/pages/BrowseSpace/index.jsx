@@ -28,6 +28,7 @@ export default function Index() {
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const open = useSelector((state) => state.homePage.open);
+  const isNotifyOpen = useSelector((state) => state.feedBack.isNotify);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -65,10 +66,14 @@ export default function Index() {
     fontSize: "1.4rem",
   };
 
+  function showNotification() {
+    if (isNotifyOpen) return <Feed />;
+  }
+
   return (
     <div>
       {isMobileScreen ? <FeedBack /> : null}
-      {isMobileScreen ? <Feed/> : null}
+      {isMobileScreen ? showNotification() : null}
       {isMobileScreen ? (
         <DrawerComp
           open={open}

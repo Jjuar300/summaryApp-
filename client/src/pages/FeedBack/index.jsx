@@ -1,14 +1,20 @@
 import { Box, Button, Modal } from "@mui/material";
-import { setFeedBackOpen } from "../../Redux/feedBack";
+import { setFeedBackOpen, setNotify } from "../../Redux/feedBack";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function index() {
   const isFeedBackModalOpen = useSelector(state => state.feedBack.isOpen)
   const dispatch = useDispatch(); 
 
+  function activateFeed() {
+   dispatch(setNotify(true))
+    setTimeout(() => {
+      dispatch(setNotify(false));
+    }, 3000);
+  }
   function sendFeedBack(){
     dispatch(setFeedBackOpen(false));
-    console.log('sending feedback') 
+    activateFeed(); 
   }
 
     return (
