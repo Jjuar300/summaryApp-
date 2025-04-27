@@ -1,0 +1,46 @@
+.notifySend {
+  position: absolute;
+  background-color: #6b21a8;
+  width: 100vw;
+  height: 7vh;
+  top: 0rem;
+  z-index: 9999;
+  left: 0rem;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  animation: notify .2s linear;
+}
+
+.thumbsUp {
+  position: absolute;
+  width: 2rem;
+  left: 3rem;
+  top: 1rem;
+  animation: move 1s linear;
+  animation-delay: 1s;
+}
+
+@keyframes move {
+  0% {
+    transform: rotate(-40deg);
+  }
+
+  50% {
+    /* width: 1rem; */
+    transform: rotate(10deg);
+  }
+  100% {
+    /* transform: translateX(4px); */
+    width: 2rem;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes notify {
+  0% {
+    top: -2rem;
+  }
+  100% {
+    top: 0rem;
+  }
+}

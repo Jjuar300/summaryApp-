@@ -15,7 +15,7 @@ export default function DrawerComp({ open, avatarStyle, setOpen, icon }) {
           height: "58rem",
         },
       }}
-    >
+    > 
       <Box
         sx={{
           width: "20rem",

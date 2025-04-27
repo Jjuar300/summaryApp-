@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
-import { setOpen } from "../../../Redux/feedBack";
+import { setFeedBackOpen} from "../../../Redux/feedBack";
 
 export default function Index({ avatarStyle }) {
   const { user, isSignedIn } = useUser();
@@ -86,7 +86,7 @@ export default function Index({ avatarStyle }) {
           />
 
           <PopoverContainer
-            submitOnClick={() => dispatch(setOpen(true))}
+            submitOnClick={() => dispatch(setFeedBackOpen(true))}
             imageIcon={feedBack}
             text={"Feedback"}
             boxStyle={boxStyle}

@@ -10,11 +10,11 @@ export const feedBack = createSlice({
     setOnClick: (state, action) => {
       state.isOnClick = action.payload;
     },
-    setOpen: (state, action) => {
+    setFeedBackOpen: (state, action) => {
       state.isOpen = action.payload;
     },
   },
 });
 
-export const { setOpen, setOnClick } = feedBack.actions;
+export const { setFeedBackOpen, setOnClick } = feedBack.actions;
 export default feedBack.reducer;
