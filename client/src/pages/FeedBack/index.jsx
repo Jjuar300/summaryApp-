@@ -1,89 +1,166 @@
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal, TextField } from "@mui/material";
 import { setFeedBackOpen, setNotify } from "../../Redux/feedBack";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function index() {
-  const isFeedBackModalOpen = useSelector(state => state.feedBack.isOpen)
-  const dispatch = useDispatch(); 
+  const isFeedBackModalOpen = useSelector((state) => state.feedBack.isOpen);
+  const dispatch = useDispatch();
+  const [textArea, setTextArea] = useState("");
+  const [formInput, setFormInput] = useState({
+    name:'', 
+    email: '', 
+    subject: '', 
+    textArea: '',  
+  })
 
   function activateFeed() {
-   dispatch(setNotify(true))
+    setTextArea('')
+    dispatch(setNotify(true));
     setTimeout(() => {
       dispatch(setNotify(false));
     }, 3000);
   }
-  function sendFeedBack(){
+  function sendFeedBack() {
     dispatch(setFeedBackOpen(false));
-    activateFeed(); 
+    activateFeed();
   }
 
-    return (
+  const textAreaOnChange = (e) => {
+    setFormInput({textArea: e.target.value})
+  };
+
+
+  const nameOnChange = (e) => {
+    setFormInput({name: e.target.value})
+  };
+
+  
+  const emailOnChange = (e) => {
+    setFormInput({email: e.target.value})
+  };
+
+  
+  const subjectOnChange = (e) => {
+    setFormInput({subject: e.target.value})
+  };
+
+  const isTextAreaWithNoSpaces = formInput?.textArea?.replace(/\s+/g, "");
+  // function isFormfilled(){
+  //  formInput.name ===  
+  // }
+
+//  console.log('isForm:', isFormfilled)
+
+  return (
     <div>
       <Modal open={isFeedBackModalOpen}>
-       
-        <Box sx={{
-                position: "absolute",
-                backgroundColor: "white",
-                height: "50vh",
-                width: "80vw",
-                left: "2rem",
-                top: "10rem",
-                outline: "none",
-                borderRadius: ".6rem",
-                boxShadow: "0 0 60px rgba(176, 172, 172, 0.2)",
-        }}>
-          <h2 style={{
-               position: "relative",
-               color: "#656464",
-               left: "2.5rem",
-               top: "1rem",
-               fontFamily: "Inter",
-               fontSize: "1.3rem",
-          }}>{'Send us a feeback!'}</h2>
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "white",
+            height: "70vh",
+            width: "80vw",
+            left: "2rem",
+            top: "10rem",
+            outline: "none",
+            borderRadius: ".6rem",
+            boxShadow: "0 0 60px rgba(176, 172, 172, 0.2)",
+          }}
+        >
+          <h2
+            style={{
+              position: "relative",
+              color: "#656464",
+              left: "4rem",
+              top: "0rem",
+              fontFamily: "Inter",
+              fontSize: "1.3rem",
+            }}
+          >
+            {"Send us a feeback!"}
+          </h2>
 
-          <textarea style={{
+          <Box
+            sx={{
+              position: "absolute",
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+              width: "70vw",
+              left: "1rem",
+              fontSize:'1.2'
+            }}
+          >
+            <TextField inputProps={{maxLength: '10'}} onClick={(e) => nameOnChange(e)}  placeholder="Name" type="text" />
+            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => emailOnChange(e)} placeholder="Email" type="email" />
+            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => subjectOnChange(e)} placeholder="Subject" type="text" />
+          </Box>
+
+          <textarea
+            placeholder="Enter message"
+            maxLength={80}
+            onChange={(e) => textAreaOnChange(e)}
+            style={{
               position: "relative",
               outline: "none",
               width: "18rem",
               height: "10rem",
               left: "1.4rem",
-              top: "3rem",
-              fontSize: "1.5rem",
+              top: "16rem",
+              fontSize: "1.2rem",
               fontFamily: "Inter",
               color: "#2c2c2c",
               borderRadius: ".6rem",
-              border: "1px solid #352033",
-              boxShadow: "0 0 2.5px #352033",
-          }} />
+              border: "none",
+              boxShadow: "0 0 3px #352033",
+              resize: "none",
+            }}
+          />
+          <span
+            style={{
+              position: "absolute",
+              top: "30.4rem",
+              left: "17.5rem",
+            }}
+          >
+            {formInput?.textArea?.length}/80
+          </span>
 
           <Button
-            sx={{    position: "absolute",
-                top: "20rem",
-                left: "1rem",
-                border: "1px solid gray",
-                width: "9rem",
-                height: "4rem",
-                borderRadius: ".6rem",
-                color: "black",
-                boxShadow: "0 0 3px gray",}}
+            sx={{
+              position: "absolute",
+              top: "33rem",
+              left: "1rem",
+              border: "1px solid gray",
+              width: "9rem",
+              height: "4rem",
+              borderRadius: ".6rem",
+              color: "black",
+              boxShadow: "0 0 3px gray",
+            }}
             onClick={() => dispatch(setFeedBackOpen(false))}
           >
-            {'Dismiss'}
+            {"Dismiss"}
           </Button>
-          <Button 
-          onClick={() => sendFeedBack()}
-          sx={{
-                position: "absolute",
-                top: "20rem",
-                left: "11rem",
-                border: "1px solid gray",
-                width: "9rem",
-                height: "4rem",
-                borderRadius: ".6rem",
-                color: "white",
-                boxShadow: "0 0 3px gray",
-                backgroundColor: "#47046e",
-          }}>{'Send Feedback'}</Button>
+          <Button
+            disabled={isTextAreaWithNoSpaces ? false : true}
+            onClick={() => sendFeedBack()}
+            sx={{
+              position: "absolute",
+              top: "33rem",
+              left: "11rem",
+              border: "1px solid gray",
+              width: "9rem",
+              height: "4rem",
+              borderRadius: ".6rem",
+              color: "white",
+              boxShadow: "0 0 3px gray",
+              backgroundColor: "#47046e",
+            }}
+          >
+            {"Send Feedback"}
+          </Button>
         </Box>
       </Modal>
     </div>
