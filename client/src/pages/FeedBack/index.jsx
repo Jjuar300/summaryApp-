@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
 import { setFeedBackOpen, setNotify } from "../../Redux/feedBack";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function index() {
   const isFeedBackModalOpen = useSelector((state) => state.feedBack.isOpen);
@@ -13,9 +13,10 @@ export default function index() {
     subject: '', 
     textArea: '',  
   })
+  const [isFormValid, setFormValid] = useState(true); 
 
   function activateFeed() {
-    setTextArea('')
+    // setTextArea('')
     dispatch(setNotify(true));
     setTimeout(() => {
       dispatch(setNotify(false));
@@ -45,12 +46,32 @@ export default function index() {
     setFormInput({subject: e.target.value})
   };
 
-  const isTextAreaWithNoSpaces = formInput?.textArea?.replace(/\s+/g, "");
-  // function isFormfilled(){
-  //  formInput.name ===  
-  // }
+  // const isTextAreaWithNoSpaces = formInput?.textArea?.replace(/\s+/g, "");
+  // const isNameInput = formInput?.name?.replace(/\s+/g, "");
+  // const isEmailInput = formInput?.email?.replace(/\s+/g, "");
+  // const isSubjectInput = formInput?.subject?.replace(/\s+/g, "");
 
-//  console.log('isForm:', isFormfilled)
+  // function isFormfilled(){
+  //  formInput.name === ''; 
+  // }; 
+
+  for(const [key, value] of Object.entries(formInput)){
+      const isNoSpaces = formInput?.key?.replace(/\s+/g, "");
+      console.log('isNoSpsace:', isNoSpaces)
+  }
+
+  const handleChange = (e) => {
+    const {name, value} = e.target; 
+    setFormInput(prev => ({...prev, [name]: value}))
+  
+  }
+
+  useEffect(() =>{ 
+    const allFilled = Object.values(formInput).every(value => value.trim() === ''); 
+    setFormValid(allFilled)
+  },[formInput])
+
+  console.log('isFormValid:', isFormValid)
 
   return (
     <div>
@@ -61,8 +82,8 @@ export default function index() {
             backgroundColor: "white",
             height: "70vh",
             width: "80vw",
-            left: "2rem",
-            top: "10rem",
+            left: "1.5rem",
+            top: "3rem",
             outline: "none",
             borderRadius: ".6rem",
             boxShadow: "0 0 60px rgba(176, 172, 172, 0.2)",
@@ -92,15 +113,15 @@ export default function index() {
               fontSize:'1.2'
             }}
           >
-            <TextField inputProps={{maxLength: '10'}} onClick={(e) => nameOnChange(e)}  placeholder="Name" type="text" />
-            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => emailOnChange(e)} placeholder="Email" type="email" />
-            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => subjectOnChange(e)} placeholder="Subject" type="text" />
+            <TextField name="name" inputProps={{maxLength: '10'}} onClick={(e) => handleChange(e)} value={formInput.name}  placeholder="Name" type="text" />
+            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => handleChange(e)} value={formInput?.email} placeholder="Email" type="email" />
+            <TextField inputProps={{maxLength: '40'}}  onClick={(e) => handleChange(e)} value={formInput?.subject} placeholder="Subject" type="text" />
           </Box>
 
           <textarea
             placeholder="Enter message"
             maxLength={80}
-            onChange={(e) => textAreaOnChange(e)}
+            onChange={(e) => handleChange(e)} value={formInput?.textArea}
             style={{
               position: "relative",
               outline: "none",
@@ -143,8 +164,9 @@ export default function index() {
           >
             {"Dismiss"}
           </Button>
+          
           <Button
-            disabled={isTextAreaWithNoSpaces ? false : true}
+            disabled={isFormValid}
             onClick={() => sendFeedBack()}
             sx={{
               position: "absolute",
