@@ -72,7 +72,6 @@ export default function Index() {
 
   return (
     <div>
-      {isMobileScreen ? <FeedBack /> : <FeedBack/>}
       {isMobileScreen ? showNotification() : null}
       {isMobileScreen ? (
         <DrawerComp
@@ -191,6 +190,8 @@ export default function Index() {
           ))}
         </Box>
       </Box>
+      <FeedBack/>
+      {showNotification()}
     </div>
   );
 }

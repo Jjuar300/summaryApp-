@@ -60,7 +60,6 @@ export default function Index() {
             >
               <AccountProfile avatarStyle={mobileUserAvatarStyle} />
               <Actions setOpen={setOpen} />
-              <FeedBack/>
               <Button
                 onClick={() => dispatch(setOpen(false))}
                 sx={{
@@ -109,6 +108,7 @@ export default function Index() {
       )}
       ;
       <Summary />
+      <FeedBack/>
     </>
   );
 }
