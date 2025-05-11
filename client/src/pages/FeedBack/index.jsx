@@ -2,6 +2,7 @@ import { Box, Button, Modal, TextField } from "@mui/material";
 import { setFeedBackOpen, setNotify } from "../../Redux/feedBack";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import {useMediaQuery} from "@mui/material";
 
 export default function index() {
   const isFeedBackModalOpen = useSelector((state) => state.feedBack.isOpen);
@@ -13,6 +14,8 @@ export default function index() {
     textArea: "",
   });
   const [isFormValid, setFormValid] = useState(false);
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
+
 
   function activateFeed() {
     dispatch(setNotify(true));
@@ -55,8 +58,8 @@ export default function index() {
             position: "absolute",
             backgroundColor: "white",
             height: "70vh",
-            width: "80vw",
-            left: "1.5rem",
+            width: isMobileScreen ? "80vw" : "45vw",
+            left: isMobileScreen ? "1.5rem" : "20rem",
             top: "3rem",
             outline: "none",
             borderRadius: ".6rem",
@@ -67,7 +70,7 @@ export default function index() {
             style={{
               position: "relative",
               color: "#656464",
-              left: "4rem",
+              left: isMobileScreen ? "4rem" : "18rem",
               top: "0rem",
               fontFamily: "Inter",
               fontSize: "1.3rem",
@@ -82,14 +85,14 @@ export default function index() {
               display: "flex",
               flexDirection: "column",
               gap: "2rem",
-              width: "70vw",
-              left: "1rem",
+              width: isMobileScreen ? "70vw" : "40vw" ,
+              left: isMobileScreen ? "1rem" : "2.5rem",
               fontSize: "1.2",
             }}
           >
             <TextField
               name="name"
-              inputProps={{ maxLength: "10" }}
+              inputProps={{ maxLength: "20" }}
               onChange={(e) => handleChange(e)}
               value={formInput?.name}
               placeholder="Name"
@@ -122,9 +125,9 @@ export default function index() {
             style={{
               position: "relative",
               outline: "none",
-              width: "18rem",
+              width: isMobileScreen ? "18rem" : "25rem",
               height: "10rem",
-              left: "1.4rem",
+              left: isMobileScreen ? "1.4rem" : "13rem",
               top: "16rem",
               fontSize: "1.2rem",
               fontFamily: "Inter",
@@ -139,17 +142,18 @@ export default function index() {
             style={{
               position: "absolute",
               top: "30.4rem",
-              left: "17.5rem",
+              left: isMobileScreen ? "17.5rem" : "33rem",
             }}
           >
             {formInput?.textArea?.length}/80
           </span>
 
-          <Button
+         
+           <Button
             sx={{
               position: "absolute",
               top: "33rem",
-              left: "1rem",
+              left: isMobileScreen ? "1rem" : "14rem",
               border: "1px solid gray",
               width: "9rem",
               height: "4rem",
@@ -168,7 +172,7 @@ export default function index() {
             sx={{
               position: "absolute",
               top: "33rem",
-              left: "11rem",
+              left: isMobileScreen ? "11rem" : "30rem",
               border: "1px solid gray",
               width: "9rem",
               height: "4rem",
@@ -180,7 +184,7 @@ export default function index() {
           >
             {"Send Feedback"}
           </Button>
-        </Box>
+         </Box>
       </Modal>
     </div>
   );

@@ -100,7 +100,7 @@ export default function DeleteModal({
             </Button>
           </form>
           <Button
-            onClick={() => setOpenModal()}
+            onClick={() => onClick()}
             sx={{
               position: "absolute",
               top: "11rem",

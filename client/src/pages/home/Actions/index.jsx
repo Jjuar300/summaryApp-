@@ -120,7 +120,7 @@ export default function Index({setOpen}) {
     dispatch(handleSpaceText(text));
     getUserData();
   };
-
+  
   const handleCancelModal = () => {
     setOpenModal(false);
     dispatch(setRun(false));

@@ -41,7 +41,7 @@ export default function Index() {
 
   return (
     <>
-     {isMobileScreen ? showNotification() : null}
+     {/* {isMobileScreen ? showNotification() : null} */}
       {isMobileScreen ? (
         <>
           <Drawer
@@ -109,6 +109,7 @@ export default function Index() {
       ;
       <Summary />
       <FeedBack/>
+      {showNotification()}
     </>
   );
 }

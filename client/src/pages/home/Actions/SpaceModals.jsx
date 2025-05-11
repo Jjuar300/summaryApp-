@@ -16,6 +16,8 @@ export default function SpaceModals({
   handleCloseSave,
   text, 
 }) {
+
+  console.log('isOpenModal', isOpenModal)
   return (
     <>
       <SpaceModal
@@ -49,6 +51,7 @@ export default function SpaceModals({
         isText={true}
         previousText={editText}
         textCount={LengthOfEditText}
+        setOpenModal={setOpenModal}
       />
     </>
   );
