@@ -12,7 +12,7 @@ export default function index() {
     subject: "",
     textArea: "",
   });
-  const [isFormValid, setFormValid] = useState(true);
+  const [isFormValid, setFormValid] = useState(false);
 
   function activateFeed() {
     dispatch(setNotify(true));
@@ -21,7 +21,12 @@ export default function index() {
     }, 3000);
   }
   function sendFeedBack() {
-    setFormInput('')
+    const clearedFormInput = Object.fromEntries(
+      Object.keys(formInput).map(key => [key, ''])
+    )
+    setFormInput(clearedFormInput); 
+
+    setFormValid(false)
     dispatch(setFeedBackOpen(false));
     activateFeed();
   }
@@ -41,8 +46,6 @@ export default function index() {
     const allFilled = Object.values(formInput).every((value) => value.trim() !== "");
     setFormValid(allFilled);
   }, [formInput]);
-
-  console.log("isFormValid:", isFormValid);
 
   return (
     <div>
