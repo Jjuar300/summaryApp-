@@ -17,7 +17,6 @@ export default function SpaceModals({
   text, 
 }) {
 
-  console.log('isOpenModal', isOpenModal)
   return (
     <>
       <SpaceModal

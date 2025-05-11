@@ -115,14 +115,13 @@ export default function Index({setOpen}) {
     e?.preventDefault();
     dispatch(handleInputValue(text));
     addSpace();
-    setOpenModal(false);
     setText("");
     dispatch(handleSpaceText(text));
     getUserData();
   };
   
   const handleCancelModal = () => {
-    setOpenModal(false);
+    setRenameSpaceOpen(false)
     dispatch(setRun(false));
   };
 

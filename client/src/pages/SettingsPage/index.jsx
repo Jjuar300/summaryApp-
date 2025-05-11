@@ -18,7 +18,7 @@ export default function index() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const [isOpen, setOpen] = useState();
-  const isMobileScreen = useMediaQuery("(max-width:400px)");
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const { space } = useGetData();
   const dispatch = useDispatch();
@@ -37,9 +37,10 @@ export default function index() {
     position: "absolute",
     backgroundColor: "white",
     width: "25rem",
-    height: "23rem",
+    height: "20rem",
     top: "10rem",
     borderRadius: "1rem",
+    left:'1rem', 
   };
 
   const UserAvatarStyle = {
@@ -86,7 +87,9 @@ export default function index() {
           flexDirection: "column",
           gap: "1rem",
           top: "17rem",
-          left: "2rem",
+          left: ".5rem",
+          backgroundColor:'white', 
+          width:'100vw'
         }}
       >
         <Box>
@@ -157,6 +160,7 @@ export default function index() {
           textRightButton={"Delete"}
           isOpen={isOpen}
           setOpen={setOpen}
+          setOpenModal={() => setOpen(false)}
           onClick={handleUserDelete}
           inlineStyle={MobileDeleteAccountModal}
           rightButtonStyle={rightButtonStyle}
@@ -172,8 +176,8 @@ export default function index() {
           textLeftButton={"Cancel"}
           textRightButton={"Delete"}
           isOpen={isOpen}
-          setOpen={setOpen}
           onClick={handleUserDelete}
+          setOpenModal={() => setOpen(false)}
           inlineStyle={DesktopDeleteAccountModal}
           rightButtonStyle={rightButtonStyle}
         />
