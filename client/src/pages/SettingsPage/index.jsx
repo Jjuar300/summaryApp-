@@ -77,21 +77,21 @@ export default function index() {
 
   return (
     <>
-      <NavBar />
-      <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
-
+     
       <Box
         sx={{
           position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          top: "17rem",
-          left: ".5rem",
+          top: "0.1rem",
+          left: ".1rem",
           backgroundColor:'white', 
-          width:'100vw'
+          width:'99.4vw', 
+          height:'100vh',
         }}
       >
+     
+      <NavBar />
+      <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
+
         <Box>
           <Typography>Email</Typography>
           <TextField
