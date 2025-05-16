@@ -40,18 +40,18 @@ export default function index() {
     height: "20rem",
     top: "10rem",
     borderRadius: "1rem",
-    left:'1rem', 
+    left: "1rem",
   };
 
   const UserAvatarStyle = {
     ":hover": { cursor: "pointer" },
     color: "white",
     backgroundColor: "orange",
-    top: "3rem",
-    width: "6rem",
-    height: "6rem",
+    top: "-9rem",
+    width: "5.5rem",
+    height: "5.5rem",
     fontSize: "2rem",
-    left: "8rem",
+    left: "17rem",
   };
 
   const handleUserDelete = async () => {
@@ -77,67 +77,163 @@ export default function index() {
 
   return (
     <>
-     
       <Box
         sx={{
           position: "absolute",
           top: "0.1rem",
           left: ".1rem",
-          backgroundColor:'white', 
-          width:'99.4vw', 
-          height:'100vh',
+          backgroundColor: "white",
+          width: "99.4vw",
+          height: "100vh",
         }}
       >
-     
-      <NavBar />
-      <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
-
-        <Box>
-          <Typography>Email</Typography>
-          <TextField
-            disabled
-            sx={{
-              width: "18rem",
-              border: "none",
-            }}
-            placeholder={`${user.emailAddresses}`}
-          />
-        </Box>
-
-        <Box>
-          <Typography>FullName</Typography>
-          <TextField
-            disabled
-            sx={{
-              width: "18rem",
-            }}
-            placeholder={`${user.fullName}`}
-          />
-        </Box>
-
-        <Divider
-          sx={{
-            position: "absolute",
-            width: "25rem",
-            left: "-2rem",
-            top: "13rem",
-          }}
-        />
-
         <Box
           sx={{
             position: "absolute",
-            top: "15rem",
-            display: "flex",
-            flexDirection: "column",
+            backgroundColor: "#e3e3e3",
+            width: "25rem",
+            height: "25rem",
+            left: "1rem",
+            top: "6rem",
+            borderRadius: "1rem",
           }}
-        ></Box>
+        >
+          <Box
+            sx={{
+              position: "relative",
+              width: "10rem",
+              left: "2rem",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "DM Sans",
+                color: "#2e2e2e",
+              }}
+            >
+              Personal info
+            </h2>
+            <h3
+              style={{
+                position: "relative",
+                fontFamily: "DM Sans",
+                color: "#515151",
+                width: "12rem",
+              }}
+            >
+              Update your photo and your personal info here.
+            </h3>
+          </Box>
+          
+          <Box
+            sx={{
+              position: "absolute",
+            }}
+          >
+            <h2
+              style={{
+                position: "relative",
+                fontFamily: "DM Sans",
+                color: "#2e2e2e",
+                fontSize: "1.2rem",
+                left: "1.5rem",
+              }}
+            >
+              First name
+            </h2>
+            <TextField
+              value={"Jose"}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  position: "relative",
+                  top: "-1rem",
+                  borderRadius: "2rem",
+                  left: "1rem",
+                  fontSize: "1.2rem",
+                  width: "10rem",
+                  height: "3rem",
+                },
+              }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              left: "12rem",
+            }}
+          >
+            <h2
+              style={{
+                position: "relative",
+                fontFamily: "DM Sans",
+                color: "#2e2e2e",
+                fontSize: "1.2rem",
+                left: "1.5rem",
+              }}
+            >
+              Last name
+            </h2>
+            <TextField
+              value={"Jose"}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  position: "relative",
+                  top: "-1rem",
+                  borderRadius: "2rem",
+                  left: "1rem",
+                  fontSize: "1.2rem",
+                  width: "10rem",
+                  height: "3rem",
+                },
+              }}
+            />
+          </Box>
+
+           <Box
+            sx={{
+              position: "absolute",
+              top:'17rem'
+            }}
+          >
+            <h2
+              style={{
+                position: "relative",
+                fontFamily: "DM Sans",
+                color: "#2e2e2e",
+                fontSize: "1.2rem",
+                left: "1.5rem",
+              }}
+            >
+              Primary Email
+            </h2>
+            <TextField
+              disabled={true}
+              value={"Jjuareze2002@gmail.com"}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  position: "relative",
+                  top: "-1rem",
+                  borderRadius: "2rem",
+                  left: "1rem",
+                  fontSize: "1.2rem",
+                  width: "23rem",
+                  height: "3rem",
+                },
+              }}
+            />
+          </Box>
+
+          <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
+        </Box>
+
+        <NavBar />
 
         <Typography
           onClick={() => setOpen(true)}
           sx={{
             position: "absolute",
-            top: "22rem",
+            top: "30rem",
             left: "1rem",
             color: "#4c4e4d",
             ":hover": {
