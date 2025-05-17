@@ -124,7 +124,7 @@ export default function index() {
               Update your photo and your personal info here.
             </h3>
           </Box>
-          
+
           <Box
             sx={{
               position: "absolute",
@@ -142,7 +142,7 @@ export default function index() {
               First name
             </h2>
             <TextField
-              value={"Jose"}
+              value={user.firstName}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   position: "relative",
@@ -175,7 +175,7 @@ export default function index() {
               Last name
             </h2>
             <TextField
-              value={"Jose"}
+              value={user.lastName}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   position: "relative",
@@ -190,10 +190,10 @@ export default function index() {
             />
           </Box>
 
-           <Box
+          <Box
             sx={{
               position: "absolute",
-              top:'17rem'
+              top: "17rem",
             }}
           >
             <h2
@@ -209,7 +209,7 @@ export default function index() {
             </h2>
             <TextField
               disabled={true}
-              value={"Jjuareze2002@gmail.com"}
+              value={user.primaryEmailAddress}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   position: "relative",
@@ -229,22 +229,75 @@ export default function index() {
 
         <NavBar />
 
+        <Box
+          sx={{
+            position: "absolute",
+            backgroundColor: "#e3e3e3",
+            width: "25rem",
+            height: "15rem",
+            left: "1rem",
+            top: "35rem",
+            borderRadius: "1rem",
+          }}
+        >
+          <Box
+          sx={{
+            position:'relative', 
+            width:'12rem', 
+            left:'2rem', 
+          }}
+          >
+            <h2
+              style={{
+                fontFamily: "DM Sans",
+                color: "#2e2e2e",
+              }}
+            >
+              Account Deletion
+            </h2>
+
+            <h3
+              style={{
+                position: "relative",
+                fontFamily: "DM Sans",
+                color: "#515151",
+                width: "12rem",
+              }}
+            >
+              This action is permannent and cannot be undone
+            </h3>
+          </Box>
+
         <Typography
           onClick={() => setOpen(true)}
           sx={{
-            position: "absolute",
-            top: "30rem",
-            left: "1rem",
-            color: "#4c4e4d",
+            position: "relative",
+            top: "-10rem",
+            left: "13rem",
+            color: "#f8536c",
+            width:'10rem',
+            height:'3rem', 
+            borderRadius:'2rem',  
+            backgroundColor: '#cdcdcd', 
+            textAlign:'center', 
+            fontSize:'1.1rem', 
             ":hover": {
               cursor: "pointer",
               color: "#252625",
             },
           }}
         >
-          Delete account
+          <span
+          style={{
+            position:'relative', 
+            top:'.6rem', 
+          }}
+          >Delete account</span>
         </Typography>
+        </Box>
+
       </Box>
+
       {isMobileScreen ? (
         <DeleteModal
           isText={true}
