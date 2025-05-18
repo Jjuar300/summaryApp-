@@ -2,26 +2,34 @@ import { UserAvatar, NavBar } from "../../components";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import {
   Box,
+  Button,
   Divider,
   TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
 import { useGetData } from "../../hooks/index";
 import { isUserCreated } from "../../Redux/imageContainer";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function index() {
+  const [isOpen, setOpen] = useState();
+  const [validateName, setValidateName] = useState(true);
+  const [textInput, setTextInput] = useState({
+    firstName: "",
+    lastName: "",
+  });
   const { user } = useUser();
   const { signOut } = useClerk();
-  const [isOpen, setOpen] = useState();
+  const { space } = useGetData();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
-  const { space } = useGetData();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -74,6 +82,51 @@ export default function index() {
     color: "white",
     width: "6rem",
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTextInput((prev) => ({ ...prev, [name]: value }));
+    if (name === "firstName") setValidateName(value);
+  };
+
+  const validateFirstName = () => {
+    if (!validateName.trim()) {
+      setValidateName(false);
+    } else if (validateName.length < 4) {
+      setValidateName("First name must be at least 4 characters");
+    }
+  };
+
+  const handleUpdate = async () => {
+   validateName ? null : validateFirstName();
+    try {
+      if (!user) return;
+      const payload = {
+        first_name: textInput.firstName,
+        last_name: textInput.lastName,
+      };
+
+     validateName ? null : await user.update(payload);
+      navigate("/");
+      await user?.reload();
+    } catch (err) {
+      console.error("Error updating name", err);
+      if (err?.errors) {
+        err.errors.forEach((e) => {
+          console.log("Error detail:", e.long_message);
+        });
+      }
+    }
+  };
+  console.log('name:', validateName); 
+  useEffect(() => {
+    if (user) {
+      setTextInput({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -142,7 +195,9 @@ export default function index() {
               First name
             </h2>
             <TextField
-              value={user.firstName}
+              name="firstName"
+              value={textInput.firstName}
+              onChange={(e) => handleChange(e)}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   position: "relative",
@@ -152,9 +207,26 @@ export default function index() {
                   fontSize: "1.2rem",
                   width: "10rem",
                   height: "3rem",
+                  backgroundColor: validateName ? null : "#f6b6b3",
+                  border: validateName ? null : "1px solid red",
                 },
               }}
             />
+
+            {validateName ? null : (
+              <h2
+                style={{
+                  position: "relative",
+                  fontSize: ".9rem",
+                  top: "-2rem",
+                  left: "1.5rem",
+                  fontFamily: "DM Sans",
+                  color: "#ec675f",
+                }}
+              >
+                Please enter a name
+              </h2>
+            )}
           </Box>
 
           <Box
@@ -175,7 +247,9 @@ export default function index() {
               Last name
             </h2>
             <TextField
-              value={user.lastName}
+              name="lastName"
+              value={textInput.lastName}
+              onChange={(e) => handleChange(e)}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   position: "relative",
@@ -227,7 +301,7 @@ export default function index() {
           <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
         </Box>
 
-        <NavBar />
+        <NavBar onclick={handleUpdate} />
 
         <Box
           sx={{
@@ -241,11 +315,11 @@ export default function index() {
           }}
         >
           <Box
-          sx={{
-            position:'relative', 
-            width:'12rem', 
-            left:'2rem', 
-          }}
+            sx={{
+              position: "relative",
+              width: "12rem",
+              left: "2rem",
+            }}
           >
             <h2
               style={{
@@ -268,34 +342,35 @@ export default function index() {
             </h3>
           </Box>
 
-        <Typography
-          onClick={() => setOpen(true)}
-          sx={{
-            position: "relative",
-            top: "-10rem",
-            left: "13rem",
-            color: "#f8536c",
-            width:'10rem',
-            height:'3rem', 
-            borderRadius:'2rem',  
-            backgroundColor: '#cdcdcd', 
-            textAlign:'center', 
-            fontSize:'1.1rem', 
-            ":hover": {
-              cursor: "pointer",
-              color: "#252625",
-            },
-          }}
-        >
-          <span
-          style={{
-            position:'relative', 
-            top:'.6rem', 
-          }}
-          >Delete account</span>
-        </Typography>
+          <Typography
+            onClick={() => setOpen(true)}
+            sx={{
+              position: "relative",
+              top: "-10rem",
+              left: "13rem",
+              color: "#f8536c",
+              width: "10rem",
+              height: "3rem",
+              borderRadius: "2rem",
+              backgroundColor: "#cdcdcd",
+              textAlign: "center",
+              fontSize: "1.1rem",
+              ":hover": {
+                cursor: "pointer",
+                color: "#252625",
+              },
+            }}
+          >
+            <span
+              style={{
+                position: "relative",
+                top: ".6rem",
+              }}
+            >
+              Delete account
+            </span>
+          </Typography>
         </Box>
-
       </Box>
 
       {isMobileScreen ? (

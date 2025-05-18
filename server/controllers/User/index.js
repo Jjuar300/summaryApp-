@@ -3,7 +3,6 @@ const { User, Space, ChatGpt } = require("../../Models");
 const newUser = async (req, res) => {
   try {
     const { email, userId } = req.body;
-
     const userFound = await User.findOne({ email });
 
     if (userFound) {

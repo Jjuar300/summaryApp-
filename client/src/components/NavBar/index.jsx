@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import exitArrow from "./assets/ExitArrow.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function index() {
-  const navigate = useNavigate();
+export default function index({onclick}) {
+  // const navigate = useNavigate({onclick});
   return (
     <>
       <Box
@@ -14,7 +14,7 @@ export default function index() {
           opacity: ".4",
         }}
       >
-        <img onClick={() => navigate("/")} src={`${exitArrow}`} />
+        <img onClick={onclick} src={`${exitArrow}`} />
       </Box>
     </>
   );

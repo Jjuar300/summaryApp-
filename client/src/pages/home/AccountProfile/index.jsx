@@ -10,16 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
-import { setFeedBackOpen} from "../../../Redux/feedBack";
+import { setFeedBackOpen } from "../../../Redux/feedBack";
 
 export default function Index({ avatarStyle }) {
   const { user, isSignedIn } = useUser();
-  const userEmail = user.primaryEmailAddress.emailAddress;
-  const firstLetterOfEmail = user.primaryEmailAddress.emailAddress
-    .charAt(0)
-    .toUpperCase();
-  const userId = user?.id;
   const [anchorEl, setAnchorEl] = useState(null);
+  const userEmail = user.primaryEmailAddress.emailAddress;
+  const FirstName = user.firstName.charAt(0).toUpperCase();
+  const userId = user?.id;
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -53,7 +51,7 @@ export default function Index({ avatarStyle }) {
   return (
     <>
       <UserAvatar
-        Text={firstLetterOfEmail}
+        Text={FirstName}
         submitOnClickFunction={handleClick}
         inlineStyle={avatarStyle}
       />
@@ -62,8 +60,8 @@ export default function Index({ avatarStyle }) {
         anchorEl={anchorEl}
         onClose={handleClose}
         sx={{
-          left: isMobileScreen ? '1rem' : "4rem",
-          top: isMobileScreen ? '-5rem' : '0rem',
+          left: isMobileScreen ? "1rem" : "4rem",
+          top: isMobileScreen ? "-5rem" : "0rem",
           width: "12rem",
         }}
       >
