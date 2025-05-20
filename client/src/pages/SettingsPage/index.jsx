@@ -89,16 +89,21 @@ export default function index() {
     if (name === "firstName") setValidateName(value);
   };
 
-  const validateFirstName = () => {
-    if (!validateName.trim()) {
-      setValidateName(false);
-    } else if (validateName.length < 4) {
-      setValidateName("First name must be at least 4 characters");
-    }
-  };
+
+  const iterateState = (e) =>{ 
+     const {name, value} = e.target; 
+     setTextInput((prev) => ({...prev, [name]: value})) 
+     /*
+      destructuring name and value from input element 
+      event target. 
+
+     updating the state variable  and keeping the previous
+     values to update the keys values.  
+     */
+  }
+
 
   const handleUpdate = async () => {
-   validateName ? null : validateFirstName();
     try {
       if (!user) return;
       const payload = {
@@ -106,7 +111,7 @@ export default function index() {
         last_name: textInput.lastName,
       };
 
-     validateName ? null : await user.update(payload);
+      await user.update(payload);
       navigate("/");
       await user?.reload();
     } catch (err) {
@@ -118,7 +123,6 @@ export default function index() {
       }
     }
   };
-  console.log('name:', validateName); 
   useEffect(() => {
     if (user) {
       setTextInput({
@@ -301,7 +305,7 @@ export default function index() {
           <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
         </Box>
 
-        <NavBar onclick={handleUpdate} />
+        <NavBar onclick={validateName ? handleUpdate : null} />
 
         <Box
           sx={{
