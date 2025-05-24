@@ -12,7 +12,7 @@ import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
 import { setFeedBackOpen } from "../../../Redux/feedBack";
 
-export default function Index({ avatarStyle }) {
+export default function Index() {
   const { user, isSignedIn } = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const userEmail = user.primaryEmailAddress.emailAddress;
@@ -22,6 +22,12 @@ export default function Index({ avatarStyle }) {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
+
+  const UserAvatarStyle = {
+    height: "3rem",
+    width: "3rem",
+    backgroundColor: '#c8a99f', 
+  };
 
   const getUserData = async () => {
     await postData("/api/users", {
@@ -50,11 +56,28 @@ export default function Index({ avatarStyle }) {
 
   return (
     <>
-      <UserAvatar
-        Text={FirstName}
-        submitOnClickFunction={handleClick}
-        inlineStyle={avatarStyle}
-      />
+      <Box
+        sx={{
+          position: "absolute",
+          borderRadius: "50%",
+          border: "7px solid transparent",
+          top: "55rem",
+          left: "11rem",
+          width: "3rem",
+          height: "3rem",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            cursor: "pointer",
+            border: "7px solid #cac9c9", // Or your desired hover border
+          },
+        }}
+      >
+        <UserAvatar
+          Text={FirstName}
+          submitOnClickFunction={handleClick}
+          inlineStyle={UserAvatarStyle}
+        />
+      </Box>
       <Popover
         open={open}
         anchorEl={anchorEl}

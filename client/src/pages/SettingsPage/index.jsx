@@ -52,14 +52,10 @@ export default function index() {
   };
 
   const UserAvatarStyle = {
-    ":hover": { cursor: "pointer" },
-    color: "white",
-    backgroundColor: "orange",
-    top: "-9rem",
     width: "5.5rem",
     height: "5.5rem",
-    fontSize: "2rem",
-    left: "17rem",
+    backgroundColor:'#c8a99f', 
+    fontSize:'1.6rem', 
   };
 
   const handleUserDelete = async () => {
@@ -88,20 +84,6 @@ export default function index() {
     setTextInput((prev) => ({ ...prev, [name]: value }));
     if (name === "firstName") setValidateName(value);
   };
-
-
-  const iterateState = (e) =>{ 
-     const {name, value} = e.target; 
-     setTextInput((prev) => ({...prev, [name]: value})) 
-     /*
-      destructuring name and value from input element 
-      event target. 
-
-     updating the state variable  and keeping the previous
-     values to update the keys values.  
-     */
-  }
-
 
   const handleUpdate = async () => {
     try {
@@ -301,8 +283,25 @@ export default function index() {
               }}
             />
           </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              borderRadius: "50%",
+              border: "7px solid transparent",
+              top: "1rem",
+              width: "5.5rem",
+              height: "5.5rem",
+              left: "18rem",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                cursor:'pointer', 
+                border: "7px solid #cac9c9", // Or your desired hover border
+              },
+            }}
+          >
+            <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
+          </Box>
 
-          <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
         </Box>
 
         <NavBar onclick={validateName ? handleUpdate : null} />

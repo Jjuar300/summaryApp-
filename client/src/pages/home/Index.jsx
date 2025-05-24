@@ -14,17 +14,6 @@ export default function Index() {
   const open = useSelector(state => state.homePage.open)
   const isNotifyOpen = useSelector(state => state.feedBack.isNotify)
 
-  const userAvatarStyle = {
-    position: "relative",
-    backgroundColor: "orange",
-    top: "55rem",
-    left: "11rem",
-    width: "3rem",
-    height: "3rem",
-    fontSize: "1.4rem",
-    cursor: "pointer",
-  };
-
   const mobileUserAvatarStyle = {
     position: "absolute",
     backgroundColor: "orange",
@@ -41,7 +30,6 @@ export default function Index() {
 
   return (
     <>
-     {/* {isMobileScreen ? showNotification() : null} */}
       {isMobileScreen ? (
         <>
           <Drawer
@@ -102,7 +90,7 @@ export default function Index() {
           }}
         >
           <AddImage />
-          <AccountProfile avatarStyle={userAvatarStyle} />
+          <AccountProfile/>
           <Actions />
         </Box>
       )}
