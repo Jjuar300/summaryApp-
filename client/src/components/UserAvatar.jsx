@@ -1,5 +1,4 @@
 import Avatar from "@mui/material/Avatar";
-import image from "./image_2.jpg";
 import { useSelector } from "react-redux";
 import { IKImage } from "imagekitio-react";
 
@@ -33,12 +32,3 @@ export default function UserAvatar({
     </>
   );
 }
-
-/*
-      const profileImage = useSelector(state => state.image.imageProfile)
-      const isImage = useSelector(state.image.isImage)
-
-      <Avatar src={ isImage ? profileImage : null} sx={inlineStyle} onClick={submitOnClickFunction}>
-        {`${Text}`}
-      </Avatar>
-*/

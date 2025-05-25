@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../Redux/createSpace";
 import { handleSpaceText } from "../../Redux/createSpace";
 import { useNavigate } from "react-router-dom";
-import {useUserNote, useGetData} from '../../hooks'
+import {useGetData} from '../../hooks'
 
 const index = ({
   text,
@@ -18,7 +18,6 @@ const index = ({
   const isMobileScreen = useMediaQuery("(max-width:400px)");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {fetchUserNote} = useUserNote(); 
   const {getUserData} = useGetData(); 
 
   const handleSpaceClick = (e) => {

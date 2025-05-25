@@ -100,7 +100,8 @@ export default function Images() {
                 cursor: "pointer",
               }}
               id="imagekitFile"
-              useUniqueFileName={true}
+              useUniqueFileName={false}
+              // overwriteFile ={true}
               onSuccess={onSuccess}
               folder={userId}
             />

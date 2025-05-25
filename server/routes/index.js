@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Space, User, Chatgpt, Notes } = require("../controllers/index");
-const {Imagekit} = require('../controllers/index.js'); 
+const { Space, User, Chatgpt, Notes, Imagekit } = require("../controllers/index");
 
 //spaces 
 router.post("/spaces", Space.createSpace);

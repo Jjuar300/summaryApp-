@@ -319,7 +319,7 @@ export default function index() {
               onSuccess={onSuccess}
               style={{ display: "none" }}
               id="uploadProfileImage"
-              useUniqueFileName={true}
+              useUniqueFileName={false}
               folder={userId}
             />
           </IKContext>
