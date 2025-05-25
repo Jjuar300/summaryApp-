@@ -28,7 +28,6 @@ export default function index() {
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
-  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
 
   const authenticator = async () => {
     try {
@@ -158,7 +157,7 @@ export default function index() {
             backgroundColor: "#e3e3e3",
             width: "25rem",
             height: "25rem",
-            left: "1rem",
+            left: isMobileScreen ? "1rem" : '40rem',
             top: "6rem",
             borderRadius: "1rem",
           }}
@@ -334,7 +333,7 @@ export default function index() {
               top: "7rem",
               width: "5.5rem",
               height: "5.5rem",
-              left: "18rem",
+              left: isMobileScreen ? "18rem" : '57rem',
               transition: "all 0.3s ease",
               "&:hover": {
                 cursor: "pointer",
@@ -358,7 +357,7 @@ export default function index() {
             backgroundColor: "#e3e3e3",
             width: "25rem",
             height: "15rem",
-            left: "1rem",
+            left: isMobileScreen ? "1rem" : '40rem',
             top: "35rem",
             borderRadius: "1rem",
           }}
