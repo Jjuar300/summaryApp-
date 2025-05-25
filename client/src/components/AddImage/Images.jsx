@@ -4,7 +4,7 @@ import {
   setFileName,
   setImageClick,
   setFile,
-  isUserCreated, 
+  isUserCreated,
 } from "../../Redux/imageContainer";
 import { useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
@@ -39,25 +39,13 @@ export default function Images() {
     }
   };
 
-  // const onError = (err) => {
-  //   console.log("success:", err);
-  // };
-
   const onSuccess = (res) => {
     // console.log("Success", res);
     dispatch(setSuccessData(res.filePath));
     dispatch(setFile(true));
     dispatch(setImageClick(true));
-    dispatch(isUserCreated(false))
+    dispatch(isUserCreated(false));
   };
-
-  // const UploadProgress = (progress) => {
-  //   console.log("Progress", progress);
-  // };
-
-  // const onUploadStart = (evt) => {
-  //   console.log("start", evt);
-  // };
 
   const images = [
     "leaf.jpg",
@@ -71,7 +59,7 @@ export default function Images() {
     dispatch(setFileName(imageName));
     dispatch(setFile(false));
     dispatch(setImageClick());
-    dispatch(isUserCreated(false))
+    dispatch(isUserCreated(false));
   };
 
   const mapImages = useMemo(() => {
@@ -99,28 +87,24 @@ export default function Images() {
           id="file"
         />
 
-        <IKContext
-          urlEndpoint={urlEndpoint}
-          publicKey={publicKey}
-          authenticator={authenticator}
-        >
-          <IKUpload
-            style={{
-              display: "none",
-              cursor: "pointer",
-            }}
-            id="imagekitFile"
-            useUniqueFileName={true}
-            // onError={onError}
-            onSuccess={onSuccess}
-            // onProgress={UploadProgress}
-            // onUploadStart={onUploadStart}
-            folder={userId}
-          />
-        </IKContext>
-
         <label className="upload-label" htmlFor="imagekitFile">
           upload
+          <IKContext
+            urlEndpoint={urlEndpoint}
+            publicKey={publicKey}
+            authenticator={authenticator}
+          >
+            <IKUpload
+              style={{
+                display: "none",
+                cursor: "pointer",
+              }}
+              id="imagekitFile"
+              useUniqueFileName={true}
+              onSuccess={onSuccess}
+              folder={userId}
+            />
+          </IKContext>
         </label>
       </div>
     </div>

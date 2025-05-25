@@ -1,20 +1,14 @@
 import { UserAvatar, NavBar } from "../../components";
 import { useUser, useClerk } from "@clerk/clerk-react";
-import {
-  Box,
-  Button,
-  Divider,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, TextField, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
 import { useGetData } from "../../hooks/index";
-import { isUserCreated } from "../../Redux/imageContainer";
+import { isUserCreated, setProfileImage } from "../../Redux/imageContainer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { IKContext, IKUpload } from "imagekitio-react";
 
 export default function index() {
   const [isOpen, setOpen] = useState();
@@ -30,6 +24,34 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
+  const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
+  const userId = user?.id;
+  const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
+
+  const authenticator = async () => {
+    try {
+      const response = await fetch("/api/authImage");
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      const { signature, expire, token } = data;
+      return { signature, expire, token };
+    } catch (error) {
+      throw new Error(`Authenticator request failed: ${error.message} `);
+    }
+  };
+
+  const onSuccess = (res) =>{ 
+    dispatch(setProfileImage(res.filePath))
+  }
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -54,8 +76,8 @@ export default function index() {
   const UserAvatarStyle = {
     width: "5.5rem",
     height: "5.5rem",
-    backgroundColor:'#c8a99f', 
-    fontSize:'1.6rem', 
+    backgroundColor: "#c8a99f",
+    fontSize: "1.6rem",
   };
 
   const handleUserDelete = async () => {
@@ -113,6 +135,10 @@ export default function index() {
       });
     }
   }, []);
+
+  const sendImage = () => {
+    console.log("image send!");
+  };
 
   return (
     <>
@@ -283,26 +309,46 @@ export default function index() {
               }}
             />
           </Box>
+
+          <IKContext
+            urlEndpoint={urlEndpoint}
+            publicKey={publicKey}
+            authenticator={authenticator}
+          >
+            <IKUpload
+              onSuccess={onSuccess}
+              style={{ display: "none" }}
+              id="uploadProfileImage"
+              useUniqueFileName={true}
+              folder={userId}
+            />
+          </IKContext>
+        </Box>
+
+        <label htmlFor="uploadProfileImage">
           <Box
             sx={{
               position: "absolute",
               borderRadius: "50%",
               border: "7px solid transparent",
-              top: "1rem",
+              top: "7rem",
               width: "5.5rem",
               height: "5.5rem",
               left: "18rem",
               transition: "all 0.3s ease",
               "&:hover": {
-                cursor:'pointer', 
+                cursor: "pointer",
                 border: "7px solid #cac9c9", // Or your desired hover border
               },
             }}
           >
-            <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
+            <UserAvatar
+              submitOnClickFunction={sendImage}
+              inlineStyle={UserAvatarStyle}
+              Text={FirstName}
+            />
           </Box>
-
-        </Box>
+        </label>
 
         <NavBar onclick={validateName ? handleUpdate : null} />
 
