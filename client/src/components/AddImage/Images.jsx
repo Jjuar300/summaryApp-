@@ -40,7 +40,6 @@ export default function Images() {
   };
 
   const onSuccess = (res) => {
-    // console.log("Success", res);
     dispatch(setSuccessData(res.filePath));
     dispatch(setFile(true));
     dispatch(setImageClick(true));
@@ -101,7 +100,6 @@ export default function Images() {
               }}
               id="imagekitFile"
               useUniqueFileName={false}
-              // overwriteFile ={true}
               onSuccess={onSuccess}
               folder={userId}
             />

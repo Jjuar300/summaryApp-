@@ -8,6 +8,7 @@ export const createSpace = createSlice({
     spaceObjectId: "",
     isSpaceTextSubmit: true,
     ObjectId: "", 
+    isOpenModal: false, 
   },
 
   reducers: {
@@ -26,6 +27,9 @@ export const createSpace = createSlice({
     sendObjectId: (state, action) => {
       state.ObjectId = action.payload; 
     }, 
+    setOpenModal: (state, action) => {
+      state.isOpenModal = action.payload; 
+    }
   },
 });
 
@@ -35,5 +39,6 @@ export const {
   shouldSpaceTextSubmit,
   sendSpaceObjectId,
   sendObjectId, 
+  setOpenModal, 
 } = createSpace.actions;
 export default createSpace.reducer;

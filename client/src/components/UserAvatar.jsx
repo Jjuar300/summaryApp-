@@ -8,6 +8,9 @@ export default function UserAvatar({
   inlineStyle,
 }) {
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_KEY;
+  const isUserProfile = useSelector(
+    (state) => state.imageContainer.isUserProfile
+  );
 
   const profileImage = useSelector(
     (state) => state.imageContainer.profileImagePath
@@ -16,18 +19,21 @@ export default function UserAvatar({
   return (
     <>
       <Avatar sx={inlineStyle} onClick={submitOnClickFunction}>
-        {`${Text}`}
-        <IKImage
-          style={{
-            position:'absolute', 
-            width: "5.5rem",
-            height: "5.5rem",
-            objectFit: "cover",
-            borderRadius: "50%",
-          }}
-          path={profileImage}
-          urlEndpoint={urlEndpoint}
-        />
+        {isUserProfile ? (
+          Text
+        ) : (
+          <IKImage
+            style={{
+              position: "absolute",
+              width: "5.5rem",
+              height: "5.5rem",
+              objectFit: "cover",
+              borderRadius: "50%",
+            }}
+            path={profileImage}
+            urlEndpoint={urlEndpoint}
+          />
+        )}
       </Avatar>
     </>
   );

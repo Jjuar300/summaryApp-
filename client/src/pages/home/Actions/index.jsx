@@ -8,6 +8,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useGetData, useUserNote } from "../../../hooks";
 import { setRun } from "../../../Redux/SpaceNotes";
+import { setOpenModal } from "../../../Redux/createSpace";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -21,8 +22,8 @@ import {
   sendObjectId,
 } from "../../../Redux/createSpace";
 
-export default function Index({setOpen}) {
-  const [isOpenModal, setOpenModal] = useState(false);
+export default function Index({ setOpen }) {
+  // const [isOpenModal, setOpenModal] = useState(false);
   const [isRenameSpaceOpen, setRenameSpaceOpen] = useState(false);
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
@@ -33,6 +34,7 @@ export default function Index({setOpen}) {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const LengthOfText = text.length;
   const LengthOfEditText = editText.length;
+  const isOpenModal = useSelector((state) => state.createSpace.isOpenModal);
 
   const navigate = useNavigate();
   const { user } = useUser();
@@ -54,7 +56,7 @@ export default function Index({setOpen}) {
 
   const handleButtonClicked = () => {
     getUserData();
-    setOpenModal(true);
+    dispatch(setOpenModal(true));
     dispatch(setRun(true));
   };
 
@@ -105,7 +107,7 @@ export default function Index({setOpen}) {
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      navigate("/browsespace");
+      // navigate("/browsespace");
     } catch (error) {
       console.log(error);
     }
@@ -118,11 +120,13 @@ export default function Index({setOpen}) {
     setText("");
     dispatch(handleSpaceText(text));
     getUserData();
+    dispatch(setOpenModal(false));
   };
-  
+
   const handleCancelModal = () => {
-    setRenameSpaceOpen(false)
+    setRenameSpaceOpen(false);
     dispatch(setRun(false));
+    dispatch(setOpenModal(false));
   };
 
   const handleCloseEditSpace = (e) => {
@@ -148,7 +152,7 @@ export default function Index({setOpen}) {
     height: "15rem",
     top: isMobileScreen ? "15rem" : "20rem",
     borderRadius: "1rem",
-    left: isMobileScreen ? '.5rem' : "45rem",
+    left: isMobileScreen ? ".5rem" : "45rem",
   };
 
   const textFieldStyle = {
@@ -205,11 +209,11 @@ export default function Index({setOpen}) {
       <Box
         sx={{
           overflow: "auto",
-          position: 'absolute', 
-          top:'13.7rem', 
-          height:'38rem', 
-          width:'16rem', 
-          scrollbarWidth:'none', 
+          position: "absolute",
+          top: "13.7rem",
+          height: "38rem",
+          width: "16rem",
+          scrollbarWidth: "none",
         }}
       >
         <SpaceList

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
 import { useGetData } from "../../hooks/index";
-import { isUserCreated, setProfileImage } from "../../Redux/imageContainer";
+import { isUserCreated, setProfileImage, setUserCreated } from "../../Redux/imageContainer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IKContext, IKUpload } from "imagekitio-react";
@@ -49,7 +49,8 @@ export default function index() {
   };
 
   const onSuccess = (res) =>{ 
-    dispatch(setProfileImage(res.filePath))
+    dispatch(setProfileImage(res.filePath)); 
+    dispatch(setUserCreated(false))
   }
 
   const DesktopDeleteAccountModal = {
@@ -84,6 +85,7 @@ export default function index() {
       folderName: user?.id,
     });
     dispatch(isUserCreated(true));
+    dispatch(setUserCreated(true)); 
     await user?.delete();
     await deleteData(`/api/users/${user?.id}`, {
       space,
@@ -134,10 +136,6 @@ export default function index() {
       });
     }
   }, []);
-
-  const sendImage = () => {
-    console.log("image send!");
-  };
 
   return (
     <>
@@ -342,7 +340,6 @@ export default function index() {
             }}
           >
             <UserAvatar
-              submitOnClickFunction={sendImage}
               inlineStyle={UserAvatarStyle}
               Text={FirstName}
             />

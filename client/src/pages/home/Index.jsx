@@ -6,13 +6,22 @@ import Summary from "../Summary";
 import { AddImage, Feed } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../../Redux/homePage";
-import FeedBack from '../FeedBack/index'; 
+import FeedBack from "../FeedBack/index";
+import { setOpenModal } from "../../Redux/createSpace";
+import { useGetData } from "../../hooks";
+import plus from "./assets/plus.svg";
+import "./styles/Index.css";
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
-  const dispatch = useDispatch(); 
-  const open = useSelector(state => state.homePage.open)
-  const isNotifyOpen = useSelector(state => state.feedBack.isNotify)
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.homePage.open);
+  const isNotifyOpen = useSelector((state) => state.feedBack.isNotify);
+  const { space } = useGetData();
+
+  const spaces = space.map((item) => {
+    return item;
+  });
 
   const mobileUserAvatarStyle = {
     position: "absolute",
@@ -23,9 +32,9 @@ export default function Index() {
     height: "3rem",
     fontSize: "1.4rem",
   };
-  
-  function showNotification(){
-    if(isNotifyOpen) return <Feed/>
+
+  function showNotification() {
+    if (isNotifyOpen) return <Feed />;
   }
 
   return (
@@ -90,13 +99,47 @@ export default function Index() {
           }}
         >
           <AddImage />
-          <AccountProfile/>
+          <AccountProfile />
           <Actions />
         </Box>
       )}
-      ;
-      <Summary />
-      <FeedBack/>
+
+      <Box
+        sx={{
+          position: "absolute",
+          backgroundColor: "#f4f4f4",
+          height: isMobileScreen ? "58.2rem" : "58rem",
+          borderRadius: isMobileScreen ? "0rem" : "1rem",
+          width: isMobileScreen ? "28.7rem" : "58rem",
+          left: isMobileScreen ? "-2rem" : "17rem",
+          top: "-.1rem",
+        }}
+      >
+        {spaces.length !== 0 ? (
+          <Summary />
+        ) : (
+          <Button
+          className="createSpaceButton"
+            onClick={() => dispatch(setOpenModal(true))}
+            sx={{
+              position: "absolute",
+              top: "23rem",
+              left: "24rem",
+              backgroundColor: "#827d81",
+              color: "white",
+              ":hover": {
+                backgroundColor: "#a19ea0",
+              },
+              width: "10rem",
+            }}
+          >
+            <img className="plus" src={plus} />
+            create space
+          </Button>
+        )}
+      </Box>
+
+      <FeedBack />
       {showNotification()}
     </>
   );
