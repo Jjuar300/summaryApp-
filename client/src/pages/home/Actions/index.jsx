@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetData, useUserNote } from "../../../hooks";
 import { setRun } from "../../../Redux/SpaceNotes";
 import { setOpenModal } from "../../../Redux/createSpace";
+import { BlockNoteEditor } from "@blocknote/core";
 
 import SpaceList from "./SpaceList";
 import SpaceModals from "./SpaceModals";
@@ -39,7 +40,7 @@ export default function Index({ setOpen }) {
   const navigate = useNavigate();
   const { user } = useUser();
   const { space, getUserData } = useGetData();
-  const { fetchUserNote } = useUserNote();
+  const { fetchUserNote, getSpaceNote } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
@@ -80,6 +81,7 @@ export default function Index({ setOpen }) {
 
   const addSpace = async (e) => {
     e?.preventDefault();
+    fetchUserNote();
     try {
       const response = await postData("/api/spaces", {
         name: text,
@@ -91,8 +93,8 @@ export default function Index({ setOpen }) {
       await postData("/api/userNotes", {
         userId: user?.id,
         spaceId: createdSapaceId,
+        content: JSON.stringify(""),
       });
-      fetchUserNote();
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +109,6 @@ export default function Index({ setOpen }) {
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      // navigate("/browsespace");
     } catch (error) {
       console.log(error);
     }

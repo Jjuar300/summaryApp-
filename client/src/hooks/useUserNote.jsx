@@ -8,7 +8,6 @@ export default function useUserNote() {
   const { user } = useUser();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
 
-  const [savedData, setSavedData] = useState([]);
   const [initialContent, setInitialContent] = useState(undefined);
 
   const userData = useGetData();
@@ -26,17 +25,17 @@ export default function useUserNote() {
     const savedContent = await fetchData(
       `/api/users/${user?.id}/spaces/${spaceId}`
     );
-    setSavedData(savedContent);
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.notes?.[0]?.content);
       return setInitialContent(blocks);
-    }
+      }
   };
+
 
   return {
     fetchUserNote,
-    savedData,
     initialContent,
     handleEditorChange,
+    // getSpaceNote, 
   };
 }

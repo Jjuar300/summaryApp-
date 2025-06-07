@@ -24,11 +24,15 @@ export default function SpaceList({
 
   const isMobileScreen = useMediaQuery("(max-width:400px)");
 
+   const handleSpaceOnclick = () => {
+    dispatch(setOpen(false)); 
+   }
+
   return (
     <>
       {spaces?.map(({ _id, name }) => (
         <Box onContextMenu={(e) => handleClickContext(e, _id, name)} key={_id}
-        onClick={() => dispatch(setOpen(false))}
+        onClick={() => handleSpaceOnclick()}
         >
           
           <Space

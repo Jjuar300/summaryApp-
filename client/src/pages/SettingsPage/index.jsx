@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
 import { useGetData } from "../../hooks/index";
-import { isUserCreated, setProfileImage, setUserCreated } from "../../Redux/imageContainer";
+import {
+  isUserCreated,
+  setProfileImage,
+  setUserCreated,
+} from "../../Redux/imageContainer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IKContext, IKUpload } from "imagekitio-react";
@@ -48,10 +52,10 @@ export default function index() {
     }
   };
 
-  const onSuccess = (res) =>{ 
-    dispatch(setProfileImage(res.filePath)); 
-    dispatch(setUserCreated(false))
-  }
+  const onSuccess = (res) => {
+    dispatch(setProfileImage(res.filePath));
+    dispatch(setUserCreated(false));
+  };
 
   const DesktopDeleteAccountModal = {
     position: "absolute",
@@ -85,8 +89,9 @@ export default function index() {
       folderName: user?.id,
     });
     dispatch(isUserCreated(true));
-    dispatch(setUserCreated(true)); 
+    dispatch(setUserCreated(true));
     await user?.delete();
+    navigate("/");
     await deleteData(`/api/users/${user?.id}`, {
       space,
     });
@@ -155,7 +160,7 @@ export default function index() {
             backgroundColor: "#e3e3e3",
             width: "25rem",
             height: "25rem",
-            left: isMobileScreen ? "1rem" : '40rem',
+            left: isMobileScreen ? "1rem" : "40rem",
             top: "6rem",
             borderRadius: "1rem",
           }}
@@ -331,7 +336,7 @@ export default function index() {
               top: "7rem",
               width: "5.5rem",
               height: "5.5rem",
-              left: isMobileScreen ? "18rem" : '57rem',
+              left: isMobileScreen ? "18rem" : "57rem",
               transition: "all 0.3s ease",
               "&:hover": {
                 cursor: "pointer",
@@ -339,10 +344,7 @@ export default function index() {
               },
             }}
           >
-            <UserAvatar
-              inlineStyle={UserAvatarStyle}
-              Text={FirstName}
-            />
+            <UserAvatar inlineStyle={UserAvatarStyle} Text={FirstName} />
           </Box>
         </label>
 
@@ -354,7 +356,7 @@ export default function index() {
             backgroundColor: "#e3e3e3",
             width: "25rem",
             height: "15rem",
-            left: isMobileScreen ? "1rem" : '40rem',
+            left: isMobileScreen ? "1rem" : "40rem",
             top: "35rem",
             borderRadius: "1rem",
           }}

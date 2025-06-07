@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../Redux/createSpace";
 import { handleSpaceText } from "../../Redux/createSpace";
 import { useNavigate } from "react-router-dom";
-import {useGetData} from '../../hooks'
+import {useGetData, useUserNote} from '../../hooks'
 
 const index = ({
   text,
@@ -19,9 +19,11 @@ const index = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {getUserData} = useGetData(); 
+  const {fetchUserNote} = useUserNote(); 
 
   const handleSpaceClick = (e) => {
     e?.preventDefault();
+    fetchUserNote(); 
     setState(text);
     dispatch(sendObjectId(ObjectId));
     dispatch(handleSpaceText(text));
