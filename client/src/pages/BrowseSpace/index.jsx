@@ -9,6 +9,7 @@ import { sendObjectId } from "../../Redux/createSpace";
 import { setOpen } from "../../Redux/homePage";
 import DrawerComp from "../../components/Drawer";
 import FeedBack from "../../pages/FeedBack/index";
+import { AddImage } from "../../components";
 
 import {
   Box,
@@ -100,9 +101,9 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            backgroundColor: "#F8F5FD",
+            backgroundColor: "#f4f4f4",
             width: isMobileScreen ? "23rem" : "16rem",
-            height: "59.8rem",
+            height: "59rem",
             left: ".2rem",
             top: ".05rem",
             borderTopRightRadius: "1rem",
@@ -115,16 +116,17 @@ export default function Index() {
             }
           />
           <Actions />
+          <AddImage />
         </Box>
       )}
 
       <Box
         sx={{
           position: "absolute",
-          backgroundColor: "#FAF6FF",
-          height: isMobileScreen ? "58.3rem" : "58rem",
+          backgroundColor: "#f4f4f4",
+          height: isMobileScreen ? "58.2rem" : "58rem",
           borderRadius: isMobileScreen ? "0rem" : "1rem",
-          width: isMobileScreen ? "27.8rem" : "98.6rem",
+          width: isMobileScreen ? "27.8rem" : "58rem",
           left: isMobileScreen ? "-1rem" : "17rem",
           top: isMobileScreen ? "-.2rem" : ".5rem",
         }}
@@ -132,7 +134,7 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            left: isMobileScreen ? "2rem" : "30rem",
+            left: isMobileScreen ? "2rem" : "12rem",
             top: "8rem",
             width: isMobileScreen ? "23rem" : "32rem",
           }}
@@ -164,7 +166,7 @@ export default function Index() {
         <Box
           sx={{
             position: "absolute",
-            left: isMobileScreen ? "4rem" : "30rem",
+            left: isMobileScreen ? "4rem" : "12rem",
             top: "17rem",
             width: isMobileScreen ? "20rem" : "0rem",
           }}
@@ -173,6 +175,8 @@ export default function Index() {
             <Typography
               onClick={(e) => handleClick(e, _id)}
               sx={{
+                // position:'absolute',
+                // left:'-18rem',
                 fontSize: "1.3rem",
                 padding: ".5rem",
                 color: "#3f3f3f",
@@ -190,7 +194,7 @@ export default function Index() {
           ))}
         </Box>
       </Box>
-      <FeedBack/>
+      <FeedBack />
       {showNotification()}
     </div>
   );
