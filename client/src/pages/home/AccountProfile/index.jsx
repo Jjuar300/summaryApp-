@@ -6,7 +6,7 @@ import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 import { postData } from "../../../utils";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
@@ -26,7 +26,7 @@ export default function Index() {
   const UserAvatarStyle = {
     height: "3rem",
     width: "3rem",
-    backgroundColor: '#c8a99f', 
+    backgroundColor: "#c8a99f",
   };
 
   const getUserData = async () => {
@@ -61,8 +61,8 @@ export default function Index() {
           position: "absolute",
           borderRadius: "50%",
           border: "7px solid transparent",
-          top: isMobileScreen ? '54rem' : "55rem",
-          left: isMobileScreen ? '15rem' : "11rem",
+          top: isMobileScreen ? "54rem" : "55rem",
+          left: isMobileScreen ? "15rem" : "11rem",
           width: "3rem",
           height: "3rem",
           transition: "all 0.3s ease",

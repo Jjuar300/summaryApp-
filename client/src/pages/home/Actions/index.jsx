@@ -108,7 +108,7 @@ export default function Index({ setOpen }) {
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      navigate('/browsespace')
+      navigate('/')
     } catch (error) {
       console.log(error);
     }

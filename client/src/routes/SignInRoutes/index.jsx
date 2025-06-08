@@ -7,14 +7,14 @@ export default function index() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path={`/spaces/:id`} element={<Home />} />
-          <Route path="/browsespace" element={<BrowseSpace/>}/>
+          <Route path="/" element={<BrowseSpace/>}/>
           <Route path="/summary" element={<Summary/>} />
         </Routes>
       </BrowserRouter>
     </>
   );
-}; 
+} 

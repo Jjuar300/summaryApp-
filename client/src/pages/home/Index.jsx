@@ -115,28 +115,7 @@ export default function Index() {
           top: "-.1rem",
         }}
       >
-        {spaces.length !== 0 ? (
-          <Summary />
-        ) : (
-          <Button
-          className="createSpaceButton"
-            onClick={() => dispatch(setOpenModal(true))}
-            sx={{
-              position: "absolute",
-              top: "23rem",
-              left: "24rem",
-              backgroundColor: "#827d81",
-              color: "white",
-              ":hover": {
-                backgroundColor: "#a19ea0",
-              },
-              width: "10rem",
-            }}
-          >
-            <img className="plus" src={plus} />
-            create space
-          </Button>
-        )}
+        <Summary />
       </Box>
 
       <FeedBack />
