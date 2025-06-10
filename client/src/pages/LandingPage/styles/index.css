@@ -1,0 +1,74 @@
+
+.signIn {
+  position: absolute;
+  top: 25rem;
+  background-color: #474343;
+  left: 26rem;
+  color: #ffffff;
+  font-family: Inter;
+  font-weight: bold;
+  font-size: 1.5rem;
+  width: 10rem;
+  height: 5rem;
+  border-radius: 0.2rem;
+  box-shadow: 6px 6px rgba(71, 67, 67, 0.44);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.signIn:hover {
+  cursor: pointer;
+  box-shadow: 13px 13px rgba(71, 67, 67, 0.44);
+}
+
+.title {
+  position: absolute;
+  left: 25rem;
+  top: 5rem;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #433d3d;
+  font-family: Inter;
+  width: 25rem;
+}
+
+.computerGirl {
+  position: absolute;
+  left: 60rem;
+}
+
+.takeNotes{
+    position: absolute;
+    font-family: Inter;
+    font-size: 1.3rem;
+    font-weight:400;
+    color: rgba(64, 63, 63, 0.74); 
+    left: 38rem;
+    top: 26rem;
+    width: 18rem;
+}
+
+.darkgraypolygon{
+    position: absolute;
+    left: 5rem;
+    top: 4rem;
+}
+
+.lightgraypolygon{
+    position: absolute;
+    left: 96rem;
+    top: 30rem;
+}
+
+.softgraypolygon{
+    position: absolute;
+    top: 40rem;
+    left: 5rem;
+}
+
+.noteTakingVideo{
+    position: absolute;
+    left: 33rem;
+    top: 35rem;
+    border-radius: 1rem;
+    width: 45rem;
+}
