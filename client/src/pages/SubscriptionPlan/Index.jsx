@@ -9,10 +9,13 @@ export default function Index() {
     <div>
       <h1 className="pickPlan"> Pick your plan</h1>
 
-      <div className="mo/ye">
-        <span>Monthly</span>
-        <span>Annually</span>
-        <span>50% off</span>
+      <div className="mo-ye">
+        <span className="tl-monthly">Monthly</span>
+        <span className="tl-annually" >Annually</span>
+        <span className='tl-discount' >50% off</span>
+        <button className="btn-mo-ye">
+          <span className="animationCircle"/>
+        </button>
       </div>
 
       <div className="subPlan">
