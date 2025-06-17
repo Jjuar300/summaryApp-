@@ -4,6 +4,7 @@ import Home from "./home/Index";
 import SettingsPage from "./SettingsPage/index";
 import BrowseSpace from "./BrowseSpace/index";
 import Summary from "./Summary/index";
+import SubscriptionPlan from './SubscriptionPlan/Index'
 
 export {
   LandingPage,
@@ -12,4 +13,5 @@ export {
   SettingsPage,
   BrowseSpace,
   Summary,
+  SubscriptionPlan, 
 };

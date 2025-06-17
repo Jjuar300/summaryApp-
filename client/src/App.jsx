@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import { SignedInRoutes, SignedOutRoutes } from "./routes";
+import { SignedInRoutes, SignedOutRoutes,SubscriptionPlan } from "./routes";
 import "./App.css";
 
 function App() {
@@ -7,7 +7,8 @@ function App() {
   return (
     <>
       <SignedIn>
-        <SignedInRoutes />
+        <SubscriptionPlan/>
+        {/* <SignedInRoutes /> */}
       </SignedIn>
       <SignedOut>
         <SignedOutRoutes />

@@ -7,9 +7,6 @@ import { AddImage, Feed } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../../Redux/homePage";
 import FeedBack from "../FeedBack/index";
-import { setOpenModal } from "../../Redux/createSpace";
-import { useGetData } from "../../hooks";
-import plus from "./assets/plus.svg";
 import "./styles/Index.css";
 
 export default function Index() {
@@ -17,11 +14,6 @@ export default function Index() {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.homePage.open);
   const isNotifyOpen = useSelector((state) => state.feedBack.isNotify);
-  const { space } = useGetData();
-
-  const spaces = space.map((item) => {
-    return item;
-  });
 
   const mobileUserAvatarStyle = {
     position: "absolute",

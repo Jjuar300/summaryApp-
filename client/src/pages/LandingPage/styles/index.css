@@ -125,13 +125,95 @@
 @keyframes poly {
   from {
     left: -10px;
-    transform: rotate(180deg)
+    transform: rotate(180deg);
   }
 }
 
 @keyframes darkpoly {
-  from{
+  from {
     right: 100rem;
     transform: rotate(180deg);
   }
-  }
+}
+
+/* mobile responsive*/
+
+.title-mobile {
+  position: absolute;
+  left: 4rem;
+  top: 5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #433d3d;
+  font-family: Inter;
+  width: 22rem;
+}
+
+.logo-mobile {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: 2rem;
+  top: 1.5rem;
+}
+
+.computerGirl-mobile {
+  position: absolute;
+  left: 1rem;
+  top: 16rem;
+  width: 26rem;
+}
+
+.signIn-mobile {
+  position: absolute;
+  top: 40rem;
+  background-color: #474343;
+  left: 6em;
+  color: #ffffff;
+  font-family: Inter;
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 12rem;
+  height: 4rem;
+  border-radius: 0.2rem;
+  box-shadow: 6px 6px rgba(71, 67, 67, 0.44);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.takeNotes-mobile {
+  position: absolute;
+  font-family: Inter;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(64, 63, 63, 0.74);
+  left: 5rem;
+  top: 45rem;
+  width: 18rem;
+}
+
+.noteTakingVideo-mobile {
+  position: absolute;
+  left: 1rem;
+  top: 53rem;
+  border-radius: 1rem;
+  width: 25rem;
+  border: 3px solid black;
+}
+
+.copyRights-mobile {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  font-family: Inter;
+  font-size: 0.9rem;
+  color: #433d3d;
+  font-weight: 460;
+  top: 75rem;
+  left: 10rem;
+  height: 3rem;
+}
+
+/* *{
+  border: 1px solid red;
+} */

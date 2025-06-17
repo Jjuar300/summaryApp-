@@ -10,6 +10,7 @@ import NoteLogo from "./assets/NoteLogo.png";
 import { Elements } from "@stripe/react-stripe-js";
 import SubscriptionFrom from "../Stripe/SubscriptionFrom";
 import { loadStripe } from "@stripe/stripe-js";
+import { useMediaQuery } from "@mui/material";
 // import { useUser } from "@clerk/clerk-react";
 
 const stripePromise = loadStripe(
@@ -17,34 +18,53 @@ const stripePromise = loadStripe(
 );
 
 export default function index() {
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
 
   return (
     <>
-      <h1 className="title">Collect your thoughts.</h1>
+      <h1 className={isMobileScreen ? "title-mobile" : "title"}>
+        Collect your thoughts.
+      </h1>
       <SignInButton>
-        <button className="signIn">Start free trial</button>
+        <button className={isMobileScreen ? "signIn-mobile" : "signIn"}>
+          Start free trial
+        </button>
       </SignInButton>
-
       {/* <Elements stripe={stripePromise} >
          <SubscriptionFrom/>
       </Elements>  */}
-    
-      <span className="takeNotes">Take notes the simple way, Forever.</span>
-      <img className="computerGirl" src={computerGirl} />
-      <img className="darkgraypolygon" src={darkGrayPolygon} />
-      <img className="lightgraypolygon" src={lightGrayPolygon} />
-      <img className="softgraypolygon" src={softGrayPolygon} />
-
-      <div className="copyRights">
+      <span className={isMobileScreen ? "takeNotes-mobile" : "takeNotes"}>
+        Take notes the simple way, Forever.
+      </span>
+      <img
+        className={isMobileScreen ? "computerGirl-mobile" : "computerGirl"}
+        src={computerGirl}
+      />
+      {isMobileScreen ? null : (
+        <img className="darkgraypolygon" src={darkGrayPolygon} />
+      )}
+      {isMobileScreen ? null : (
+        <img className="lightgraypolygon" src={lightGrayPolygon} />
+      )}
+      {isMobileScreen ? null : (
+        <img className="softgraypolygon" src={softGrayPolygon} />
+      )}
+      <div className={isMobileScreen ? "copyRights-mobile" : "copyRights"}>
         <img className="Ccorporation" src={Ccorporation} />
         <span>2025 Noto</span>
       </div>
-
-      <div className="logo">
+      <div className={isMobileScreen ? "logo-mobile" : "logo"}>
         <img className="NoteLogo" src={NoteLogo} />
         <span className="LogoTitle">Noto</span>
       </div>
-      <video autoPlay muted loop className="noteTakingVideo">
+      <video
+        autoPlay
+        muted
+        loop
+        className={
+          isMobileScreen ? "noteTakingVideo-mobile" : "noteTakingVideo"
+        }
+      >
         <source src={NoteTakingVideo} />
       </video>
     </>
