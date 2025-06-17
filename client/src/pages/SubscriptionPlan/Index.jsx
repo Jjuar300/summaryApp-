@@ -1,23 +1,122 @@
 import "./styles/Index.css";
-import fireIcon from "./assets/fireIcon.webp";
-import checkMark from "./assets/checkMark.png";
 import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
-import NoteLogo from "./assets/NoteLogo.png";
-import { UserAvatar } from "../../components";
+import { UserAvatar, PopoverContainer } from "../../components";
+import { useUser, SignOutButton } from "@clerk/clerk-react";
+import { Popover, Box, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  settings,
+  logout,
+  checkMark,
+  NoteLogo,
+  fireIcon,
+} from "./assets/index";
+import {sendObjectId} from '../../Redux/createSpace'
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
   const pricePlan = isPlanButton ? 20 : 10;
+  const { user, isSignedIn } = useUser();
+  const FirstName = user.firstName.charAt(0).toUpperCase();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
 
   const handleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+ const handleOnClick = () => {
+    // navigate("/");
+    dispatch(sendObjectId(null));
+  };
+
+  const boxStyle = {
+    position: "relative",
+    display: "flex",
+    left: "1rem",
+  };
+
+  const buttonStyle = {
+    fontSize: "1rem",
+    color: "black",
+    width: "10rem",
+    left: "-2rem",
+  };
+
   return (
     <div>
-    
+      {/* <AccountProfile/> */}
+      <UserAvatar
+        inlineStyle={{
+          position: "absolute",
+          left: "90rem",
+          top: "2rem",
+          ":hover": {
+            cursor: "pointer",
+          },
+        }}
+        Text={FirstName}
+        submitOnClickFunction={handleClick}
+      />
+
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        sx={{
+          left: isMobileScreen ? "1rem" : "4rem",
+          top: isMobileScreen ? "-5rem" : "0rem",
+          width: "12rem",
+        }}
+      >
+        <PopoverContainer
+          imageIcon={settings}
+          text={"Settings"}
+          submitOnClick={() => navigate("/settings")}
+          boxStyle={boxStyle}
+          buttonStyle={buttonStyle}
+          isIcon={true}
+        />
+
+       
+       <SignOutButton>
+         <Box
+          sx={{
+            position: "relative",
+            display: "flex",
+            left: "1rem",
+          }}
+        >
+          <img style={{ width: "1.2rem" }} src={`${logout}`} />
+          <Button
+            onClick={handleOnClick}
+            sx={{
+              fontSize: "1rem",
+              color: "black",
+              width: "10rem",
+              left: "-2rem",
+            }}
+          >
+            Logout
+          </Button>
+        </Box>
+       </SignOutButton>
+
+      </Popover>
+
       <h1 className={isMobileScreen ? "pickPlan-mobile" : "pickPlan"}>
         Pick your plan
       </h1>
