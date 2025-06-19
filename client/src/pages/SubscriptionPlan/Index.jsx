@@ -19,7 +19,7 @@ export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
   const pricePlan = isPlanButton ? 20 : 10;
-  const { user, isSignedIn } = useUser();
+  const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -58,7 +58,6 @@ export default function Index() {
 
   return (
     <div>
-      {/* <AccountProfile/> */}
       <UserAvatar
         inlineStyle={{
           position: "absolute",
@@ -161,7 +160,7 @@ export default function Index() {
             <span className="month">/mo</span>
           </span>
         </span>
-        <button className="btn-startTrial">Start free trial</button>
+        <button onClick={() => navigate('/subScriptionForm')} className="btn-startTrial">Start free trial</button>
         <span className="divider">
           ________________________________________
         </span>
