@@ -1,6 +1,6 @@
 import SignedInRoutes from './SignInRoutes'
 import SignedOutRoutes from './SignedOutRoute'
-import { SubscriptionPlan } from '../pages'
+import SubscriptionPlan from './Subscription'
 
 export {
     SignedInRoutes, 

@@ -122,7 +122,8 @@ export default function index() {
       };
 
       await user.update(payload);
-      navigate("/");
+      navigate("/"); /*if user have acces to app or start 
+      free trial then it should be "/" if not then "/subscription" */
       await user?.reload();
     } catch (err) {
       console.error("Error updating name", err);

@@ -6,13 +6,13 @@ import SubscriptionPlan from '../../pages/SubscriptionPlan/Index'
 export default function index() {
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Routes>
           <Route path="*" element={<LandingPage />} />
           {/* <Route path="/subscriptionPlan" element={<SubscriptionPlan/>} /> */}
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </>
   );
 }

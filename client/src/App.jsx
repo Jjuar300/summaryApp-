@@ -1,18 +1,20 @@
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import { SignedInRoutes, SignedOutRoutes,SubscriptionPlan } from "./routes";
+import { SignedInRoutes, SignedOutRoutes, SubscriptionPlan } from "./routes";
 import "./App.css";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-
+  const isUserFreeTrial = false; 
   return (
     <>
-      <SignedIn>
-        <SubscriptionPlan/>
-        {/* <SignedInRoutes /> */}
-      </SignedIn>
-      <SignedOut>
-        <SignedOutRoutes />
-      </SignedOut>
+      <BrowserRouter>
+        <SignedIn>
+          {isUserFreeTrial ? <SignedInRoutes/> : <SubscriptionPlan />}
+        </SignedIn>
+        <SignedOut>
+          <SignedOutRoutes />
+        </SignedOut>
+      </BrowserRouter>
     </>
   );
 }
