@@ -14,6 +14,13 @@ import {
   fireIcon,
 } from "./assets/index";
 import {sendObjectId} from '../../Redux/createSpace'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Payment  from "../Payment/Index";
+
+const stripePromise = loadStripe(
+  "pk_live_51NF8hxKBWAiPiCSPtcoQCx48lHOJtJO2DPNIlVCm3oWWHLqM6UAhKHIJINBAYP8IoRBZiqIe5Q7tKEzP0MWiOkAY003QNuFgTR"
+);
 
 export default function Index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
@@ -58,6 +65,11 @@ export default function Index() {
 
   return (
     <div>
+
+    <Elements stripe={stripePromise}>
+      <Payment/>
+    </Elements>
+
       <UserAvatar
         inlineStyle={{
           position: "absolute",

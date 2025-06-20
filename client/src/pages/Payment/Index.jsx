@@ -1,11 +1,5 @@
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(
-  "pk_live_51NF8hxKBWAiPiCSPtcoQCx48lHOJtJO2DPNIlVCm3oWWHLqM6UAhKHIJINBAYP8IoRBZiqIe5Q7tKEzP0MWiOkAY003QNuFgTR"
-);
 
 export default function Index() {
   const stripe = useStripe();
@@ -42,20 +36,18 @@ export default function Index() {
   };
 
   return (
-    <Elements stripe={stripePromise} >
-      <form onSubmit={handleSubscribe}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <CardElement />
-        <button type="submit" disabled={!stripe}>
-          Subscribe
-        </button>
-      </form>
-    </Elements>
+    <form onSubmit={handleSubscribe}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <CardElement />
+      <button type="submit" disabled={!stripe}>
+        Subscribe
+      </button>
+    </form>
   );
 }

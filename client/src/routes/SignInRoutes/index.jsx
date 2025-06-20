@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import {
   SettingsPage,
@@ -6,7 +6,6 @@ import {
   NotFound,
   BrowseSpace,
   Summary,
-  SubscriptionPlan,
 } from "../../pages";
 
 export default function index() {
@@ -24,9 +23,3 @@ export default function index() {
     </>
   );
 }
-
-
-    {/*   <Route path="/home" element={<Home />} />
-          <Route path={`/spaces/:id`} element={<Home />} />
-          <Route path="/" element={<BrowseSpace />} />
-          <Route path="/summary" element={<Summary />} /> */}
