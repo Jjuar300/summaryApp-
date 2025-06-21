@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Space, User, Chatgpt, Notes, Imagekit } = require("../controllers/index");
+const { Space, User, Chatgpt, Notes, Imagekit, Stripe } = require("../controllers/index");
 
 //spaces 
 router.post("/spaces", Space.createSpace);
@@ -30,4 +30,6 @@ router.get('/userNotes/:userId/space/:spaceId', Notes.data)
 router.put('/updateUserNotes', Notes.update )
 router.delete('/deleteNote/:noteId', Notes.remove)
 
+//stripe
+router.post('/create-checkout-session',Stripe.createSubscription)
 module.exports = router;

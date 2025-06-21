@@ -14,26 +14,22 @@ import {
   fireIcon,
 } from "./assets/index";
 import {sendObjectId} from '../../Redux/createSpace'
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import Payment  from "../Payment/Index";
-
-const stripePromise = loadStripe(
-  "pk_live_51NF8hxKBWAiPiCSPtcoQCx48lHOJtJO2DPNIlVCm3oWWHLqM6UAhKHIJINBAYP8IoRBZiqIe5Q7tKEzP0MWiOkAY003QNuFgTR"
-);
+import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
+  const priceId = import.meta.env.VITE_TEST_PRICE_KEY; 
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
   const pricePlan = isPlanButton ? 20 : 10;
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
+ 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch(); 
   const navigate = useNavigate(); 
 
-  const handleSubscriptionPlan = () => {
+  const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
 
@@ -50,6 +46,24 @@ export default function Index() {
     dispatch(sendObjectId(null));
   };
 
+  const handleSubscriptionPlan = async (priceId) => {
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method:'POST', 
+        headers: {
+          'Content-Type' : 'application/json'
+        }, 
+        body: JSON.stringify({priceId})
+      }); 
+      const session = await response.json() 
+      if(session.status === 'complete') return setSessionStatus(true)
+      window.location.href = session.url;
+      console.log('session status:', session.status)
+    } catch (error) {
+       console.log('Error:', error) 
+    }
+  }
+
   const boxStyle = {
     position: "relative",
     display: "flex",
@@ -65,10 +79,6 @@ export default function Index() {
 
   return (
     <div>
-
-    <Elements stripe={stripePromise}>
-      <Payment/>
-    </Elements>
 
       <UserAvatar
         inlineStyle={{
@@ -148,7 +158,7 @@ export default function Index() {
           50% off
         </span>
         <button
-          onClick={handleSubscriptionPlan}
+          onClick={toggleSubscriptionPlan}
           className={isPlanButton ? "btn-mo-ye-click" : "btn-mo-ye"}
         >
           <span
@@ -172,7 +182,7 @@ export default function Index() {
             <span className="month">/mo</span>
           </span>
         </span>
-        <button onClick={() => navigate('/subScriptionForm')} className="btn-startTrial">Start free trial</button>
+        <button onClick={() => handleSubscriptionPlan(priceId)} className="btn-startTrial">Start free trial</button>
         <span className="divider">
           ________________________________________
         </span>

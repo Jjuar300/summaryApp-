@@ -5,7 +5,6 @@ import SettingsPage from "./SettingsPage/index";
 import BrowseSpace from "./BrowseSpace/index";
 import Summary from "./Summary/index";
 import SubscriptionPlan from './SubscriptionPlan/Index'
-import Payment from './Payment/Index'
 
 export {
   LandingPage,
@@ -15,5 +14,4 @@ export {
   BrowseSpace,
   Summary,
   SubscriptionPlan, 
-  Payment, 
 };

@@ -10,8 +10,8 @@ import {
   setProfileImage,
   setUserCreated,
 } from "../../Redux/imageContainer";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate} from "react-router-dom";
 import { IKContext, IKUpload } from "imagekitio-react";
 
 export default function index() {
@@ -28,6 +28,9 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const sessionStatus = useSelector(state => state.Stripe.status); 
+
+  console.log('sessionStatus:', sessionStatus);
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;

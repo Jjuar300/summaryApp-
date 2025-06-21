@@ -6,9 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 
-const stripePromise = loadStripe(
-  "pk_live_51NF8hxKBWAiPiCSPtcoQCx48lHOJtJO2DPNIlVCm3oWWHLqM6UAhKHIJINBAYP8IoRBZiqIe5Q7tKEzP0MWiOkAY003QNuFgTR"
-);
+const stripePromise = loadStripe(import.meta.env.VITE_TEST_PUBLISH_KEY);
 
 const options = {
   mode:'payment', 
