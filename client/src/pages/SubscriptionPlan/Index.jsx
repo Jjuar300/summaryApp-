@@ -1,11 +1,11 @@
 import "./styles/Index.css";
 import { useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {
   settings,
   logout,
@@ -13,56 +13,78 @@ import {
   NoteLogo,
   fireIcon,
 } from "./assets/index";
-import {sendObjectId} from '../../Redux/createSpace'
+import { sendObjectId } from "../../Redux/createSpace";
 import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
-  const priceId = import.meta.env.VITE_TEST_PRICE_KEY; 
+  const priceId = import.meta.env.VITE_TEST_PRICE_KEY;
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
   const pricePlan = isPlanButton ? 20 : 10;
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
- 
-  const open = Boolean(anchorEl);
-  const dispatch = useDispatch(); 
-  const navigate = useNavigate(); 
+  const queryParams = new URLSearchParams(location.search); 
+  const sessionId = queryParams.get('session_id'); 
+  
 
+  
+  const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
-
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
-
- const handleOnClick = () => {
+  
+  const handleOnClick = () => {
     // navigate("/");
     dispatch(sendObjectId(null));
   };
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
-      const response = await fetch('/api/create-checkout-session', {
-        method:'POST', 
+      await fetch("/api/create-checkout-session", {
+        method: "POST",
         headers: {
-          'Content-Type' : 'application/json'
-        }, 
-        body: JSON.stringify({priceId})
-      }); 
-      const session = await response.json() 
-      if(session.status === 'complete') return setSessionStatus(true)
-      window.location.href = session.url;
-      console.log('session status:', session.status)
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ priceId, email:user.primaryEmailAddress.emailAddress }),
+      });
     } catch (error) {
-       console.log('Error:', error) 
+      console.log("Error:", error);
     }
-  }
+  };
+  
+  const savePayment =  async () => {
+    try {
+    const response =  await fetch('/save-payment', {
+        method: 'POST', 
+        headers: {
+          "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({session_id: sessionId})
+      }); 
+     setSessionStatus(response)
+      console.log('response:', response)
+    } catch (error) {
+    return error;  
+    }
+  }; 
+
+  useEffect(() =>{ 
+    if(sessionId){
+      savePayment(); 
+    }
+  },[sessionId])
 
   const boxStyle = {
     position: "relative",
@@ -79,7 +101,6 @@ export default function Index() {
 
   return (
     <div>
-
       <UserAvatar
         inlineStyle={{
           position: "absolute",
@@ -112,30 +133,28 @@ export default function Index() {
           isIcon={true}
         />
 
-       
-       <SignOutButton>
-         <Box
-          sx={{
-            position: "relative",
-            display: "flex",
-            left: "1rem",
-          }}
-        >
-          <img style={{ width: "1.2rem" }} src={`${logout}`} />
-          <Button
-            onClick={handleOnClick}
+        <SignOutButton>
+          <Box
             sx={{
-              fontSize: "1rem",
-              color: "black",
-              width: "10rem",
-              left: "-2rem",
+              position: "relative",
+              display: "flex",
+              left: "1rem",
             }}
           >
-            Logout
-          </Button>
-        </Box>
-       </SignOutButton>
-
+            <img style={{ width: "1.2rem" }} src={`${logout}`} />
+            <Button
+              onClick={handleOnClick}
+              sx={{
+                fontSize: "1rem",
+                color: "black",
+                width: "10rem",
+                left: "-2rem",
+              }}
+            >
+              Logout
+            </Button>
+          </Box>
+        </SignOutButton>
       </Popover>
 
       <h1 className={isMobileScreen ? "pickPlan-mobile" : "pickPlan"}>
@@ -182,7 +201,12 @@ export default function Index() {
             <span className="month">/mo</span>
           </span>
         </span>
-        <button onClick={() => handleSubscriptionPlan(priceId)} className="btn-startTrial">Start free trial</button>
+        <button
+          onClick={() => handleSubscriptionPlan(priceId)}
+          className="btn-startTrial"
+        >
+          Start free trial
+        </button>
         <span className="divider">
           ________________________________________
         </span>
