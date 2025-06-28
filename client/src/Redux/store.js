@@ -18,7 +18,7 @@ const persistConfig = {
   version: 1,
   storage,
   sessionStorage,
-  //  whitelist:[], 
+  //  whitelist:["Stripe"], 
   //  blacklist: [createSpace] 
 };
 

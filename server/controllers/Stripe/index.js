@@ -14,13 +14,10 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}settings?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT_URL}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}`,
     });
-
-    console.log("session:", session);
-
-    res.json({ url: session.url, status: session.status });
+    res.json({  session, status: session.status });
   } catch (error) {
     console.log("Error:", error);
     res.status(500).json({ error: error.message });
@@ -29,13 +26,13 @@ const createSubscription = async (req, res) => {
 
 const saveSubscribtion = async (req, res) => {
    const {session_id} = req.body;
-   console.log('sessionId:', session_id) 
+  //  console.log('sessionId:', session_id) 
   try {
-    const session = await stripe.checkout.session.retrieve(session_id); 
+    const session = await stripe.checkout.sessions.retrieve(`${session_id}`); 
     const subscription = await stripe.subscriptions.retrieve(session.subscription); 
    
     if(session.status === 'complete'){
-      console.log({session, subscription}); 
+      // console.log({session, subscription}); 
       return res.status(200).json({session, subscription}); 
     }
 

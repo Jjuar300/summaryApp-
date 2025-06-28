@@ -4,7 +4,7 @@ import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
+import { useSelector } from "react-redux";
 
 const stripePromise = loadStripe(import.meta.env.VITE_TEST_PUBLISH_KEY);
 
@@ -19,13 +19,14 @@ const options = {
 
 
 function App() {
-  const isUserFreeTrial = false; 
+      const isSessionStatus = useSelector((state) => state.Stripe.status); 
+
   return (
     <>
       <BrowserRouter>
         <SignedIn>
           <Elements options={options} stripe={stripePromise}>
-            {isUserFreeTrial ? <SignedInRoutes/> : <SubscriptionPlan />}
+            {isSessionStatus ? <SignedInRoutes/> : <SubscriptionPlan />}
           </Elements>
         </SignedIn>
         <SignedOut>

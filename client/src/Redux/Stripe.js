@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export const Stripe = createSlice({
-   name:'stripe', 
+   name:'Stripe', 
    initialState:{
-    status:'', 
+    status:null, 
    }, 
    reducers: {
     setSessionStatus: (state, action) => {

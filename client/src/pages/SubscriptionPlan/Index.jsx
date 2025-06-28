@@ -27,8 +27,6 @@ export default function Index() {
   const queryParams = new URLSearchParams(location.search); 
   const sessionId = queryParams.get('session_id'); 
   
-
-  
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,13 +50,18 @@ export default function Index() {
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
-      await fetch("/api/create-checkout-session", {
+      const response =  await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ priceId, email:user.primaryEmailAddress.emailAddress }),
-      });
+
+      })
+
+      const{ session }= await response.json(); 
+
+      if(session) return window.location.href = session.url; 
     } catch (error) {
       console.log("Error:", error);
     }
@@ -66,25 +69,31 @@ export default function Index() {
   
   const savePayment =  async () => {
     try {
-    const response =  await fetch('/save-payment', {
+    const response =  await fetch('/api/save-payment', {
         method: 'POST', 
         headers: {
           "Content-Type" : "application/json",
         },
         body: JSON.stringify({session_id: sessionId})
       }); 
-     setSessionStatus(response)
-      console.log('response:', response)
+      if(response){
+           return  dispatch(setSessionStatus(true))
+      }else{
+           return  dispatch(setSessionStatus(false))
+
+      }
+      // console.log('response:', response)
     } catch (error) {
     return error;  
     }
   }; 
 
+
   useEffect(() =>{ 
     if(sessionId){
       savePayment(); 
     }
-  },[sessionId])
+  },[])
 
   const boxStyle = {
     position: "relative",
