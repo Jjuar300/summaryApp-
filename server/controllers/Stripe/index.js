@@ -41,7 +41,25 @@ const saveSubscribtion = async (req, res) => {
   }
 };
 
+  const cancelPayment = async (req, res) =>{ 
+    try {
+      const {session_Id} = req.body; 
+      const session = await stripe.checkout.sessions.retrive(session_Id);
+      const subscription =  await stripe.subscription.retrive(session.subscriptioin);
+      
+      console.log('sessionID:', session_Id)
+      console.log('subscription:', subscription); 
+      // if(session.status === 'complete'){
+        
+      // }
+    } catch (error) {
+      return error
+    }
+  }
+
+
 module.exports = {
   createSubscription,
   saveSubscribtion, 
+  cancelPayment, 
 };

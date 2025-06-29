@@ -11,8 +11,9 @@ import {
   setUserCreated,
 } from "../../Redux/imageContainer";
 import { useDispatch } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IKContext, IKUpload } from "imagekitio-react";
+import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function index() {
   const [isOpen, setOpen] = useState();
@@ -28,6 +29,8 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const session_Id = queryParams.get("session_id");
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
@@ -84,12 +87,29 @@ export default function index() {
     fontSize: "1.6rem",
   };
 
+  //add stripe subscription deletion here.
+  const cancelSubscriptionPlan = async () => {
+     dispatch(setSessionStatus(false))
+    try {
+      const response = await fetch("/api/cancel-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "Applicaiton/json",
+        },
+         body: JSON.stringify({session_Id: session_Id})
+      });
+    } catch (error) {
+      return error;
+    }
+  };
+
   const handleUserDelete = async () => {
     postData("/api/imagekitfolder", {
       folderName: user?.id,
     });
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
+    // cancelSubscriptionPlan()
     await user?.delete();
     navigate("/");
     await deleteData(`/api/users/${user?.id}`, {
@@ -153,6 +173,10 @@ export default function index() {
           height: "100vh",
         }}
       >
+            <button
+            onClick={() => cancelSubscriptionPlan()}
+            >cancel subscription</button>
+
         <Box
           sx={{
             position: "absolute",
@@ -420,6 +444,7 @@ export default function index() {
       </Box>
 
       {isMobileScreen ? (
+        //mobile
         <DeleteModal
           isText={true}
           textQuestion={"Are your sure you want to delete your Account?"}
@@ -436,6 +461,7 @@ export default function index() {
           rightButtonStyle={rightButtonStyle}
         />
       ) : (
+        //desktop
         <DeleteModal
           isInput={false}
           isText={true}

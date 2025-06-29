@@ -33,4 +33,5 @@ router.delete('/deleteNote/:noteId', Notes.remove)
 //stripe
 router.post('/create-checkout-session',Stripe.createSubscription)
 router.post('/save-payment', Stripe.saveSubscribtion)
+router.post('/cancel-payment', Stripe.cancelPayment)
 module.exports = router;
