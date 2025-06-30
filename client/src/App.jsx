@@ -20,8 +20,9 @@ const options = {
 
 function App() {
       const isSessionStatus = useSelector((state) => state.Stripe.status); 
-
-  return (
+      // const isSessionStatus = false
+     console.log('isSessionStatus:', isSessionStatus)
+      return (
     <>
       <BrowserRouter>
         <SignedIn>

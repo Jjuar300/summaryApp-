@@ -5,7 +5,7 @@ import { UserAvatar, PopoverContainer } from "../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   settings,
   logout,
@@ -24,25 +24,25 @@ export default function Index() {
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
-  const queryParams = new URLSearchParams(location.search); 
-  const sessionId = queryParams.get('session_id'); 
-  
+  const queryParams = new URLSearchParams(location.search);
+  const sessionId = queryParams.get("session_id");
+
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
-  
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleOnClick = () => {
     // navigate("/");
     dispatch(sendObjectId(null));
@@ -50,50 +50,50 @@ export default function Index() {
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
-      const response =  await fetch("/api/create-checkout-session", {
+      const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ priceId, email:user.primaryEmailAddress.emailAddress }),
+        body: JSON.stringify({
+          priceId,
+          email: user.primaryEmailAddress.emailAddress,
+        }),
+      });
 
-      })
-
-      const{ session }= await response.json(); 
-
-      if(session) return window.location.href = session.url; 
+      const { session } = await response.json();
+      if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);
     }
   };
-  
-  const savePayment =  async () => {
+
+  const savePayment = async () => {
     try {
-    const response =  await fetch('/api/save-payment', {
-        method: 'POST', 
+      const response = await fetch("/api/save-payment", {
+        method: "POST",
         headers: {
-          "Content-Type" : "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({session_id: sessionId})
-      }); 
-      if(response){
-           return  dispatch(setSessionStatus(true))
-      }else{
-           return  dispatch(setSessionStatus(false))
-
+        body: JSON.stringify({ session_id: sessionId, userId: user.id }),
+      });
+      const data = await response.json();
+      console.log("subscription:", data.subscription.status);
+      if (data.subscription.status === "active") {
+        return dispatch(setSessionStatus(true));
+      } else {
+        return dispatch(setSessionStatus(false));
       }
-      // console.log('response:', response)
     } catch (error) {
-    return error;  
+      return error;
     }
-  }; 
-
-
-  useEffect(() =>{ 
-    if(sessionId){
-      savePayment(); 
+  };
+ 
+  useEffect(() => {
+    if (sessionId) {
+      savePayment();
     }
-  },[])
+  }, []);
 
   const boxStyle = {
     position: "relative",

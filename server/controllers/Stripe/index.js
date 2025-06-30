@@ -1,13 +1,14 @@
 const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
+const { UserPayment } = require("../../Models/index");
 
 const createSubscription = async (req, res) => {
   try {
     const { priceId, email } = req.body;
-   
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
-      customer_email: email, 
+      customer_email: email,
       line_items: [
         {
           price: priceId,
@@ -17,7 +18,7 @@ const createSubscription = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}`,
     });
-    res.json({  session, status: session.status });
+    res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error:", error);
     res.status(500).json({ error: error.message });
@@ -25,41 +26,67 @@ const createSubscription = async (req, res) => {
 };
 
 const saveSubscribtion = async (req, res) => {
-   const {session_id} = req.body;
-  //  console.log('sessionId:', session_id) 
   try {
-    const session = await stripe.checkout.sessions.retrieve(`${session_id}`); 
-    const subscription = await stripe.subscriptions.retrieve(session.subscription); 
-   
-    if(session.status === 'complete'){
-      // console.log({session, subscription}); 
-      return res.status(200).json({session, subscription}); 
-    }
+    const { session_id, userId } = req.body;
+    const session = await stripe.checkout.sessions.retrieve(`${session_id}`);
+    const subscription = await stripe.subscriptions.retrieve(
+      session.subscription
+    );
 
+    const isUserPayment = UserPayment.findOne({session:{_id: session_id}})
+
+    // if(isUserPayment) return console.log("user paid")
+
+    const newUserPayment = await UserPayment.create({
+      session: {
+        _id: session.id,
+        status: session.status,
+        userId: userId,
+        createAt: session.created,
+      },
+      subscription: {
+        userId: userId,
+        customerId: subscription.customer,
+        subscriptionId: subscription.id,
+        priceId: subscription.items.data[0].price?.id,
+        paymentMethodId: subscription.default_payment_method,
+        status: subscription.status,
+        currentPeriodEnd: subscription.items.data[0].current_period_end,
+        isSubscribed: true,
+        Plan: {
+          priceId: subscription.plan.id,
+          productId: subscription.plan.product,
+          planName: subscription.plan.nickname,
+          amount: subscription.plan.amount,
+          currency: subscription.plan.currency,
+          interval: subscription.plan.interval,
+        },
+      },
+    });
+ 
+    if (session.status === "complete") {
+      await newUserPayment.save();
+      return res.status(200).json({ session, subscription });
+    }
   } catch (error) {
     console.log("Error:", error);
   }
 };
 
-  const cancelPayment = async (req, res) =>{ 
-    try {
-      const {session_Id} = req.body; 
-      const session = await stripe.checkout.sessions.retrive(session_Id);
-      const subscription =  await stripe.subscription.retrive(session.subscriptioin);
-      
-      console.log('sessionID:', session_Id)
-      console.log('subscription:', subscription); 
-      // if(session.status === 'complete'){
-        
-      // }
-    } catch (error) {
-      return error
-    }
+const cancelPayment = async (req, res) => {
+  try {
+    const { session_Id } = req.body;
+    const session = await stripe.checkout.sessions.retrive(session_Id);
+    const subscription = await stripe.subscription.retrive(
+      session.subscriptioin
+    );
+  } catch (error) {
+    return error;
   }
-
+};
 
 module.exports = {
   createSubscription,
-  saveSubscribtion, 
-  cancelPayment, 
+  saveSubscribtion,
+  cancelPayment,
 };
