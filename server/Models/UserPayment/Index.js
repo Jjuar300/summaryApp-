@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'); 
 
 const UserPayment = new mongoose.Schema({
-   
+   userId: String, 
     session: {
         _id: String, 
         status: String, 

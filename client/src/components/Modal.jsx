@@ -84,7 +84,7 @@ export default function DeleteModal({
               onClick={isTextWithoutSpaces && onClick}
               sx={{
                 position: "absolute",
-                top: "11rem",
+                top: "14rem",
                 left: "17rem",
                 backgroundColor: isTextWithoutSpaces ? "#47046e" : "gray",
                 color: "white",
@@ -103,7 +103,7 @@ export default function DeleteModal({
             onClick={() => setOpenModal()}
             sx={{
               position: "absolute",
-              top: "11rem",
+              top: "14rem",
               left: "12rem",
               color: "black",
             }}

@@ -20,9 +20,6 @@ const data = async (req, res) => {
   try {
     const { spaceId, userId } = req.params;
 
-    console.log("spaceId:", spaceId);
-    console.log("userId:", userId);
-
     const userNotes = await Notes.findOne({ _id: `${spaceId}` });
     return res.json(userNotes);
   } catch (error) {

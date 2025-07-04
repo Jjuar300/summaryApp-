@@ -38,6 +38,7 @@ const saveSubscribtion = async (req, res) => {
     // if(isUserPayment) return console.log("user paid")
 
     const newUserPayment = await UserPayment.create({
+     userId: userId, 
       session: {
         _id: session.id,
         status: session.status,
@@ -73,20 +74,30 @@ const saveSubscribtion = async (req, res) => {
   }
 };
 
-const cancelPayment = async (req, res) => {
+const getUserPayment = async (req, res) => {
   try {
-    const { session_Id } = req.body;
-    const session = await stripe.checkout.sessions.retrive(session_Id);
-    const subscription = await stripe.subscription.retrive(
-      session.subscriptioin
-    );
+    const userId = req.params.userId
+     const userPayment = await UserPayment.findOne({userId: userId})
+    res.json(userPayment); 
   } catch (error) {
     return error;
   }
 };
 
+const cancelUserPayment = async (req, res) =>{ 
+  try {
+   const {subscription_Id} = req.body;
+   console.log('subscription_Id:', subscription_Id);
+   const deletedSubscription = await stripe.subscriptions.cancel(subscription_Id) 
+   res.json({success: true, message: 'subscription cancelled successfully!',deletedSubscription})
+  } catch (error) {
+    return error
+  }
+}
+
 module.exports = {
   createSubscription,
   saveSubscribtion,
-  cancelPayment,
+  getUserPayment,
+  cancelUserPayment, 
 };

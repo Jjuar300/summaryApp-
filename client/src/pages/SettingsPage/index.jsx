@@ -30,7 +30,8 @@ export default function index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const session_Id = queryParams.get("session_id");
+  const [userPayment, setUserPayment] = useState();
+  const subscription_Id = userPayment?.subscription.subscriptionId;
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
@@ -65,7 +66,7 @@ export default function index() {
     backgroundColor: "white",
     width: "25rem",
     height: "23rem",
-    left: "50rem",
+    left: "45rem",
     top: "15rem",
     borderRadius: "1rem",
   };
@@ -88,19 +89,36 @@ export default function index() {
   };
 
   //add stripe subscription deletion here.
-  const cancelSubscriptionPlan = async () => {
-     dispatch(setSessionStatus(false))
+  console.log("subscription:", userPayment?.subscription.subscriptionId);
+  const getSubscriptionPlan = async () => {
+    dispatch(setSessionStatus(false));
     try {
-      const response = await fetch("/api/cancel-payment", {
-        method: "POST",
+      const response = await fetch(`/api/userPayment/${userId}`, {
+        method: "GET",
         headers: {
-          "Content-Type": "Applicaiton/json",
+          "Content-Type": "Application/json",
         },
-         body: JSON.stringify({session_Id: session_Id})
       });
+      const data = await response.json();
+      setUserPayment(data);
     } catch (error) {
       return error;
     }
+  };
+
+  const cancelPayment = async () => {
+    setSessionStatus(false)
+   fetch("/api/cancel-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify({
+        subscription_Id
+      }),
+    });
+    // const data = await response.json();
+    // console.log('response:',data )
   };
 
   const handleUserDelete = async () => {
@@ -109,7 +127,6 @@ export default function index() {
     });
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
-    // cancelSubscriptionPlan()
     await user?.delete();
     navigate("/");
     await deleteData(`/api/users/${user?.id}`, {
@@ -154,6 +171,7 @@ export default function index() {
   };
   useEffect(() => {
     if (user) {
+      getSubscriptionPlan();
       setTextInput({
         firstName: user.firstName || "",
         lastName: user.lastName || "",
@@ -173,8 +191,8 @@ export default function index() {
           height: "100vh",
         }}
       >
-            <button
-            onClick={() => cancelSubscriptionPlan()}
+        <button
+            onClick={() => cancelPayment()}
             >cancel subscription</button>
 
         <Box
@@ -449,7 +467,7 @@ export default function index() {
           isText={true}
           textQuestion={"Are your sure you want to delete your Account?"}
           textInformation={
-            "Deleting your account will remove all information and data. "
+            "Deleting your account will permanently erase all your data, personal information, and any active subscriptions. "
           }
           textLeftButton={"Cancel"}
           textRightButton={"Delete"}
@@ -467,7 +485,7 @@ export default function index() {
           isText={true}
           textQuestion={"Are your sure you want to delete your Account?"}
           textInformation={
-            "Deleting your account will remove all information and data. "
+            "Deleting your account will permanently erase all your data, personal information, and any active subscriptions.  "
           }
           textLeftButton={"Cancel"}
           textRightButton={"Delete"}
