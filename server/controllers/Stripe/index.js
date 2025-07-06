@@ -33,12 +33,12 @@ const saveSubscribtion = async (req, res) => {
       session.subscription
     );
 
-    const isUserPayment = UserPayment.findOne({session:{_id: session_id}})
+    const isUserPayment = UserPayment.findOne({ session: { _id: session_id } });
 
     // if(isUserPayment) return console.log("user paid")
 
     const newUserPayment = await UserPayment.create({
-     userId: userId, 
+      userId: userId,
       session: {
         _id: session.id,
         status: session.status,
@@ -64,7 +64,7 @@ const saveSubscribtion = async (req, res) => {
         },
       },
     });
- 
+
     if (session.status === "complete") {
       await newUserPayment.save();
       return res.status(200).json({ session, subscription });
@@ -76,28 +76,37 @@ const saveSubscribtion = async (req, res) => {
 
 const getUserPayment = async (req, res) => {
   try {
-    const userId = req.params.userId
-     const userPayment = await UserPayment.findOne({userId: userId})
-    res.json(userPayment); 
+    const userId = req.params.userId;
+    const userPayment = await UserPayment.findOne({ userId: userId });
+    res.json(userPayment);
   } catch (error) {
     return error;
   }
 };
 
-const cancelUserPayment = async (req, res) =>{ 
+const cancelUserPayment = async (req, res) => {
   try {
-   const {subscription_Id} = req.body;
-   console.log('subscription_Id:', subscription_Id);
-   const deletedSubscription = await stripe.subscriptions.cancel(subscription_Id) 
-   res.json({success: true, message: 'subscription cancelled successfully!',deletedSubscription})
+    const { userPaymentMongoDocId } = req.body;
+    console.log('userPaymentMongoDocId:',userPaymentMongoDocId)
+   await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
+
+    const { subscription_Id } = req.body;
+    const deletedSubscription = await stripe.subscriptions.cancel(
+      subscription_Id
+    );
+    res.json({
+      success: true,
+      message: "subscription cancelled successfully!",
+      deletedSubscription,
+    });
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 module.exports = {
   createSubscription,
   saveSubscribtion,
   getUserPayment,
-  cancelUserPayment, 
+  cancelUserPayment,
 };

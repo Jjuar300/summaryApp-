@@ -29,10 +29,10 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
   const [userPayment, setUserPayment] = useState();
   const subscription_Id = userPayment?.subscription.subscriptionId;
-
+  const userPaymentMongoDocId = userPayment?._id; 
+   
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
@@ -89,7 +89,7 @@ export default function index() {
   };
 
   //add stripe subscription deletion here.
-  console.log("subscription:", userPayment?.subscription.subscriptionId);
+  console.log('userPayment:', userPayment?._id)
   const getSubscriptionPlan = async () => {
     dispatch(setSessionStatus(false));
     try {
@@ -107,14 +107,15 @@ export default function index() {
   };
 
   const cancelPayment = async () => {
-    setSessionStatus(false)
+    // setSessionStatus(false)
    fetch("/api/cancel-payment", {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify({
-        subscription_Id
+        subscription_Id, 
+        userPaymentMongoDocId, 
       }),
     });
     // const data = await response.json();
@@ -122,6 +123,7 @@ export default function index() {
   };
 
   const handleUserDelete = async () => {
+    cancelPayment();
     postData("/api/imagekitfolder", {
       folderName: user?.id,
     });
@@ -191,9 +193,6 @@ export default function index() {
           height: "100vh",
         }}
       >
-        <button
-            onClick={() => cancelPayment()}
-            >cancel subscription</button>
 
         <Box
           sx={{
