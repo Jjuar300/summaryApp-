@@ -4,7 +4,7 @@ import { Box, TextField, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
-import { useGetData } from "../../hooks/index";
+import { useGetData, useUserPayment } from "../../hooks/index";
 import {
   isUserCreated,
   setProfileImage,
@@ -25,17 +25,20 @@ export default function index() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { space } = useGetData();
+  const {userPayment} = useUserPayment();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userPayment, setUserPayment] = useState();
+  // const [userPayment, setUserPayment] = useState();
   const subscription_Id = userPayment?.subscription.subscriptionId;
   const userPaymentMongoDocId = userPayment?._id; 
    
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
+
+  console.log('userPayment:', userPayment)
 
   const authenticator = async () => {
     try {
@@ -88,26 +91,22 @@ export default function index() {
     fontSize: "1.6rem",
   };
 
-  //add stripe subscription deletion here.
-  console.log('userPayment:', userPayment?._id)
-  const getSubscriptionPlan = async () => {
-    dispatch(setSessionStatus(false));
-    try {
-      const response = await fetch(`/api/userPayment/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-      });
-      const data = await response.json();
-      setUserPayment(data);
-    } catch (error) {
-      return error;
-    }
-  };
+  // const getSubscriptionPlan = async () => {
+  //   try {
+  //     const response = await fetch(`/api/userPayment/${userId}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "Application/json",
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setUserPayment(data);
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // };
 
   const cancelPayment = async () => {
-    // setSessionStatus(false)
    fetch("/api/cancel-payment", {
       method: "POST",
       headers: {
@@ -118,12 +117,11 @@ export default function index() {
         userPaymentMongoDocId, 
       }),
     });
-    // const data = await response.json();
-    // console.log('response:',data )
   };
 
   const handleUserDelete = async () => {
     cancelPayment();
+    dispatch(setSessionStatus('cancelled'))
     postData("/api/imagekitfolder", {
       folderName: user?.id,
     });
@@ -173,7 +171,7 @@ export default function index() {
   };
   useEffect(() => {
     if (user) {
-      getSubscriptionPlan();
+      // getSubscriptionPlan();
       setTextInput({
         firstName: user.firstName || "",
         lastName: user.lastName || "",

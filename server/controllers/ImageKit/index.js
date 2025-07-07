@@ -15,6 +15,8 @@ const uploadFileImageKit = async (req, res) => {
     const result = imagekit.getAuthenticationParameters();
     res.send(result);
   } catch (error) {
+    console.log("error at imagekit/index.js :18:", error);
+
     res.status(500).json({ error: "Internal error" });
   }
 };
@@ -22,9 +24,9 @@ const uploadFileImageKit = async (req, res) => {
 const deleteImagekitFolder = async (req, res) => {
   try {
     const { folderName } = req.body;
-    imagekit.deleteFolder(`${folderName}`, (error, result) => {
+   if(folderName) return  imagekit.deleteFolder(`${folderName}`, (error, result) => {
       if (error) {
-        console.log("error:", error);
+        console.log("error at imagekit/index.js :27:", error);
       } else {
         console.log("result:", result);
       }

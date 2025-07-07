@@ -20,7 +20,7 @@ const createSubscription = async (req, res) => {
     });
     res.json({ session, status: session.status });
   } catch (error) {
-    console.log("Error:", error);
+    console.log("Error stripe/index.js line:23 :", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -70,7 +70,7 @@ const saveSubscribtion = async (req, res) => {
       return res.status(200).json({ session, subscription });
     }
   } catch (error) {
-    console.log("Error:", error);
+    console.log("Error stripe/index.js line:73 :", error);
   }
 };
 
@@ -80,7 +80,7 @@ const getUserPayment = async (req, res) => {
     const userPayment = await UserPayment.findOne({ userId: userId });
     res.json(userPayment);
   } catch (error) {
-    return error;
+    return console.log('error in stripe/index.js :83', error);
   }
 };
 
@@ -100,7 +100,7 @@ const cancelUserPayment = async (req, res) => {
       deletedSubscription,
     });
   } catch (error) {
-    return error;
+    return console.log('error in stripe/index.js :103', error);
   }
 };
 

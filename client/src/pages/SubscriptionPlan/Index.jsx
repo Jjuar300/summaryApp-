@@ -14,6 +14,7 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
+import { useUserPayment } from "../../hooks";
 import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
@@ -26,6 +27,7 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = useState(null);
   const queryParams = new URLSearchParams(location.search);
   const sessionId = queryParams.get("session_id");
+  const { getSubscriptionPlan } = useUserPayment();
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -44,7 +46,6 @@ export default function Index() {
   };
 
   const handleOnClick = () => {
-    // navigate("/");
     dispatch(sendObjectId(null));
   };
 
@@ -78,22 +79,17 @@ export default function Index() {
         body: JSON.stringify({ session_id: sessionId, userId: user.id }),
       });
       const data = await response.json();
-      console.log("subscription:", data.subscription.status);
-      if (data.subscription.status === "active") {
-        return dispatch(setSessionStatus(true));
-      } else {
-        return dispatch(setSessionStatus(false));
-      }
+      console.log("userPaymentData:", data);
+      return dispatch(setSessionStatus(data.subscription.status));
     } catch (error) {
       return error;
     }
   };
- 
+
   useEffect(() => {
-    if (sessionId) {
-      savePayment();
-    }
-  }, []);
+    savePayment();
+    // getSubscriptionPlan(); 
+  },[]);
 
   const boxStyle = {
     position: "relative",
