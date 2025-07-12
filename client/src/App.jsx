@@ -1,11 +1,10 @@
-import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
 import { SignedInRoutes, SignedOutRoutes, SubscriptionPlan } from "./routes";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
 
 const stripePromise = loadStripe(import.meta.env.VITE_TEST_PUBLISH_KEY);
 
@@ -22,12 +21,19 @@ function App() {
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   console.log("isSessionStatus:", isSessionStatus);
 
+  const userPaymentPlan = () => {
+    if (isSessionStatus === "active") {
+      return <SignedInRoutes />;
+    } else if (isSessionStatus === "pending") {
+      return <SubscriptionPlan />;
+    }
+  };
   return (
     <>
       <BrowserRouter>
-        <SignedIn>
+        <SignedIn >
           <Elements options={options} stripe={stripePromise}>
-            {isSessionStatus === null || isSessionStatus === "loading" ? (<div>loading...</div>) : isSessionStatus === "active" ? (<SignedInRoutes/>) : (<SubscriptionPlan/>)}
+            {userPaymentPlan()}
           </Elements>
         </SignedIn>
         <SignedOut>

@@ -8,7 +8,7 @@ export default function Index() {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/" element={<SubscriptionPlan />} />
+        <Route path="/subscriptionPlan" element={<SubscriptionPlan />} />
       </Routes>
     </>
   );

@@ -47,7 +47,7 @@ export default function Index() {
   };
 
   const handleOnClick = () => {
-    navigate("/");
+    navigate('http://localhost:5173/noto')
     dispatch(sendObjectId(null));
     if (isSignedIn) {
       dispatch(setOnClick(true));

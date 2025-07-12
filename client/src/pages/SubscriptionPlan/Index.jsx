@@ -28,6 +28,8 @@ export default function Index() {
   const queryParams = new URLSearchParams(location.search);
   const sessionId = queryParams.get("session_id");
   const { getSubscriptionPlan } = useUserPayment();
+  const { isSignedIn } = useUser();
+
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -71,6 +73,7 @@ export default function Index() {
 
   const savePayment = async () => {
     try {
+      // dispatch(setSessionStatus('pending'))
       const response = await fetch("/api/save-payment", {
         method: "POST",
         headers: {
@@ -85,6 +88,7 @@ export default function Index() {
       return error;
     }
   };
+
 
   useEffect(() => {
     savePayment();

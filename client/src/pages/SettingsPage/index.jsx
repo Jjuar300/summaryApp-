@@ -128,7 +128,7 @@ export default function index() {
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
     await user?.delete();
-    navigate("/");
+    navigate("/Noto");
     await deleteData(`/api/users/${user?.id}`, {
       space,
     });
