@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
+import { SignedIn, SignedOut} from "@clerk/clerk-react";
 import { SignedInRoutes, SignedOutRoutes, SubscriptionPlan } from "./routes";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";

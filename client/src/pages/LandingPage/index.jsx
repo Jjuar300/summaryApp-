@@ -25,7 +25,7 @@ export default function index() {
       <h1 className={isMobileScreen ? "title-mobile" : "title"}>
         Collect your thoughts.
       </h1>
-      <SignInButton fallbackRedirectUrl={import.meta.env.VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL} >
+      <SignInButton>
         <button className={isMobileScreen ? "signIn-mobile" : "signIn"}>
           Start free trial
         </button>

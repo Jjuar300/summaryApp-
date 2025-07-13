@@ -10,7 +10,7 @@ export default function index() {
         <Routes>
           <Route path="/Noto" element={<LandingPage />} />
           {/* <Route path="/subscriptionPlan" element={<SubscriptionPlan/>} /> */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       {/* </BrowserRouter> */}
     </>

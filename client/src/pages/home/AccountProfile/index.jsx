@@ -1,6 +1,6 @@
 import { Box, Button, Popover } from "@mui/material";
 import { UserAvatar, PopoverContainer } from "../../../components";
-import { useUser, SignOutButton } from "@clerk/clerk-react";
+import { useUser, SignOutButton, useClerk } from "@clerk/clerk-react";
 import { useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import { boxStyle, buttonStyle } from "./styles/index";
 import { setFeedBackOpen } from "../../../Redux/feedBack";
 
 export default function Index() {
+  const {signOut} = useClerk(); 
   const { user, isSignedIn } = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const userEmail = user.primaryEmailAddress.emailAddress;
@@ -22,6 +23,17 @@ export default function Index() {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
+
+
+  const handleSignOut = async () =>{ 
+    try {
+      await signOut(); 
+   if(!isSignedIn) return navigate('http://localhost:5173/noto')
+    } catch (error) {
+      console.log('error ::33', error)
+    }
+  }; 
+
 
   const UserAvatarStyle = {
     height: "3rem",
@@ -47,11 +59,11 @@ export default function Index() {
   };
 
   const handleOnClick = () => {
-    navigate('http://localhost:5173/noto')
+    handleSignOut();
     dispatch(sendObjectId(null));
     if (isSignedIn) {
       dispatch(setOnClick(true));
-    }
+    } 
   };
 
   return (
