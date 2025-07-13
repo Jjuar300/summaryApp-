@@ -84,6 +84,7 @@ export default function Index() {
           },
         }}
       >
+        
         <UserAvatar
           Text={FirstName}
           submitOnClickFunction={handleClick}
@@ -126,8 +127,8 @@ export default function Index() {
             buttonStyle={buttonStyle}
             isIcon={true}
           />
-
-          <SignOutButton>
+          
+          <SignOutButton signOutOptions={{redirectUrl: '/Noto'}} >
             <Box
               sx={{
                 position: "relative",

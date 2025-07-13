@@ -15,7 +15,7 @@ export default function index() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path={`/spaces/:id`} element={<Home />} />
-          <Route path="/" element={<BrowseSpace />} />
+          <Route path="/BrowseSpace" element={<BrowseSpace />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/settings" element={<SettingsPage />} />

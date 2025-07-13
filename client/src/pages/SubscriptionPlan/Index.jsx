@@ -2,7 +2,7 @@ import "./styles/Index.css";
 import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
-import { useUser, SignOutButton } from "@clerk/clerk-react";
+import { useUser, SignOutButton, useClerk } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -122,7 +122,6 @@ export default function Index() {
         Text={FirstName}
         submitOnClickFunction={handleClick}
       />
-
       <Popover
         open={open}
         anchorEl={anchorEl}
@@ -142,7 +141,7 @@ export default function Index() {
           isIcon={true}
         />
 
-        <SignOutButton>
+        <SignOutButton signOutOptions={{redirectUrl: '/Noto'}}>
           <Box
             sx={{
               position: "relative",
