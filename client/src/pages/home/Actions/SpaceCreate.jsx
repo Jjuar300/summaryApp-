@@ -37,7 +37,7 @@ export default function SpaceCreate({
   const handleBrowse = (e) =>{ 
     e?.preventDefault();
     dispatch(setRun(false)) 
-    navigate('/');
+    navigate('/BrowseSpace');
     fetchUserNote();
     dispatch(setOpen(false))
   }

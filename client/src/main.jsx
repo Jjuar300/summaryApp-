@@ -14,8 +14,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <ClerkProvider
         publishableKey={PUBLISHIBLE_CLERK_KEY}
-        afterSignInUrl="/subscriptionPlan"
-        afterSignOutUrl="/Noto"
+        // afterSignInUrl="/BrowseSpace"
+        // afterSignOutUrl="/Noto"
      >
         <PersistGate persistor={persistStore(store)}>
           <App />

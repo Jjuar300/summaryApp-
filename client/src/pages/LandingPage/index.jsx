@@ -25,7 +25,7 @@ export default function index() {
       <h1 className={isMobileScreen ? "title-mobile" : "title"}>
         Collect your thoughts.
       </h1>
-      <SignInButton>
+      <SignInButton forceRedirectUrl='/subscriptionPlan' >
         <button className={isMobileScreen ? "signIn-mobile" : "signIn"}>
           Start free trial
         </button>

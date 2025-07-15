@@ -108,7 +108,7 @@ export default function Index({ setOpen }) {
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      navigate('/')
+      navigate('/Noto')
     } catch (error) {
       console.log(error);
     }

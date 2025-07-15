@@ -15,9 +15,10 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_URL}`,
+      success_url: `${process.env.CLIENT_URL}BrowseSpace?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_URL}Noto`,
     });
+    console.log('session:', session)
     res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error stripe/index.js line:23 :", error);
@@ -32,7 +33,7 @@ const saveSubscribtion = async (req, res) => {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription
     );
-
+     console.log('session_id:',session_id)
     const isUserPayment = UserPayment.findOne({ session: { _id: session_id } });
 
     // if(isUserPayment) return console.log("user paid")

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
 import { useUser, SignOutButton, useClerk } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   settings,
@@ -27,14 +27,11 @@ export default function Index() {
   const [anchorEl, setAnchorEl] = useState(null);
   const queryParams = new URLSearchParams(location.search);
   const sessionId = queryParams.get("session_id");
-  const { getSubscriptionPlan } = useUserPayment();
-  const { isSignedIn } = useUser();
-
-
+  
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
@@ -65,6 +62,7 @@ export default function Index() {
       });
 
       const { session } = await response.json();
+      console.log('session:',session)
       if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);

@@ -13,7 +13,7 @@ export default function index() {
   return (
     <>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          {/* <Route path="/home" element={<Home />} /> */}
           <Route path={`/spaces/:id`} element={<Home />} />
           <Route path="/BrowseSpace" element={<BrowseSpace />} />
           <Route path="/summary" element={<Summary />} />
