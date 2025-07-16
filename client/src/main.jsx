@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { BrowserRouter } from "react-router-dom";
 
 const PUBLISHIBLE_CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -14,11 +15,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <ClerkProvider
         publishableKey={PUBLISHIBLE_CLERK_KEY}
-        // afterSignInUrl="/BrowseSpace"
-        // afterSignOutUrl="/Noto"
-     >
+        afterSignInUrl="/subscriptionPlan"
+        afterSignOutUrl="/Noto"
+      >
         <PersistGate persistor={persistStore(store)}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </PersistGate>
       </ClerkProvider>
     </React.StrictMode>

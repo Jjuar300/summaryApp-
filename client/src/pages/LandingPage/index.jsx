@@ -12,6 +12,7 @@ import SubscriptionFrom from "../Stripe/SubscriptionFrom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useMediaQuery } from "@mui/material";
 // import { useUser } from "@clerk/clerk-react";
+import { useSelector } from "react-redux";
 
 const stripePromise = loadStripe(
   "pk_live_51NF8hxKBWAiPiCSPtcoQCx48lHOJtJO2DPNIlVCm3oWWHLqM6UAhKHIJINBAYP8IoRBZiqIe5Q7tKEzP0MWiOkAY003QNuFgTR"
@@ -19,13 +20,14 @@ const stripePromise = loadStripe(
 
 export default function index() {
   const isMobileScreen = useMediaQuery("(max-width:430px)");
+  const isSessionStatus = useSelector((state) => state.Stripe.status);
 
   return (
     <>
       <h1 className={isMobileScreen ? "title-mobile" : "title"}>
         Collect your thoughts.
       </h1>
-      <SignInButton forceRedirectUrl='/subscriptionPlan' >
+      <SignInButton forceRedirectUrl= '/subscriptionPlan'>
         <button className={isMobileScreen ? "signIn-mobile" : "signIn"}>
           Start free trial
         </button>

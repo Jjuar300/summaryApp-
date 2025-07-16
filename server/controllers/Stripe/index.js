@@ -15,16 +15,21 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}BrowseSpace?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT_URL}subscriptionPlan?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}Noto`,
     });
     console.log('session:', session)
+    const sessionInfo = await stripe.checkout.sessions.retrieve(`${session.id}`);
+
+    console.log('sessionInfo:', sessionInfo)
     res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error stripe/index.js line:23 :", error);
     res.status(500).json({ error: error.message });
   }
 };
+
+//?session_id={CHECKOUT_SESSION_ID}
 
 const saveSubscribtion = async (req, res) => {
   try {
@@ -33,7 +38,6 @@ const saveSubscribtion = async (req, res) => {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription
     );
-     console.log('session_id:',session_id)
     const isUserPayment = UserPayment.findOne({ session: { _id: session_id } });
 
     // if(isUserPayment) return console.log("user paid")
@@ -85,10 +89,18 @@ const getUserPayment = async (req, res) => {
   }
 };
 
+const userPaymentSuccess = (req, res) =>{
+ const event = req.body; 
+  try {
+  
+ } catch (error) {
+  
+ }
+}
+
 const cancelUserPayment = async (req, res) => {
   try {
     const { userPaymentMongoDocId } = req.body;
-    console.log('userPaymentMongoDocId:',userPaymentMongoDocId)
    await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
 
     const { subscription_Id } = req.body;

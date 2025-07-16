@@ -81,8 +81,9 @@ export default function Index() {
       });
       const data = await response.json();
       console.log("userPaymentData:", data);
-      return dispatch(setSessionStatus(data.subscription.status));
-    } catch (error) {
+       dispatch(setSessionStatus(data.subscription.status));
+        if(data.subscription.status === 'active') return navigate('/BrowseSpace')
+      } catch (error) {
       return error;
     }
   };

@@ -33,7 +33,6 @@ export default function index() {
   // const [userPayment, setUserPayment] = useState();
   const subscription_Id = userPayment?.subscription.subscriptionId;
   const userPaymentMongoDocId = userPayment?._id; 
-  const queryParams = new URLSearchParams(location.search);  
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
@@ -131,8 +130,8 @@ export default function index() {
     await deleteData(`/api/users/${user?.id}`, {
       space,
     });
-    navigate("/Noto");
     await signOut();
+    navigate("/Noto");
   };
 
   const rightButtonStyle = {
