@@ -31,6 +31,8 @@ export default function Index() {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  console.log('priceid:', priceId)
   
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);

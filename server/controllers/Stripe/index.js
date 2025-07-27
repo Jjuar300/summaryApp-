@@ -4,7 +4,7 @@ const { UserPayment } = require("../../Models/index");
 const createSubscription = async (req, res) => {
   try {
     const { priceId, email } = req.body;
-
+    console.log("priceID:", priceId)
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -18,13 +18,12 @@ const createSubscription = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}subscriptionPlan?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}Noto`,
     });
-    console.log('session:', session)
+    // console.log('session:', session)
     const sessionInfo = await stripe.checkout.sessions.retrieve(`${session.id}`);
-
-    console.log('sessionInfo:', sessionInfo)
+    // console.log('sessionInfo:', sessionInfo)
     res.json({ session, status: session.status });
   } catch (error) {
-    console.log("Error stripe/index.js line:23 :", error);
+    console.log("Error stripe/index.js:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -80,6 +79,7 @@ const saveSubscribtion = async (req, res) => {
 };
 
 const getUserPayment = async (req, res) => {
+  
   try {
     const userId = req.params.userId;
     const userPayment = await UserPayment.findOne({ userId: userId });
@@ -89,13 +89,27 @@ const getUserPayment = async (req, res) => {
   }
 };
 
-const userPaymentSuccess = (req, res) =>{
- const event = req.body; 
+const userPaymentSuccess =  (req, res) =>{
+  
   try {
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET; 
+     
+    const sig = req.headers['stripe-signature']; 
+    const event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);   
+    console.log('event:',event.type)
+    switch(event.type){
+     case 'checkout.session.completed':
+       const session = event.data.object; 
+       console.log('checkout session completed:', session.id);
+     break; 
+     }
+     return res.status(200).send('Event received')
+  } catch (error) {
+  console.log('webhook Error:', error.message)
+  return res.status(400).send('Webhook Error:', error.message) 
+}
   
- } catch (error) {
-  
- }
+
 }
 
 const cancelUserPayment = async (req, res) => {
@@ -122,4 +136,5 @@ module.exports = {
   saveSubscribtion,
   getUserPayment,
   cancelUserPayment,
+  userPaymentSuccess, 
 };

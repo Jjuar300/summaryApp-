@@ -25,19 +25,18 @@ export default function index() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { space } = useGetData();
-  const {userPayment} = useUserPayment();
+  const { userPayment } = useUserPayment();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [userPayment, setUserPayment] = useState();
   const subscription_Id = userPayment?.subscription.subscriptionId;
-  const userPaymentMongoDocId = userPayment?._id; 
+  const userPaymentMongoDocId = userPayment?._id;
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
-
 
   const authenticator = async () => {
     try {
@@ -106,21 +105,22 @@ export default function index() {
   // };
 
   const cancelPayment = async () => {
-   fetch("/api/cancel-payment", {
+    navigate("/Noto");
+    dispatch(setSessionStatus("cancelled"));
+    fetch("/api/cancel-payment", {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify({
-        subscription_Id, 
-        userPaymentMongoDocId, 
+        subscription_Id,
+        userPaymentMongoDocId,
       }),
     });
   };
 
   const handleUserDelete = async () => {
     cancelPayment();
-    dispatch(setSessionStatus('cancelled'))
     postData("/api/imagekitfolder", {
       folderName: user?.id,
     });
@@ -131,7 +131,6 @@ export default function index() {
       space,
     });
     await signOut();
-    navigate("/Noto");
   };
 
   const rightButtonStyle = {
@@ -190,7 +189,6 @@ export default function index() {
           height: "100vh",
         }}
       >
-
         <Box
           sx={{
             position: "absolute",

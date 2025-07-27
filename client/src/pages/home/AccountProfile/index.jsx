@@ -11,6 +11,7 @@ import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
 import { boxStyle, buttonStyle } from "./styles/index";
 import { setFeedBackOpen } from "../../../Redux/feedBack";
+import { setSessionStatus } from "../../../Redux/Stripe";
 
 export default function Index() {
   const {signOut} = useClerk(); 
@@ -27,13 +28,13 @@ export default function Index() {
 
   const handleSignOut = async () =>{ 
     try {
+      dispatch(setSessionStatus('pending'))
       await signOut(); 
    if(!isSignedIn) return navigate('http://localhost:5173/noto')
     } catch (error) {
       console.log('error ::33', error)
     }
   }; 
-
 
   const UserAvatarStyle = {
     height: "3rem",

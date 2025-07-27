@@ -18,15 +18,15 @@ export default function useUserPayment() {
       });
       const data = await response.json();
       setUserPayment(data);
-    //   return dispatch(setSessionStatus(data.subscription.status))
+      return dispatch(setSessionStatus(data.subscription.status))
     } catch (error) {
       return error;
     }
   };
 
-//   useEffect(() => {
-//     getSubscriptionPlan()
-//   },[])
+  useEffect(() => {
+    getSubscriptionPlan()
+  },[])
   
     return {
      userPayment,

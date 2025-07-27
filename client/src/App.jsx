@@ -25,18 +25,9 @@ function App() {
   console.log("isSessionStatus:", isSessionStatus);
   const navigate = useNavigate();
 
-  // const userPaymentPlan = () => {
-  //   if (isSessionStatus === "active") {
-  //     return <SignedInRoutes />;
-  //   } else if (
-  //     isSessionStatus === "pending" ||
-  //     isSessionStatus === "cancelled"
-  //   ) {
-  //     return <SubscriptionPlan />;
-  //   }
-  // };
-
- 
+  // useEffect(() => {
+  //   if(isSessionStatus === 'active') return navigate("/BrowseSpace")
+  // },[isSessionStatus, navigate])
 
   return (
     <>
