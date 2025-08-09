@@ -24,7 +24,6 @@ function App() {
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   console.log("isSessionStatus:", isSessionStatus);
   const navigate = useNavigate();
-
   // useEffect(() => {
   //   if(isSessionStatus === 'active') return navigate("/BrowseSpace")
   // },[isSessionStatus, navigate])
