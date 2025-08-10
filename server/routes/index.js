@@ -39,27 +39,5 @@ router.post('/save-payment', Stripe.saveSubscribtion)
 router.post('/cancel-payment', Stripe.cancelUserPayment)
 router.get('/userPayment/:userId', Stripe.getUserPayment)
 
-// router.post('/webhook', express.raw({type:'application/json'}) , async (req, res) => {
-  
-//   try {
-//     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET; 
-    
-//     const sig = req.headers['stripe-signature']; 
-//     const event = STRIPE.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);   
-//     console.log('event:',event.type)
-    
-//     if(event.type === 'customer.created'){
-//       const customer = await STRIPE.customers.retrive(event.data.object.id); 
-//       console.log('Customer retrived:', customer);
-//     }else{
-//       console.log('Unhandled event', event.type)
-//     }
-    
-//     return res.sendStatus(200)
-//   } catch (error) {
-//     console.log('webhook Error:', error.message)
-//     return res.sendStatus(400)
-//   }
-// })
 
 module.exports = router;

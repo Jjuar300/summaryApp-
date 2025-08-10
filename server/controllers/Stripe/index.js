@@ -26,7 +26,7 @@ const createSubscription = async (req, res) => {
     console.log("Error stripe/index.js:", error);
     res.status(500).json({ error: error.message });
   }
-};
+}
 
 //?session_id={CHECKOUT_SESSION_ID}
 
@@ -108,9 +108,7 @@ const userPaymentSuccess =  (req, res) =>{
   console.log('webhook Error:', error.message)
   return res.status(400).send('Webhook Error:', error.message) 
 }
-  
-
-}
+};
 
 const cancelUserPayment = async (req, res) => {
   try {

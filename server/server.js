@@ -26,35 +26,32 @@ app.post(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
-      console.log("event:", event.type);
-
-      // if(event.type === 'customer.created'){
-      //   const customer = await STRIPE.customers.retrive(event.data.object.id);
-      //   console.log('Customer retrived:', customer);
-      // }else if(event.type === 'customer.subscription.delete'){
-      //   const subscription = await STRIPE.subscription.retrive(event.data.object.id)
-
-      // }
 
       if (event.type === "checkout.session.completed") {
         const session = await STRIPE.checkout.sessions.retrieve(
           event.data.object.id,
           { expand: ["line_items"] }
         );
-        console.log('session::', session)
         const customer = await STRIPE.customers.retrieve(session?.customer);
-        // const customer = event.data.object;
-        console.log("customer:", customer);
-        // let testPayment = await TestPayment.findOne({email: customer.email})
-        const testPayment = await TestPayment.create({
-          email: customer.email,
-          name: customer.name,
-          customerId: customer.id,
-          hasAccess: true, 
-          priceId: session?.line_items?.data[0]?.price.id, 
 
-        });
-        testPayment.save();
+        if (customer.email) {
+          const isPayment = await TestPayment.findOne({
+            email: customer.email,
+          });
+          console.log("isPayment:", isPayment);
+          if (!isPayment) {
+            const testPayment = await TestPayment.create({
+              email: customer.email,
+              name: customer.name,
+              customerId: customer.id,
+              hasAccess: true,
+              priceId: session?.line_items?.data[0]?.price.id,
+            });
+            testPayment.save();
+          }
+        } else {
+              throw new Error('No user found!')
+        }
 
         return res.sendStatus(200);
       }
