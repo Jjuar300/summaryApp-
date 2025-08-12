@@ -10,7 +10,6 @@ import { BrowserRouter } from "react-router-dom";
 
 const PUBLISHIBLE_CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-// console.log('useSessionStatus:', useSessionsStatus())
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>

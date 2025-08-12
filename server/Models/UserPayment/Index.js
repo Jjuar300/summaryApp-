@@ -1,33 +1,38 @@
-const mongoose = require('mongoose'); 
+const mongoose = require("mongoose");
 
-const UserPayment = new mongoose.Schema({
-   userId: String, 
-    session: {
-        _id: String, 
-        status: String, 
-        userId: String, 
-        createAt: Number, 
-    }, 
-    subscription: {
-        userId: String, 
-        customerId: String, 
-        subscriptionId: String, 
-        priceId: String, 
-        paymentMethodId: String, 
-        status: String, 
-        currentPeriodEnd: Number, 
-        isSubscribed: Boolean, 
-        Plan: {
-            priceId: String, 
-            productId: String, 
-            planName: String, 
-            amount: Number, 
-            currency: String, 
-            interval: String, 
-        }
-    }
+const userPayment = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      private: true,
+    },
+    name: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      private: true,
+    },
+    customerId: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      private: true,
+    },
+    hasAccess: {
+      type: Boolean,
+      default: false,
+    },
+    priceId: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      private: true,
+    },
+  },
+  { timestamps: true }
+);
 
-})
-
-const UserPaymentModel = mongoose.model('userPayment', UserPayment); 
-module.exports = UserPaymentModel
+const UserPayment = mongoose.model("userPayment", userPayment);
+module.exports = UserPayment;

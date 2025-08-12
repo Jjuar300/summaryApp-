@@ -1,10 +1,10 @@
 import "./styles/Index.css";
 import { useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
-import { useUser, SignOutButton, useClerk } from "@clerk/clerk-react";
+import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   settings,
@@ -14,8 +14,6 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
-import { useUserPayment } from "../../hooks";
-import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
   const priceId = import.meta.env.VITE_TEST_PRICE_KEY;
@@ -26,15 +24,14 @@ export default function Index() {
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
-  const queryParams = new URLSearchParams(location.search);
-  const sessionId = queryParams.get("session_id");
-  
+
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   console.log('priceid:', priceId)
   
+
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
   };
@@ -71,31 +68,6 @@ export default function Index() {
       console.log("Error:", error);
     }
   };
-
-  const savePayment = async () => {
-    try {
-      // dispatch(setSessionStatus('pending'))
-      const response = await fetch("/api/save-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ session_id: sessionId, userId: user.id }),
-      });
-      const data = await response.json();
-      console.log("userPaymentData:", data);
-       dispatch(setSessionStatus(data.subscription.status));
-        if(data.subscription.status === 'active') return navigate('/BrowseSpace')
-      } catch (error) {
-      return error;
-    }
-  };
-
-
-  useEffect(() => {
-    savePayment();
-    // getSubscriptionPlan(); 
-  },[]);
 
   const boxStyle = {
     position: "relative",

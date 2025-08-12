@@ -89,24 +89,9 @@ export default function index() {
     fontSize: "1.6rem",
   };
 
-  // const getSubscriptionPlan = async () => {
-  //   try {
-  //     const response = await fetch(`/api/userPayment/${userId}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "Application/json",
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     setUserPayment(data);
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // };
-
   const cancelPayment = async () => {
     navigate("/Noto");
-    dispatch(setSessionStatus("cancelled"));
+    dispatch(setSessionStatus(false));
     fetch("/api/cancel-payment", {
       method: "POST",
       headers: {
@@ -169,7 +154,6 @@ export default function index() {
   };
   useEffect(() => {
     if (user) {
-      // getSubscriptionPlan();
       setTextInput({
         firstName: user.firstName || "",
         lastName: user.lastName || "",

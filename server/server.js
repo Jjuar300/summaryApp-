@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3004;
 const app = express();
 const routes = require("./routes");
 const stripe = require("stripe");
-const { TestPayment } = require("./Models");
+const { UserPayment } = require("./Models");
 
 const STRIPE = new stripe(process.env.STRIPE_TEST_SECRET_KEY);
 
@@ -35,12 +35,12 @@ app.post(
         const customer = await STRIPE.customers.retrieve(session?.customer);
 
         if (customer.email) {
-          const isPayment = await TestPayment.findOne({
+          const isPayment = await UserPayment.findOne({
             email: customer.email,
           });
           console.log("isPayment:", isPayment);
           if (!isPayment) {
-            const testPayment = await TestPayment.create({
+            const testPayment = await UserPayment.create({
               email: customer.email,
               name: customer.name,
               customerId: customer.id,
