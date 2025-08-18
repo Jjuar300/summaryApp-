@@ -8,9 +8,11 @@ const app = express();
 const routes = require("./routes");
 const stripe = require("stripe");
 const { UserPayment } = require("./Models");
+const morgan = require("morgan"); 
 
 const STRIPE = new stripe(process.env.STRIPE_TEST_SECRET_KEY);
 
+app.use(morgan('dev'))
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
 try {
@@ -50,7 +52,7 @@ app.post(
             testPayment.save();
           }
         } else {
-              throw new Error('No user found!')
+          throw new Error("No user found!");
         }
 
         return res.sendStatus(200);

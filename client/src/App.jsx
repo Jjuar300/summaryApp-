@@ -18,8 +18,11 @@ const options = {
 
 function App() {
   const isSessionStatus = useSelector((state) => state.Stripe.status);
+  const subscriptionId = useSelector((state) => state.Stripe.subscription_Id); 
+  console.log('subscriptionId:', subscriptionId); 
   console.log("isSessionStatus:", isSessionStatus);
- 
+  
+
   return (
     <>
       <SignedIn>

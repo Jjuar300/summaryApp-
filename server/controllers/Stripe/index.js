@@ -15,7 +15,7 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}subscriptionPlan?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.CLIENT_URL}BrowseSpace`,
       cancel_url: `${process.env.CLIENT_URL}Noto`,
     });
     // console.log('session:', session)

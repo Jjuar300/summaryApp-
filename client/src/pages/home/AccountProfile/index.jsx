@@ -28,7 +28,7 @@ export default function Index() {
 
   const handleSignOut = async () =>{ 
     try {
-      dispatch(setSessionStatus('pending'))
+      dispatch(setSessionStatus(false))
       await signOut(); 
    if(!isSignedIn) return navigate('http://localhost:5173/noto')
     } catch (error) {

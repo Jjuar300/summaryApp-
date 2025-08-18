@@ -25,14 +25,13 @@ export default function index() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { space } = useGetData();
-  const { userPayment } = useUserPayment();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [userPayment, setUserPayment] = useState();
-  const subscription_Id = userPayment?.subscription.subscriptionId;
-  const userPaymentMongoDocId = userPayment?._id;
+  // const subscription_Id = data?.subscription.subscriptionId;
+  // const userPaymentMongoDocId = data?._id;
+
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
