@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const Stripe = createSlice({
-   name:'Stripe', 
-   initialState:{
-    status:'', 
-    subscription_Id: '', 
-   }, 
-   reducers: {
+  name: "Stripe",
+  initialState: {
+    status: "",
+    documentId: "",
+    subscriptionId: "",
+  },
+  reducers: {
     setSessionStatus: (state, action) => {
-        state.status = action.payload; 
-    }, 
-    setSubscriptionId: (state, action) =>{ 
-        state.status = action.payload; 
-    }
-   }
-})
+      state.status = action.payload;
+    },
+    setDocumentId: (state, action) => {
+      state.documentId = action.payload;
+    },
+    setSubscriptionId: (state, action) => {
+      state.subscriptionId = action.payload;
+    },
+  },
+});
 
-export const {setSessionStatus, setSubscriptionId} = Stripe.actions; 
-export default Stripe.reducer; 
+export const { setSessionStatus, setDocumentId, setSubscriptionId } = Stripe.actions;
+export default Stripe.reducer;

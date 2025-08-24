@@ -4,18 +4,18 @@ import { Box, TextField, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import DeleteModal from "../../components/Modal";
 import { deleteData, postData } from "../../utils";
-import { useGetData, useUserPayment } from "../../hooks/index";
+import { useGetData } from "../../hooks/index";
 import {
   isUserCreated,
   setProfileImage,
   setUserCreated,
 } from "../../Redux/imageContainer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IKContext, IKUpload } from "imagekitio-react";
 import { setSessionStatus } from "../../Redux/Stripe";
 
-export default function index() {
+export default function Index() {
   const [isOpen, setOpen] = useState();
   const [validateName, setValidateName] = useState(true);
   const [textInput, setTextInput] = useState({
@@ -29,9 +29,12 @@ export default function index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userPaymentMongoDocId = useSelector(state => state.Stripe.documentId);
+  const subscriptionId = useSelector(state => state.Stripe.subscriptionId);
   // const subscription_Id = data?.subscription.subscriptionId;
   // const userPaymentMongoDocId = data?._id;
-
+  console.log('subscription_Id:', subscriptionId); 
+  console.log('userPaymentMongoDocId:', userPaymentMongoDocId);
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
@@ -97,7 +100,7 @@ export default function index() {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify({
-        subscription_Id,
+        subscriptionId,
         userPaymentMongoDocId,
       }),
     });

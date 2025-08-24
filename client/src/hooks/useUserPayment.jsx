@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
-import { setSessionStatus, setSubscriptionId } from "../Redux/Stripe";
+import { setDocumentId, setSessionStatus, setSubscriptionId } from "../Redux/Stripe";
 
 export default function useUserPayment() {
   const { user } = useUser();
@@ -20,18 +20,13 @@ export default function useUserPayment() {
         }
       );
       const data = await response.json();
-      dispatch(setSubscriptionId(data?._id));
+      dispatch(setDocumentId(data?._id));
+      dispatch(setSubscriptionId(data?.subscriptionId))
       return dispatch(setSessionStatus(data?.hasAccess));
     } catch (error) {
       return error;
     }
   };
-
-  useEffect(() => {
-    if (userId) {
-      getSubscriptionPlan();
-    }
-  }, []);
 
   return {
     getSubscriptionPlan,

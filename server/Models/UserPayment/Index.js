@@ -20,6 +20,9 @@ const userPayment = new mongoose.Schema(
       lowercase: true,
       private: true,
     },
+    subscriptionId: {
+      type: String,
+    },
     hasAccess: {
       type: Boolean,
       default: false,

@@ -14,12 +14,13 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
+import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
   const priceId = import.meta.env.VITE_TEST_PRICE_KEY;
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
-  const pricePlan = isPlanButton ? 20 : 120;
+  const pricePlan = isPlanButton ? 10 : 60;
   const subscriptionPan = isPlanButton ? '/mo' : '/yr'; 
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
@@ -84,6 +85,7 @@ export default function Index() {
 
   return (
     <div>
+      <button onClick={() => dispatch(setSessionStatus(true))} >setSession</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

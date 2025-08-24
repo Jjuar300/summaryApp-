@@ -35,6 +35,7 @@ app.post(
           { expand: ["line_items"] }
         );
         const customer = await STRIPE.customers.retrieve(session?.customer);
+        const subscription = await STRIPE.subscriptions.retrieve(session?.subscription)
 
         if (customer.email) {
           const isPayment = await UserPayment.findOne({
@@ -46,6 +47,7 @@ app.post(
               email: customer.email,
               name: customer.name,
               customerId: customer.id,
+              subscriptionId: subscription.id,
               hasAccess: true,
               priceId: session?.line_items?.data[0]?.price.id,
             });
@@ -57,6 +59,12 @@ app.post(
 
         return res.sendStatus(200);
       }
+
+      // if(event.type === 'customer.subscription.delete'){
+      //   const subscription = await STRIPE.subscriptions.retrieve(data.object.id)
+      //    await STRIPE.subscriptions.cancel(subscription)
+      //    await UserPayment.findOneAndDelete({customerId: subscription.customer})
+      // }
     } catch (error) {
       console.log("webhook Error:", error.message);
       return res.sendStatus(400);
