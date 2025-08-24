@@ -25,7 +25,6 @@ function App() {
   const {user, isSignedIn} = useUser(); 
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   const navigate = useNavigate(); 
-  console.log("isSessionStatus:", isSessionStatus);
   
   if(!isSignedIn){
     navigate('/Noto')

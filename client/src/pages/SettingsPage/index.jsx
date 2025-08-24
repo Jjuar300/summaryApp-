@@ -31,10 +31,6 @@ export default function Index() {
   const navigate = useNavigate();
   const userPaymentMongoDocId = useSelector(state => state.Stripe.documentId);
   const subscriptionId = useSelector(state => state.Stripe.subscriptionId);
-  // const subscription_Id = data?.subscription.subscriptionId;
-  // const userPaymentMongoDocId = data?._id;
-  console.log('subscription_Id:', subscriptionId); 
-  console.log('userPaymentMongoDocId:', userPaymentMongoDocId);
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;

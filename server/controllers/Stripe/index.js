@@ -4,7 +4,6 @@ const { UserPayment } = require("../../Models/index");
 const createSubscription = async (req, res) => {
   try {
     const { priceId, email } = req.body;
-    console.log("priceID:", priceId)
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -15,12 +14,20 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
+      subscription_data: {
+        trial_period_days: 1, 
+        // trial_end: Math.floor(Date.now() / 1000) + 60,
+        trial_settings:{
+          end_behavior: {
+            missing_payment_method: 'cancel', 
+          }
+        }
+      },
+      // payment_method_collection: 'if_required', 
       success_url: `${process.env.CLIENT_URL}BrowseSpace`,
       cancel_url: `${process.env.CLIENT_URL}Noto`,
     });
-    // console.log('session:', session)
-    const sessionInfo = await stripe.checkout.sessions.retrieve(`${session.id}`);
-    // console.log('sessionInfo:', sessionInfo)
+  
     res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error stripe/index.js:", error);
@@ -51,9 +58,6 @@ const getUserPayment = async (req, res) => {
 const cancelUserPayment = async (req, res) => {
   try {
     const { userPaymentMongoDocId, subscriptionId } = req.body;
-
-    console.log('userPaymentMonogdicID:', userPaymentMongoDocId); 
-    console.log('subscriptionId:', subscriptionId); 
 
     await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
     

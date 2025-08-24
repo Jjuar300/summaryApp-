@@ -4,7 +4,7 @@ import { useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { Popover, Box, Button } from "@mui/material";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   settings,
@@ -14,14 +14,15 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
-import { setSessionStatus } from "../../Redux/Stripe";
 
 export default function Index() {
-  const priceId = import.meta.env.VITE_TEST_PRICE_KEY;
-  const isMobileScreen = useMediaQuery("(max-width:430px)");
   const [isPlanButton, setPlanButton] = useState(false);
+  const priceId = isPlanButton
+    ? import.meta.env.VITE_TEST_MONTHLY_PRICE_KEY
+    : import.meta.env.VITE_TEST_ANNUAL_PRICE_KEY;
+  const isMobileScreen = useMediaQuery("(max-width:430px)");
   const pricePlan = isPlanButton ? 10 : 60;
-  const subscriptionPan = isPlanButton ? '/mo' : '/yr'; 
+  const subscriptionPan = isPlanButton ? "/mo" : "/yr";
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,9 +30,6 @@ export default function Index() {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log('priceid:', priceId)
-  
 
   const toggleSubscriptionPlan = () => {
     setPlanButton(!isPlanButton);
@@ -63,7 +61,6 @@ export default function Index() {
       });
 
       const { session } = await response.json();
-      console.log('session:',session)
       if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);
@@ -85,7 +82,6 @@ export default function Index() {
 
   return (
     <div>
-      <button onClick={() => dispatch(setSessionStatus(true))} >setSession</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",
@@ -117,7 +113,7 @@ export default function Index() {
           isIcon={true}
         />
 
-        <SignOutButton signOutOptions={{redirectUrl: '/Noto'}}>
+        <SignOutButton signOutOptions={{ redirectUrl: "/Noto" }}>
           <Box
             sx={{
               position: "relative",

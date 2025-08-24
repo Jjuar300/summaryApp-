@@ -8,11 +8,11 @@ const app = express();
 const routes = require("./routes");
 const stripe = require("stripe");
 const { UserPayment } = require("./Models");
-const morgan = require("morgan"); 
+const morgan = require("morgan");
 
 const STRIPE = new stripe(process.env.STRIPE_TEST_SECRET_KEY);
 
-app.use(morgan('dev'))
+app.use(morgan("dev"));
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
 try {
@@ -35,13 +35,14 @@ app.post(
           { expand: ["line_items"] }
         );
         const customer = await STRIPE.customers.retrieve(session?.customer);
-        const subscription = await STRIPE.subscriptions.retrieve(session?.subscription)
+        const subscription = await STRIPE.subscriptions.retrieve(
+          session?.subscription
+        );
 
         if (customer.email) {
           const isPayment = await UserPayment.findOne({
             email: customer.email,
           });
-          console.log("isPayment:", isPayment);
           if (!isPayment) {
             const testPayment = await UserPayment.create({
               email: customer.email,
@@ -59,12 +60,6 @@ app.post(
 
         return res.sendStatus(200);
       }
-
-      // if(event.type === 'customer.subscription.delete'){
-      //   const subscription = await STRIPE.subscriptions.retrieve(data.object.id)
-      //    await STRIPE.subscriptions.cancel(subscription)
-      //    await UserPayment.findOneAndDelete({customerId: subscription.customer})
-      // }
     } catch (error) {
       console.log("webhook Error:", error.message);
       return res.sendStatus(400);
