@@ -10,7 +10,7 @@ const stripe = require("stripe");
 const { UserPayment } = require("./Models");
 const morgan = require("morgan");
 
-const STRIPE = new stripe(process.env.STRIPE_TEST_SECRET_KEY);
+const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 
 app.use(morgan("dev"));
 app.use(cors("*"));

@@ -9,7 +9,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const stripePromise = loadStripe(import.meta.env.VITE_TEST_PUBLISH_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
 const options = {
   mode: "payment",
