@@ -9,9 +9,15 @@ const routes = require("./routes");
 const stripe = require("stripe");
 const { UserPayment } = require("./Models");
 const morgan = require("morgan");
+const path = require("path");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
+const __dirname = path.resolve();
 
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(morgan("dev"));
 app.use(cors("*"));
 app.use(express.urlencoded({ extended: false }));
