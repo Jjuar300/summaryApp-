@@ -1,3 +1,5 @@
+import {createRequire} from 'module';
+const require = createRequire(import.meta.url);
 require("dotenv").config();
 process.removeAllListeners("warning");
 const cors = require("cors");

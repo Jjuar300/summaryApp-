@@ -4,6 +4,7 @@ const { UserPayment } = require("../../Models/index");
 const createSubscription = async (req, res) => {
   try {
     const { priceId, email } = req.body;
+    console.log('piceId:', priceId)
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],

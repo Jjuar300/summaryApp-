@@ -18,14 +18,15 @@ import { sendObjectId } from "../../Redux/createSpace";
 export default function Index() {
   const [isPlanButton, setPlanButton] = useState(false);
   const priceId = isPlanButton
-    ? import.meta.env.VITE_TEST_MONTHLY_PRICE_KEY
-    : import.meta.env.VITE_TEST_ANNUAL_PRICE_KEY;
+    ? import.meta.env.VITE_MONTHLY_PRICE_KEY
+    : import.meta.env.VITE_ANNUAL_PRICE_KEY;
   const isMobileScreen = useMediaQuery("(max-width:430px)");
   const pricePlan = isPlanButton ? 10 : 60;
   const subscriptionPan = isPlanButton ? "/mo" : "/yr";
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
+
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
