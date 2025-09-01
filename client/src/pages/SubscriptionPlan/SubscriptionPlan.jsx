@@ -27,7 +27,6 @@ export default function SubscriptionPlan() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
 
-
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
