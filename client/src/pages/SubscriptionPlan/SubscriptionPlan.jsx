@@ -48,6 +48,7 @@ export default function SubscriptionPlan() {
     dispatch(sendObjectId(null));
   };
 
+  console.log('priceId:', priceId)
   const handleSubscriptionPlan = async (priceId) => {
     try {
       const response = await fetch(`${productionAPI}/api/create-checkout-session`, {
@@ -63,7 +64,7 @@ export default function SubscriptionPlan() {
 
       console.log('response status', response.status); 
       console.log('response headers:', response.headers.get("content-type"));
-      console.log('pricePlan:', priceId);
+      console.log('priceId:', priceId);
 
       const { session } = await response.json();
       if (session) return (window.location.href = session.url);
