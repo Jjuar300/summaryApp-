@@ -1,4 +1,4 @@
-import "./styles/Index.css";
+import "./styles/index.css";
 import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { UserAvatar, PopoverContainer } from "../../components";
