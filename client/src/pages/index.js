@@ -4,7 +4,7 @@ import Home from "./home/Index";
 import SettingsPage from "./SettingsPage/index";
 import BrowseSpace from "./BrowseSpace/index";
 import Summary from "./Summary/index";
-import SubscriptionPlan from './SubscriptionPlan/index.jsx'
+import SubscriptionPlan from './SubscriptionPlan/SubscriptionPlan.jsx'
 
 export {
   LandingPage,

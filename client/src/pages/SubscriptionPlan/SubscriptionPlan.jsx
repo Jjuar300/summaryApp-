@@ -15,7 +15,7 @@ import {
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
 
-export default function Index() {
+export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
   const priceId = isPlanButton
     ? import.meta.env.VITE_MONTHLY_PRICE_KEY
