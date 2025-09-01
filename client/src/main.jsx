@@ -15,8 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <ClerkProvider
         publishableKey={PUBLISHIBLE_CLERK_KEY}
-        afterSignInUrl={'/BrowseSpace'}
-        afterSignUpUrl={'/subscriptionPlan'}
+        afterSignInUrl={import.meta.env.VITE_CLERK_DEV_AFTERSIGNIN_REDIRECT_URL || import.meta.env.VITE_CLERK_PRODUCTION_AFTERSIGNIN_REDIRECT_URL}
+        afterSignUpUrl={ import.meta.env.VITE_CLERK_DEV_AFTERSIGNUP_REDIRECT_URL || import.meta.env.VITE_CLERK_PRODUCTION_AFTERSIGNUP_REDIRECT_URL }
         afterSignOutUrl="/Noto"
       >
         <PersistGate persistor={persistStore(store)}>
