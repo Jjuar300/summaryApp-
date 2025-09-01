@@ -26,6 +26,7 @@ export default function SubscriptionPlan() {
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ export default function SubscriptionPlan() {
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
-      const response = await fetch("/api/create-checkout-session", {
+      const response = await fetch(`${productionAPI}/api/create-checkout-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
