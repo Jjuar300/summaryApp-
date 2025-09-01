@@ -6,7 +6,7 @@ export default defineConfig(({mode}) => ({
   server: { 
     proxy: {
       '/api' : {
-        target: mode === "development" ?  "http://localhost:3004" : import.meta.env.VITE_PRODUCTION_API_URL,
+        target: mode === "development" ?  "http://localhost:3004" : "https://noto-api.onrender.com",
         changeOrigin: true, 
       }
     }
