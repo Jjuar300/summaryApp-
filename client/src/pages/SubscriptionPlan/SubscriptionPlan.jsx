@@ -61,6 +61,10 @@ export default function SubscriptionPlan() {
         }),
       });
 
+      console.log('response status', response.status); 
+      console.log('response headers:', response.headers.get("content-type"));
+      console.log('pricePlan:', pricePlan);
+
       const { session } = await response.json();
       if (session) return (window.location.href = session.url);
     } catch (error) {
