@@ -63,7 +63,7 @@ export default function SubscriptionPlan() {
 
       console.log('response status', response.status); 
       console.log('response headers:', response.headers.get("content-type"));
-      console.log('pricePlan:', pricePlan);
+      console.log('pricePlan:', priceId);
 
       const { session } = await response.json();
       if (session) return (window.location.href = session.url);
