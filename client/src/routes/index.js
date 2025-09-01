@@ -1,9 +1,5 @@
-import SignedInRoutes from './SignInRoutes'
-import SignedOutRoutes from './SignedOutRoute'
-import SubscriptionPlan from './SubscriptionPlan'
+import SignedInRoutes from "./SignInRoutes";
+import SignedOutRoutes from "./SignedOutRoute";
+import SubscriptionPlan from "./SubscriptionPlan"
 
-export {
-    SignedInRoutes, 
-    SignedOutRoutes, 
-    SubscriptionPlan,
-}
+export { SignedInRoutes, SignedOutRoutes, SubscriptionPlan };
