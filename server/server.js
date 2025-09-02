@@ -15,6 +15,7 @@ const path = require("path");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
+const productionURL = process.env.PRODUCTION_CLIENT_URL
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
@@ -76,7 +77,7 @@ app.post(
 );
 
 app.use(express.json());
-app.use("/api", routes);
+app.use(`${productionURL}`, routes);
 
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
