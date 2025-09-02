@@ -49,6 +49,7 @@ export default function SubscriptionPlan() {
   };
 
   console.log('priceId:', priceId)
+  console.log('productionAPI:', productionAPI); 
   const handleSubscriptionPlan = async (priceId) => {
     try {
       const response = await fetch(`${productionAPI}/create-checkout-session`, {
