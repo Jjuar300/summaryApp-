@@ -15,7 +15,6 @@ const path = require("path");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
-const productionURL = process.env.VITE_PRODUCTION_API_URL; 
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {

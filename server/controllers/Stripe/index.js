@@ -3,6 +3,7 @@ const { UserPayment } = require("../../Models/index");
 
 const createSubscription = async (req, res) => {
   try {
+    const clientUrl = process.env.CLIENT_URL || process.env.PRODUCTION_CLIENT_URL;
     const { priceId, email } = req.body;
     console.log('piceId:', priceId)
     const session = await stripe.checkout.sessions.create({
@@ -25,8 +26,8 @@ const createSubscription = async (req, res) => {
         }
       },
       // payment_method_collection: 'if_required', 
-      success_url: `${process.env.CLIENT_URL || process.env.PRODUCTION_CLIENT_URL}BrowseSpace`,
-      cancel_url: `${process.env.CLIENT_URL || process.env.PRODUCTION_CLIENT_URL}Noto`,
+      success_url: `${clientUrl}BrowseSpace`,
+      cancel_url: `${clientUrl}Noto`,
     });
   
     res.json({ session, status: session.status });
