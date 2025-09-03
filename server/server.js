@@ -77,7 +77,7 @@ app.post(
 );
 
 app.use(express.json());
-app.use('/api', routes);
+app.use('/', routes);
 
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);

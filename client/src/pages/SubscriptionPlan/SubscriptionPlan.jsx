@@ -52,7 +52,7 @@ export default function SubscriptionPlan() {
   console.log('productionAPI:', productionAPI); 
   const handleSubscriptionPlan = async (priceId) => {
     try {
-      const response = await fetch(`${productionAPI}/api/create-checkout-session`, {
+      const response = await fetch(`${productionAPI}/create-checkout-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
