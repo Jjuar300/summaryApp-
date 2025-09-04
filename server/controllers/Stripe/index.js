@@ -17,7 +17,7 @@ const createSubscription = async (req, res) => {
         },
       ],
       subscription_data: {
-        trial_period_days: 1, 
+        trial_period_days: 3, 
         // trial_end: Math.floor(Date.now() / 1000) + 60,
         trial_settings:{
           end_behavior: {
