@@ -5,7 +5,7 @@ const createSubscription = async (req, res) => {
   try {
     const clientUrl = process.env.CLIENT_URL || process.env.PRODUCTION_CLIENT_URL;
     const { priceId, email } = req.body;
-    console.log('piceId:', priceId)
+    console.log('productionCLientUrl:', process.env.PRODUCTION_CLIENT_URL); 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],

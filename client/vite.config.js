@@ -6,7 +6,7 @@ export default defineConfig(({mode}) => ({
   server: { 
     proxy: {
       '/api' : {
-        target: mode === "development" ?  "http://localhost:3004" : "https://noto-api.onrender.com",
+        target: "https://noto-api.onrender.com",
         changeOrigin: true, 
       }
     }
