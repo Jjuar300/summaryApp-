@@ -28,7 +28,6 @@ const createSubscription = async (req, res) => {
       success_url: `${process.env.PRODUCTION_CLIENT_URL}BrowseSpace`,
       cancel_url: `${process.env.PRODUCTION_CLIENT_URL}Noto`,
     });
-    console.log('session:', session)
     res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error stripe/index.js:", error);
