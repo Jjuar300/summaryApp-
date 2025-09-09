@@ -68,6 +68,7 @@ export default function SubscriptionPlan() {
       console.log('priceId:', priceId);
 
       const { session } = await response.json();
+      console.log('session:', session)
       if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);

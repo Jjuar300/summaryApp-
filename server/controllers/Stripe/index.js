@@ -3,7 +3,6 @@ const { UserPayment } = require("../../Models/index");
 
 const createSubscription = async (req, res) => {
   try {
-    const clientUrl = process.env.CLIENT_URL || process.env.PRODUCTION_CLIENT_URL;
     const { priceId, email } = req.body;
     console.log('productionCLientUrl:', process.env.PRODUCTION_CLIENT_URL); 
     const session = await stripe.checkout.sessions.create({
@@ -29,7 +28,7 @@ const createSubscription = async (req, res) => {
       success_url: `${process.env.PRODUCTION_CLIENT_URL}BrowseSpace`,
       cancel_url: `${process.env.PRODUCTION_CLIENT_URL}Noto`,
     });
-  
+    console.log('session:', session)
     res.json({ session, status: session.status });
   } catch (error) {
     console.log("Error stripe/index.js:", error);
