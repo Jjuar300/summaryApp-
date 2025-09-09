@@ -38,6 +38,8 @@ app.post(
         process.env.STRIPE_WEBHOOK_SECRET
       );
 
+      console.log('event:', event)
+      console.log('webhookSecretId:', process.env.STRIPE_WEBHOOK_SECRET)
       if (event.type === "checkout.session.completed") {
         console.log("user checkout.session.completed");
         const session = await STRIPE.checkout.sessions.retrieve(
