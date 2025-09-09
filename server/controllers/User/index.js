@@ -5,6 +5,9 @@ const newUser = async (req, res) => {
     const { email, userId } = req.body;
     const userFound = await User.findOne({ email });
 
+    console.log('email:', email)
+    console.log('userId user created:', userId)
+
     if (userFound) {
       return res.status(200).json(userFound);
     }

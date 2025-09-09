@@ -38,6 +38,7 @@ app.post(
       );
 
       if (event.type === "checkout.session.completed") {
+        console.log('user checkout.session.completed')
         const session = await STRIPE.checkout.sessions.retrieve(
           event.data.object.id,
           { expand: ["line_items"] }
