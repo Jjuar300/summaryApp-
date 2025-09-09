@@ -1,4 +1,5 @@
-import {createRequire} from 'module';
+import bodyParser from "body-parser";
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 require("dotenv").config();
 process.removeAllListeners("warning");
@@ -27,7 +28,7 @@ try {
 } catch (error) {}
 app.post(
   "/webhook",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   async (req, res) => {
     try {
       const sig = req.headers["stripe-signature"];
@@ -38,7 +39,7 @@ app.post(
       );
 
       if (event.type === "checkout.session.completed") {
-        console.log('user checkout.session.completed')
+        console.log("user checkout.session.completed");
         const session = await STRIPE.checkout.sessions.retrieve(
           event.data.object.id,
           { expand: ["line_items"] }
@@ -77,7 +78,7 @@ app.post(
 );
 
 app.use(express.json());
-app.use('/', routes);
+app.use("/", routes);
 
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
