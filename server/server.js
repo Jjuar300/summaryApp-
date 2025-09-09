@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 try {
 } catch (error) {}
 app.post(
-  "/api/webhook",
+  "/webhook",
   express.raw({ type: "application/json" }),
   async (req, res) => {
     try {
