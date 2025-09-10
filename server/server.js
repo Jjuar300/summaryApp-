@@ -22,7 +22,13 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 app.use(morgan("dev"));
-app.use(cors("*"));
+app.use(cors(
+  {
+    origin: process.env.PRODUCTION_CLIENT_URL, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true, 
+  }
+));
 app.use(express.urlencoded({ extended: false }));
 try {
 } catch (error) {}

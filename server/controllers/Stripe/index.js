@@ -25,8 +25,8 @@ const createSubscription = async (req, res) => {
         }
       },
       // payment_method_collection: 'if_required', 
-      success_url: `${process.env.PRODUCTION_CLIENT_URL}BrowseSpace`,
-      cancel_url: `${process.env.PRODUCTION_CLIENT_URL}Noto`,
+      success_url: `${process.env.PRODUCTION_CLIENT_URL}/BrowseSpace`,
+      cancel_url: `${process.env.PRODUCTION_CLIENT_URL}/Noto`,
     });
     res.json({ session, status: session.status });
   } catch (error) {
