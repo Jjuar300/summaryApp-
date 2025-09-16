@@ -14,7 +14,6 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
-import sentry from '@sentry/react'
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
