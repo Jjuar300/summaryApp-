@@ -17,7 +17,6 @@ const path = require("path");
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
 
-sentry.setupExpressErrorHandler(app);
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
