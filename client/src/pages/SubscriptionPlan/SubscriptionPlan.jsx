@@ -90,9 +90,6 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button
-      onClick={() => {throw new Error("This is your first error!")}}
-      >break the world</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

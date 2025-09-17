@@ -7,12 +7,6 @@ import store from "./Redux/store.js";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
-import * as  sentry from '@sentry/react'
-
-sentry.init({
-  dsn: "https://299c629b92c8a469aaf521b4d0b8646f@o4510013303554048.ingest.us.sentry.io/4510031685681152",
-  sendDefaultPii: true, 
-})
 
 
 const PUBLISHIBLE_CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

@@ -13,8 +13,6 @@ const stripe = require("stripe");
 const { UserPayment } = require("./Models");
 const morgan = require("morgan");
 const path = require("path");
-const sentry = require("@sentry/node");
-const { nodeProfilingIntegration } = require("@sentry/profiling-node");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
@@ -90,16 +88,6 @@ app.post(
 
 app.use(express.json());
 app.use("/", routes);
-
-sentry.init({
-  dsn: "https://fb3384e7c218f3e8c887add378bfe68a@o4510013303554048.ingest.us.sentry.io/4510013306241024",
-  sendDefaultPii: true,
-  
-});
-
-app.get("/debug-sentry", function mainHandler(req, res) {
-  throw new Error("my first sentry error!");
-});
 
 try {
   mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
