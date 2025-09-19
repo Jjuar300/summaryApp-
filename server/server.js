@@ -24,7 +24,7 @@ app.get("*", (req, res) => {
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin:[ `${process.env.PRODUCTION_CLIENT_URL}`],
+    origin: process.env.PRODUCTION_CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
