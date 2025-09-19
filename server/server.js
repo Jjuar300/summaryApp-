@@ -24,7 +24,7 @@ app.get("*", (req, res) => {
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin:[ `${process.env.PRODUCTION_CLIENT_URL}/create-checkout-session`],
+    origin:[ `$https://noto-cient.onrender.com/create-checkout-session`],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
