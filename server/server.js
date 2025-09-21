@@ -10,7 +10,7 @@ const app = express();
 const routes = require("./routes");
 const stripe = require("stripe");
 const { UserPayment } = require("./Models");
-const morgan = require("combined");
+const morgan = require("morgan");
 const path = require("path");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 console.log(process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
