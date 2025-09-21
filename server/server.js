@@ -45,6 +45,8 @@ app.post(
         process.env.STRIPE_WEBHOOK_SECRET
       );
 
+      console.log('event received:', event?.type)
+
       if (event.type === "checkout.session.completed") {
         console.log("user checkout.session.completed");
         const session = await STRIPE.checkout.sessions.retrieve(
@@ -61,7 +63,7 @@ app.post(
             email: customer.email,
           });
           if (!isPayment) {
-            const testPayment = await UserPayment.create({
+             await UserPayment.create({
               email: customer.email,
               name: customer.name,
               customerId: customer.id,
@@ -69,10 +71,13 @@ app.post(
               hasAccess: true,
               priceId: session?.line_items?.data[0]?.price.id,
             });
-            testPayment.save();
+            console.log('payment saved to mongoDB')
+          }else{
+            console.log('User already exists in payments'); 
           }
         } else {
-          throw new Error("No user found!");
+          res.sendStatus(400); 
+          throw new Error("No user found!", error.message);
         }
 
         return res.sendStatus(200);
@@ -88,7 +93,8 @@ app.use(express.json());
 app.use("/", routes);
 
 try {
-  mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
+  // mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
+  mongoose.connect(process.env.MONGO_DATABASE);
 } catch (error) {
   console.log(`${error}: did not connect`);
 }
