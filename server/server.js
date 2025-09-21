@@ -32,6 +32,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 
+console.log('console logging server!')
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
