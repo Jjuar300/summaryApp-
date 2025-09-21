@@ -17,14 +17,13 @@ const createSubscription = async (req, res) => {
           quantity: 1,
         },
       ],
-      subscription_data: {
-        trial_period_days: 3, 
-        // trial_end: Math.floor(Date.now() / 1000) + 60,
-        trial_settings:{
-          end_behavior: {
-            missing_payment_method: 'cancel', 
-          }
-        }
+      // subscription_data: {
+      //   trial_period_days: 3, 
+      //   trial_settings:{
+      //     end_behavior: {
+      //       missing_payment_method: 'cancel', 
+      //     }
+      //   }
       },
       // payment_method_collection: 'if_required', 
       success_url: `${process.env.PRODUCTION_CLIENT_URL}/BrowseSpace`,
