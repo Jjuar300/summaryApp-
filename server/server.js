@@ -10,7 +10,7 @@ const app = express();
 const routes = require("./routes");
 const stripe = require("stripe");
 const { UserPayment } = require("./Models");
-const morgan = require("morgan");
+const morgan = require("combined");
 const path = require("path");
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
@@ -31,8 +31,7 @@ app.use(
   
 );
 app.use(express.urlencoded({ extended: false }));
-try {
-} catch (error) {}
+
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
@@ -45,8 +44,6 @@ app.post(
         process.env.STRIPE_WEBHOOK_SECRET
       );
 
-      console.log("event:", event);
-      console.log("webhookSecretId:", process.env.STRIPE_WEBHOOK_SECRET);
       if (event.type === "checkout.session.completed") {
         console.log("user checkout.session.completed");
         const session = await STRIPE.checkout.sessions.retrieve(
@@ -57,7 +54,7 @@ app.post(
         const subscription = await STRIPE.subscriptions.retrieve(
           session?.subscription
         );
-
+       console.log('customer:', customer)
         if (customer.email) {
           const isPayment = await UserPayment.findOne({
             email: customer.email,
