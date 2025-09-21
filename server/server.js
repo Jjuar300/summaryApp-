@@ -34,8 +34,8 @@ app.use(express.urlencoded({ extended: false }));
 
 console.log('console logging server!')
 app.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
+  "https://noto-cient.onrender.com/webhook",
+  express.json({ type: "application/json" }),
   async (req, res) => {
     try {
       const sig = req.headers["stripe-signature"];
