@@ -32,7 +32,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 
-console.log('stripe:', STRIPE)
+
 console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
 
 console.log('console logging server!')
