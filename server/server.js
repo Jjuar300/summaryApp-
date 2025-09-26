@@ -55,7 +55,7 @@ app.post(
         console.log("user checkout.session.completed");
         const session = await STRIPE.checkout.sessions.retrieve(
           event.data.object.id,
-          { expand: ["line_items", "customer", "subscription"] }
+          { expand: ["line_items"] }
         );
         const customer = await STRIPE.customers.retrieve(session?.customer);
         const subscription = await STRIPE.subscriptions.retrieve(
