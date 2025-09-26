@@ -39,7 +39,7 @@ console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
 console.log('console logging server!')
 app.post(
   "/webhook",
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   async (req, res) => {
     try {
       const sig = req.headers["stripe-signature"];
