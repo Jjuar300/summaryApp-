@@ -27,7 +27,7 @@ export default function SubscriptionPlan() {
   const { user } = useUser();
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
-  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -47,14 +47,14 @@ export default function SubscriptionPlan() {
 
   const handleOnClick = () => {
     dispatch(sendObjectId(null));
-  }; 
+  };
 
   const createUser = async () => {
-        await postData("/api/users", {
-          email: user?.primaryEmailAddress.emailAddress,
-          userId: user?.id,
-        });
-      };
+    await postData("/api/users", {
+      email: user?.primaryEmailAddress.emailAddress,
+      userId: user?.id,
+    });
+  };
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
@@ -70,7 +70,7 @@ export default function SubscriptionPlan() {
       });
 
       const { session } = await response.json();
-      console.log('session:', session)
+      console.log("session:", session);
       if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);
@@ -92,7 +92,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button onClick={() => createUser()} >Send new user</button>
+      <button onClick={() => createUser()}>Send new user</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

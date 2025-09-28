@@ -34,16 +34,18 @@ function App() {
   useEffect(() => {
     if (user?.id) {
       getSubscriptionPlan();
-    } else if (!user?.id) {
-      const createUser = async () => {
-        await postData("/api/users", {
-          email: user?.primaryEmailAddress.emailAddress,
-          userId: user?.id,
-        });
-      };
-      return createUser(); 
-    }
+    } 
   }, []);
+
+// else if (!user?.id) {
+//       const createUser = async () => {
+//         await postData("/api/users", {
+//           email: user?.primaryEmailAddress.emailAddress,
+//           userId: user?.id,
+//         });
+//       };
+//       return createUser(); 
+//     }
 
   return (
     <>
