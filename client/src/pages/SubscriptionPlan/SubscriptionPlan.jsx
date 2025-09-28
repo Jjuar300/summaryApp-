@@ -50,7 +50,7 @@ export default function SubscriptionPlan() {
   };
 
   const createUser = async () => {
-    await postData("/api/users", {
+    await postData(`${productionAPI}/users`, {
       email: user?.primaryEmailAddress.emailAddress,
       userId: user?.id,
     });
@@ -92,7 +92,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button onClick={createUser()}>Send new user</button>
+      <button onClick={() => createUser()}>Send new user</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",
