@@ -41,6 +41,7 @@ export default function Index({ setOpen }) {
   const { space, getUserData } = useGetData();
   const { fetchUserNote } = useUserNote();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const objectId = useSelector((state) => state.createSpace.ObjectId);
   const isSpaceId = space.find((space) => space._id === spaceId);
@@ -63,7 +64,7 @@ export default function Index({ setOpen }) {
   const renameSpaceText = async (e) => {
     e?.preventDefault();
     try {
-      await updateData(`/api/spaces/${objectId}`, {
+      await updateData(`/${productionAPI}/spaces/${objectId}`, {
         newName: editText,
       });
       getUserData();
@@ -82,14 +83,14 @@ export default function Index({ setOpen }) {
     e?.preventDefault();
     fetchUserNote();
     try {
-      const response = await postData("/api/spaces", {
+      const response = await postData(`${productionAPI}/spaces`, {
         name: text,
         userId: user?.id,
       });
       const createdSapaceId = response?._id;
       dispatch(sendObjectId(createdSapaceId));
       navigate(`/spaces/${createdSapaceId}`);
-      await postData("/api/userNotes", {
+      await postData(`${productionAPI}/userNotes`, {
         userId: user?.id,
         spaceId: createdSapaceId,
         content: JSON.stringify(""),
@@ -102,13 +103,13 @@ export default function Index({ setOpen }) {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
-      await deleteData(`/api/deleteNote/${isSpaceId?.notes[0]?._id}`);
-      await deleteData(`/api/users/${user.id}/spaces/${objectId}`);
+      await deleteData(`/${productionAPI}/deleteNote/${isSpaceId?.notes[0]?._id}`);
+      await deleteData(`/${productionAPI}/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      navigate('/Noto')
+      navigate("/Noto");
     } catch (error) {
       console.log(error);
     }

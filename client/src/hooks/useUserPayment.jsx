@@ -6,11 +6,12 @@ export default function useUserPayment() {
   const { user } = useUser();
   const userId = user?.id;
   const dispatch = useDispatch();
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
 
   const getSubscriptionPlan = async () => {
     try {
       const response = await fetch(
-        `/api/userPayment/${userId}/${user?.primaryEmailAddress}`,
+        `/${productionAPI}/userPayment/${userId}/${user?.primaryEmailAddress}`,
         {
           method: "GET",
           headers: {

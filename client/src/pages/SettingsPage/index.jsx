@@ -29,8 +29,9 @@ export default function Index() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userPaymentMongoDocId = useSelector(state => state.Stripe.documentId);
-  const subscriptionId = useSelector(state => state.Stripe.subscriptionId);
+  const userPaymentMongoDocId = useSelector((state) => state.Stripe.documentId);
+  const subscriptionId = useSelector((state) => state.Stripe.subscriptionId);
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
@@ -38,7 +39,7 @@ export default function Index() {
 
   const authenticator = async () => {
     try {
-      const response = await fetch("/api/authImage");
+      const response = await fetch(`${productionAPI}/authImage`);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -90,7 +91,7 @@ export default function Index() {
   const cancelPayment = async () => {
     navigate("/Noto");
     dispatch(setSessionStatus(false));
-    fetch("/api/cancel-payment", {
+    fetch(`/${productionAPI}/cancel-payment`, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
@@ -104,13 +105,13 @@ export default function Index() {
 
   const handleUserDelete = async () => {
     cancelPayment();
-    postData("/api/imagekitfolder", {
+    postData(`/${productionAPI}/imagekitfolder`, {
       folderName: user?.id,
     });
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
     await user?.delete();
-    await deleteData(`/api/users/${user?.id}`, {
+    await deleteData(`/${productionAPI}/users/${user?.id}`, {
       space,
     });
     await signOut();

@@ -19,10 +19,11 @@ export default function Images() {
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
   const imagekitUrl = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
 
   const authenticator = async () => {
     try {
-      const response = await fetch("/api/authImage");
+      const response = await fetch(`${productionAPI}/authImage`);
 
       if (!response.ok) {
         const errorText = await response.text();
