@@ -40,8 +40,7 @@ function App() {
   useEffect(() => {
     if(user?.id){
       getSubscriptionPlan(); 
-    }else{
-     return createUser();   
+      createUser(); 
     }
   },[])
 
