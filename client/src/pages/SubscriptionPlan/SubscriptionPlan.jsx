@@ -56,6 +56,8 @@ export default function SubscriptionPlan() {
     });
   };
 
+  createUser(); 
+
   const handleSubscriptionPlan = async (priceId) => {
     try {
       const response = await fetch(`${productionAPI}/create-checkout-session`, {
@@ -71,10 +73,7 @@ export default function SubscriptionPlan() {
 
       const { session } = await response.json();
       console.log('session:', session)
-      if (session) {
-        createUser();
-        window.location.href = session.url
-      }
+      if (session) return (window.location.href = session.url);
     } catch (error) {
       console.log("Error:", error);
     }
