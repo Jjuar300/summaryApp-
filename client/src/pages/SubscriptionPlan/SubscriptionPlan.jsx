@@ -14,6 +14,7 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
+import { postData } from "../../utils";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
@@ -48,8 +49,13 @@ export default function SubscriptionPlan() {
     dispatch(sendObjectId(null));
   };
 
-  console.log('priceId:', priceId)
-  console.log('productionAPI:', productionAPI); 
+  const createUser = async () => {
+    await postData("/api/users", {
+      email: user.primaryEmailAddress.emailAddress,
+      userId: user?.id,
+    });
+  };
+
   const handleSubscriptionPlan = async (priceId) => {
     try {
       const response = await fetch(`${productionAPI}/create-checkout-session`, {
@@ -63,13 +69,12 @@ export default function SubscriptionPlan() {
         }),
       });
 
-      console.log('response status', response.status); 
-      console.log('response headers:', response.headers.get("content-type"));
-      console.log('priceId:', priceId);
-
       const { session } = await response.json();
       console.log('session:', session)
-      if (session) return (window.location.href = session.url);
+      if (session) {
+        createUser();
+        window.location.href = session.url
+      }
     } catch (error) {
       console.log("Error:", error);
     }

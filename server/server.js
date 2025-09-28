@@ -12,7 +12,6 @@ const stripe = require("stripe");
 const { UserPayment } = require("./Models");
 const morgan = require("morgan");
 const path = require("path");
-const bodyParser = require('body-parser')
 
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();

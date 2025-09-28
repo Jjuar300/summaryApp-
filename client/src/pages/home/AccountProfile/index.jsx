@@ -5,7 +5,6 @@ import { useState } from "react";
 import { settings, feedBack, logout } from "./assets";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-import { postData } from "../../../utils";
 import { useDispatch } from "react-redux";
 import { sendObjectId } from "../../../Redux/createSpace";
 import { setOnClick } from "../../../Redux/feedBack";
@@ -17,9 +16,7 @@ export default function Index() {
   const {signOut} = useClerk(); 
   const { user, isSignedIn } = useUser();
   const [anchorEl, setAnchorEl] = useState(null);
-  const userEmail = user.primaryEmailAddress.emailAddress;
   const FirstName = user.firstName.charAt(0).toUpperCase();
-  const userId = user?.id;
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -41,15 +38,6 @@ export default function Index() {
     width: "3rem",
     backgroundColor: "#c8a99f",
   };
-
-  const getUserData = async () => {
-    await postData("/api/users", {
-      email: userEmail,
-      userId: userId,
-    });
-  };
-
-  getUserData();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
