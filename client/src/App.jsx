@@ -28,7 +28,7 @@ function App() {
   const navigate = useNavigate(); 
  const createUser = async () => {
     await postData("/api/users", {
-      email: user.primaryEmailAddress.emailAddress,
+      email: user?.primaryEmailAddress.emailAddress,
       userId: user?.id,
     });
   };
