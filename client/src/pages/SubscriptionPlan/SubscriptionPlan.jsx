@@ -92,7 +92,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button onClick={() => createUser()}>Send new user</button>
+      <button onClick={createUser()}>Send new user</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",
