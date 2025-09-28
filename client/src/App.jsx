@@ -8,6 +8,7 @@ import { useUserPayment } from "./hooks";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { postData } from "./utils";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
@@ -25,6 +26,13 @@ function App() {
   const {user, isSignedIn} = useUser(); 
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   const navigate = useNavigate(); 
+ const createUser = async () => {
+    await postData("/api/users", {
+      email: user.primaryEmailAddress.emailAddress,
+      userId: user?.id,
+    });
+  };
+
   if(!isSignedIn){
     navigate('/Noto')
   } 
@@ -32,6 +40,8 @@ function App() {
   useEffect(() => {
     if(user?.id){
       getSubscriptionPlan(); 
+    }else{
+     return createUser();   
     }
   },[])
 

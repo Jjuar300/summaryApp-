@@ -14,7 +14,6 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
-import { postData } from "../../utils";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
@@ -47,16 +46,7 @@ export default function SubscriptionPlan() {
 
   const handleOnClick = () => {
     dispatch(sendObjectId(null));
-  };
-
-  const createUser = async () => {
-    await postData("/api/users", {
-      email: user.primaryEmailAddress.emailAddress,
-      userId: user?.id,
-    });
-  };
-
-  createUser(); 
+  }; 
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
