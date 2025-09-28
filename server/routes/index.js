@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require('body-parser')
-const stripe = require("stripe")
 
 const { Space, User, Chatgpt, Notes, Imagekit, Stripe } = require("../controllers/index");
-const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY)
 
 //spaces 
 router.post("/spaces", Space.createSpace);

@@ -48,6 +48,13 @@ export default function SubscriptionPlan() {
     dispatch(sendObjectId(null));
   }; 
 
+  const createUser = async () => {
+        await postData("/api/users", {
+          email: user?.primaryEmailAddress.emailAddress,
+          userId: user?.id,
+        });
+      };
+
   const handleSubscriptionPlan = async (priceId) => {
     try {
       const response = await fetch(`${productionAPI}/create-checkout-session`, {
@@ -84,6 +91,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
+      <button onClick={() => createUser()} >Send new user</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

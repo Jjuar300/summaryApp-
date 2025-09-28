@@ -22,27 +22,28 @@ const options = {
 };
 
 function App() {
-  const {getSubscriptionPlan} = useUserPayment();
-  const {user, isSignedIn} = useUser(); 
+  const { getSubscriptionPlan } = useUserPayment();
+  const { user, isSignedIn } = useUser();
   const isSessionStatus = useSelector((state) => state.Stripe.status);
-  const navigate = useNavigate(); 
- const createUser = async () => {
-    await postData("/api/users", {
-      email: user?.primaryEmailAddress.emailAddress,
-      userId: user?.id,
-    });
-  };
+  const navigate = useNavigate();
 
-  if(!isSignedIn){
-    navigate('/Noto')
-  } 
-  
+  if (!isSignedIn) {
+    navigate("/Noto");
+  }
+
   useEffect(() => {
-    if(user?.id){
-      getSubscriptionPlan(); 
-      createUser(); 
+    if (user?.id) {
+      getSubscriptionPlan();
+    } else if (!user.id) {
+      const createUser = async () => {
+        await postData("/api/users", {
+          email: user?.primaryEmailAddress.emailAddress,
+          userId: user?.id,
+        });
+      };
+      return createUser(); 
     }
-  },[])
+  }, []);
 
   return (
     <>

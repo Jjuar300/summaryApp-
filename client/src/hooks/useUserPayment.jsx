@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
 import { setDocumentId, setSessionStatus, setSubscriptionId } from "../Redux/Stripe";
