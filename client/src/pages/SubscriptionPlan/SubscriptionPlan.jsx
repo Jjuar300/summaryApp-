@@ -14,6 +14,7 @@ import {
   fireIcon,
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
+import { postData } from "../../utils";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
