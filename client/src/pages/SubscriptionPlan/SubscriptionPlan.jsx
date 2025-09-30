@@ -16,6 +16,7 @@ import {
 import { sendObjectId } from "../../Redux/createSpace";
 import { postData } from "../../utils";
 import { useEffect } from "react";
+import { useUserPayment } from "../../hooks";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
@@ -29,6 +30,7 @@ export default function SubscriptionPlan() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
+  const {getSubscriptionPlan} = useUserPayment();
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -58,13 +60,6 @@ export default function SubscriptionPlan() {
   };
 
  createUser();
-
- console.log('userId:', user?.id)
-  useEffect(() => {
-     if (user?.id) {
-       console.log('user have id!')
-     } 
-   }, []);
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
@@ -102,6 +97,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
+      <button onClick={() => getSubscriptionPlan()} >get user payment data</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

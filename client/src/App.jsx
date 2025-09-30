@@ -30,13 +30,11 @@ function App() {
     navigate("/Noto");
   }
 
-  console.log('userId in app:', user?.id)
   useEffect(() => {
     if (user?.id) {
-      getSubscriptionPlan();
-      console.log('user have id!')
+     return getSubscriptionPlan();
     } 
-  }, []);
+  },[]);
 
   return (
     <>
