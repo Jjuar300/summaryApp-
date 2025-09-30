@@ -60,6 +60,7 @@ export default function SubscriptionPlan() {
   };
 
  createUser();
+ getSubscriptionPlan()
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
@@ -82,12 +83,6 @@ export default function SubscriptionPlan() {
     }
   };
 
-    useEffect(() => {
-    if (user?.id) {
-     return getSubscriptionPlan();
-    } 
-  },[]);
-
   const boxStyle = {
     position: "relative",
     display: "flex",
@@ -103,7 +98,6 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button onClick={() => getSubscriptionPlan()} >get user payment data</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

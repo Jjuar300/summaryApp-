@@ -31,11 +31,8 @@ function App() {
   }
 
   console.log('isSessionStatus:', isSessionStatus); 
-  // useEffect(() => {
-  //   if (user?.id) {
-  //    return getSubscriptionPlan();
-  //   } 
-  // },[]);
+
+  getSubscriptionPlan()
 
   return (
     <>
