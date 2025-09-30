@@ -31,11 +31,11 @@ function App() {
   }
 
   console.log('isSessionStatus:', isSessionStatus); 
-  useEffect(() => {
-    if (user?.id) {
-     return getSubscriptionPlan();
-    } 
-  },[]);
+  // useEffect(() => {
+  //   if (user?.id) {
+  //    return getSubscriptionPlan();
+  //   } 
+  // },[]);
 
   return (
     <>

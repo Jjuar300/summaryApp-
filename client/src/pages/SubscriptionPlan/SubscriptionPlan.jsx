@@ -82,6 +82,12 @@ export default function SubscriptionPlan() {
     }
   };
 
+    useEffect(() => {
+    if (user?.id) {
+     return getSubscriptionPlan();
+    } 
+  },[]);
+
   const boxStyle = {
     position: "relative",
     display: "flex",
