@@ -98,6 +98,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
+      <button onClick={() => getSubscriptionPlan()} >get user payment</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",
