@@ -8,7 +8,6 @@ import { useUserPayment } from "./hooks";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData } from "./utils";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
@@ -34,18 +33,9 @@ function App() {
   useEffect(() => {
     if (user?.id) {
       getSubscriptionPlan();
+      console.log('user have id!')
     } 
   }, []);
-
-// else if (!user?.id) {
-//       const createUser = async () => {
-//         await postData("/api/users", {
-//           email: user?.primaryEmailAddress.emailAddress,
-//           userId: user?.id,
-//         });
-//       };
-//       return createUser(); 
-//     }
 
   return (
     <>
