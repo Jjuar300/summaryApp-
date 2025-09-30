@@ -30,6 +30,7 @@ function App() {
     navigate("/Noto");
   }
 
+  console.log('isSessionStatus:', isSessionStatus); 
   useEffect(() => {
     if (user?.id) {
      return getSubscriptionPlan();
