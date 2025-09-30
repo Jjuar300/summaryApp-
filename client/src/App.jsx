@@ -30,6 +30,7 @@ function App() {
     navigate("/Noto");
   }
 
+  console.log('userId in app:', user?.id)
   useEffect(() => {
     if (user?.id) {
       getSubscriptionPlan();

@@ -59,6 +59,7 @@ export default function SubscriptionPlan() {
 
  createUser();
 
+ console.log('userId:', user?.id)
   useEffect(() => {
      if (user?.id) {
        console.log('user have id!')
