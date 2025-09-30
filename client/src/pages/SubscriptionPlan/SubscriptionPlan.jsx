@@ -15,6 +15,7 @@ import {
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
 import { postData } from "../../utils";
+import { useEffect } from "react";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
@@ -57,6 +58,12 @@ export default function SubscriptionPlan() {
   };
 
  createUser();
+
+  useEffect(() => {
+     if (user?.id) {
+       console.log('user have id!')
+     } 
+   }, []);
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
