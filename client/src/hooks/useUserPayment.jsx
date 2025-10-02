@@ -29,6 +29,9 @@ export default function useUserPayment() {
     }
   };
 
+  // router.get('/userPayment/:userId/:email', Stripe.getUserPayment)
+
+
   return {
     getSubscriptionPlan,
   };
