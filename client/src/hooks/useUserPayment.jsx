@@ -11,7 +11,7 @@ export default function useUserPayment() {
   const getSubscriptionPlan = async () => {
     try {
       const response = await fetch(
-        `${productionAPI}/userPayment/${userId}/${user?.primaryEmailAddress}`,
+        `https://noto-cient.onrender.com/userPayment/${userId}/${user?.primaryEmailAddress}`,
         {
           method: "GET",
           headers: {
