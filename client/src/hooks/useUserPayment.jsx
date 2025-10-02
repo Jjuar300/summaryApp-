@@ -12,12 +12,12 @@ export default function useUserPayment() {
     try {
       const response = await fetch(
         `${productionAPI}/userPayment/${userId}/${user?.primaryEmailAddress}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/json",
-          },
-        }
+        // {
+        //   method: "GET",
+        //   headers: {
+        //     "Content-Type": "Application/json",
+        //   },
+        // }
       );
       const data = await response.json();
       console.log('data user payment:', data)
