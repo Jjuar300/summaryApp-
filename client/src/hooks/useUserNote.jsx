@@ -15,7 +15,7 @@ export default function useUserNote() {
   const isSpaceId = userData.space.find((space) => space._id === spaceId);
 
   const handleEditorChange = async (jsonBlock) => {
-    await updateData(`/${productionAPI}/updateUserNotes`, {
+    await updateData(`${productionAPI}/updateUserNotes`, {
       content: JSON.stringify(jsonBlock),
       userId: user?.id,
       noteDoId: isSpaceId?.notes[0]?._id,
@@ -24,7 +24,7 @@ export default function useUserNote() {
 
   const fetchUserNote = async () => {
     const savedContent = await fetchData(
-      `/${productionAPI}/users/${user?.id}/spaces/${spaceId}`
+      `${productionAPI}/users/${user?.id}/spaces/${spaceId}`
     );
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.notes?.[0]?.content);

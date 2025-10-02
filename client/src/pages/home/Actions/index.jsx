@@ -64,7 +64,7 @@ export default function Index({ setOpen }) {
   const renameSpaceText = async (e) => {
     e?.preventDefault();
     try {
-      await updateData(`/${productionAPI}/spaces/${objectId}`, {
+      await updateData(`${productionAPI}/spaces/${objectId}`, {
         newName: editText,
       });
       getUserData();
@@ -103,8 +103,8 @@ export default function Index({ setOpen }) {
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
-      await deleteData(`/${productionAPI}/deleteNote/${isSpaceId?.notes[0]?._id}`);
-      await deleteData(`/${productionAPI}/users/${user.id}/spaces/${objectId}`);
+      await deleteData(`${productionAPI}/deleteNote/${isSpaceId?.notes[0]?._id}`);
+      await deleteData(`${productionAPI}/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));

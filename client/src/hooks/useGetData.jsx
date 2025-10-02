@@ -11,7 +11,7 @@ export default function useGetData() {
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const getUserData = async () => {
-    const response = await fetchData(`/${productionAPI}/users/${user?.id}`);
+    const response = await fetchData(`${productionAPI}/users/${user?.id}`);
 
     if (response.spaces) {
       setSpaces(response.spaces);

@@ -91,7 +91,7 @@ export default function Index() {
   const cancelPayment = async () => {
     navigate("/Noto");
     dispatch(setSessionStatus(false));
-    fetch(`/${productionAPI}/cancel-payment`, {
+    fetch(`${productionAPI}/cancel-payment`, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
@@ -105,13 +105,13 @@ export default function Index() {
 
   const handleUserDelete = async () => {
     cancelPayment();
-    postData(`/${productionAPI}/imagekitfolder`, {
+    postData(`${productionAPI}/imagekitfolder`, {
       folderName: user?.id,
     });
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
     await user?.delete();
-    await deleteData(`/${productionAPI}/users/${user?.id}`, {
+    await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
     await signOut();
