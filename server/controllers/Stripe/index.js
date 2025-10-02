@@ -41,6 +41,8 @@ const getUserPayment = async (req, res) => {
   try {
     const userId = req.params.userId;
     // const userPayment = await UserPayment.findOne({ userId: userId });
+    console.log('userID userpayment:', req.params.userId)
+    console.log('email userpayment:', req.params.email)
     if(userId){
       const userPayment = await UserPayment.findOne({email: req.params.email})
       res.status(200).json(userPayment);
