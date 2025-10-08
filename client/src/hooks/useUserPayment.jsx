@@ -11,7 +11,7 @@ export default function useUserPayment() {
   const getSubscriptionPlan = async () => {
     try {
       const response = await fetch(
-        `/userPayment/${userId}/${user?.primaryEmailAddress}`,
+        `${productionAPI}/userPayment/${userId}/${user?.primaryEmailAddress}`,
         // {
         //   method: "GET",
         //   headers: {
@@ -30,7 +30,6 @@ export default function useUserPayment() {
   };
 
   // router.get('/userPayment/:userId/:email', Stripe.getUserPayment)
-
 
   return {
     getSubscriptionPlan,
