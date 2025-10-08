@@ -27,7 +27,7 @@ console.log(process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
     // origin: process.env.PRODUCTION_CLIENT_URL,
-    origin:'https://noto-cient.onrender.com', //https://noto-cient.onrender.com
+    origin:'*', 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -38,7 +38,6 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/test-cors', (req, res) =>{ 
   res.json({message: 'CORS TEST WORKS'})
 })
-
 
 console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
 
