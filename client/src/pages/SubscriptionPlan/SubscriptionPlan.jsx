@@ -98,8 +98,9 @@ export default function SubscriptionPlan() {
 
 
   //testing cors
-  const testingCors = () => {
-    fetch(`${productionAPI}/test-cors`)
+  const testingCors = async () => {
+    const response = await fetch(`${productionAPI}/test-cors`)
+    console.log('test cors response:', response)
   }
 
   return (
