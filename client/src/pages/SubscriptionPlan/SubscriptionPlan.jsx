@@ -96,9 +96,16 @@ export default function SubscriptionPlan() {
     left: "-2rem",
   };
 
+
+  //testing cors
+  const testingCors = () => {
+    fetch(`${productionAPI}/test-cors`)
+  }
+
   return (
     <div>
       <button onClick={() => getSubscriptionPlan()} >get user payment</button>
+      <button onClick={() => testingCors()} >testing cors</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

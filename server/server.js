@@ -16,6 +16,11 @@ const path = require("path");
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
 
+
+app.get('/test-cors', (req, res) =>{ 
+  res.json({message: 'CORS TEST WORKS'})
+})
+
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
@@ -31,7 +36,6 @@ app.use(
   
 );
 app.use(express.urlencoded({ extended: false }));
-
 
 console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
 
