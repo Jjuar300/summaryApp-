@@ -27,7 +27,7 @@ console.log(process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
     // origin: process.env.PRODUCTION_CLIENT_URL,
-    origin:'https://noto-cient.onrender.com', //https://noto-cient.onrender.com
+    origin:'https://noto-cient.onrender.com/test-cors', //https://noto-cient.onrender.com
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
