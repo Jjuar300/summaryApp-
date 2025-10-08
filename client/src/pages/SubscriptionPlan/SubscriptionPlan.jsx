@@ -105,7 +105,7 @@ export default function SubscriptionPlan() {
 
   return (
     <div>
-      <button onClick={() => getSubscriptionPlan()} >get user payment</button>
+      <button onClick={getSubscriptionPlan} >get user payment</button>
       <button onClick={() => testingCors()} >testing cors</button>
       <UserAvatar
         inlineStyle={{
