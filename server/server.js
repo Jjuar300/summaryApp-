@@ -29,7 +29,8 @@ app.use(morgan("combined"));
 console.log(process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
-    origin: process.env.PRODUCTION_CLIENT_URL,
+    // origin: process.env.PRODUCTION_CLIENT_URL,
+    origin:'https://noto-cient.onrender.com', 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
