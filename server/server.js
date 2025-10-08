@@ -17,9 +17,6 @@ const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
 
 
-app.get('/test-cors', (req, res) =>{ 
-  res.json({message: 'CORS TEST WORKS'})
-})
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
@@ -30,7 +27,7 @@ console.log(process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
     // origin: process.env.PRODUCTION_CLIENT_URL,
-    origin:'https://noto-cient.onrender.com', 
+    origin:'https://noto-cient.onrender.com', //https://noto-cient.onrender.com
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -99,6 +96,11 @@ app.post(
 
 app.use(express.json());
 app.use("/", routes);
+
+
+app.get('/test-cors', (req, res) =>{ 
+  res.json({message: 'CORS TEST WORKS'})
+})
 
 try {
   // mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
