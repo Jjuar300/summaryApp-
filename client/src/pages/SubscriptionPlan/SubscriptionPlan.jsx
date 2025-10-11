@@ -100,6 +100,9 @@ export default function SubscriptionPlan() {
   //testing cors
   const testingCors = async () => {
     const response = await fetch(`${productionAPI}/test-cors`, {method:"GET"})
+    if(!response.ok) {
+      throw new Error('Failed fetch test cors data!')
+    }
     const data = await response.json(); 
     console.log('test cors data:', data)
   }
@@ -107,7 +110,7 @@ export default function SubscriptionPlan() {
   return (
     <div>
       <button onClick={getSubscriptionPlan} >get user payment</button>
-      <button onClick={() => testingCors()} >testing cors</button>
+      <button onClick={testingCors} >testing cors</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",
