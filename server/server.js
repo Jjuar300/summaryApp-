@@ -35,7 +35,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/test-cors', (req, res) =>{ 
+app.get('https://noto-api.onrender.com/test-cors', (req, res) =>{ 
   res.json({message: 'CORS TEST WORKS'})
 })
 
