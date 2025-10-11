@@ -18,10 +18,7 @@ const __dirname = path.resolve();
 
 
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+
 app.use(morgan("combined"));
 console.log('production_client_url:',process.env.PRODUCTION_CLIENT_URL)
 app.use(
@@ -34,11 +31,11 @@ app.use(
   
 );
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
-
-console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
-
-console.log('console logging server!')
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
