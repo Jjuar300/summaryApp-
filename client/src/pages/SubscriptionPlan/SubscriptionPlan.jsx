@@ -99,7 +99,7 @@ export default function SubscriptionPlan() {
 
   //testing cors
   const testingCors = async () => {
-    const response = await fetch(`${productionAPI}/test-cors`)
+    const response = await fetch(`https://noto-cient.onrender.com/test-cors`)
     console.log('test cors response:', response)
   }
 
