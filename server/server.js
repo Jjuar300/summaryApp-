@@ -23,11 +23,11 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 app.use(morgan("combined"));
-console.log(process.env.PRODUCTION_CLIENT_URL)
+console.log('production_client_url:',process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
-    // origin: process.env.PRODUCTION_CLIENT_URL,
-    origin:'*', 
+    origin: process.env.PRODUCTION_CLIENT_URL,
+    // origin:'*', 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
