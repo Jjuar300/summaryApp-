@@ -31,10 +31,6 @@ app.use(
   
 );
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 app.post(
   "/webhook",
@@ -97,6 +93,12 @@ app.use("/", routes);
 app.get('/test-cors', (req, res) =>{ 
   res.json({message: 'CORS TEST WORKS'})
 })
+
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+
 
 try {
   // mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
