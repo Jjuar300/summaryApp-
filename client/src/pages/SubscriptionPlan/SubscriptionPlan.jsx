@@ -101,7 +101,7 @@ export default function SubscriptionPlan() {
   const testingCors = async () => {
     const response = await fetch(`${productionAPI}/test-cors`)
     const data = await response.json(); 
-    console.log('test cors data:', data?.message)
+    console.log('test cors data:', data)
   }
 
   return (
