@@ -35,9 +35,6 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/test-cors', (req, res) =>{ 
-  res.json({message: 'CORS TEST WORKS'})
-})
 
 console.log('stripe webhook secret:',process.env.STRIPE_WEBHOOK_SECRET)
 
@@ -100,7 +97,9 @@ app.post(
 
 app.use(express.json());
 app.use("/", routes);
-
+app.get('/test-cors', (req, res) =>{ 
+  res.json({message: 'CORS TEST WORKS'})
+})
 
 try {
   // mongoose.connect(process.env.DEV_MONGODB || process.env.MONGO_DATABASE);
