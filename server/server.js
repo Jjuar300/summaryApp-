@@ -24,7 +24,6 @@ console.log('production_client_url:',process.env.PRODUCTION_CLIENT_URL)
 app.use(
   cors({
     origin: process.env.PRODUCTION_CLIENT_URL,
-    // origin:'*', 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -88,16 +87,15 @@ app.post(
   }
 );
 
+app.use(express.static(path.join(__dirname, "client", "dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(express.json());
 app.use("/", routes);
 app.get('/test-cors', (req, res) =>{ 
   res.json({message: 'CORS TEST WORKS'})
 })
-
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 
 try {
