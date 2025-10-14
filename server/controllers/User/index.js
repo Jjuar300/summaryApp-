@@ -46,6 +46,9 @@ const deleteUser = async (req, res) => {
     const { space } = req.body;
     const spaceIds = space?.map((item) => item._id);
     // const chatGptIds = space?.map((item) => item?.chatGpt?.map((item) => item._id));
+    console.log('delete userId:', userId); 
+    console.log('delete space:', space)
+    console.log('spaceIds:', spaceIds); 
 
     await User.findOneAndDelete({ userId: userId });
     await Space.deleteMany({ _id: { $in: spaceIds } });
