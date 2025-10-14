@@ -94,6 +94,14 @@ app.get('/test-cors', (req, res) =>{
   res.json({message: 'CORS TEST WORKS'})
 })
 
+/* I commented the code below for testing purposes
+if I get any 404 errors refering to files or static
+files, then it might be because i comment the code below, 
+to fix that maybe just uncomment the code and see what happens. 
+The purpose for the code below is for the express server those
+static files to the frontend. 
+*/
+
 // app.use(express.static(path.join(__dirname, "client", "dist")));
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
