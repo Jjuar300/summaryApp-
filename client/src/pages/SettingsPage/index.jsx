@@ -38,6 +38,8 @@ export default function Index() {
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
 
+  console.log('userCustomerId:', userCustomerId)
+
   const authenticator = async () => {
     try {
       const response = await fetch(`${productionAPI}/authImage`);
@@ -93,7 +95,7 @@ export default function Index() {
     navigate("/Noto");
     dispatch(setSessionStatus(false));
     fetch(`${productionAPI}/cancel-payment`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "Application/json",
       },
