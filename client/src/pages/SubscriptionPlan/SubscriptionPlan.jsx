@@ -15,7 +15,6 @@ import {
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
 import { postData } from "../../utils";
-import { useEffect } from "react";
 import { useUserPayment } from "../../hooks";
 
 export default function SubscriptionPlan() {
@@ -30,7 +29,7 @@ export default function SubscriptionPlan() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
-  const {getSubscriptionPlan} = useUserPayment();
+  const { getSubscriptionPlan } = useUserPayment();
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -58,9 +57,6 @@ export default function SubscriptionPlan() {
       userId: user?.id,
     });
   };
-
- createUser();
- getSubscriptionPlan()
 
   const handleSubscriptionPlan = async (priceId) => {
     try {
@@ -96,21 +92,11 @@ export default function SubscriptionPlan() {
     left: "-2rem",
   };
 
-
-  //testing cors
-  const testingCors = async () => {
-    const response = await fetch(`${productionAPI}/test-cors`, {method:"GET"})
-    if(!response.ok) {
-      throw new Error('Failed fetch test cors data!')
-    }
-    const data = await response.json(); 
-    console.log('test cors data:', data)
-  }
+  createUser();
+  getSubscriptionPlan();
 
   return (
     <div>
-      <button onClick={getSubscriptionPlan} >get user payment</button>
-      <button onClick={testingCors} >testing cors</button>
       <UserAvatar
         inlineStyle={{
           position: "absolute",

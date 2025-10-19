@@ -4,7 +4,6 @@ import "./App.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSelector } from "react-redux";
-import { useUserPayment } from "./hooks";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +19,6 @@ const options = {
 };
 
 function App() {
-  const { getSubscriptionPlan } = useUserPayment();
   const { isSignedIn } = useUser();
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   const navigate = useNavigate();
@@ -29,9 +27,7 @@ function App() {
     navigate("/Noto");
   }
 
-  console.log('isSessionStatus:', isSessionStatus); 
-
-  getSubscriptionPlan()
+  console.log("isSessionStatus:", isSessionStatus);
 
   return (
     <>
