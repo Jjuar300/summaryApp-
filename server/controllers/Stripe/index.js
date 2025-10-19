@@ -60,18 +60,21 @@ const getUserPayment = async (req, res) => {
 
 const cancelUserPayment = async (req, res) => {
   try {
-    const { userPaymentMongoDocId, subscriptionId } = req.body;
+    const { userPaymentMongoDocId, subscriptionId, userCustomerId } = req.body;
 
     console.log('userPaymentMongoDocId:', userPaymentMongoDocId); 
-    console.log("subscriptionId:", subscriptionId)
+    console.log("subscriptionId:", subscriptionId);
+    console.log('userCustomerId:', userCustomerId); 
 
     await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
-    
     const deletedSubscription = await stripe.subscriptions.cancel(subscriptionId);
+    const deleteCustomer = await stripe.customers.del(userCustomerId)
+
     res.json({
       success: true,
       message: "subscription cancelled successfully!",
       deletedSubscription,
+      deleteCustomer, 
     });
   } catch (error) {
     return console.log('error in stripe/index.js :103', error);

@@ -6,6 +6,7 @@ export const Stripe = createSlice({
     status: "",
     documentId: "",
     subscriptionId: "",
+    customerId: "",
   },
   reducers: {
     setSessionStatus: (state, action) => {
@@ -17,8 +18,16 @@ export const Stripe = createSlice({
     setSubscriptionId: (state, action) => {
       state.subscriptionId = action.payload;
     },
+    setCustomerId: (state, action) => {
+      state.customerId = action.payload;
+    },
   },
 });
 
-export const { setSessionStatus, setDocumentId, setSubscriptionId } = Stripe.actions;
+export const {
+  setSessionStatus,
+  setDocumentId,
+  setSubscriptionId,
+  setCustomerId,
+} = Stripe.actions;
 export default Stripe.reducer;

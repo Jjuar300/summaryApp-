@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
-import { setDocumentId, setSessionStatus, setSubscriptionId } from "../Redux/Stripe";
+import { setCustomerId, setDocumentId, setSessionStatus, setSubscriptionId } from "../Redux/Stripe";
 
 export default function useUserPayment() {
   const { user } = useUser();
@@ -22,6 +22,7 @@ export default function useUserPayment() {
       const data = await response.json();
       dispatch(setDocumentId(data?._id));
       dispatch(setSubscriptionId(data?.subscriptionId))
+      dispatch(setCustomerId(data?.customer))
       return dispatch(setSessionStatus(data?.hasAccess));
     } catch (error) {
       return error;

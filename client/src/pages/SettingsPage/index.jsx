@@ -31,6 +31,7 @@ export default function Index() {
   const navigate = useNavigate();
   const userPaymentMongoDocId = useSelector((state) => state.Stripe.documentId);
   const subscriptionId = useSelector((state) => state.Stripe.subscriptionId);
+  const userCustomerId = useSelector((state) => state.Stripe.customerId)
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
@@ -99,6 +100,7 @@ export default function Index() {
       body: JSON.stringify({
         subscriptionId,
         userPaymentMongoDocId,
+        userCustomerId,
       }),
     });
   };
@@ -114,10 +116,10 @@ export default function Index() {
     );
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
-    await user?.delete();
     await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
+    await user?.delete();
     await signOut();
   };
 
