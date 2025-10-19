@@ -1,7 +1,8 @@
 
 const postData = async ( 
     endpoint,
-    data, 
+    data,
+    functionError, 
 ) => {
     try{
         const response = await fetch(endpoint,{
@@ -14,7 +15,7 @@ const postData = async (
       const result = await response.json();
       return result; 
     }catch(error){
-     console.log(error); 
+     console.log( `${functionError}`,error); 
      return error; 
     } 
  }

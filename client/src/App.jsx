@@ -28,8 +28,6 @@ function App() {
   if (!isSignedIn) {
     navigate("/Noto");
   }
-
-  console.log("isSessionStatus:", isSessionStatus);
   getSubscriptionPlan();
   return (
     <>

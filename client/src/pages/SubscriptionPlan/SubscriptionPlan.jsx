@@ -55,7 +55,7 @@ export default function SubscriptionPlan() {
     await postData(`${productionAPI}/users`, {
       email: user?.primaryEmailAddress.emailAddress,
       userId: user?.id,
-    });
+    }, 'createUser error ::');
   };
 
   const handleSubscriptionPlan = async (priceId) => {
@@ -72,10 +72,9 @@ export default function SubscriptionPlan() {
       });
 
       const { session } = await response.json();
-      console.log("session:", session);
       if (session) return (window.location.href = session.url);
     } catch (error) {
-      console.log("Error:", error);
+      console.log("handleSubscriptionPlan Error ::", error);
     }
   };
 

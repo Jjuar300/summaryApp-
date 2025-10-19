@@ -21,13 +21,13 @@ export default function Index() {
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const isMobileScreen = useMediaQuery("(max-width:430px)");
-
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
 
   const handleSignOut = async () =>{ 
     try {
       dispatch(setSessionStatus(false))
       await signOut(); 
-   if(!isSignedIn) return navigate('http://localhost:5173/noto')
+   if(!isSignedIn) return navigate(`${productionAPI}/Noto`)
     } catch (error) {
       console.log('error ::33', error)
     }

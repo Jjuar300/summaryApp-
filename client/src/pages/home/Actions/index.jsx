@@ -69,7 +69,7 @@ export default function Index({ setOpen }) {
       });
       getUserData();
     } catch (error) {
-      console.log(error);
+      console.log("RenameSpace error ::", error);
     }
   };
 
@@ -83,10 +83,14 @@ export default function Index({ setOpen }) {
     e?.preventDefault();
     fetchUserNote();
     try {
-      const response = await postData(`${productionAPI}/spaces`, {
-        name: text,
-        userId: user?.id,
-      });
+      const response = await postData(
+        `${productionAPI}/spaces`,
+        {
+          name: text,
+          userId: user?.id,
+        },
+        "addSpace error ::"
+      );
       const createdSapaceId = response?._id;
       dispatch(sendObjectId(createdSapaceId));
       navigate(`/spaces/${createdSapaceId}`);
@@ -94,16 +98,18 @@ export default function Index({ setOpen }) {
         userId: user?.id,
         spaceId: createdSapaceId,
         content: JSON.stringify(""),
-      });
+      }, 'createSpaceId error ::');
     } catch (error) {
-      console.log(error);
+      console.log("addSpace error ::", error);
     }
   };
 
   const handleDeleteSpace = async (e) => {
     e?.preventDefault();
     try {
-      await deleteData(`${productionAPI}/deleteNote/${isSpaceId?.notes[0]?._id}`);
+      await deleteData(
+        `${productionAPI}/deleteNote/${isSpaceId?.notes[0]?._id}`
+      );
       await deleteData(`${productionAPI}/users/${user.id}/spaces/${objectId}`);
       handleClose();
       dispatch(handleSpaceText(""));
@@ -111,7 +117,7 @@ export default function Index({ setOpen }) {
       getUserData();
       navigate("/Noto");
     } catch (error) {
-      console.log(error);
+      console.log("handleDelete error ::", error);
     }
   };
 

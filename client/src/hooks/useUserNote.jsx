@@ -1,4 +1,4 @@
-import { fetchData, updateData, postData } from "../utils";
+import { fetchData, updateData } from "../utils";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";

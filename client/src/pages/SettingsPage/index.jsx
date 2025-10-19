@@ -105,9 +105,13 @@ export default function Index() {
 
   const handleUserDelete = async () => {
     cancelPayment();
-    postData(`${productionAPI}/imagekitfolder`, {
-      folderName: user?.id,
-    });
+    postData(
+      `${productionAPI}/imagekitfolder`,
+      {
+        folderName: user?.id,
+      },
+      "handleUserDelete error ::"
+    );
     dispatch(isUserCreated(true));
     dispatch(setUserCreated(true));
     await user?.delete();
@@ -146,7 +150,7 @@ export default function Index() {
       console.error("Error updating name", err);
       if (err?.errors) {
         err.errors.forEach((e) => {
-          console.log("Error detail:", e.long_message);
+          console.log("handleUpdate error ::", e.long_message);
         });
       }
     }

@@ -10,7 +10,6 @@ import { BrowserRouter } from "react-router-dom";
 
 
 const PUBLISHIBLE_CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-console.log('clientUrl:', import.meta.env.VITE_CLERK_PRODUCTION_AFTERSIGNIN_REDIRECT_URL)
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
