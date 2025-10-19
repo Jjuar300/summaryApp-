@@ -15,7 +15,6 @@ import {
 } from "./assets/index";
 import { sendObjectId } from "../../Redux/createSpace";
 import { postData } from "../../utils";
-import { useUserPayment } from "../../hooks";
 
 export default function SubscriptionPlan() {
   const [isPlanButton, setPlanButton] = useState(false);
@@ -29,7 +28,6 @@ export default function SubscriptionPlan() {
   const FirstName = user.firstName.charAt(0).toUpperCase();
   const [anchorEl, setAnchorEl] = useState(null);
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
-  const { getSubscriptionPlan } = useUserPayment();
 
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -52,10 +50,14 @@ export default function SubscriptionPlan() {
   };
 
   const createUser = async () => {
-    await postData(`${productionAPI}/users`, {
-      email: user?.primaryEmailAddress.emailAddress,
-      userId: user?.id,
-    }, 'createUser error ::');
+    await postData(
+      `${productionAPI}/users`,
+      {
+        email: user?.primaryEmailAddress.emailAddress,
+        userId: user?.id,
+      },
+      "createUser error ::"
+    );
   };
 
   const handleSubscriptionPlan = async (priceId) => {

@@ -20,6 +20,7 @@ export default function useUserPayment() {
         }
       );
       const data = await response.json();
+      console.log('data userCustomerId:', data?.customer)
       dispatch(setDocumentId(data?._id));
       dispatch(setSubscriptionId(data?.subscriptionId))
       dispatch(setCustomerId(data?.customer))
