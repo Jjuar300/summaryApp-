@@ -93,7 +93,7 @@ export default function SubscriptionPlan() {
   };
 
   createUser();
-  getSubscriptionPlan();
+  // getSubscriptionPlan();
 
   return (
     <div>
