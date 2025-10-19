@@ -24,10 +24,12 @@ function App() {
   const { isSignedIn } = useUser();
   const isSessionStatus = useSelector((state) => state.Stripe.status);
   const navigate = useNavigate();
+  
+  console.log('isSignedIn:', isSignedIn)
 
-  if (!isSignedIn) {
-    navigate("/Noto");
-  }
+  // if (!isSignedIn) {
+  //   navigate("/Noto");
+  // }
   getSubscriptionPlan();
   return (
     <>
