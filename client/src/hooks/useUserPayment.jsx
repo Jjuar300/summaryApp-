@@ -25,7 +25,7 @@ export default function useUserPayment() {
       console.log('data subscriptionId:', data?.subscriptionId)
       dispatch(setDocumentId(data?._id));
       dispatch(setSubscriptionId(data?.subscriptionId))
-      dispatch(setCustomerId(data?.customer))
+      dispatch(setCustomerId(data?.customerId))
       return dispatch(setSessionStatus(data?.hasAccess));
     } catch (error) {
       return error;
