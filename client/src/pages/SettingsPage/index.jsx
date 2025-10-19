@@ -95,7 +95,7 @@ export default function Index() {
     navigate("/Noto");
     dispatch(setSessionStatus(false));
     fetch(`${productionAPI}/cancel-payment`, {
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "Application/json",
       },
