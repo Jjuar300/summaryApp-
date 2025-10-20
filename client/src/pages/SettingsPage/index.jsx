@@ -159,6 +159,7 @@ export default function Index() {
       }
     }
   };
+
   useEffect(() => {
     if (user) {
       setTextInput({
@@ -170,6 +171,7 @@ export default function Index() {
 
   return (
     <>
+    <button>delete customer</button>
       <Box
         sx={{
           position: "absolute",
