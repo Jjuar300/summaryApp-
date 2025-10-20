@@ -70,7 +70,7 @@ const cancelUserPayment = async (req, res) => {
     const deleteCustomer = await stripe.customers.del(userCustomerId)
     const deletedSubscription = await stripe.subscriptions.cancel(subscriptionId);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "subscription cancelled successfully!",
       deletedSubscription,

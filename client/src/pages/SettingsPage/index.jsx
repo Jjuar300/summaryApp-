@@ -31,14 +31,14 @@ export default function Index() {
   const navigate = useNavigate();
   const userPaymentMongoDocId = useSelector((state) => state.Stripe.documentId);
   const subscriptionId = useSelector((state) => state.Stripe.subscriptionId);
-  const userCustomerId = useSelector((state) => state.Stripe.customerId)
+  const userCustomerId = useSelector((state) => state.Stripe.customerId);
   const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
   const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URLENDPOINT;
   const userId = user?.id;
 
-  console.log('userCustomerId:', userCustomerId)
+  console.log("userCustomerId:", userCustomerId);
 
   const authenticator = async () => {
     try {
@@ -160,6 +160,16 @@ export default function Index() {
     }
   };
 
+  const deleteCustomer = () => {
+    fetch(`${productionAPI}/deleteCustomer`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify({userCustomerId})
+    });
+  };
+
   useEffect(() => {
     if (user) {
       setTextInput({
@@ -171,7 +181,6 @@ export default function Index() {
 
   return (
     <>
-    <button>delete customer</button>
       <Box
         sx={{
           position: "absolute",
@@ -182,6 +191,7 @@ export default function Index() {
           height: "100vh",
         }}
       >
+        <button onClick={() => deleteCustomer()} >delete customer</button>
         <Box
           sx={{
             position: "absolute",

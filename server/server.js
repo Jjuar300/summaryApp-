@@ -16,18 +16,14 @@ const path = require("path");
 const STRIPE = new stripe(process.env.STRIPE_SECRET_KEY);
 const __dirname = path.resolve();
 
-
-
-
 app.use(morgan("combined"));
-console.log('production_client_url:',process.env.PRODUCTION_CLIENT_URL)
+console.log("production_client_url:", process.env.PRODUCTION_CLIENT_URL);
 app.use(
   cors({
     origin: process.env.PRODUCTION_CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
-  
 );
 app.use(express.urlencoded({ extended: false }));
 
@@ -43,7 +39,7 @@ app.post(
         process.env.STRIPE_WEBHOOK_SECRET
       );
 
-      console.log('event received:', event?.type)
+      console.log("event received:", event?.type);
 
       if (event.type === "checkout.session.completed") {
         console.log("user checkout.session.completed");
@@ -55,13 +51,13 @@ app.post(
         const subscription = await STRIPE.subscriptions.retrieve(
           session?.subscription
         );
-       console.log('customer:', customer)
+        console.log("customer:", customer);
         if (customer.email) {
           const isPayment = await UserPayment.findOne({
             email: customer.email,
           });
           if (!isPayment) {
-             await UserPayment.create({
+            await UserPayment.create({
               email: customer.email,
               name: customer.name,
               customerId: customer.id,
@@ -69,12 +65,12 @@ app.post(
               hasAccess: true,
               priceId: session?.line_items?.data[0]?.price.id,
             });
-            console.log('payment saved to mongoDB')
-          }else{
-            console.log('User already exists in payments'); 
+            console.log("payment saved to mongoDB");
+          } else {
+            console.log("User already exists in payments");
           }
         } else {
-          res.sendStatus(400); 
+          res.sendStatus(400);
           throw new Error("No user found!", error.message);
         }
 
@@ -87,12 +83,14 @@ app.post(
   }
 );
 
-
 app.use(express.json());
 app.use("/", routes);
-app.get('/test-cors', (req, res) =>{ 
-  res.json({message: 'CORS TEST WORKS'})
-})
+
+app.delete("/deleteCustomer", (req, res) => {
+  const { userCustomerId } = req.body;
+  const deleteCustomer = stripe.customers.del(userCustomerId);
+  res.status(200).json({ message: "subscription cancelled successfully!", deleteCustomer });
+});
 
 /* I commented the code below for testing purposes
 if I get any 404 errors refering to files or static
