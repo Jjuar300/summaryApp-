@@ -86,9 +86,9 @@ app.post(
 app.use(express.json());
 app.use("/", routes);
 
-app.delete("/deleteCustomer", (req, res) => {
+app.delete("/deleteCustomer", async (req, res) => {
   const { userCustomerId } = req.body;
-  const deleteCustomer = stripe.customers.del(userCustomerId);
+  const deleteCustomer = await stripe.customers.del(userCustomerId);
   res.status(200).json({ message: "subscription cancelled successfully!", deleteCustomer });
 });
 
