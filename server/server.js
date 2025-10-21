@@ -84,15 +84,15 @@ app.post(
 );
 
 app.use(express.json());
-app.use("/", routes);
-
 app.delete("/deleteCustomer", async (req, res) => {
   const { userCustomerId } = req.body;
   console.log('userCustomerId:', userCustomerId)
    if(!userCustomerId) return console.log('userCustomerId not found!')
-  const deleteCustomer = await stripe.customers.cancel(userCustomerId);
+  const deleteCustomer = await stripe.customers.del(userCustomerId);
   res.status(200).json({ message: "subscription cancelled successfully!", deleteCustomer });
 });
+app.use("/", routes);
+
 
 /* I commented the code below for testing purposes
 if I get any 404 errors refering to files or static
