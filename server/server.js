@@ -88,8 +88,8 @@ app.delete("/deleteCustomer", async (req, res) => {
   const { userCustomerId } = req.body;
   console.log('userCustomerId:', userCustomerId)
    if(!userCustomerId) return console.log('userCustomerId not found!')
-  const deleteCustomer = await stripe.customers.del(userCustomerId);
-  res.status(200).json({ message: "subscription cancelled successfully!", deleteCustomer });
+  const deleteCustomer = await stripe.customers.del('cus_thnbyozp0tdgyx');
+  res.status(200).json({ message: " customer cancelled successfully!", deleteCustomer });
 });
 app.use("/", routes);
 
