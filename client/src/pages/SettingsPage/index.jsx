@@ -92,7 +92,7 @@ export default function Index() {
   };
 
   const cancelPayment = async () => {
-    navigate("/Noto");
+    // navigate("/Noto");
     dispatch(setSessionStatus(false));
     fetch(`${productionAPI}/cancel-payment`, {
       method: "POST",
