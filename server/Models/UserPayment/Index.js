@@ -17,7 +17,6 @@ const userPayment = new mongoose.Schema(
     customerId: {
       type: String,
       trim: true,
-      lowercase: true,
       private: true,
     },
     subscriptionId: {
@@ -30,7 +29,6 @@ const userPayment = new mongoose.Schema(
     priceId: {
       type: String,
       trim: true,
-      lowercase: true,
       private: true,
     },
   },

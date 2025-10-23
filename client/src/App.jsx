@@ -23,6 +23,8 @@ function App() {
   const { isSignedIn } = useUser();
   const isSessionStatus = useSelector((state) => state.Stripe.status);
 
+  console.log('isSessionStatus:', isSessionStatus)
+
   getSubscriptionPlan();
   return (
     <>
