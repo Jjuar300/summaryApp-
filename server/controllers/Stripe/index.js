@@ -67,7 +67,7 @@ const cancelUserPayment = async (req, res) => {
     console.log('userCustomerId:', userCustomerId); 
 
     await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
-    const deleteCustomer = await stripe.customers.del('cus_THNByozP0TDGYx');
+    const deleteCustomer = await stripe.customers.del(userCustomerId);
     const deletedSubscription = await stripe.subscriptions.cancel(subscriptionId);
 
     res.status(200).json({

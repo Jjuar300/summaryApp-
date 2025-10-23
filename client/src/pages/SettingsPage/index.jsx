@@ -160,16 +160,6 @@ export default function Index() {
     }
   };
 
-  const deleteCustomer = () => {
-    fetch(`${productionAPI}/deleteCustomer`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify({userCustomerId})
-    });
-  };
-
   useEffect(() => {
     if (user) {
       setTextInput({
@@ -191,7 +181,6 @@ export default function Index() {
           height: "100vh",
         }}
       >
-        <button onClick={() => deleteCustomer()} >delete customer</button>
         <Box
           sx={{
             position: "absolute",
