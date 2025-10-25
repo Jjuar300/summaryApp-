@@ -121,8 +121,8 @@ export default function Index() {
     await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
-    await signOut();
     await user?.delete();
+    await signOut();
   };
 
   const rightButtonStyle = {
