@@ -92,7 +92,7 @@ export default function Index() {
   };
 
   const cancelPayment = async () => {
-    // navigate("/Noto");
+    navigate("/Noto");
     await signOut();
 
     dispatch(setSessionStatus(false));
