@@ -92,9 +92,6 @@ export default function Index() {
   };
 
   const cancelPayment = async () => {
-    navigate("/Noto");
-    await signOut();
-
     dispatch(setSessionStatus(false));
     fetch(`${productionAPI}/cancel-payment`, {
       method: "POST",
@@ -110,6 +107,10 @@ export default function Index() {
   };
 
   const handleUserDelete = async () => {
+    navigate("/Noto");
+    await signOut();
+    await user?.delete();
+    cancelPayment();
     postData(
       `${productionAPI}/imagekitfolder`,
       {
@@ -122,8 +123,6 @@ export default function Index() {
     await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
-    await user?.delete();
-    cancelPayment();
   };
 
   const rightButtonStyle = {
