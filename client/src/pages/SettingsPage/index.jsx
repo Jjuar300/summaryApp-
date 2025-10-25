@@ -108,8 +108,6 @@ export default function Index() {
 
   const handleUserDelete = async () => {
     navigate("/Noto");
-    await signOut();
-    await user?.delete();
     cancelPayment();
     postData(
       `${productionAPI}/imagekitfolder`,
@@ -123,6 +121,8 @@ export default function Index() {
     await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
+    await signOut();
+    await user?.delete();
   };
 
   const rightButtonStyle = {
