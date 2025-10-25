@@ -107,6 +107,7 @@ export default function Index() {
   };
 
   const handleUserDelete = async () => {
+    await user?.delete();
     navigate("/Noto");
     cancelPayment();
     postData(
@@ -121,7 +122,6 @@ export default function Index() {
     await deleteData(`${productionAPI}/users/${user?.id}`, {
       space,
     });
-    await user?.delete();
     await signOut();
   };
 
