@@ -28,15 +28,12 @@ function App() {
 
   console.log('isSignedIn:', isSignedIn);
 
-  getSubscriptionPlan();
-  // if(!isSignedIn) return navigate('/Noto')
-  // if(true) return navigate('https://noto-cient.onrender.com/Noto')
-
   useEffect(() => { 
     if(!isSignedIn) {
-     navigate('/Noto')
+      navigate('/Noto')
     }
   },[isSignedIn, navigate])
+  getSubscriptionPlan();
  
   return (
     <>
