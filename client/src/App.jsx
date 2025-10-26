@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useUserPayment } from "./hooks";
 import {useUser} from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
@@ -29,7 +30,14 @@ function App() {
 
   getSubscriptionPlan();
   // if(!isSignedIn) return navigate('/Noto')
+  // if(true) return navigate('https://noto-cient.onrender.com/Noto')
 
+  useEffect(() => { 
+    if(!isSignedIn) {
+     navigate('/Noto')
+    }
+  },[isSignedIn, navigate])
+ 
   return (
     <>
       <SignedIn>
