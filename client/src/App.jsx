@@ -28,7 +28,7 @@ function App() {
   console.log('isSignedIn:', isSignedIn);
 
   getSubscriptionPlan();
-  if(!isSignedIn) return navigate('/Noto')
+  // if(!isSignedIn) return navigate('/Noto')
 
   return (
     <>
