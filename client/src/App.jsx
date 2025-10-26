@@ -5,6 +5,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSelector } from "react-redux";
 import { useUserPayment } from "./hooks";
+import {useUser} from '@clerk/clerk-react';
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
@@ -20,6 +22,12 @@ const options = {
 function App() {
   const { getSubscriptionPlan } = useUserPayment();
   const isSessionStatus = useSelector((state) => state.Stripe.status);
+  const {isSignedIn} = useUser(); 
+  const navigate = useNavigate(); 
+
+  console.log('isSignedIn:', isSignedIn);
+
+  if(!isSignedIn) return navigate('/Noto')
 
   getSubscriptionPlan();
   return (
