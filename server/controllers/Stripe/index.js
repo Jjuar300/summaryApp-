@@ -4,9 +4,7 @@ const { UserPayment } = require("../../Models/index");
 const createSubscription = async (req, res) => {
   try {
     const { priceId, email } = req.body;
-    console.log('productionCLientUrl:', process.env.PRODUCTION_CLIENT_URL); 
-   
-    
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -18,14 +16,14 @@ const createSubscription = async (req, res) => {
         },
       ],
       // subscription_data: {
-      //   trial_period_days: 3, 
+      //   trial_period_days: 3,
       //   trial_settings:{
       //     end_behavior: {
-      //       missing_payment_method: 'cancel', 
+      //       missing_payment_method: 'cancel',
       //     }
       //   }
       // },
-      // payment_method_collection: 'if_required', 
+      // payment_method_collection: 'if_required',
       success_url: `${process.env.PRODUCTION_CLIENT_URL}/BrowseSpace`,
       cancel_url: `${process.env.PRODUCTION_CLIENT_URL}/Noto`,
     });
@@ -34,50 +32,42 @@ const createSubscription = async (req, res) => {
     console.log("Error stripe/index.js:", error);
     res.status(500).json({ error: error.message });
   }
-}
-
-const getUserPayment = async (req, res) => {
-  
-  try {
-    const userId = req.params.userId;
-    // const userPayment = await UserPayment.findOne({ userId: userId });
-    console.log('userID userpayment:', req.params.userId)
-    console.log('email userpayment:', req.params.email)
-    if(userId){
-      const userPayment = await UserPayment.findOne({email: req.params.email})
-      res.status(200).json(userPayment);
-    }else{
-      res.status(404).json({message: 'User not found!'})      
-      throw new Error('User not found!')
-    }
-    
-  } catch (error) {
-    return console.log('error in stripe/index.js :83', error);
-  }
 };
 
-
+const getUserPayment = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    if (userId) {
+      const userPayment = await UserPayment.findOne({
+        email: req.params.email,
+      });
+      res.status(200).json(userPayment);
+    } else {
+      res.status(404).json({ message: "User not found!" });
+      throw new Error("User not found!");
+    }
+  } catch (error) {
+    return console.log("error in stripe/index.js :83", error);
+  }
+};
 
 const cancelUserPayment = async (req, res) => {
   try {
     const { userPaymentMongoDocId, subscriptionId, userCustomerId } = req.body;
-
-    console.log('userPaymentMongoDocId:', userPaymentMongoDocId); 
-    console.log("subscriptionId:", subscriptionId);
-    console.log('userCustomerId:', userCustomerId); 
-
-    await UserPayment.findOneAndDelete({_id: userPaymentMongoDocId});
+    await UserPayment.findOneAndDelete({ _id: userPaymentMongoDocId });
     const deleteCustomer = await stripe.customers.del(userCustomerId);
-    const deletedSubscription = await stripe.subscriptions.cancel(subscriptionId);
+    const deletedSubscription = await stripe.subscriptions.cancel(
+      subscriptionId
+    );
 
     res.status(200).json({
       success: true,
       message: "subscription cancelled successfully!",
       deletedSubscription,
-      deleteCustomer, 
+      deleteCustomer,
     });
   } catch (error) {
-    return console.log('error in stripe/index.js :103', error);
+    return console.log("error in stripe/index.js :103", error);
   }
 };
 

@@ -4,10 +4,6 @@ const newUser = async (req, res) => {
   try {
     const { email, userId } = req.body;
     const userFound = await User.findOne({ email });
-
-    console.log('email:', email)
-    console.log('userId user created:', userId)
-
     if (userFound) {
       return res.status(200).json(userFound);
     }
@@ -36,7 +32,7 @@ const getUserByUserId = async (req, res) => {
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
-    console.log("error getuser:", error)
+    console.log("error getuser:", error);
   }
 };
 
@@ -45,14 +41,9 @@ const deleteUser = async (req, res) => {
     const userId = req.params.userId;
     const { space } = req.body;
     const spaceIds = space?.map((item) => item._id);
-    // const chatGptIds = space?.map((item) => item?.chatGpt?.map((item) => item._id));
-    console.log('delete userId:', userId); 
-    console.log('delete space:', space)
-    console.log('spaceIds:', spaceIds); 
 
     await User.findOneAndDelete({ userId: userId });
     await Space.deleteMany({ _id: { $in: spaceIds } });
-    //  await ChatGpt.deleteMany({_id: {$in: chatGptIds}})
   } catch (error) {
     res.status(500).json({ error: "internal error" });
   }
