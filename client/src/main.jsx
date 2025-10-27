@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         publishableKey={PUBLISHIBLE_CLERK_KEY}
         afterSignInUrl={'/BrowseSpace'}
         afterSignUpUrl={ '/SubscriptionPlan' }
-        afterSignOutUrl="/Noto"
+        afterSignOutUrl={"/Noto"}
       >
         <PersistGate persistor={persistStore(store)}>
           <BrowserRouter>
