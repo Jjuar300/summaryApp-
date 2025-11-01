@@ -7,7 +7,7 @@ export default function index() {
     <>
       {/* <BrowserRouter> */}
         <Routes>
-          <Route path="https://noto-cient.onrender.com" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       {/* </BrowserRouter> */}
