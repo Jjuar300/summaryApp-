@@ -117,7 +117,7 @@ export default function Index() {
             isIcon={true}
           />
           
-          <SignOutButton signOutOptions={{redirectUrl: '/Noto'}} >
+          <SignOutButton signOutOptions={{redirectUrl: '/'}} >
             <Box
               sx={{
                 position: "relative",

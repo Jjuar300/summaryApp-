@@ -129,7 +129,7 @@ export default function SubscriptionPlan() {
           isIcon={true}
         />
 
-        <SignOutButton signOutOptions={{ redirectUrl: "/Noto" }}>
+        <SignOutButton signOutOptions={{ redirectUrl: "/" }}>
           <Box
             sx={{
               position: "relative",

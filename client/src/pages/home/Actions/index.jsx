@@ -115,7 +115,7 @@ export default function Index({ setOpen }) {
       dispatch(handleSpaceText(""));
       dispatch(setRun(false));
       getUserData();
-      navigate("/Noto");
+      navigate("/");
     } catch (error) {
       console.log("handleDelete error ::", error);
     }

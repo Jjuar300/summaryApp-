@@ -106,7 +106,7 @@ export default function Index() {
 
   const handleUserDelete = async () => {
     await user?.delete();
-    navigate("/Noto");
+    navigate("/");
     cancelPayment();
     postData(
       `${productionAPI}/imagekitfolder`,
