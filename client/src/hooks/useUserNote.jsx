@@ -18,7 +18,7 @@ export default function useUserNote() {
     await updateData(`${productionAPI}/updateUserNotes`, {
       content: JSON.stringify(jsonBlock),
       userId: user?.id,
-      noteDcumentId: isSpaceId?.notes[0]?._id,
+      noteDocumentId: isSpaceId?.notes[0]?._id,
     });
   };
 

@@ -30,10 +30,10 @@ const data = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { content, userId, noteDcumentId } = req.body;
+    const { content, userId, noteDocumentId } = req.body;
 
-    console.log('noteDoId:', noteDoId)
-    const updateNote = await Notes.findByIdAndUpdate(noteDcumentId, {
+    console.log('noteDoId:', noteDocumentId)
+    const updateNote = await Notes.findByIdAndUpdate(noteDocumentId, {
       content: content,
       userId,
     });
