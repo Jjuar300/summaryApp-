@@ -13,12 +13,16 @@ export default function useUserNote() {
 
   const userData = useGetData();
   const isSpaceId = userData.space.find((space) => space._id === spaceId);
+  const noteDocumentId = isSpaceId?.notes[0]?._id;
+
+  console.log("isSpaceId:", isSpaceId); 
+  console.log('noteDocumentId:', noteDocumentId)
 
   const handleEditorChange = async (jsonBlock) => {
     await updateData(`${productionAPI}/updateUserNotes`, {
       content: JSON.stringify(jsonBlock),
       userId: user?.id,
-      noteDocumentId: isSpaceId?.notes[0]?._id,
+      noteDocumentId,
     });
   };
 
