@@ -7,7 +7,7 @@ import { useGetData } from "../hooks";
 export default function useUserNote() {
   const { user } = useUser();
   const spaceId = useSelector((state) => state.createSpace.ObjectId);
-  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL; 
+  const productionAPI = import.meta.env.VITE_PRODUCTION_API_URL;
 
   const [initialContent, setInitialContent] = useState(undefined);
 
@@ -18,7 +18,7 @@ export default function useUserNote() {
     await updateData(`${productionAPI}/updateUserNotes`, {
       content: JSON.stringify(jsonBlock),
       userId: user?.id,
-      noteDoId: isSpaceId?.notes[0]?._id,
+      noteDcumentId: isSpaceId?.notes[0]?._id,
     });
   };
 
@@ -29,15 +29,13 @@ export default function useUserNote() {
     if (savedContent) {
       const blocks = JSON.parse(savedContent?.notes?.[0]?.content);
       return setInitialContent(blocks);
-      }
+    }
   };
-
-  
 
   return {
     fetchUserNote,
     initialContent,
     handleEditorChange,
-    // getSpaceNote, 
+    // getSpaceNote,
   };
 }
